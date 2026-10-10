@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+
+<html lang="es"><head><meta charset="utf-8"/><meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" name="viewport"/><title>DeliveryGo</title><link href="https://fonts.googleapis.com" rel="preconnect"/><link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/><link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/><link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/><style>@layer base{html,body{width:100%;min-height:100%;margin:0;padding:0;}body{overscroll-behavior-y:none;-webkit-tap-highlight-color:transparent;}.pb-safe{padding-bottom:env(safe-area-inset-bottom,0px);}.pt-safe{padding-top:env(safe-area-inset-top,0px);}main>:first-child{margin-top:0!important;}main>:last-child{margin-bottom:0!important;}}::-webkit-scrollbar{display:none;}</style><script src="https://cdn.tailwindcss.com"></script><script id="tailwind-config">tailwind.config = { darkMode: 'class', theme: { extend: { 'colors': { 'on-primary-fixed-variant': '#00513e', 'primary': '#006b53', 'secondary-fixed-dim': '#c5c7c9', 'on-secondary': '#ffffff', 'on-tertiary-container': '#002771', 'surface': '#f9f9ff', 'surface-container-lowest': '#ffffff', 'on-error': '#ffffff', 'on-secondary-fixed': '#191c1e', 'on-tertiary': '#ffffff', 'tertiary-fixed': '#dbe1ff', 'surface-bright': '#f9f9ff', 'background': '#f9f9ff', 'surface-container': '#e7eefe', 'tertiary': '#0053db', 'on-surface': '#151c27', 'surface-container-low': '#f0f3ff', 'tertiary-fixed-dim': '#b4c5ff', 'secondary-fixed': '#e1e2e5', 'on-surface-variant': '#3d4a44', 'on-error-container': '#93000a', 'surface-variant': '#dce2f3', 'inverse-surface': '#2a313d', 'on-secondary-fixed-variant': '#444749', 'surface-tint': '#006b53', 'outline-variant': '#bccac2', 'primary-container': '#00a884', 'primary-fixed-dim': '#59dcb5', 'on-tertiary-fixed-variant': '#003ea8', 'inverse-on-surface': '#ebf1ff', 'on-background': '#151c27', 'error-container': '#ffdad6', 'secondary-container': '#dee0e2', 'inverse-primary': '#59dcb5', 'on-primary-container': '#003427', 'outline': '#6c7a74', 'on-primary': '#ffffff', 'on-secondary-container': '#606365', 'primary-fixed': '#79f9d0', 'error': '#ba1a1a', 'on-primary-fixed': '#002117', 'surface-container-highest': '#dce2f3', 'tertiary-container': '#678fff', 'surface-container-high': '#e2e8f8', 'secondary': '#5c5f61', 'surface-dim': '#d3daea', 'on-tertiary-fixed': '#00174b' }, 'borderRadius': { 'DEFAULT': '0.25rem', 'lg': '0.5rem', 'xl': '0.75rem', 'full': '9999px' }, 'spacing': { 'container-max': '1280px', 'space-2xs': '0.25rem', 'space-md': '1rem', 'gutter-mobile': '1rem', 'space-2xl': '3rem', 'space-sm': '0.75rem', 'space-xl': '2rem', 'space-xs': '0.5rem', 'space-3xl': '4rem', 'gutter-desktop': '1.5rem', 'space-lg': '1.5rem' }, 'fontFamily': { 'display-hero': ['Inter'], 'body-md-medium': ['Inter'], 'title-md': ['Inter'], 'body-md': ['Inter'], 'headline-lg-mobile': ['Inter'], 'headline-sm': ['Inter'], 'body-lg-medium': ['Inter'], 'caption-bold': ['Inter'], 'display-hero-mobile': ['Inter'], 'caption-sm': ['Inter'], 'headline-lg': ['Inter'], 'headline-md': ['Inter'], 'label-md': ['Inter'], 'body-lg': ['Inter'] }, 'fontSize': { 'display-hero': ['40px', { 'lineHeight': '48px', 'letterSpacing': '-0.02em', 'fontWeight': '700' }], 'body-md-medium': ['14px', { 'lineHeight': '20px', 'letterSpacing': '0em', 'fontWeight': '500' }], 'title-md': ['18px', { 'lineHeight': '24px', 'letterSpacing': '0em', 'fontWeight': '600' }], 'body-md': ['14px', { 'lineHeight': '20px', 'letterSpacing': '0em', 'fontWeight': '400' }], 'headline-lg-mobile': ['26px', { 'lineHeight': '32px', 'letterSpacing': '-0.01em', 'fontWeight': '600' }], 'headline-sm': ['20px', { 'lineHeight': '28px', 'letterSpacing': '-0.005em', 'fontWeight': '600' }], 'body-lg-medium': ['16px', { 'lineHeight': '24px', 'letterSpacing': '0em', 'fontWeight': '500' }], 'caption-bold': ['12px', { 'lineHeight': '16px', 'letterSpacing': '0.02em', 'fontWeight': '600' }], 'display-hero-mobile': ['30px', { 'lineHeight': '36px', 'letterSpacing': '-0.015em', 'fontWeight': '700' }], 'caption-sm': ['12px', { 'lineHeight': '16px', 'letterSpacing': '0.01em', 'fontWeight': '400' }], 'headline-lg': ['32px', { 'lineHeight': '40px', 'letterSpacing': '-0.015em', 'fontWeight': '600' }], 'headline-md': ['24px', { 'lineHeight': '32px', 'letterSpacing': '-0.01em', 'fontWeight': '600' }], 'label-md': ['13px', { 'lineHeight': '18px', 'letterSpacing': '0.01em', 'fontWeight': '500' }], 'body-lg': ['16px', { 'lineHeight': '24px', 'letterSpacing': '0em', 'fontWeight': '400' }] } } } };</script><style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head><body class="bg-surface text-on-surface font-body-md min-h-screen flex flex-col selection:bg-primary/20"><header class="fixed top-0 inset-x-0 z-50 bg-surface/85 backdrop-blur-xl shadow-[0_1px_8px_rgba(0,0,0,0.04)] pt-safe"><div class="h-16 px-gutter-mobile flex items-center justify-between gap-space-xs"><button aria-label="Volver" class="w-11 h-11 flex items-center justify-center rounded-full text-on-surface hover:bg-surface-container active:scale-95 transition-all" onclick="history.back()" type="button"><span class="material-symbols-outlined">arrow_back</span></button><div class="flex-1 flex items-center justify-center gap-space-xs px-space-xs truncate"><img alt="DeliveryGo brand logo. Modern delivery and tech emblem: a stylized fast delivery bag with an arrow or lightning bolt / speed wing in vibrant green-teal #00A884 and slate dark accents. Clean geometric SVG style, professional e-commerce delivery branding.. Design context: - Primary color: #00a884
+- Font: inter
+- Mode: light
+- Roundness: rounded-md
+. The logo should be visually consistent with these brand tokens." class="h-6 w-auto object-contain" src="https://lh3.googleusercontent.com/aida/AEtjO1VbknMmwuWv6CuoI9J5GUSydsn0LVFVSwOrYjYTnl1PwkCSrzwTjYnyNk18OJz9O0VDT-a_GXQVnM7QgxBbCgPEyJLRq9Ot9FzZqpTDQHo0VNCGdlfIDE-aSsOapj2aOg1dVVP-lTrEvhMf-rUj1MtIEdMM3WRgo0NboYe6Rk-gPwCvZtwjizS6BIwMqSZusvs6QTqNGqAaUDq03acDfE8Hfbpn8WeBV8WpdFhuBiQCndrN2bn2_9bDPw4"/><h1 class="font-title-md text-title-md text-on-surface truncate">Seguimiento En Vivo</h1></div><div class="w-11 h-11 flex items-center justify-end"><img alt="Profile" class="w-8 h-8 rounded-full object-cover ring-2 ring-primary-container/30" src="https://lh3.googleusercontent.com/aida/AEtjO1WBuZxQdnPVPMRWPNFwxqw1oCMLF-u4IY-nKhbNRlS2gMcAGQ09BpSrGpMwiVucMI2r78xVJjZXYF-DEPfd8Qt2gYoJdRHO8d1GNOLZLTz7N5n39hEM_WiZe5n_R_BUPukJ-gJ-_J_UyhIxj2O4RzGI1A3ZypUbqKmNnH3Rwj69UdH-NrEeWnWq-qNL87kc7DXB4rlC6zxmE6f_g6B6_okapA_wPd2Pdbgi0WyaOkYbJi_iFI5nbP5jKA"/></div></div></header><main class="flex-1 flex flex-col w-full px-gutter-mobile pt-16 pb-safe bg-surface"><div class="flex flex-col w-full pb-32">
+<!-- Banner Alerta Pago Rechazado (ERR_704) -->
+<div class="w-full bg-error-container text-on-error-container p-space-md rounded-xl shadow-sm mb-space-md">
+<div class="flex items-start gap-space-sm">
+<div class="w-10 h-10 rounded-full bg-error text-on-error flex items-center justify-center shrink-0 shadow-sm">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">error</span>
+</div>
+<div class="flex-1 min-w-0">
+<h2 class="font-headline-sm text-headline-sm text-error leading-tight font-semibold">
+          Pago rechazado por la entidad emisora (ERR_704)
+        </h2>
+<p class="font-body-md text-body-md text-on-error-container/90 mt-1 leading-snug">
+          No pudimos procesar el cobro con la tarjeta terminada en <strong>4242</strong> por fondos insuficientes o límite excedido.
+        </p>
+<button class="mt-space-sm inline-flex items-center gap-1.5 px-3.5 py-2 rounded-lg bg-surface-container-lowest text-error font-body-md-medium text-body-md-medium shadow-sm active:scale-95 transition-all" onclick="document.getElementById('seccion-pagos').scrollIntoView({ behavior: 'smooth' })" type="button">
+<span class="material-symbols-outlined text-sm">chevron_forward</span>
+          Probar con otro medio de pago
+        </button>
+</div>
+</div>
+</div>
+<!-- Bloque: Dirección de Entrega -->
+<div class="w-full bg-surface-container-lowest rounded-xl p-space-md shadow-sm mb-space-md">
+<div class="flex items-center justify-between mb-space-xs">
+<div class="flex items-center gap-space-xs">
+<span class="material-symbols-outlined text-primary-container" style="font-variation-settings: 'FILL' 1;">location_on</span>
+<span class="font-caption-bold text-caption-bold text-on-surface-variant uppercase tracking-wider">Dirección de entrega</span>
+</div>
+<button class="font-body-md-medium text-body-md-medium text-primary-container hover:underline active:opacity-75 min-h-[44px] flex items-center px-1" type="button">
+        Cambiar
+      </button>
+</div>
+<div class="flex items-center justify-between">
+<div class="pr-2">
+<p class="font-title-md text-title-md text-on-surface font-semibold truncate">Av. Corrientes 1450, Piso 4 B</p>
+<p class="font-body-md text-body-md text-on-surface-variant">Balvanera, CABA</p>
+</div>
+<div class="shrink-0 bg-surface-container-low px-2.5 py-1.5 rounded-lg flex items-center gap-1">
+<span class="material-symbols-outlined text-primary text-base">schedule</span>
+<span class="font-caption-bold text-caption-bold text-primary">25-35 min</span>
+</div>
+</div>
+</div>
+<!-- Sección: Medios de Pago -->
+<div class="w-full bg-surface-container-lowest rounded-xl p-space-md shadow-sm mb-space-md" id="seccion-pagos">
+<div class="flex items-center justify-between mb-space-sm">
+<h3 class="font-title-md text-title-md text-on-surface font-semibold">Medios de pago guardados</h3>
+<span class="font-caption-sm text-caption-sm text-on-surface-variant">Elegí cómo abonar</span>
+</div>
+<!-- Lista de tarjetas apiladas -->
+<div class="flex flex-col gap-space-xs" id="payment-options-container">
+<!-- Tarjeta 1: Visa Débito Rechazada -->
+<label class="group relative flex items-center justify-between p-3.5 rounded-xl bg-surface-container-low/60 cursor-pointer transition-all">
+<div class="flex items-center gap-3 min-w-0">
+<input class="sr-only peer" name="payment_method" type="radio" value="visa_4242"/>
+<div class="w-5 h-5 rounded-full bg-surface-container-highest flex items-center justify-center peer-checked:bg-primary-container transition-all">
+<div class="w-2 h-2 rounded-full bg-surface-container-lowest"></div>
+</div>
+<div class="w-10 h-7 rounded-md bg-surface-container-highest flex items-center justify-center shrink-0 shadow-sm">
+<span class="font-caption-bold text-caption-bold text-on-surface-variant">VISA</span>
+</div>
+<div class="min-w-0">
+<div class="flex items-center gap-2">
+<span class="font-body-md-medium text-body-md-medium text-on-surface truncate">Visa Débito •••• 4242</span>
+</div>
+<p class="font-caption-sm text-caption-sm text-on-surface-variant">Vence 08/26</p>
+</div>
+</div>
+<span class="shrink-0 font-caption-bold text-caption-bold text-error bg-error-container px-2 py-0.5 rounded-full flex items-center gap-1">
+<span class="material-symbols-outlined text-xs">close</span> Rechazada
+        </span>
+</label>
+<!-- Tarjeta 2: Mastercard Crédito (Seleccionada) -->
+<label class="group relative flex items-center justify-between p-3.5 rounded-xl bg-surface-container-low/90 cursor-pointer transition-all">
+<div class="flex items-center gap-3 min-w-0">
+<input checked="" class="sr-only peer" name="payment_method" onchange="toggleInstallments(true)" type="radio" value="mc_8819"/>
+<div class="w-5 h-5 rounded-full bg-primary-container flex items-center justify-center transition-all">
+<div class="w-2 h-2 rounded-full bg-surface-container-lowest"></div>
+</div>
+<div class="w-10 h-7 rounded-md bg-inverse-surface flex items-center justify-center shrink-0 shadow-sm">
+<div class="flex -space-x-1.5">
+<div class="w-3.5 h-3.5 rounded-full bg-[#EB001B] opacity-90"></div>
+<div class="w-3.5 h-3.5 rounded-full bg-[#F79E1B] opacity-90"></div>
+</div>
+</div>
+<div class="min-w-0">
+<div class="flex items-center gap-2">
+<span class="font-body-md-medium text-body-md-medium text-on-surface font-semibold truncate">Mastercard Crédito •••• 8819</span>
+</div>
+<p class="font-caption-sm text-caption-sm text-on-surface-variant">Vence 11/27</p>
+</div>
+</div>
+<span class="shrink-0 font-caption-bold text-caption-bold text-primary bg-primary-fixed/60 px-2 py-0.5 rounded-full">
+          Activa
+        </span>
+</label>
+<!-- Tarjeta 3: Saldo en cuenta DeliveryGo -->
+<label class="group relative flex items-center justify-between p-3.5 rounded-xl bg-surface-container-low/60 cursor-pointer transition-all">
+<div class="flex items-center gap-3 min-w-0">
+<input class="sr-only peer" name="payment_method" onchange="toggleInstallments(false)" type="radio" value="wallet_go"/>
+<div class="w-5 h-5 rounded-full bg-surface-container-highest flex items-center justify-center peer-checked:bg-primary-container transition-all">
+<div class="w-2 h-2 rounded-full bg-surface-container-lowest"></div>
+</div>
+<div class="w-10 h-7 rounded-md bg-primary-container text-on-primary flex items-center justify-center shrink-0 shadow-sm">
+<span class="material-symbols-outlined text-base">account_balance_wallet</span>
+</div>
+<div class="min-w-0">
+<span class="font-body-md-medium text-body-md-medium text-on-surface truncate">Saldo DeliveryGo</span>
+<p class="font-caption-sm text-caption-sm text-on-surface-variant">Disponible: $ 4.200</p>
+</div>
+</div>
+<button class="shrink-0 font-caption-bold text-caption-bold text-primary-container hover:underline px-2 py-1" type="button">
+          Cargar
+        </button>
+</label>
+</div>
+<!-- Fila Interactiva: Agregar nueva tarjeta -->
+<button class="w-full mt-3 flex items-center justify-center gap-2 py-3 rounded-xl bg-surface-container text-on-surface font-body-md-medium text-body-md-medium active:scale-[0.99] transition-all min-h-[48px]" onclick="openCardSheet()" type="button">
+<span class="material-symbols-outlined text-primary-container">add_card</span>
+      + Agregar nueva tarjeta
+    </button>
+</div>
+<!-- Selector de Cuotas -->
+<div class="w-full bg-surface-container-lowest rounded-xl p-space-md shadow-sm mb-space-md" id="installments-box">
+<div class="flex items-center justify-between mb-2">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-primary-container">calendar_month</span>
+<h3 class="font-title-md text-title-md text-on-surface font-semibold">Plan de cuotas</h3>
+</div>
+<span class="font-caption-bold text-caption-bold text-primary bg-primary-fixed/50 px-2 py-0.5 rounded-full">Sin recargo</span>
+</div>
+<div class="relative">
+<select class="w-full h-12 px-3.5 pr-10 rounded-xl bg-surface-container-low text-on-surface font-body-md-medium text-body-md-medium appearance-none focus:outline-none focus:bg-surface-container transition-all" id="select-cuotas" onchange="updateInstallment(this.value)">
+<option value="1">1 cuota sin interés de $ 19.300</option>
+<option value="3">3 cuotas fijas de $ 7.100 (CFT: 8.5%)</option>
+<option value="6">6 cuotas fijas de $ 3.980 (CFT: 14.2%)</option>
+</select>
+<div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-3 text-on-surface-variant">
+<span class="material-symbols-outlined">expand_more</span>
+</div>
+</div>
+</div>
+<!-- Resumen de Orden (Colapsable) -->
+<div class="w-full bg-surface-container-lowest rounded-xl p-space-md shadow-sm mb-space-md">
+<button class="w-full flex items-center justify-between text-left min-h-[44px]" onclick="toggleOrderSummary()" type="button">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-primary-container">receipt_long</span>
+<span class="font-title-md text-title-md text-on-surface font-semibold">Resumen del pedido</span>
+<span class="font-caption-sm text-caption-sm text-on-surface-variant bg-surface-container px-2 py-0.5 rounded-full">3 ítems</span>
+</div>
+<span class="material-symbols-outlined text-on-surface-variant transition-transform duration-200" id="summary-chevron">expand_more</span>
+</button>
+<div class="hidden pt-space-sm mt-space-xs space-y-2.5" id="summary-content">
+<div class="flex justify-between font-body-md text-body-md text-on-surface-variant">
+<span>1x Hamburguesa Doble Bacon Cheeseburger</span>
+<span class="text-on-surface font-medium">$ 14.500</span>
+</div>
+<div class="flex justify-between font-body-md text-body-md text-on-surface-variant">
+<span>1x Papas Fritas Rústicas Cheddar</span>
+<span class="text-on-surface font-medium">$ 3.200</span>
+</div>
+<div class="flex justify-between font-body-md text-body-md text-on-surface-variant">
+<span>1x Gaseosa Cola 500ml</span>
+<span class="text-on-surface font-medium">$ 1.600</span>
+</div>
+<div class="h-px bg-surface-container my-2"></div>
+<div class="flex justify-between font-body-md text-body-md text-on-surface-variant">
+<span>Subtotal productos</span>
+<span>$ 19.300</span>
+</div>
+<div class="flex justify-between font-body-md text-body-md text-on-surface-variant">
+<span>Costo de envío (Promo)</span>
+<span class="text-primary font-medium">¡Gratis!</span>
+</div>
+<div class="flex justify-between font-body-md text-body-md text-on-surface-variant">
+<span>Tarifa de servicio</span>
+<span class="line-through text-on-surface-variant/60">$ 450</span>
+</div>
+</div>
+<div class="flex justify-between items-center mt-3 pt-3">
+<span class="font-title-md text-title-md text-on-surface font-bold">Total a abonar</span>
+<span class="font-headline-sm text-headline-sm text-primary font-bold" id="total-amount-display">$ 19.300</span>
+</div>
+</div>
+<!-- Bottom Sheet / Modal: Agregar Tarjeta (Oculto inicialmente) -->
+<div class="fixed inset-0 z-50 hidden" id="card-sheet">
+<!-- Scrim -->
+<div class="absolute inset-0 bg-inverse-surface/60 backdrop-blur-sm transition-opacity" onclick="closeCardSheet()"></div>
+<!-- Contenedor Sheet -->
+<div class="absolute inset-x-0 bottom-0 max-w-lg mx-auto bg-surface-container-lowest rounded-t-2xl p-space-lg shadow-2xl flex flex-col max-h-[795px] overflow-y-auto">
+<div class="w-12 h-1.5 bg-surface-container-highest rounded-full mx-auto mb-4 shrink-0"></div>
+<div class="flex items-center justify-between mb-4">
+<div>
+<h3 class="font-headline-sm text-headline-sm text-on-surface font-bold">Nueva tarjeta</h3>
+<p class="font-caption-sm text-caption-sm text-on-surface-variant">Ingresá los datos tal como figuran en el plástico</p>
+</div>
+<button class="w-9 h-9 rounded-full bg-surface-container-low flex items-center justify-center text-on-surface-variant active:scale-95" onclick="closeCardSheet()" type="button">
+<span class="material-symbols-outlined">close</span>
+</button>
+</div>
+<form class="space-y-3.5" onsubmit="handleSaveCard(event)">
+<div>
+<label class="block font-label-md text-label-md text-on-surface mb-1 font-medium">Número de la tarjeta</label>
+<div class="relative">
+<input class="w-full h-11 px-3.5 pr-10 rounded-xl bg-surface-container-low text-on-surface font-body-md text-body-md focus:bg-surface-container focus:outline-none" maxlength="19" placeholder="•••• •••• •••• ••••" required="" type="text"/>
+<span class="material-symbols-outlined absolute right-3 top-2.5 text-on-surface-variant">credit_card</span>
+</div>
+</div>
+<div>
+<label class="block font-label-md text-label-md text-on-surface mb-1 font-medium">Nombre y apellido del titular</label>
+<input class="w-full h-11 px-3.5 rounded-xl bg-surface-container-low text-on-surface font-body-md text-body-md uppercase focus:bg-surface-container focus:outline-none" placeholder="Ej: SOFÍA DELFINO" required="" type="text"/>
+</div>
+<div class="grid grid-cols-2 gap-3">
+<div>
+<label class="block font-label-md text-label-md text-on-surface mb-1 font-medium">Vencimiento</label>
+<input class="w-full h-11 px-3.5 rounded-xl bg-surface-container-low text-on-surface font-body-md text-body-md focus:bg-surface-container focus:outline-none" maxlength="5" placeholder="MM/AA" required="" type="text"/>
+</div>
+<div>
+<label class="block font-label-md text-label-md text-on-surface mb-1 font-medium">Código CVV</label>
+<div class="relative">
+<input class="w-full h-11 px-3.5 pr-8 rounded-xl bg-surface-container-low text-on-surface font-body-md text-body-md focus:bg-surface-container focus:outline-none" maxlength="4" placeholder="123" required="" type="password"/>
+<span class="material-symbols-outlined absolute right-2.5 top-2.5 text-on-surface-variant text-sm" title="3 o 4 dígitos al dorso">help_outline</span>
+</div>
+</div>
+</div>
+<div class="pt-3">
+<button class="w-full h-12 bg-primary-container text-on-primary font-body-lg-medium text-body-lg-medium rounded-xl shadow-md active:scale-[0.98] transition-all flex items-center justify-center gap-2" type="submit">
+<span class="material-symbols-outlined text-lg">check</span>
+            Guardar y usar tarjeta
+          </button>
+</div>
+</form>
+</div>
+</div>
+<!-- Barra Fija Inferior con Botón Primario y Badge de Seguridad -->
+<div class="fixed bottom-0 inset-x-0 bg-surface-container-lowest shadow-[0_-4px_16px_rgba(0,0,0,0.06)] p-space-md z-40">
+<div class="max-w-md mx-auto flex flex-col items-center gap-2">
+<!-- Botón Primario 52px Full Width -->
+<button class="w-full h-[52px] rounded-xl bg-primary-container text-on-primary font-headline-sm text-headline-sm font-semibold shadow-md active:scale-[0.98] transition-transform flex items-center justify-center gap-2" id="btn-pay" onclick="simulatePayment(this)" type="button">
+<span class="material-symbols-outlined">lock</span>
+<span>Confirmar y pagar $ 19.300</span>
+</button>
+<!-- Badge Compra Protegida -->
+<div class="flex items-center justify-center gap-1 text-on-surface-variant font-caption-sm text-caption-sm">
+<span class="material-symbols-outlined text-xs text-primary" style="font-variation-settings: 'FILL' 1;">verified_user</span>
+<span>Compra 100% segura y encriptada por DeliveryGo</span>
+</div>
+</div>
+</div>
+</div>
+<script>
+  function toggleOrderSummary() {
+    const content = document.getElementById('summary-content');
+    const chevron = document.getElementById('summary-chevron');
+    const isHidden = content.classList.contains('hidden');
+    
+    if (isHidden) {
+      content.classList.remove('hidden');
+      chevron.style.transform = 'rotate(180deg)';
+    } else {
+      content.classList.add('hidden');
+      chevron.style.transform = 'rotate(0deg)';
+    }
+  }
+
+  function openCardSheet() {
+    const sheet = document.getElementById('card-sheet');
+    sheet.classList.remove('hidden');
+  }
+
+  function closeCardSheet() {
+    const sheet = document.getElementById('card-sheet');
+    sheet.classList.add('hidden');
+  }
+
+  function toggleInstallments(show) {
+    const box = document.getElementById('installments-box');
+    if (show) {
+      box.classList.remove('opacity-40', 'pointer-events-none');
+    } else {
+      box.classList.add('opacity-40', 'pointer-events-none');
+    }
+  }
+
+  function updateInstallment(val) {
+    const btn = document.getElementById('btn-pay');
+    if (val === '1') {
+      btn.innerHTML = '<span class="material-symbols-outlined">lock</span><span>Confirmar y pagar $ 19.300</span>';
+    } else if (val === '3') {
+      btn.innerHTML = '<span class="material-symbols-outlined">lock</span><span>Confirmar en 3 cuotas de $ 7.100</span>';
+    } else {
+      btn.innerHTML = '<span class="material-symbols-outlined">lock</span><span>Confirmar en 6 cuotas de $ 3.980</span>';
+    }
+  }
+
+  function handleSaveCard(e) {
+    e.preventDefault();
+    closeCardSheet();
+    alert('¡Tarjeta guardada con éxito! Ahora podés continuar con el pago.');
+  }
+
+  function simulatePayment(btn) {
+    btn.disabled = true;
+    btn.innerHTML = '<span class="material-symbols-outlined animate-spin">refresh</span><span>Procesando pago...</span>';
+    setTimeout(() => {
+      btn.innerHTML = '<span class="material-symbols-outlined">check_circle</span><span>¡Pago aprobado! Redirigiendo...</span>';
+      btn.classList.remove('bg-primary-container');
+      btn.classList.add('bg-primary');
+    }, 1500);
+  }
+</script></main></body></html>

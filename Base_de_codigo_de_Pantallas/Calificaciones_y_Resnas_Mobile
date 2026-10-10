@@ -1,0 +1,422 @@
+<!DOCTYPE html>
+
+<html lang="es"><head><meta charset="utf-8"/><meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" name="viewport"/><title>DeliveryGo</title><link href="https://fonts.googleapis.com" rel="preconnect"/><link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/><link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/><link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/><style>@layer base{html,body{width:100%;min-height:100%;margin:0;padding:0;}body{overscroll-behavior-y:none;-webkit-tap-highlight-color:transparent;}.pb-safe{padding-bottom:env(safe-area-inset-bottom,0px);}.pt-safe{padding-top:env(safe-area-inset-top,0px);}main>:first-child{margin-top:0!important;}main>:last-child{margin-bottom:0!important;}}::-webkit-scrollbar{display:none;}</style><script src="https://cdn.tailwindcss.com"></script><script id="tailwind-config">tailwind.config = { darkMode: 'class', theme: { extend: { 'colors': { 'on-primary-fixed-variant': '#00513e', 'primary': '#006b53', 'secondary-fixed-dim': '#c5c7c9', 'on-secondary': '#ffffff', 'on-tertiary-container': '#002771', 'surface': '#f9f9ff', 'surface-container-lowest': '#ffffff', 'on-error': '#ffffff', 'on-secondary-fixed': '#191c1e', 'on-tertiary': '#ffffff', 'tertiary-fixed': '#dbe1ff', 'surface-bright': '#f9f9ff', 'background': '#f9f9ff', 'surface-container': '#e7eefe', 'tertiary': '#0053db', 'on-surface': '#151c27', 'surface-container-low': '#f0f3ff', 'tertiary-fixed-dim': '#b4c5ff', 'secondary-fixed': '#e1e2e5', 'on-surface-variant': '#3d4a44', 'on-error-container': '#93000a', 'surface-variant': '#dce2f3', 'inverse-surface': '#2a313d', 'on-secondary-fixed-variant': '#444749', 'surface-tint': '#006b53', 'outline-variant': '#bccac2', 'primary-container': '#00a884', 'primary-fixed-dim': '#59dcb5', 'on-tertiary-fixed-variant': '#003ea8', 'inverse-on-surface': '#ebf1ff', 'on-background': '#151c27', 'error-container': '#ffdad6', 'secondary-container': '#dee0e2', 'inverse-primary': '#59dcb5', 'on-primary-container': '#003427', 'outline': '#6c7a74', 'on-primary': '#ffffff', 'on-secondary-container': '#606365', 'primary-fixed': '#79f9d0', 'error': '#ba1a1a', 'on-primary-fixed': '#002117', 'surface-container-highest': '#dce2f3', 'tertiary-container': '#678fff', 'surface-container-high': '#e2e8f8', 'secondary': '#5c5f61', 'surface-dim': '#d3daea', 'on-tertiary-fixed': '#00174b' }, 'borderRadius': { 'DEFAULT': '0.25rem', 'lg': '0.5rem', 'xl': '0.75rem', 'full': '9999px' }, 'spacing': { 'container-max': '1280px', 'space-2xs': '0.25rem', 'space-md': '1rem', 'gutter-mobile': '1rem', 'space-2xl': '3rem', 'space-sm': '0.75rem', 'space-xl': '2rem', 'space-xs': '0.5rem', 'space-3xl': '4rem', 'gutter-desktop': '1.5rem', 'space-lg': '1.5rem' }, 'fontFamily': { 'display-hero': ['Inter'], 'body-md-medium': ['Inter'], 'title-md': ['Inter'], 'body-md': ['Inter'], 'headline-lg-mobile': ['Inter'], 'headline-sm': ['Inter'], 'body-lg-medium': ['Inter'], 'caption-bold': ['Inter'], 'display-hero-mobile': ['Inter'], 'caption-sm': ['Inter'], 'headline-lg': ['Inter'], 'headline-md': ['Inter'], 'label-md': ['Inter'], 'body-lg': ['Inter'] }, 'fontSize': { 'display-hero': ['40px', { 'lineHeight': '48px', 'letterSpacing': '-0.02em', 'fontWeight': '700' }], 'body-md-medium': ['14px', { 'lineHeight': '20px', 'letterSpacing': '0em', 'fontWeight': '500' }], 'title-md': ['18px', { 'lineHeight': '24px', 'letterSpacing': '0em', 'fontWeight': '600' }], 'body-md': ['14px', { 'lineHeight': '20px', 'letterSpacing': '0em', 'fontWeight': '400' }], 'headline-lg-mobile': ['26px', { 'lineHeight': '32px', 'letterSpacing': '-0.01em', 'fontWeight': '600' }], 'headline-sm': ['20px', { 'lineHeight': '28px', 'letterSpacing': '-0.005em', 'fontWeight': '600' }], 'body-lg-medium': ['16px', { 'lineHeight': '24px', 'letterSpacing': '0em', 'fontWeight': '500' }], 'caption-bold': ['12px', { 'lineHeight': '16px', 'letterSpacing': '0.02em', 'fontWeight': '600' }], 'display-hero-mobile': ['30px', { 'lineHeight': '36px', 'letterSpacing': '-0.015em', 'fontWeight': '700' }], 'caption-sm': ['12px', { 'lineHeight': '16px', 'letterSpacing': '0.01em', 'fontWeight': '400' }], 'headline-lg': ['32px', { 'lineHeight': '40px', 'letterSpacing': '-0.015em', 'fontWeight': '600' }], 'headline-md': ['24px', { 'lineHeight': '32px', 'letterSpacing': '-0.01em', 'fontWeight': '600' }], 'label-md': ['13px', { 'lineHeight': '18px', 'letterSpacing': '0.01em', 'fontWeight': '500' }], 'body-lg': ['16px', { 'lineHeight': '24px', 'letterSpacing': '0em', 'fontWeight': '400' }] } } } };</script><style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head><body class="bg-surface text-on-surface font-body-md min-h-screen flex flex-col selection:bg-primary/20"><header class="fixed top-0 inset-x-0 z-50 bg-surface/85 backdrop-blur-xl shadow-[0_1px_8px_rgba(0,0,0,0.04)] pt-safe"><div class="h-16 px-gutter-mobile flex items-center justify-between gap-space-xs"><button aria-label="Volver" class="w-11 h-11 flex items-center justify-center rounded-full text-on-surface hover:bg-surface-container active:scale-95 transition-all" onclick="history.back()" type="button"><span class="material-symbols-outlined">arrow_back</span></button><div class="flex-1 flex items-center justify-center gap-space-xs px-space-xs truncate"><img alt="DeliveryGo brand logo. Modern delivery and tech emblem: a stylized fast delivery bag with an arrow or lightning bolt / speed wing in vibrant green-teal #00A884 and slate dark accents. Clean geometric SVG style, professional e-commerce delivery branding.. Design context: - Primary color: #00a884
+- Font: inter
+- Mode: light
+- Roundness: rounded-md
+. The logo should be visually consistent with these brand tokens." class="h-6 w-auto object-contain" src="https://lh3.googleusercontent.com/aida/AEtjO1VbknMmwuWv6CuoI9J5GUSydsn0LVFVSwOrYjYTnl1PwkCSrzwTjYnyNk18OJz9O0VDT-a_GXQVnM7QgxBbCgPEyJLRq9Ot9FzZqpTDQHo0VNCGdlfIDE-aSsOapj2aOg1dVVP-lTrEvhMf-rUj1MtIEdMM3WRgo0NboYe6Rk-gPwCvZtwjizS6BIwMqSZusvs6QTqNGqAaUDq03acDfE8Hfbpn8WeBV8WpdFhuBiQCndrN2bn2_9bDPw4"/><h1 class="font-title-md text-title-md text-on-surface truncate">Seguimiento En Vivo</h1></div><div class="w-11 h-11 flex items-center justify-end"><img alt="Profile" class="w-8 h-8 rounded-full object-cover ring-2 ring-primary-container/30" src="https://lh3.googleusercontent.com/aida/AEtjO1WBuZxQdnPVPMRWPNFwxqw1oCMLF-u4IY-nKhbNRlS2gMcAGQ09BpSrGpMwiVucMI2r78xVJjZXYF-DEPfd8Qt2gYoJdRHO8d1GNOLZLTz7N5n39hEM_WiZe5n_R_BUPukJ-gJ-_J_UyhIxj2O4RzGI1A3ZypUbqKmNnH3Rwj69UdH-NrEeWnWq-qNL87kc7DXB4rlC6zxmE6f_g6B6_okapA_wPd2Pdbgi0WyaOkYbJi_iFI5nbP5jKA"/></div></div></header><main class="flex-1 flex flex-col w-full px-gutter-mobile pt-16 pb-safe bg-surface"><div class="flex flex-col w-full pb-10">
+<!-- Feedback / Review Card (Post-delivery state) -->
+<section class="flex flex-col w-full bg-surface-container-lowest rounded-xl shadow-md p-space-md mb-space-lg">
+<!-- Header Badge & Title -->
+<div class="flex items-center justify-between gap-space-xs mb-space-sm">
+<div class="flex items-center gap-space-2xs bg-primary/10 text-primary px-space-xs py-1 rounded-full">
+<span class="material-symbols-outlined text-[16px]" style="font-variation-settings: 'FILL' 1;">check_circle</span>
+<span class="font-caption-bold text-caption-bold">Pedido Entregado</span>
+</div>
+<span class="font-caption-sm text-caption-sm text-secondary">Hace 18 min</span>
+</div>
+<h2 class="font-headline-sm text-headline-sm text-on-surface mb-space-2xs">¿Cómo estuvo tu pedido?</h2>
+<p class="font-body-md text-body-md text-on-surface-variant mb-space-md">Contanos tu experiencia para seguir mejorando el servicio.</p>
+<!-- Order summary chip card -->
+<div class="flex items-center gap-space-sm bg-surface-container-low p-space-sm rounded-lg mb-space-lg">
+<div class="w-12 h-12 rounded-lg bg-surface-variant overflow-hidden flex-shrink-0">
+<img class="w-full h-full object-cover" data-alt="Close up photo of an artisan smash burger with melted golden cheddar cheese, crispy bacon, and golden french fries from an Argentine craft burger spot, warm atmospheric lighting" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCjDTSxeWRgGzYeaW0u25NpPZQbnU3-2pgxKiAAx2tYk3eD3oa9VrBQAi33qIylyQGz15y1D1nWVNQn1SNWAvLmNl9YuNyJy9ZG7eSB8F_qF3e9KmPiUicYPnY2Y9eRU3ngnWib5NS2HNDN3JGiK6_FdrXRGKzRnaMFRRkOwFtEFD7s1cYrJgbRrpBFEIq3MqD3jFWxOdKHl7FhXR5wNBAoxIdF4m0VdvnBJfYNtNX19q3z6yG-GZ5s"/>
+</div>
+<div class="flex-1 min-w-0">
+<div class="flex items-center justify-between">
+<p class="font-body-md-medium text-body-md-medium text-on-surface truncate">La Birra Bar</p>
+<span class="font-caption-bold text-caption-bold text-primary">#DG-92813</span>
+</div>
+<p class="font-caption-sm text-caption-sm text-secondary truncate">Golden Burger doble + Papas rústicas</p>
+</div>
+</div>
+<!-- Rating Section 1: Store / Food -->
+<div class="flex flex-col w-full mb-space-lg">
+<div class="flex items-center justify-between mb-space-2xs">
+<label class="font-body-md-medium text-body-md-medium text-on-surface">Calificá la comida y preparación</label>
+<span class="font-caption-bold text-caption-bold text-primary" id="store-rating-label">Excelente</span>
+</div>
+<div class="flex items-center justify-between py-space-xs px-space-2xs bg-surface-container-low rounded-lg" id="store-stars-container">
+<button aria-label="1 estrella" class="star-btn-store h-11 w-11 flex items-center justify-center text-primary active:scale-90 transition-transform" data-rating="1" type="button">
+<span class="material-symbols-outlined text-[32px]" style="font-variation-settings: 'FILL' 1;">star</span>
+</button>
+<button aria-label="2 estrellas" class="star-btn-store h-11 w-11 flex items-center justify-center text-primary active:scale-90 transition-transform" data-rating="2" type="button">
+<span class="material-symbols-outlined text-[32px]" style="font-variation-settings: 'FILL' 1;">star</span>
+</button>
+<button aria-label="3 estrellas" class="star-btn-store h-11 w-11 flex items-center justify-center text-primary active:scale-90 transition-transform" data-rating="3" type="button">
+<span class="material-symbols-outlined text-[32px]" style="font-variation-settings: 'FILL' 1;">star</span>
+</button>
+<button aria-label="4 estrellas" class="star-btn-store h-11 w-11 flex items-center justify-center text-primary active:scale-90 transition-transform" data-rating="4" type="button">
+<span class="material-symbols-outlined text-[32px]" style="font-variation-settings: 'FILL' 1;">star</span>
+</button>
+<button aria-label="5 estrellas" class="star-btn-store h-11 w-11 flex items-center justify-center text-primary active:scale-90 transition-transform" data-rating="5" type="button">
+<span class="material-symbols-outlined text-[32px]" style="font-variation-settings: 'FILL' 1;">star</span>
+</button>
+</div>
+</div>
+<!-- Rating Section 2: Delivery Courier -->
+<div class="flex flex-col w-full mb-space-lg">
+<div class="flex items-center justify-between mb-space-2xs">
+<div class="flex items-center gap-space-2xs min-w-0">
+<div class="w-7 h-7 rounded-full bg-primary-container/20 flex items-center justify-center text-primary font-caption-bold text-caption-bold flex-shrink-0 overflow-hidden">
+<img class="w-full h-full object-cover" data-alt="Portrait of Matías, a friendly delivery courier in Buenos Aires wearing a teal DeliveryGo jacket and a warm authentic smile, urban outdoor background with soft daylight" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCgJGhYJxyloVuxamU04V0W6HhAz_rr3DYkwjBIGtALudpHQZqICEH62YNHTKp4x6aeE-kM3qWTC3giyltayw4sEv9VQpVnNhM3mLbJaEkdXNZqLEnB8mHixnRJNEHlFgQK_NlwhdcEksQbzbjPrw0k6RuLoU1kWDn-6f6sQWb_CcBWs7piyg7Zf46PXRYX8krdKh-BaqN5uQ-TwKn8_W9yLndHwo6WaZuWptCJqJ5rXgPPnVHx85J6"/>
+</div>
+<label class="font-body-md-medium text-body-md-medium text-on-surface truncate">Calificá la atención de Matías G.</label>
+</div>
+<span class="font-caption-bold text-caption-bold text-primary" id="courier-rating-label">Excelente</span>
+</div>
+<div class="flex items-center justify-between py-space-xs px-space-2xs bg-surface-container-low rounded-lg" id="courier-stars-container">
+<button aria-label="1 estrella repartidor" class="star-btn-courier h-11 w-11 flex items-center justify-center text-primary active:scale-90 transition-transform" data-rating="1" type="button">
+<span class="material-symbols-outlined text-[32px]" style="font-variation-settings: 'FILL' 1;">star</span>
+</button>
+<button aria-label="2 estrellas repartidor" class="star-btn-courier h-11 w-11 flex items-center justify-center text-primary active:scale-90 transition-transform" data-rating="2" type="button">
+<span class="material-symbols-outlined text-[32px]" style="font-variation-settings: 'FILL' 1;">star</span>
+</button>
+<button aria-label="3 estrellas repartidor" class="star-btn-courier h-11 w-11 flex items-center justify-center text-primary active:scale-90 transition-transform" data-rating="3" type="button">
+<span class="material-symbols-outlined text-[32px]" style="font-variation-settings: 'FILL' 1;">star</span>
+</button>
+<button aria-label="4 estrellas repartidor" class="star-btn-courier h-11 w-11 flex items-center justify-center text-primary active:scale-90 transition-transform" data-rating="4" type="button">
+<span class="material-symbols-outlined text-[32px]" style="font-variation-settings: 'FILL' 1;">star</span>
+</button>
+<button aria-label="5 estrellas repartidor" class="star-btn-courier h-11 w-11 flex items-center justify-center text-primary active:scale-90 transition-transform" data-rating="5" type="button">
+<span class="material-symbols-outlined text-[32px]" style="font-variation-settings: 'FILL' 1;">star</span>
+</button>
+</div>
+</div>
+<!-- Quick Tags / Compliments -->
+<div class="flex flex-col w-full mb-space-lg">
+<span class="font-label-md text-label-md text-on-surface-variant mb-space-xs">¿Qué se destacó de esta entrega?</span>
+<div class="flex flex-wrap gap-space-2xs">
+<button class="tag-chip px-space-sm h-9 flex items-center justify-center rounded-full font-label-md text-label-md transition-colors bg-primary text-on-primary shadow-sm" data-selected="true" type="button">
+<span class="material-symbols-outlined text-[16px] mr-1">timer</span>
+          Puntualidad impecable
+        </button>
+<button class="tag-chip px-space-sm h-9 flex items-center justify-center rounded-full font-label-md text-label-md transition-colors bg-primary text-on-primary shadow-sm" data-selected="true" type="button">
+<span class="material-symbols-outlined text-[16px] mr-1">local_fire_department</span>
+          Comida caliente
+        </button>
+<button class="tag-chip px-space-sm h-9 flex items-center justify-center rounded-full font-label-md text-label-md transition-colors bg-surface-container-high text-on-surface hover:bg-surface-container-highest" data-selected="false" type="button">
+<span class="material-symbols-outlined text-[16px] mr-1">inventory_2</span>
+          Presentación y empaque
+        </button>
+<button class="tag-chip px-space-sm h-9 flex items-center justify-center rounded-full font-label-md text-label-md transition-colors bg-primary text-on-primary shadow-sm" data-selected="true" type="button">
+<span class="material-symbols-outlined text-[16px] mr-1">sentiment_very_satisfied</span>
+          Trato amable y cordial
+        </button>
+<button class="tag-chip px-space-sm h-9 flex items-center justify-center rounded-full font-label-md text-label-md transition-colors bg-surface-container-high text-on-surface hover:bg-surface-container-highest" data-selected="false" type="button">
+<span class="material-symbols-outlined text-[16px] mr-1">task_alt</span>
+          Pedido completo
+        </button>
+</div>
+</div>
+<!-- Feedback Textarea -->
+<div class="flex flex-col w-full mb-space-lg">
+<div class="flex items-center justify-between mb-space-2xs">
+<label class="font-label-md text-label-md text-on-surface-variant" for="review-text">Dejá tu comentario (opcional)</label>
+<span class="font-caption-sm text-caption-sm text-secondary" id="char-counter">0/500</span>
+</div>
+<div class="relative w-full rounded-lg bg-surface-container-low p-space-sm focus-within:bg-surface-container-lowest focus-within:shadow-[0_0_0_2px_#00A884] transition-all">
+<textarea class="w-full bg-transparent resize-none outline-none font-body-md text-body-md text-on-surface placeholder:text-secondary" id="review-text" maxlength="500" placeholder="¿Qué fue lo que más te gustó? ¿Algún detalle a considerar para la próxima vez?" rows="3"></textarea>
+</div>
+</div>
+<!-- Submit Primary Button -->
+<button class="w-full h-12 bg-primary-container hover:bg-primary text-on-primary font-body-lg-medium text-body-lg-medium rounded-lg flex items-center justify-center gap-space-xs active:scale-[0.98] transition-all shadow-md" id="submit-review-btn" type="button">
+<span>Enviar reseña y finalizar</span>
+<span class="material-symbols-outlined text-[20px]">send</span>
+</button>
+</section>
+<!-- Community Reviews Section -->
+<section class="flex flex-col w-full">
+<div class="flex items-center justify-between mb-space-sm">
+<h3 class="font-headline-sm text-headline-sm text-on-surface">Reseñas de la comunidad</h3>
+<span class="font-label-md text-label-md text-primary font-medium">1.482 opiniones</span>
+</div>
+<!-- Overall Rating Breakdown Card -->
+<div class="flex flex-col w-full bg-surface-container-lowest rounded-xl p-space-md shadow-sm mb-space-md">
+<div class="flex items-center gap-space-md mb-space-md">
+<div class="flex flex-col items-center justify-center w-24 flex-shrink-0">
+<span class="font-display-hero-mobile text-display-hero-mobile text-on-surface font-bold">4.8</span>
+<div class="flex items-center gap-0.5 text-primary my-1">
+<span class="material-symbols-outlined text-[18px]" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined text-[18px]" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined text-[18px]" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined text-[18px]" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined text-[18px]" style="font-variation-settings: 'FILL' 1;">star</span>
+</div>
+<span class="font-caption-sm text-caption-sm text-secondary text-center">de 5 estrellas</span>
+</div>
+<!-- Rating Histograms -->
+<div class="flex-1 flex flex-col gap-1.5 min-w-0">
+<!-- 5 stars -->
+<div class="flex items-center gap-space-xs">
+<span class="font-caption-bold text-caption-bold text-on-surface-variant w-3">5</span>
+<div class="flex-1 h-2 bg-surface-container rounded-full overflow-hidden">
+<div class="h-full bg-primary-container rounded-full" style="width: 84%;"></div>
+</div>
+<span class="font-caption-sm text-caption-sm text-secondary w-8 text-right">84%</span>
+</div>
+<!-- 4 stars -->
+<div class="flex items-center gap-space-xs">
+<span class="font-caption-bold text-caption-bold text-on-surface-variant w-3">4</span>
+<div class="flex-1 h-2 bg-surface-container rounded-full overflow-hidden">
+<div class="h-full bg-primary-container rounded-full" style="width: 11%;"></div>
+</div>
+<span class="font-caption-sm text-caption-sm text-secondary w-8 text-right">11%</span>
+</div>
+<!-- 3 stars -->
+<div class="flex items-center gap-space-xs">
+<span class="font-caption-bold text-caption-bold text-on-surface-variant w-3">3</span>
+<div class="flex-1 h-2 bg-surface-container rounded-full overflow-hidden">
+<div class="h-full bg-primary-container rounded-full" style="width: 3%;"></div>
+</div>
+<span class="font-caption-sm text-caption-sm text-secondary w-8 text-right">3%</span>
+</div>
+<!-- 2 stars -->
+<div class="flex items-center gap-space-xs">
+<span class="font-caption-bold text-caption-bold text-on-surface-variant w-3">2</span>
+<div class="flex-1 h-2 bg-surface-container rounded-full overflow-hidden">
+<div class="h-full bg-primary-container rounded-full" style="width: 1%;"></div>
+</div>
+<span class="font-caption-sm text-caption-sm text-secondary w-8 text-right">1%</span>
+</div>
+<!-- 1 star -->
+<div class="flex items-center gap-space-xs">
+<span class="font-caption-bold text-caption-bold text-on-surface-variant w-3">1</span>
+<div class="flex-1 h-2 bg-surface-container rounded-full overflow-hidden">
+<div class="h-full bg-primary-container rounded-full" style="width: 1%;"></div>
+</div>
+<span class="font-caption-sm text-caption-sm text-secondary w-8 text-right">1%</span>
+</div>
+</div>
+</div>
+<!-- Quick Trust Indicators -->
+<div class="flex items-center justify-between pt-space-xs bg-surface-container-low p-space-xs rounded-lg text-secondary">
+<div class="flex items-center gap-1">
+<span class="material-symbols-outlined text-[18px] text-primary">verified</span>
+<span class="font-caption-bold text-caption-bold text-on-surface">100% Pedidos Reales</span>
+</div>
+<div class="flex items-center gap-1">
+<span class="material-symbols-outlined text-[18px] text-primary">speed</span>
+<span class="font-caption-bold text-caption-bold text-on-surface">Demora prom.: 24 min</span>
+</div>
+</div>
+</div>
+<!-- Review Card 1 -->
+<article class="flex flex-col w-full bg-surface-container-lowest rounded-xl p-space-md shadow-sm mb-space-sm">
+<div class="flex items-start justify-between gap-space-sm mb-space-2xs">
+<div class="flex items-center gap-space-xs">
+<div class="w-10 h-10 rounded-full overflow-hidden flex-shrink-0 bg-surface-variant">
+<img class="w-full h-full object-cover" data-alt="Portrait photo of Lucía Fernández, a young cheerful Argentine woman in a casual cafe setting in Buenos Aires, natural light and friendly expression" src="https://lh3.googleusercontent.com/aida-public/AB6AXuB6d8g3Ts_RjmN9XOld6NidmzfwfoVxCkpoL_hVbOdcT4Jg2R8FiO0GDFG1R8KHZokhXKUoko0Sv3A6Ei8nZyeqFVFnyjrX-XMwvNn_lHcJe-G8O9mIs5Pzy7ODXSeRp8Ag6xmCDuQOCiozqFWh8nmtYvTwnk98TdUXfMVFbyWjmNM3UpQDGni36xEPWK8uVJBNGI5bx-UQV-9hXYORl_ASwkBGjWZsLVOlEl8EbBTtOOMGguIpMcCi"/>
+</div>
+<div class="flex flex-col">
+<div class="flex items-center gap-1">
+<span class="font-body-md-medium text-body-md-medium text-on-surface">Lucía Fernández</span>
+<span class="material-symbols-outlined text-[16px] text-primary" title="Comprador verificado">verified</span>
+</div>
+<span class="font-caption-sm text-caption-sm text-secondary">Ayer a las 21:40</span>
+</div>
+</div>
+<div class="flex items-center gap-0.5 text-primary">
+<span class="material-symbols-outlined text-[16px]" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined text-[16px]" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined text-[16px]" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined text-[16px]" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined text-[16px]" style="font-variation-settings: 'FILL' 1;">star</span>
+</div>
+</div>
+<!-- Item tag -->
+<div class="inline-flex items-center gap-1 bg-surface-container-high px-space-xs py-0.5 rounded text-on-surface-variant w-fit mb-space-xs">
+<span class="material-symbols-outlined text-[14px]">lunch_dining</span>
+<span class="font-caption-bold text-caption-bold">Golden Burger doble</span>
+</div>
+<!-- Review content -->
+<p class="font-body-md text-body-md text-on-surface mb-space-md leading-relaxed">
+        ¡Tremenda hamburguesa! Llegó hirviendo y el pan de papa intacto, nada aplastado. La Birra Bar nunca defrauda en calidad. El repartidor fue súper educado y subió hasta el piso 4 sin problemas. Recomiendo 100%.
+      </p>
+<!-- Review footer / Useful button -->
+<div class="flex items-center justify-between pt-space-2xs">
+<span class="font-caption-sm text-caption-sm text-secondary">¿Te sirvió esta reseña?</span>
+<button class="helpful-btn h-9 px-space-sm rounded-full bg-surface-container flex items-center gap-1 text-on-surface active:scale-95 transition-all hover:bg-surface-container-high" data-count="24" data-voted="false" type="button">
+<span class="material-symbols-outlined text-[18px]">thumb_up</span>
+<span class="font-caption-bold text-caption-bold">Útil (<span class="count">24</span>)</span>
+</button>
+</div>
+</article>
+<!-- Review Card 2 -->
+<article class="flex flex-col w-full bg-surface-container-lowest rounded-xl p-space-md shadow-sm mb-space-sm">
+<div class="flex items-start justify-between gap-space-sm mb-space-2xs">
+<div class="flex items-center gap-space-xs">
+<div class="w-10 h-10 rounded-full overflow-hidden flex-shrink-0 bg-surface-variant">
+<img class="w-full h-full object-cover" data-alt="Portrait photo of Esteban Rossi, an energetic guy with glasses in Buenos Aires outdoors during afternoon sunset, authentic smiling customer portrait" src="https://lh3.googleusercontent.com/aida-public/AB6AXuA639dSVSq7TPYSQTC2BTEvKCtDW81shvPs8kTFou8Tk24sntbYC6yuHS-naDXMImjOhFKuVCKa_D5S3rkQd0m-U4tbrmIf-mm-GTwwZU2aAf00JcaxykWTxZSYyOP8cxttyjZs3DbXSEd_-Pu0wVi7PdWdzEOzhDltkzg8vJHQMbv_nJ_8OasGXNJtt_0Y_gwgxKiRdxuej-p93_-xAab1uDinlhJRvzoyxugt2Zx8y4Gm2rLSYYVp"/>
+</div>
+<div class="flex flex-col">
+<div class="flex items-center gap-1">
+<span class="font-body-md-medium text-body-md-medium text-on-surface">Esteban Rossi</span>
+<span class="material-symbols-outlined text-[16px] text-primary" title="Comprador verificado">verified</span>
+</div>
+<span class="font-caption-sm text-caption-sm text-secondary">Hace 3 días</span>
+</div>
+</div>
+<div class="flex items-center gap-0.5 text-primary">
+<span class="material-symbols-outlined text-[16px]" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined text-[16px]" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined text-[16px]" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined text-[16px]" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined text-[16px] text-surface-container-highest" style="font-variation-settings: 'FILL' 1;">star</span>
+</div>
+</div>
+<!-- Item tag -->
+<div class="inline-flex items-center gap-1 bg-surface-container-high px-space-xs py-0.5 rounded text-on-surface-variant w-fit mb-space-xs">
+<span class="material-symbols-outlined text-[14px]">lunch_dining</span>
+<span class="font-caption-bold text-caption-bold">Crispy Onion Burger + Papas Cheddar</span>
+</div>
+<!-- Review content -->
+<p class="font-body-md text-body-md text-on-surface mb-space-md leading-relaxed">
+        El sabor de la carne smasheada es insuperable. Le saco una estrella solo porque las papas con cheddar llegaron un poco tibias, pero un golpe de horno y quedaron diez puntos. La salsa birra es adictiva.
+      </p>
+<!-- Review footer / Useful button -->
+<div class="flex items-center justify-between pt-space-2xs">
+<span class="font-caption-sm text-caption-sm text-secondary">¿Te sirvió esta reseña?</span>
+<button class="helpful-btn h-9 px-space-sm rounded-full bg-surface-container flex items-center gap-1 text-on-surface active:scale-95 transition-all hover:bg-surface-container-high" data-count="12" data-voted="false" type="button">
+<span class="material-symbols-outlined text-[18px]">thumb_up</span>
+<span class="font-caption-bold text-caption-bold">Útil (<span class="count">12</span>)</span>
+</button>
+</div>
+</article>
+</section>
+</div>
+<script>
+  (function() {
+    // Rating labels map
+    const ratingTexts = {
+      1: 'Malo',
+      2: 'Regular',
+      3: 'Bueno',
+      4: 'Muy bueno',
+      5: 'Excelente'
+    };
+
+    // Store Stars Handler
+    const storeStars = document.querySelectorAll('.star-btn-store');
+    const storeLabel = document.getElementById('store-rating-label');
+    let currentStoreRating = 5;
+
+    function updateStars(buttons, rating, labelEl) {
+      buttons.forEach(btn => {
+        const btnRating = parseInt(btn.dataset.rating, 10);
+        const icon = btn.querySelector('.material-symbols-outlined');
+        if (btnRating <= rating) {
+          btn.classList.add('text-primary');
+          btn.classList.remove('text-surface-variant');
+          icon.style.fontVariationSettings = "'FILL' 1";
+        } else {
+          btn.classList.remove('text-primary');
+          btn.classList.add('text-surface-variant');
+          icon.style.fontVariationSettings = "'FILL' 0";
+        }
+      });
+      if (labelEl && ratingTexts[rating]) {
+        labelEl.textContent = ratingTexts[rating];
+      }
+    }
+
+    storeStars.forEach(btn => {
+      btn.addEventListener('click', () => {
+        currentStoreRating = parseInt(btn.dataset.rating, 10);
+        updateStars(storeStars, currentStoreRating, storeLabel);
+      });
+    });
+
+    // Courier Stars Handler
+    const courierStars = document.querySelectorAll('.star-btn-courier');
+    const courierLabel = document.getElementById('courier-rating-label');
+    let currentCourierRating = 5;
+
+    courierStars.forEach(btn => {
+      btn.addEventListener('click', () => {
+        currentCourierRating = parseInt(btn.dataset.rating, 10);
+        updateStars(courierStars, currentCourierRating, courierLabel);
+      });
+    });
+
+    // Toggle Tag Chips
+    const tagChips = document.querySelectorAll('.tag-chip');
+    tagChips.forEach(chip => {
+      chip.addEventListener('click', () => {
+        const isSelected = chip.dataset.selected === 'true';
+        if (isSelected) {
+          chip.dataset.selected = 'false';
+          chip.classList.remove('bg-primary', 'text-on-primary', 'shadow-sm');
+          chip.classList.add('bg-surface-container-high', 'text-on-surface');
+        } else {
+          chip.dataset.selected = 'true';
+          chip.classList.remove('bg-surface-container-high', 'text-on-surface');
+          chip.classList.add('bg-primary', 'text-on-primary', 'shadow-sm');
+        }
+      });
+    });
+
+    // Textarea Char Counter
+    const textarea = document.getElementById('review-text');
+    const charCounter = document.getElementById('char-counter');
+    if (textarea && charCounter) {
+      textarea.addEventListener('input', () => {
+        const len = textarea.value.length;
+        charCounter.textContent = len + '/500';
+      });
+    }
+
+    // Helpful Buttons Upvote
+    const helpfulBtns = document.querySelectorAll('.helpful-btn');
+    helpfulBtns.forEach(btn => {
+      btn.addEventListener('click', () => {
+        const isVoted = btn.dataset.voted === 'true';
+        let count = parseInt(btn.dataset.count, 10);
+        const countSpan = btn.querySelector('.count');
+
+        if (!isVoted) {
+          count += 1;
+          btn.dataset.voted = 'true';
+          btn.dataset.count = count;
+          countSpan.textContent = count;
+          btn.classList.add('bg-primary/15', 'text-primary');
+          btn.classList.remove('bg-surface-container', 'text-on-surface');
+          btn.querySelector('.material-symbols-outlined').style.fontVariationSettings = "'FILL' 1";
+        } else {
+          count -= 1;
+          btn.dataset.voted = 'false';
+          btn.dataset.count = count;
+          countSpan.textContent = count;
+          btn.classList.remove('bg-primary/15', 'text-primary');
+          btn.classList.add('bg-surface-container', 'text-on-surface');
+          btn.querySelector('.material-symbols-outlined').style.fontVariationSettings = "'FILL' 0";
+        }
+      });
+    });
+
+    // Submit Action Feedback
+    const submitBtn = document.getElementById('submit-review-btn');
+    if (submitBtn) {
+      submitBtn.addEventListener('click', () => {
+        submitBtn.disabled = true;
+        submitBtn.innerHTML = `
+          <span class="material-symbols-outlined text-[20px] animate-spin">progress_activity</span>
+          <span>Publicando calificación...</span>
+        `;
+        setTimeout(() => {
+          submitBtn.innerHTML = `
+            <span class="material-symbols-outlined text-[20px]">check_circle</span>
+            <span>¡Gracias por calificar!</span>
+          `;
+          submitBtn.classList.replace('bg-primary-container', 'bg-primary');
+        }, 800);
+      });
+    }
+  })();
+</script></main></body></html>

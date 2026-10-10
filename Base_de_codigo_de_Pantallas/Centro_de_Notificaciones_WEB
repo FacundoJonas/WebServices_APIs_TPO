@@ -1,0 +1,385 @@
+<!DOCTYPE html><html lang="es"><head><meta charset="utf-8"><meta content="width=device-width, initial-scale=1.0" name="viewport"><link href="https://fonts.googleapis.com" rel="preconnect"><link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"><link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet"><link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"><style>@layer base { html, body { margin: 0; padding: 0; } body { overscroll-behavior: none; } main > :first-child { margin-top: 0 !important; } main > :last-child { margin-bottom: 0 !important; } } ::-webkit-scrollbar { display: none; }</style><script src="https://cdn.tailwindcss.com"></script><script id="tailwind-config">tailwind.config = { darkMode: "class", theme: { extend: { "colors": { "on-surface-variant": "#3d4a44", "on-secondary-fixed": "#191c1e", "on-primary-container": "#003427", "primary-fixed": "#79f9d0", "surface-tint": "#006b53", "secondary-fixed": "#e1e2e5", "outline": "#6c7a74", "secondary-fixed-dim": "#c5c7c9", "on-error": "#ffffff", "outline-variant": "#bccac2", "on-primary": "#ffffff", "tertiary-fixed": "#dbe1ff", "primary-container": "#00a884", "secondary": "#5c5f61", "surface-container-lowest": "#ffffff", "tertiary-fixed-dim": "#b4c5ff", "surface": "#f9f9ff", "on-surface": "#151c27", "on-error-container": "#93000a", "surface-container-low": "#f0f3ff", "on-background": "#151c27", "on-tertiary-container": "#002771", "primary": "#006b53", "inverse-on-surface": "#ebf1ff", "secondary-container": "#dee0e2", "on-secondary-fixed-variant": "#444749", "surface-bright": "#f9f9ff", "tertiary-container": "#678fff", "on-tertiary-fixed": "#00174b", "error": "#ba1a1a", "surface-container-highest": "#dce2f3", "on-tertiary-fixed-variant": "#003ea8", "on-tertiary": "#ffffff", "on-secondary-container": "#606365", "surface-container-high": "#e2e8f8", "on-secondary": "#ffffff", "background": "#f9f9ff", "surface-container": "#e7eefe", "on-primary-fixed-variant": "#00513e", "surface-variant": "#dce2f3", "primary-fixed-dim": "#59dcb5", "on-primary-fixed": "#002117", "inverse-primary": "#59dcb5", "tertiary": "#0053db", "error-container": "#ffdad6", "inverse-surface": "#2a313d", "surface-dim": "#d3daea" }, "borderRadius": { "DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px" }, "spacing": { "space-md": "1rem", "gutter-mobile": "1rem", "container-max": "1280px", "space-2xs": "0.25rem", "space-3xl": "4rem", "space-lg": "1.5rem", "gutter-desktop": "1.5rem", "space-xl": "2rem", "space-2xl": "3rem", "space-xs": "0.5rem", "space-sm": "0.75rem" }, "fontFamily": { "headline-lg-mobile": ["Inter"], "body-lg": ["Inter"], "headline-lg": ["Inter"], "body-md": ["Inter"], "title-md": ["Inter"], "body-md-medium": ["Inter"], "display-hero": ["Inter"], "headline-md": ["Inter"], "label-md": ["Inter"], "display-hero-mobile": ["Inter"], "body-lg-medium": ["Inter"], "caption-bold": ["Inter"], "headline-sm": ["Inter"], "caption-sm": ["Inter"] }, "fontSize": { "headline-lg-mobile": ["26px", { "lineHeight": "32px", "letterSpacing": "-0.01em", "fontWeight": "600" }], "body-lg": ["16px", { "lineHeight": "24px", "letterSpacing": "0em", "fontWeight": "400" }], "headline-lg": ["32px", { "lineHeight": "40px", "letterSpacing": "-0.015em", "fontWeight": "600" }], "body-md": ["14px", { "lineHeight": "20px", "letterSpacing": "0em", "fontWeight": "400" }], "title-md": ["18px", { "lineHeight": "24px", "letterSpacing": "0em", "fontWeight": "600" }], "body-md-medium": ["14px", { "lineHeight": "20px", "letterSpacing": "0em", "fontWeight": "500" }], "display-hero": ["40px", { "lineHeight": "48px", "letterSpacing": "-0.02em", "fontWeight": "700" }], "headline-md": ["24px", { "lineHeight": "32px", "letterSpacing": "-0.01em", "fontWeight": "600" }], "label-md": ["13px", { "lineHeight": "18px", "letterSpacing": "0.01em", "fontWeight": "500" }], "display-hero-mobile": ["30px", { "lineHeight": "36px", "letterSpacing": "-0.015em", "fontWeight": "700" }], "body-lg-medium": ["16px", { "lineHeight": "24px", "letterSpacing": "0em", "fontWeight": "500" }], "caption-bold": ["12px", { "lineHeight": "16px", "letterSpacing": "0.02em", "fontWeight": "600" }], "headline-sm": ["20px", { "lineHeight": "28px", "letterSpacing": "-0.005em", "fontWeight": "600" }], "caption-sm": ["12px", { "lineHeight": "16px", "letterSpacing": "0.01em", "fontWeight": "400" }] } } } };</script></head><body class="bg-background font-body-md text-on-surface antialiased selection:bg-primary-container selection:text-on-primary-container"><header class="fixed top-0 left-0 right-0 w-full z-50 bg-surface-container-lowest/90 backdrop-blur-xl shadow-[0_1px_8px_rgba(0,0,0,0.04)]"><div class="h-20 max-w-[1280px] mx-auto px-gutter-mobile lg:px-gutter-desktop flex items-center justify-between gap-space-md"><div class="flex items-center gap-space-lg shrink-0"><a class="flex items-center gap-space-xs" data-path="comercios" href="#"><img alt="DeliveryGo Logo" class="h-8 w-auto object-contain" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAR10kqrtXin7jn-sIsvkfeTDKlpO5HZRYcxXpawKI1qNTtK26vuLJ8cYSoH5PGhne4hWGje1bm7RBt5MqZ9Sdemk_SZtByp6R-5ILMToWzRltEtGw2JSzns9m_PC_H8fvNiRtWAJ8-_1lC_bx8zSGvc4Iku6e1M7LRy7GFuP1FutlPKqqn_tPtQDAapUqnKTqyofC9ESW1il78PNUtTB3ZuiZAI5kWz-LjQt6cW-otkNcPcAGbwkcN"><span class="font-title-md text-title-md text-on-surface hidden sm:inline-block tracking-tight">Delivery<span class="text-primary-container">Go</span></span></a><button class="flex items-center gap-space-xs py-space-xs px-space-sm rounded-full bg-surface-container-low hover:bg-surface-container hover:text-on-surface text-on-surface-variant transition-colors" type="button"><span class="material-symbols-outlined text-primary-container text-[20px]">location_on</span><div class="flex flex-col text-left"><span class="font-caption-sm text-caption-sm text-secondary leading-none">Entregar en</span><span class="font-body-md-medium text-body-md-medium text-on-surface truncate max-w-[150px] md:max-w-[200px] leading-tight">Av. Corrientes 1450, CABA</span></div><span class="material-symbols-outlined text-secondary text-[18px]">expand_more</span></button></div><div class="flex-1 max-w-xl hidden md:block"><div class="relative w-full"><span class="material-symbols-outlined absolute left-space-md top-1/2 -translate-y-1/2 text-outline text-[20px]">search</span><input class="w-full h-11 pl-11 pr-space-md rounded-xl bg-surface-container-low border border-outline-variant/30 text-on-surface placeholder:text-outline font-body-md focus:outline-none focus:ring-2 focus:ring-primary-container/20 focus:border-primary-container transition-all" placeholder="Buscar restaurantes, platos o bebidas..." type="text"></div></div><div class="flex items-center gap-space-sm shrink-0"><nav class="hidden xl:flex items-center gap-space-xs mr-space-xs" data-active-classes="bg-surface-container-high text-on-surface font-body-md-medium"><a class="px-space-sm py-space-xs rounded-lg font-body-md text-body-md text-on-surface-variant hover:text-on-surface hover:bg-surface-container-low transition-colors" data-path="comercios" href="#">Comercios</a><a class="px-space-sm py-space-xs rounded-lg font-body-md text-body-md text-on-surface-variant hover:text-on-surface hover:bg-surface-container-low transition-colors" data-path="promociones" href="#">Promociones</a><a class="px-space-sm py-space-xs rounded-lg font-body-md text-body-md text-on-surface-variant hover:text-on-surface hover:bg-surface-container-low transition-colors" data-path="pedidos-activos" href="#">Mis Pedidos</a></nav><a class="relative p-space-xs rounded-full hover:bg-surface-container-low text-on-surface-variant hover:text-on-surface transition-colors" data-path="notificaciones" href="#"><span class="material-symbols-outlined text-[24px]">notifications</span><span class="absolute top-1 right-1 flex items-center justify-center min-w-[18px] h-[18px] px-1 bg-error text-on-error rounded-full font-caption-bold text-[10px] leading-none">3</span></a><a class="flex items-center gap-space-xs py-space-xs px-space-sm rounded-xl bg-surface-container-low hover:bg-surface-container text-on-surface transition-colors" data-path="carrito" href="#"><div class="relative flex items-center"><span class="material-symbols-outlined text-primary-container text-[22px]">shopping_bag</span><span class="absolute -top-1.5 -right-2 flex items-center justify-center min-w-[16px] h-[16px] px-1 bg-primary-container text-on-primary rounded-full font-caption-bold text-[10px] leading-none">2</span></div><span class="hidden sm:inline-block font-body-md-medium text-body-md-medium text-on-surface">$8.450</span></a><a class="flex items-center gap-space-xs pl-space-xs py-space-xs rounded-full hover:bg-surface-container-low transition-colors" data-path="perfil" href="#"><img alt="Profile" class="w-8 h-8 rounded-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuB6H7_LwcTC-3P1tlRzTOM1gGsKRRI4C3WPhUC-h3xufJtxhYUSxlvF8E-806QGOsyDTm5ZWzg5fvnGSedo-auwT8GpTQH9Buz9Du6eFiDLzhDy7SozSvK9v2f2Nf-KpXgwaOQuwPTlJan18CmoxKvtOIvIKzbC147jW5W-2Zpxc14BJo0-4mA7Kx8Pa0iM1Xrj22CLFZSMtkYowTef_EBRn_lphfacnhKmBll1ulLyDeCZI8coezS6"><span class="font-body-md-medium text-body-md-medium text-on-surface hidden lg:inline-block pr-space-xs">Lucas M.</span></a></div></div></header><main class="w-full pt-20 bg-background min-h-[calc(100vh-280px)]"><div class="flex flex-col w-full max-w-[1280px] mx-auto px-gutter-mobile lg:px-gutter-desktop py-space-xl">
+<!-- Top Banner / Live Alert Highlight for Active Order -->
+<div class="relative overflow-hidden rounded-xl bg-gradient-to-r from-primary-container/15 via-surface-container to-surface-container-low p-space-md lg:p-space-lg mb-space-xl shadow-sm">
+<div class="absolute -right-8 -top-8 w-44 h-44 rounded-full bg-primary-fixed/20 blur-2xl pointer-events-none"></div>
+<div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-space-md relative z-10">
+<div class="flex items-center gap-space-md">
+<div class="relative flex items-center justify-center w-12 h-12 rounded-full bg-primary-container text-on-primary shadow-sm shrink-0">
+<span class="material-symbols-outlined text-[26px]">two_wheeler</span>
+<span class="absolute top-0 right-0 w-3 h-3 bg-primary-fixed rounded-full animate-ping"></span>
+<span class="absolute top-0 right-0 w-3 h-3 bg-primary-fixed rounded-full"></span>
+</div>
+<div class="flex flex-col">
+<div class="flex items-center gap-space-xs flex-wrap">
+<span class="font-caption-bold text-caption-bold uppercase tracking-wider text-primary">En tránsito</span>
+<span class="w-1.5 h-1.5 rounded-full bg-outline-variant"></span>
+<span class="font-caption-sm text-caption-sm text-secondary">Llega en aprox. 12 min</span>
+</div>
+<h2 class="font-title-md text-title-md text-on-surface">Pedido #AR-8942 de La Birra Bar</h2>
+<p class="font-body-md text-body-md text-on-surface-variant">Matías G. ya se encuentra en Av. Callao y Corrientes.</p>
+</div>
+</div>
+<a class="inline-flex items-center gap-space-xs px-space-md py-space-xs bg-primary-container text-on-primary font-body-md-medium text-body-md-medium rounded-lg shadow-sm hover:opacity-95 transition-all" data-path="pedidos-activos" href="#">
+<span>Seguir en vivo</span>
+<span class="material-symbols-outlined text-[18px]">near_me</span>
+</a>
+</div>
+</div>
+<!-- Main Notification Header -->
+<div class="flex flex-col gap-space-lg mb-space-xl">
+<div class="flex flex-col md:flex-row md:items-center justify-between gap-space-md">
+<div class="flex items-center gap-space-sm flex-wrap">
+<h1 class="font-headline-lg text-headline-lg text-on-surface tracking-tight">Centro de Notificaciones</h1>
+<span class="inline-flex items-center px-space-sm py-1 bg-primary-fixed text-on-primary-container font-caption-bold text-caption-bold rounded-full shadow-sm" id="unread-badge">
+          3 nuevas
+        </span>
+</div>
+<!-- Action Buttons -->
+<div class="flex items-center gap-space-xs flex-wrap">
+<button class="inline-flex items-center gap-space-xs px-space-md py-space-xs bg-surface-container-low hover:bg-surface-container text-on-surface font-body-md-medium text-body-md-medium rounded-lg transition-colors" id="mark-all-read-btn" type="button">
+<span class="material-symbols-outlined text-primary-container text-[20px]">done_all</span>
+<span>Marcar todas como leídas</span>
+</button>
+<button class="inline-flex items-center gap-space-2xs px-space-sm py-space-xs bg-surface-container-lowest hover:bg-surface-container text-secondary font-caption-bold text-caption-bold rounded-lg transition-colors" id="toggle-empty-state-btn" title="Alternar vista previa sin notificaciones" type="button">
+<span class="material-symbols-outlined text-[18px]">visibility</span>
+<span>Ver estado vacío</span>
+</button>
+</div>
+</div>
+<!-- Filter Pills Bar & Search -->
+<div class="flex flex-col sm:flex-row sm:items-center justify-between gap-space-md">
+<div class="flex items-center gap-space-xs overflow-x-auto pb-space-2xs sm:pb-0" id="filter-container">
+<button class="filter-tab px-space-md py-1.5 rounded-full font-body-md-medium text-body-md-medium bg-primary-container text-on-primary shadow-sm transition-all whitespace-nowrap" data-filter="all" type="button">
+          Todas
+        </button>
+<button class="filter-tab px-space-md py-1.5 rounded-full font-body-md-medium text-body-md-medium bg-surface-container-low text-on-surface hover:bg-surface-container transition-all whitespace-nowrap" data-filter="order" type="button">
+          Pedidos
+        </button>
+<button class="filter-tab px-space-md py-1.5 rounded-full font-body-md-medium text-body-md-medium bg-surface-container-low text-on-surface hover:bg-surface-container transition-all whitespace-nowrap" data-filter="promo" type="button">
+          Promociones
+        </button>
+<button class="filter-tab px-space-md py-1.5 rounded-full font-body-md-medium text-body-md-medium bg-surface-container-low text-on-surface hover:bg-surface-container transition-all whitespace-nowrap" data-filter="system" type="button">
+          Sistema
+        </button>
+</div>
+<div class="flex items-center gap-space-xs text-secondary font-caption-sm text-caption-sm self-end sm:self-center">
+<span class="material-symbols-outlined text-[16px] text-primary">tune</span>
+<span>Mostrando actividad reciente</span>
+</div>
+</div>
+</div>
+<!-- Content Sections Wrapper -->
+<div class="flex flex-col gap-space-2xl" id="notifications-feed">
+<!-- 1. SECCIÓN: HOY -->
+<section class="flex flex-col gap-space-md group-section" data-group="today">
+<div class="flex items-center gap-space-xs">
+<span class="font-caption-bold text-caption-bold uppercase tracking-wider text-secondary">Hoy</span>
+<span class="w-1.5 h-1.5 rounded-full bg-primary-container"></span>
+<span class="font-caption-sm text-caption-sm text-outline">2 notificaciones recientes</span>
+</div>
+<div class="flex flex-col gap-space-sm">
+<!-- Item 1: Pedido en tránsito (No leído / Clickeable) -->
+<article class="notif-card group relative flex flex-col md:flex-row items-start md:items-center justify-between gap-space-md p-space-md lg:p-space-lg rounded-xl bg-surface-container-lowest shadow-sm hover:shadow-md transition-all cursor-pointer" data-status="unread" data-type="order">
+<div class="flex items-start gap-space-md min-w-0">
+<!-- Icon Container -->
+<div class="relative shrink-0 flex items-center justify-center w-12 h-12 rounded-xl bg-primary-fixed/30 text-primary-container">
+<span class="material-symbols-outlined text-[26px]">two_wheeler</span>
+<!-- Unread Dot -->
+<span class="unread-dot absolute -top-1 -right-1 w-3 h-3 rounded-full bg-primary-container ring-2 ring-surface-container-lowest"></span>
+</div>
+<!-- Content Details -->
+<div class="flex flex-col min-w-0">
+<div class="flex items-center gap-space-xs flex-wrap mb-1">
+<span class="inline-flex items-center gap-1 px-space-xs py-0.5 rounded-full bg-primary-fixed text-on-primary-container font-caption-bold text-[11px] leading-none">
+<span class="w-1.5 h-1.5 rounded-full bg-primary animate-pulse"></span>
+                  En tránsito
+                </span>
+<span class="font-caption-sm text-caption-sm text-secondary">Hace 6 minutos</span>
+</div>
+<h3 class="font-title-md text-title-md text-on-surface group-hover:text-primary transition-colors">Tu pedido #AR-8942 está en camino</h3>
+<p class="font-body-md text-body-md text-on-surface-variant line-clamp-2 mt-0.5">El repartidor Matías G. está a 8 cuadras de tu domicilio en Av. Corrientes 1450. Tocá acá para ver el seguimiento en vivo en el mapa.</p>
+</div>
+</div>
+<!-- Action Affiliate -->
+<div class="flex items-center gap-space-sm shrink-0 self-end md:self-center w-full md:w-auto justify-between md:justify-end pt-space-xs md:pt-0">
+<span class="inline-flex items-center gap-1 text-primary-container font-body-md-medium text-body-md-medium">
+              Ver mapa
+              <span class="material-symbols-outlined text-[18px]">chevron_right</span>
+</span>
+</div>
+</article>
+<!-- Item 2: Descuento Pizzería Güerrín (Promo / No leído) -->
+<article class="notif-card group relative flex flex-col md:flex-row items-start md:items-center justify-between gap-space-md p-space-md lg:p-space-lg rounded-xl bg-surface-container-lowest shadow-sm hover:shadow-md transition-all cursor-pointer" data-status="unread" data-type="promo">
+<div class="flex items-start gap-space-md min-w-0">
+<!-- Icon Container -->
+<div class="relative shrink-0 flex items-center justify-center w-12 h-12 rounded-xl bg-surface-container text-tertiary">
+<span class="material-symbols-outlined text-[26px]">local_offer</span>
+<span class="unread-dot absolute -top-1 -right-1 w-3 h-3 rounded-full bg-primary-container ring-2 ring-surface-container-lowest"></span>
+</div>
+<!-- Content Details -->
+<div class="flex flex-col min-w-0">
+<div class="flex items-center gap-space-xs flex-wrap mb-1">
+<span class="inline-flex items-center px-space-xs py-0.5 rounded-full bg-surface-container-high text-on-surface font-caption-bold text-[11px] leading-none">
+                  Promoción Especial
+                </span>
+<span class="font-caption-sm text-caption-sm text-secondary">Hace 2 horas</span>
+</div>
+<h3 class="font-title-md text-title-md text-on-surface group-hover:text-primary transition-colors">25% de descuento en Pizzería Güerrín</h3>
+<p class="font-body-md text-body-md text-on-surface-variant line-clamp-2 mt-0.5">Aprovechá hoy en tu cena el cupón <strong class="font-body-md-medium text-on-surface bg-surface-container-low px-1 rounded">GUERRIN25</strong> en todas las pizzas grandes al molde.</p>
+</div>
+</div>
+<!-- Action Affiliate -->
+<div class="flex items-center gap-space-sm shrink-0 self-end md:self-center w-full md:w-auto justify-between md:justify-end pt-space-xs md:pt-0">
+<button class="px-space-md py-space-xs rounded-lg bg-surface-container-low hover:bg-surface-container text-primary font-body-md-medium text-body-md-medium transition-colors" type="button">
+              Pedir con descuento
+            </button>
+</div>
+</article>
+</div>
+</section>
+<!-- 2. SECCIÓN: ESTA SEMANA -->
+<section class="flex flex-col gap-space-md group-section" data-group="this-week">
+<div class="flex items-center gap-space-xs">
+<span class="font-caption-bold text-caption-bold uppercase tracking-wider text-secondary">Esta semana</span>
+<span class="font-caption-sm text-caption-sm text-outline">• 2 registros</span>
+</div>
+<div class="flex flex-col gap-space-sm">
+<!-- Item 3: Pedido entregado (Con opción calificar) -->
+<article class="notif-card group relative flex flex-col md:flex-row items-start md:items-center justify-between gap-space-md p-space-md lg:p-space-lg rounded-xl bg-surface-container-lowest shadow-sm hover:shadow-md transition-all" data-status="read" data-type="order">
+<div class="flex items-start gap-space-md min-w-0">
+<!-- Icon Container -->
+<div class="shrink-0 flex items-center justify-center w-12 h-12 rounded-xl bg-surface-container text-primary-container">
+<span class="material-symbols-outlined text-[26px]">task_alt</span>
+</div>
+<!-- Content Details -->
+<div class="flex flex-col min-w-0">
+<div class="flex items-center gap-space-xs flex-wrap mb-1">
+<span class="inline-flex items-center px-space-xs py-0.5 rounded-full bg-surface-container-low text-secondary font-caption-bold text-[11px] leading-none">
+                  Entregado
+                </span>
+<span class="font-caption-sm text-caption-sm text-secondary">Ayer a las 21:40 hs</span>
+</div>
+<h3 class="font-title-md text-title-md text-on-surface group-hover:text-primary transition-colors">Pedido #AR-8810 entregado con éxito</h3>
+<p class="font-body-md text-body-md text-on-surface-variant line-clamp-2 mt-0.5">Tu pedido de Sushiclub Recoleta fue entregado. ¡Dejanos tu reseña para ayudar a la comunidad!</p>
+</div>
+</div>
+<!-- Quick action button -->
+<div class="flex items-center gap-space-sm shrink-0 self-end md:self-center w-full md:w-auto justify-between md:justify-end pt-space-xs md:pt-0">
+<button class="inline-flex items-center gap-space-xs px-space-md py-space-xs rounded-lg bg-surface-container-low hover:bg-surface-container text-on-surface font-body-md-medium text-body-md-medium transition-colors" type="button">
+<span class="material-symbols-outlined text-primary-container text-[18px]">star</span>
+<span>Calificar pedido</span>
+</button>
+</div>
+</article>
+<!-- Item 4: Notificación del Sistema (Seguridad / Tarjeta) -->
+<article class="notif-card group relative flex flex-col md:flex-row items-start md:items-center justify-between gap-space-md p-space-md lg:p-space-lg rounded-xl bg-surface-container-lowest shadow-sm hover:shadow-md transition-all" data-status="read" data-type="system">
+<div class="flex items-start gap-space-md min-w-0">
+<!-- Icon Container -->
+<div class="shrink-0 flex items-center justify-center w-12 h-12 rounded-xl bg-surface-container text-secondary">
+<span class="material-symbols-outlined text-[26px]">shield</span>
+</div>
+<!-- Content Details -->
+<div class="flex flex-col min-w-0">
+<div class="flex items-center gap-space-xs flex-wrap mb-1">
+<span class="inline-flex items-center px-space-xs py-0.5 rounded-full bg-surface-container-low text-secondary font-caption-bold text-[11px] leading-none">
+                  Seguridad
+                </span>
+<span class="font-caption-sm text-caption-sm text-secondary">Martes 14:15 hs</span>
+</div>
+<h3 class="font-title-md text-title-md text-on-surface group-hover:text-primary transition-colors">Nueva tarjeta de crédito vinculada</h3>
+<p class="font-body-md text-body-md text-on-surface-variant line-clamp-2 mt-0.5">Se agregó con éxito la tarjeta terminada en •••• 9012 a tu billetera DeliveryGo.</p>
+</div>
+</div>
+<div class="flex items-center gap-space-xs text-outline shrink-0 self-end md:self-center">
+<span class="font-caption-sm text-caption-sm">Verificado</span>
+<span class="material-symbols-outlined text-[18px] text-primary-container">verified_user</span>
+</div>
+</article>
+</div>
+</section>
+<!-- 3. SECCIÓN: ANTERIORES -->
+<section class="flex flex-col gap-space-md group-section" data-group="older">
+<div class="flex items-center gap-space-xs">
+<span class="font-caption-bold text-caption-bold uppercase tracking-wider text-secondary">Anteriores</span>
+<span class="font-caption-sm text-caption-sm text-outline">• Historial de cuenta</span>
+</div>
+<div class="flex flex-col gap-space-sm">
+<!-- Item 5: Prime Membership -->
+<article class="notif-card group relative flex flex-col md:flex-row items-start md:items-center justify-between gap-space-md p-space-md lg:p-space-lg rounded-xl bg-surface-container-lowest shadow-sm hover:shadow-md transition-all" data-status="read" data-type="system">
+<div class="flex items-start gap-space-md min-w-0">
+<!-- Icon Container -->
+<div class="shrink-0 flex items-center justify-center w-12 h-12 rounded-xl bg-primary-fixed/20 text-primary">
+<span class="material-symbols-outlined text-[26px]">workspace_premium</span>
+</div>
+<!-- Content Details -->
+<div class="flex flex-col min-w-0">
+<div class="flex items-center gap-space-xs flex-wrap mb-1">
+<span class="inline-flex items-center px-space-xs py-0.5 rounded-full bg-primary-fixed-dim/30 text-on-primary-fixed-variant font-caption-bold text-[11px] leading-none">
+                  Membresía Activa
+                </span>
+<span class="font-caption-sm text-caption-sm text-secondary">Hace 2 semanas</span>
+</div>
+<h3 class="font-title-md text-title-md text-on-surface group-hover:text-primary transition-colors">¡Bienvenido a DeliveryGo Prime!</h3>
+<p class="font-body-md text-body-md text-on-surface-variant line-clamp-2 mt-0.5">Tenés 30 días de envíos sin cargo en comercios seleccionados y beneficios exclusivos.</p>
+</div>
+</div>
+<div class="flex items-center gap-space-xs shrink-0 self-end md:self-center">
+<button class="text-primary font-body-md-medium text-body-md-medium hover:underline" type="button">
+              Ver beneficios Prime
+            </button>
+</div>
+</article>
+</div>
+</section>
+<!-- Visual Digest / Summary Graphic Bento -->
+<div class="grid grid-cols-1 md:grid-cols-3 gap-space-md mt-space-md">
+<div class="flex items-center gap-space-md p-space-md rounded-xl bg-surface-container-low">
+<div class="w-10 h-10 rounded-lg bg-surface-container-lowest flex items-center justify-center text-primary-container shadow-sm">
+<span class="material-symbols-outlined text-[22px]">notifications_active</span>
+</div>
+<div class="flex flex-col">
+<span class="font-body-md-medium text-body-md-medium text-on-surface">Notificaciones push</span>
+<span class="font-caption-sm text-caption-sm text-secondary">Activadas en este navegador</span>
+</div>
+</div>
+<div class="flex items-center gap-space-md p-space-md rounded-xl bg-surface-container-low">
+<div class="w-10 h-10 rounded-lg bg-surface-container-lowest flex items-center justify-center text-tertiary shadow-sm">
+<span class="material-symbols-outlined text-[22px]">mail</span>
+</div>
+<div class="flex flex-col">
+<span class="font-body-md-medium text-body-md-medium text-on-surface">Resumen semanal</span>
+<span class="font-caption-sm text-caption-sm text-secondary">Enviado a l.martinez@gmail.com</span>
+</div>
+</div>
+<div class="flex items-center gap-space-md p-space-md rounded-xl bg-surface-container-low">
+<div class="w-10 h-10 rounded-lg bg-surface-container-lowest flex items-center justify-center text-primary shadow-sm">
+<span class="material-symbols-outlined text-[22px]">tune</span>
+</div>
+<div class="flex flex-col">
+<span class="font-body-md-medium text-body-md-medium text-on-surface">Preferencias de aviso</span>
+<span class="font-caption-sm text-caption-sm text-primary hover:underline cursor-pointer">Personalizar alertas</span>
+</div>
+</div>
+</div>
+</div>
+<!-- 4. ESTADO VACÍO (Oculto por defecto, activable mediante el botón de toggle o filtro sin resultados) -->
+<div class="hidden flex-col items-center justify-center text-center py-space-3xl px-space-md rounded-2xl bg-surface-container-lowest shadow-sm my-space-md" id="empty-state-view">
+<div class="relative w-28 h-28 mb-space-lg flex items-center justify-center">
+<div class="absolute inset-0 rounded-full bg-surface-container-low animate-pulse"></div>
+<div class="relative w-20 h-20 rounded-full bg-surface-container flex items-center justify-center text-outline">
+<span class="material-symbols-outlined text-[48px] text-secondary">notifications_off</span>
+</div>
+<div class="absolute bottom-1 right-2 w-7 h-7 rounded-full bg-primary-fixed flex items-center justify-center shadow-sm">
+<span class="material-symbols-outlined text-[16px] text-on-primary-container">check</span>
+</div>
+</div>
+<h2 class="font-headline-md text-headline-md text-on-surface mb-space-2xs">Estás al día</h2>
+<p class="font-body-lg text-body-lg text-on-surface-variant max-w-md mb-space-xl">No tenés notificaciones pendientes por el momento. Te avisaremos cuando haya novedades de tus pedidos o promos disponibles.</p>
+<div class="flex items-center gap-space-sm flex-wrap justify-center">
+<a class="inline-flex items-center gap-space-xs px-space-lg py-space-xs bg-primary-container text-on-primary font-body-md-medium text-body-md-medium rounded-xl shadow-sm hover:bg-primary transition-colors" data-path="comercios" href="#">
+<span class="material-symbols-outlined text-[20px]">storefront</span>
+<span>Volver a inicio</span>
+</a>
+<button class="inline-flex items-center gap-space-xs px-space-md py-space-xs bg-surface-container-low hover:bg-surface-container text-on-surface font-body-md-medium text-body-md-medium rounded-xl transition-colors" id="restore-feed-btn" type="button">
+<span class="material-symbols-outlined text-[20px]">refresh</span>
+<span>Restaurar lista</span>
+</button>
+</div>
+</div>
+</div>
+<script>
+  (function() {
+    const markAllReadBtn = document.getElementById('mark-all-read-btn');
+    const toggleEmptyBtn = document.getElementById('toggle-empty-state-btn');
+    const restoreFeedBtn = document.getElementById('restore-feed-btn');
+    const feed = document.getElementById('notifications-feed');
+    const emptyState = document.getElementById('empty-state-view');
+    const unreadBadge = document.getElementById('unread-badge');
+    const filterTabs = document.querySelectorAll('.filter-tab');
+    const cards = document.querySelectorAll('.notif-card');
+    const sections = document.querySelectorAll('.group-section');
+
+    // Mark all as read micro-interaction
+    if (markAllReadBtn) {
+      markAllReadBtn.addEventListener('click', function() {
+        const unreadDots = document.querySelectorAll('.unread-dot');
+        unreadDots.forEach(dot => dot.remove());
+
+        cards.forEach(card => card.setAttribute('data-status', 'read'));
+        if (unreadBadge) {
+          unreadBadge.textContent = '0 nuevas';
+          unreadBadge.classList.remove('bg-primary-fixed', 'text-on-primary-container');
+          unreadBadge.classList.add('bg-surface-container', 'text-secondary');
+        }
+
+        markAllReadBtn.innerHTML = '<span class="material-symbols-outlined text-primary-container text-[20px]">check</span><span>Todas leídas</span>';
+        markAllReadBtn.disabled = true;
+      });
+    }
+
+    // Toggle Empty State for demonstration
+    if (toggleEmptyBtn) {
+      toggleEmptyBtn.addEventListener('click', function() {
+        const isHidden = emptyState.classList.contains('hidden');
+        if (isHidden) {
+          feed.classList.add('hidden');
+          emptyState.classList.remove('hidden');
+          emptyState.classList.add('flex');
+          toggleEmptyBtn.querySelector('span:last-child').textContent = 'Ver lista de notificaciones';
+        } else {
+          feed.classList.remove('hidden');
+          emptyState.classList.add('hidden');
+          emptyState.classList.remove('flex');
+          toggleEmptyBtn.querySelector('span:last-child').textContent = 'Ver estado vacío';
+        }
+      });
+    }
+
+    if (restoreFeedBtn) {
+      restoreFeedBtn.addEventListener('click', function() {
+        feed.classList.remove('hidden');
+        emptyState.classList.add('hidden');
+        emptyState.classList.remove('flex');
+        if (toggleEmptyBtn) {
+          toggleEmptyBtn.querySelector('span:last-child').textContent = 'Ver estado vacío';
+        }
+      });
+    }
+
+    // Category Filtering Logic
+    filterTabs.forEach(tab => {
+      tab.addEventListener('click', function() {
+        filterTabs.forEach(t => {
+          t.classList.remove('bg-primary-container', 'text-on-primary', 'shadow-sm');
+          t.classList.add('bg-surface-container-low', 'text-on-surface');
+        });
+        this.classList.remove('bg-surface-container-low', 'text-on-surface');
+        this.classList.add('bg-primary-container', 'text-on-primary', 'shadow-sm');
+
+        const filter = this.getAttribute('data-filter');
+
+        let visibleCount = 0;
+        cards.forEach(card => {
+          const type = card.getAttribute('data-type');
+          if (filter === 'all' || type === filter) {
+            card.classList.remove('hidden');
+            visibleCount++;
+          } else {
+            card.classList.add('hidden');
+          }
+        });
+
+        // Hide empty headers if all their cards are hidden
+        sections.forEach(sec => {
+          const visibleInSec = sec.querySelectorAll('.notif-card:not(.hidden)');
+          if (visibleInSec.length === 0) {
+            sec.classList.add('hidden');
+          } else {
+            sec.classList.remove('hidden');
+          }
+        });
+      });
+    });
+  })();
+</script></main><footer class="w-full bg-surface-container-lowest shadow-[0_-1px_8px_rgba(0,0,0,0.02)] mt-space-3xl"><div class="max-w-[1280px] mx-auto px-gutter-mobile lg:px-gutter-desktop py-space-2xl"><div class="grid grid-cols-1 md:grid-cols-4 gap-space-xl pb-space-2xl"><div class="space-y-space-sm"><div class="flex items-center gap-space-xs"><img alt="DeliveryGo Logo" class="h-7 w-auto object-contain" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAR10kqrtXin7jn-sIsvkfeTDKlpO5HZRYcxXpawKI1qNTtK26vuLJ8cYSoH5PGhne4hWGje1bm7RBt5MqZ9Sdemk_SZtByp6R-5ILMToWzRltEtGw2JSzns9m_PC_H8fvNiRtWAJ8-_1lC_bx8zSGvc4Iku6e1M7LRy7GFuP1FutlPKqqn_tPtQDAapUqnKTqyofC9ESW1il78PNUtTB3ZuiZAI5kWz-LjQt6cW-otkNcPcAGbwkcN"><span class="font-title-md text-title-md text-on-surface font-bold tracking-tight">Delivery<span class="text-primary-container">Go</span></span></div><p class="font-body-md text-body-md text-on-surface-variant max-w-xs">La plataforma urbana de entregas ultrarrápidas pensada para todo el país. Pedí lo que quieras, cuando quieras.</p></div><div class="flex flex-col gap-space-xs"><span class="font-caption-bold text-caption-bold uppercase tracking-wider text-secondary">Compañía</span><a class="font-body-md text-body-md text-on-surface-variant hover:text-primary transition-colors" data-path="ayuda-y-soporte" href="#">Ayuda y Soporte</a><a class="font-body-md text-body-md text-on-surface-variant hover:text-primary transition-colors" data-path="suma-tu-comercio" href="#">Sumá tu comercio</a><a class="font-body-md text-body-md text-on-surface-variant hover:text-primary transition-colors" data-path="contacto" href="#">Contacto</a></div><div class="flex flex-col gap-space-xs"><span class="font-caption-bold text-caption-bold uppercase tracking-wider text-secondary">Legal</span><a class="font-body-md text-body-md text-on-surface-variant hover:text-primary transition-colors" data-path="terminos-y-condiciones" href="#">Términos y Condiciones</a><a class="font-body-md text-body-md text-on-surface-variant hover:text-primary transition-colors" data-path="privacidad" href="#">Privacidad</a><a class="font-body-md text-body-md text-on-surface-variant hover:text-primary transition-colors" data-path="defensa-al-consumidor" href="#">Defensa al Consumidor</a></div><div class="flex flex-col gap-space-xs"><span class="font-caption-bold text-caption-bold uppercase tracking-wider text-secondary">Pagos Seguros</span><p class="font-body-md text-body-md text-on-surface-variant">Aceptamos todas las tarjetas de crédito, débito y dinero en cuenta con liquidación ARS inmediata.</p><div class="flex items-center gap-space-xs text-secondary mt-space-xs"><span class="material-symbols-outlined text-[24px]">credit_card</span><span class="material-symbols-outlined text-[24px]">account_balance_wallet</span><span class="material-symbols-outlined text-[24px]">qr_code_scanner</span></div></div></div><div class="pt-space-lg flex flex-col sm:flex-row items-center justify-between gap-space-md bg-surface-container-lowest text-center sm:text-left"><p class="font-caption-sm text-caption-sm text-on-surface-variant">© 2025 DeliveryGo Argentina S.A. Todos los derechos reservados.</p><span class="font-caption-sm text-caption-sm text-secondary">Buenos Aires, Argentina</span></div></div></footer></body></html>

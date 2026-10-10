@@ -1,0 +1,405 @@
+<!DOCTYPE html><html lang="es"><head><meta charset="utf-8"><meta content="width=device-width, initial-scale=1.0" name="viewport"><link href="https://fonts.googleapis.com" rel="preconnect"><link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"><link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet"><link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"><style>@layer base { html, body { margin: 0; padding: 0; } body { overscroll-behavior: none; } main > :first-child { margin-top: 0 !important; } main > :last-child { margin-bottom: 0 !important; } } ::-webkit-scrollbar { display: none; }</style><script src="https://cdn.tailwindcss.com"></script><script id="tailwind-config">tailwind.config = { darkMode: "class", theme: { extend: { "colors": { "on-surface-variant": "#3d4a44", "on-secondary-fixed": "#191c1e", "on-primary-container": "#003427", "primary-fixed": "#79f9d0", "surface-tint": "#006b53", "secondary-fixed": "#e1e2e5", "outline": "#6c7a74", "secondary-fixed-dim": "#c5c7c9", "on-error": "#ffffff", "outline-variant": "#bccac2", "on-primary": "#ffffff", "tertiary-fixed": "#dbe1ff", "primary-container": "#00a884", "secondary": "#5c5f61", "surface-container-lowest": "#ffffff", "tertiary-fixed-dim": "#b4c5ff", "surface": "#f9f9ff", "on-surface": "#151c27", "on-error-container": "#93000a", "surface-container-low": "#f0f3ff", "on-background": "#151c27", "on-tertiary-container": "#002771", "primary": "#006b53", "inverse-on-surface": "#ebf1ff", "secondary-container": "#dee0e2", "on-secondary-fixed-variant": "#444749", "surface-bright": "#f9f9ff", "tertiary-container": "#678fff", "on-tertiary-fixed": "#00174b", "error": "#ba1a1a", "surface-container-highest": "#dce2f3", "on-tertiary-fixed-variant": "#003ea8", "on-tertiary": "#ffffff", "on-secondary-container": "#606365", "surface-container-high": "#e2e8f8", "on-secondary": "#ffffff", "background": "#f9f9ff", "surface-container": "#e7eefe", "on-primary-fixed-variant": "#00513e", "surface-variant": "#dce2f3", "primary-fixed-dim": "#59dcb5", "on-primary-fixed": "#002117", "inverse-primary": "#59dcb5", "tertiary": "#0053db", "error-container": "#ffdad6", "inverse-surface": "#2a313d", "surface-dim": "#d3daea" }, "borderRadius": { "DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px" }, "spacing": { "space-md": "1rem", "gutter-mobile": "1rem", "container-max": "1280px", "space-2xs": "0.25rem", "space-3xl": "4rem", "space-lg": "1.5rem", "gutter-desktop": "1.5rem", "space-xl": "2rem", "space-2xl": "3rem", "space-xs": "0.5rem", "space-sm": "0.75rem" }, "fontFamily": { "headline-lg-mobile": ["Inter"], "body-lg": ["Inter"], "headline-lg": ["Inter"], "body-md": ["Inter"], "title-md": ["Inter"], "body-md-medium": ["Inter"], "display-hero": ["Inter"], "headline-md": ["Inter"], "label-md": ["Inter"], "display-hero-mobile": ["Inter"], "body-lg-medium": ["Inter"], "caption-bold": ["Inter"], "headline-sm": ["Inter"], "caption-sm": ["Inter"] }, "fontSize": { "headline-lg-mobile": ["26px", { "lineHeight": "32px", "letterSpacing": "-0.01em", "fontWeight": "600" }], "body-lg": ["16px", { "lineHeight": "24px", "letterSpacing": "0em", "fontWeight": "400" }], "headline-lg": ["32px", { "lineHeight": "40px", "letterSpacing": "-0.015em", "fontWeight": "600" }], "body-md": ["14px", { "lineHeight": "20px", "letterSpacing": "0em", "fontWeight": "400" }], "title-md": ["18px", { "lineHeight": "24px", "letterSpacing": "0em", "fontWeight": "600" }], "body-md-medium": ["14px", { "lineHeight": "20px", "letterSpacing": "0em", "fontWeight": "500" }], "display-hero": ["40px", { "lineHeight": "48px", "letterSpacing": "-0.02em", "fontWeight": "700" }], "headline-md": ["24px", { "lineHeight": "32px", "letterSpacing": "-0.01em", "fontWeight": "600" }], "label-md": ["13px", { "lineHeight": "18px", "letterSpacing": "0.01em", "fontWeight": "500" }], "display-hero-mobile": ["30px", { "lineHeight": "36px", "letterSpacing": "-0.015em", "fontWeight": "700" }], "body-lg-medium": ["16px", { "lineHeight": "24px", "letterSpacing": "0em", "fontWeight": "500" }], "caption-bold": ["12px", { "lineHeight": "16px", "letterSpacing": "0.02em", "fontWeight": "600" }], "headline-sm": ["20px", { "lineHeight": "28px", "letterSpacing": "-0.005em", "fontWeight": "600" }], "caption-sm": ["12px", { "lineHeight": "16px", "letterSpacing": "0.01em", "fontWeight": "400" }] } } } };</script></head><body class="bg-background font-body-md text-on-surface antialiased selection:bg-primary-container selection:text-on-primary-container"><header class="fixed top-0 left-0 right-0 w-full z-50 bg-surface-container-lowest/90 backdrop-blur-xl shadow-[0_1px_8px_rgba(0,0,0,0.04)]"><div class="h-20 max-w-[1280px] mx-auto px-gutter-mobile lg:px-gutter-desktop flex items-center justify-between gap-space-md"><div class="flex items-center gap-space-lg shrink-0"><a class="flex items-center gap-space-xs" data-path="comercios" href="#"><img alt="DeliveryGo Logo" class="h-8 w-auto object-contain" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAR10kqrtXin7jn-sIsvkfeTDKlpO5HZRYcxXpawKI1qNTtK26vuLJ8cYSoH5PGhne4hWGje1bm7RBt5MqZ9Sdemk_SZtByp6R-5ILMToWzRltEtGw2JSzns9m_PC_H8fvNiRtWAJ8-_1lC_bx8zSGvc4Iku6e1M7LRy7GFuP1FutlPKqqn_tPtQDAapUqnKTqyofC9ESW1il78PNUtTB3ZuiZAI5kWz-LjQt6cW-otkNcPcAGbwkcN"><span class="font-title-md text-title-md text-on-surface hidden sm:inline-block tracking-tight">Delivery<span class="text-primary-container">Go</span></span></a><button class="flex items-center gap-space-xs py-space-xs px-space-sm rounded-full bg-surface-container-low hover:bg-surface-container hover:text-on-surface text-on-surface-variant transition-colors" type="button"><span class="material-symbols-outlined text-primary-container text-[20px]">location_on</span><div class="flex flex-col text-left"><span class="font-caption-sm text-caption-sm text-secondary leading-none">Entregar en</span><span class="font-body-md-medium text-body-md-medium text-on-surface truncate max-w-[150px] md:max-w-[200px] leading-tight">Av. Corrientes 1450, CABA</span></div><span class="material-symbols-outlined text-secondary text-[18px]">expand_more</span></button></div><div class="flex-1 max-w-xl hidden md:block"><div class="relative w-full"><span class="material-symbols-outlined absolute left-space-md top-1/2 -translate-y-1/2 text-outline text-[20px]">search</span><input class="w-full h-11 pl-11 pr-space-md rounded-xl bg-surface-container-low border border-outline-variant/30 text-on-surface placeholder:text-outline font-body-md focus:outline-none focus:ring-2 focus:ring-primary-container/20 focus:border-primary-container transition-all" placeholder="Buscar restaurantes, platos o bebidas..." type="text"></div></div><div class="flex items-center gap-space-sm shrink-0"><nav class="hidden xl:flex items-center gap-space-xs mr-space-xs" data-active-classes="bg-surface-container-high text-on-surface font-body-md-medium"><a aria-current="page" class="px-space-sm py-space-xs rounded-lg transition-colors bg-surface-container-high text-on-surface font-body-md-medium" data-path="comercios" href="#">Comercios</a><a class="px-space-sm py-space-xs rounded-lg font-body-md text-body-md text-on-surface-variant hover:text-on-surface hover:bg-surface-container-low transition-colors" data-path="promociones" href="#">Promociones</a><a class="px-space-sm py-space-xs rounded-lg font-body-md text-body-md text-on-surface-variant hover:text-on-surface hover:bg-surface-container-low transition-colors" data-path="pedidos-activos" href="#">Mis Pedidos</a></nav><a class="relative p-space-xs rounded-full hover:bg-surface-container-low text-on-surface-variant hover:text-on-surface transition-colors" data-path="notificaciones" href="#"><span class="material-symbols-outlined text-[24px]">notifications</span><span class="absolute top-1 right-1 flex items-center justify-center min-w-[18px] h-[18px] px-1 bg-error text-on-error rounded-full font-caption-bold text-[10px] leading-none">3</span></a><a class="flex items-center gap-space-xs py-space-xs px-space-sm rounded-xl bg-surface-container-low hover:bg-surface-container text-on-surface transition-colors" data-path="carrito" href="#"><div class="relative flex items-center"><span class="material-symbols-outlined text-primary-container text-[22px]">shopping_bag</span><span class="absolute -top-1.5 -right-2 flex items-center justify-center min-w-[16px] h-[16px] px-1 bg-primary-container text-on-primary rounded-full font-caption-bold text-[10px] leading-none">2</span></div><span class="hidden sm:inline-block font-body-md-medium text-body-md-medium text-on-surface">$8.450</span></a><a class="flex items-center gap-space-xs pl-space-xs py-space-xs rounded-full hover:bg-surface-container-low transition-colors" data-path="perfil" href="#"><img alt="Profile" class="w-8 h-8 rounded-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuB6H7_LwcTC-3P1tlRzTOM1gGsKRRI4C3WPhUC-h3xufJtxhYUSxlvF8E-806QGOsyDTm5ZWzg5fvnGSedo-auwT8GpTQH9Buz9Du6eFiDLzhDy7SozSvK9v2f2Nf-KpXgwaOQuwPTlJan18CmoxKvtOIvIKzbC147jW5W-2Zpxc14BJo0-4mA7Kx8Pa0iM1Xrj22CLFZSMtkYowTef_EBRn_lphfacnhKmBll1ulLyDeCZI8coezS6"><span class="font-body-md-medium text-body-md-medium text-on-surface hidden lg:inline-block pr-space-xs">Lucas M.</span></a></div></div></header><main class="w-full pt-20 bg-background min-h-[calc(100vh-280px)]"><div class="flex flex-col w-full">
+<!-- Commerce Banner / Header Showcase -->
+<section class="w-full relative bg-surface-container-low overflow-hidden">
+<div class="relative w-full h-64 md:h-80 bg-cover bg-center" data-alt="Warm atmospheric interior and kitchen counter of an upscale artisan burger joint with glowing amber pendant lights, rustic exposed brick textures, and fresh burger brioche buns neatly stacked on stainless steel shelves. Modern urban gastronomic vibe." style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuCC35-jxkL6A72OhbGdYi85mkgs26PJpG4_Jw-OeTlVA-nhclYoyV67QsbzvknLHpUMCSdZMyE2KBrw1Llf0ylBUslNiu1_og1BQaVtwuCOAOoOUU_htLvjKhPK1ilGlKQA--B1giTQ-7qGLcoSRL2Z8LBmf7uhzoTPrbLanhk2H9OnmV-Xce-m-HAl6Ps-T1IfB728ndThW-Q9XVQiC5s59y6vV2JwnZ3w8PP5HWCzw3a5WtObiVOs')">
+<div class="absolute inset-0 bg-gradient-to-t from-on-surface/90 via-on-surface/40 to-transparent"></div>
+<!-- Back Navigation Affordance -->
+<div class="absolute top-4 left-4 z-10">
+<a class="flex items-center gap-space-xs px-space-sm py-space-xs rounded-full bg-surface-container-lowest/80 backdrop-blur-md text-on-surface font-body-md-medium shadow-sm hover:bg-surface-container-lowest transition-all" data-path="comercios" href="#">
+<span class="material-symbols-outlined text-[18px]">arrow_back</span>
+<span>Volver a comercios</span>
+</a>
+</div>
+<!-- Quick Actions -->
+<div class="absolute top-4 right-4 z-10 flex items-center gap-space-xs">
+<button aria-label="Favorito" class="p-space-xs rounded-full bg-surface-container-lowest/80 backdrop-blur-md text-error hover:bg-surface-container-lowest shadow-sm transition-transform active:scale-95" id="favorite-btn" onclick="toggleFavorite()">
+<span class="material-symbols-outlined text-[22px]" id="fav-icon" style="font-variation-settings: 'FILL' 1;">favorite</span>
+</button>
+<button aria-label="Compartir" class="p-space-xs rounded-full bg-surface-container-lowest/80 backdrop-blur-md text-on-surface hover:bg-surface-container-lowest shadow-sm transition-transform active:scale-95" onclick="shareStore()">
+<span class="material-symbols-outlined text-[22px]">share</span>
+</button>
+</div>
+</div>
+<!-- Store Profile Card Overlap -->
+<div class="max-w-[1280px] mx-auto px-gutter-mobile lg:px-gutter-desktop -mt-16 md:-mt-20 relative z-20 pb-space-lg">
+<div class="bg-surface-container-lowest rounded-xl p-space-md md:p-space-lg shadow-md flex flex-col md:flex-row md:items-center justify-between gap-space-md">
+<div class="flex items-start md:items-center gap-space-md">
+<!-- Merchant Logo Avatar -->
+<div class="relative shrink-0">
+<div class="w-20 h-20 md:w-24 md:h-24 rounded-xl overflow-hidden shadow-sm bg-surface-container-highest p-1 flex items-center justify-center">
+<img class="w-full h-full object-cover rounded-lg" data-alt="High contrast bold typographic badge logo for La Birra Bar featuring retro craft burger typography, dark teal and vibrant amber warm tones against a clean minimal background." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCbm_yv0HP0YdsGq8yeD5tpnrKNXkt61h0OOGhLLncQb3epOXn6ncbpadLH_offLSidiDNnoTAiQkPPXIHlJYh5qSe9gABVjSbcEdv2SCtM2PSUQ-2DjMpARzwDlPTMLkdadgSqnG52T0v8_Ko_IQOK6221Vi9Cp9KItxaZDkSVfzBe86KlsxXgiGiCkQqssPBjDTiVH6cgrlfp0ih4B449Pf4CcKzjAYEQn70F08f5vaxe7A69phuJ">
+</div>
+<span class="absolute -bottom-1 -right-1 bg-primary-container text-on-primary font-caption-bold text-[10px] px-1.5 py-0.5 rounded-full shadow-sm">OFICIAL</span>
+</div>
+<!-- Merchant Title & Metadata -->
+<div class="flex flex-col">
+<div class="flex items-center gap-space-xs flex-wrap">
+<h1 class="font-headline-md text-headline-md md:font-headline-lg md:text-headline-lg text-on-surface tracking-tight">La Birra Bar</h1>
+<span class="px-space-xs py-0.5 bg-surface-container text-on-surface-variant font-label-md text-label-md rounded-md">Almagro</span>
+</div>
+<p class="font-body-md text-body-md text-on-surface-variant mt-0.5">Hamburguesas artesanales smash, cervezas tiradas &amp; guarniciones premium</p>
+<!-- Badges Bar -->
+<div class="flex flex-wrap items-center gap-y-1 gap-x-space-md mt-space-xs font-body-md text-body-md text-on-surface-variant">
+<div class="flex items-center gap-1 font-body-md-medium text-on-surface">
+<span class="material-symbols-outlined text-[18px] text-amber-500" style="font-variation-settings: 'FILL' 1;">star</span>
+<span>4.8</span>
+<span class="text-secondary font-body-md font-normal">(1.240)</span>
+</div>
+<span class="text-outline-variant">•</span>
+<div class="flex items-center gap-1 text-primary">
+<span class="material-symbols-outlined text-[18px]">schedule</span>
+<span class="font-body-md-medium text-on-surface">25-35 min</span>
+</div>
+<span class="text-outline-variant">•</span>
+<div class="flex items-center gap-1">
+<span class="material-symbols-outlined text-[18px] text-secondary">moped</span>
+<span class="font-body-md-medium text-on-surface">Envío: $850</span>
+</div>
+<span class="text-outline-variant">•</span>
+<div class="flex items-center gap-1 text-primary font-body-md-medium">
+<span class="w-2 h-2 rounded-full bg-primary-container animate-pulse"></span>
+<span>Abierto: 11:30 a 00:30 hs</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Secondary CTA & Promo Tag -->
+<div class="flex flex-row md:flex-col items-start md:items-end justify-between md:justify-center shrink-0 pt-space-xs md:pt-0">
+<div class="inline-flex items-center gap-space-xs px-space-sm py-1 rounded-full bg-primary-fixed text-on-primary-fixed font-caption-bold text-caption-bold">
+<span class="material-symbols-outlined text-[16px]">local_fire_department</span>
+<span>20% OFF con DeliveryGo Prime</span>
+</div>
+<p class="text-secondary font-caption-sm text-caption-sm mt-1">Pedido mínimo: $4.500</p>
+</div>
+</div>
+</div>
+</section>
+<!-- Main 3-Column Catalog Workspace -->
+<main class="max-w-[1280px] mx-auto w-full px-gutter-mobile lg:px-gutter-desktop py-space-xl">
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-space-lg items-start">
+<!-- Left Column: Sticky Anchor Navigation (3 Cols) -->
+<aside class="hidden lg:block lg:col-span-3 sticky top-24 bg-surface-container-lowest rounded-xl p-space-md shadow-sm">
+<div class="flex items-center justify-between pb-space-sm mb-space-xs">
+<span class="font-caption-bold text-caption-bold uppercase tracking-wider text-secondary">Categorías</span>
+<span class="material-symbols-outlined text-outline text-[18px]">menu_book</span>
+</div>
+<nav class="flex flex-col space-y-1">
+<a class="flex items-center justify-between px-space-sm py-space-xs rounded-lg font-body-md-medium text-body-md-medium text-primary-container bg-surface-container-low transition-colors" href="#promociones">
+<span class="flex items-center gap-2">
+<span class="material-symbols-outlined text-[18px]">verified</span>
+              Promociones del día
+            </span>
+<span class="font-caption-sm text-caption-sm bg-primary-container/10 px-2 py-0.5 rounded-full text-primary">2</span>
+</a>
+<a class="flex items-center justify-between px-space-sm py-space-xs rounded-lg font-body-md text-body-md text-on-surface-variant hover:text-on-surface hover:bg-surface-container-low transition-colors" href="#hamburguesas-dobles">
+<span>Hamburguesas Dobles &amp; Triples</span>
+<span class="font-caption-sm text-caption-sm text-secondary">3</span>
+</a>
+<a class="flex items-center justify-between px-space-sm py-space-xs rounded-lg font-body-md text-body-md text-on-surface-variant hover:text-on-surface hover:bg-surface-container-low transition-colors" href="#hamburguesas-simples">
+<span>Hamburguesas Simples</span>
+<span class="font-caption-sm text-caption-sm text-secondary">4</span>
+</a>
+<a class="flex items-center justify-between px-space-sm py-space-xs rounded-lg font-body-md text-body-md text-on-surface-variant hover:text-on-surface hover:bg-surface-container-low transition-colors" href="#opciones-vegetarianas">
+<span>Opciones Vegetarianas</span>
+<span class="font-caption-sm text-caption-sm text-secondary">2</span>
+</a>
+<a class="flex items-center justify-between px-space-sm py-space-xs rounded-lg font-body-md text-body-md text-on-surface-variant hover:text-on-surface hover:bg-surface-container-low transition-colors" href="#guarniciones-papas">
+<span>Guarniciones &amp; Papas</span>
+<span class="font-caption-sm text-caption-sm text-secondary">5</span>
+</a>
+<a class="flex items-center justify-between px-space-sm py-space-xs rounded-lg font-body-md text-body-md text-on-surface-variant hover:text-on-surface hover:bg-surface-container-low transition-colors" href="#bebidas-cervezas">
+<span>Bebidas &amp; Cervezas</span>
+<span class="font-caption-sm text-caption-sm text-secondary">8</span>
+</a>
+<a class="flex items-center justify-between px-space-sm py-space-xs rounded-lg font-body-md text-body-md text-on-surface-variant hover:text-on-surface hover:bg-surface-container-low transition-colors" href="#postres">
+<span>Postres</span>
+<span class="font-caption-sm text-caption-sm text-secondary">3</span>
+</a>
+</nav>
+<!-- Guarantee Callout -->
+<div class="mt-space-lg p-space-sm bg-surface-container-low rounded-lg flex items-start gap-space-xs">
+<span class="material-symbols-outlined text-primary-container text-[20px] shrink-0">verified_user</span>
+<div>
+<p class="font-caption-bold text-caption-bold text-on-surface">Envío Garantizado</p>
+<p class="font-caption-sm text-caption-sm text-secondary">Si tu pedido llega frío, te devolvemos el valor en saldo al instante.</p>
+</div>
+</div>
+</aside>
+<!-- Center Column: Food Feed & Sections (6 Cols) -->
+<section class="col-span-1 lg:col-span-6 space-y-space-xl">
+<!-- Mobile Horizontal Category Scroll -->
+<div class="lg:hidden flex items-center gap-space-xs overflow-x-auto pb-space-xs scrollbar-none pr-8">
+<a class="px-space-md py-1.5 rounded-full bg-primary-container text-on-primary font-caption-bold text-caption-bold shrink-0 shadow-sm" href="#hamburguesas-dobles">Hamburguesas</a>
+<a class="px-space-md py-1.5 rounded-full bg-surface-container-lowest text-on-surface-variant font-caption-bold text-caption-bold shrink-0 shadow-sm" href="#guarniciones-papas">Papas &amp; Extras</a>
+<a class="px-space-md py-1.5 rounded-full bg-surface-container-lowest text-on-surface-variant font-caption-bold text-caption-bold shrink-0 shadow-sm" href="#bebidas-cervezas">Bebidas</a>
+<a class="px-space-md py-1.5 rounded-full bg-surface-container-lowest text-on-surface-variant font-caption-bold text-caption-bold shrink-0 shadow-sm" href="#postres">Postres</a>
+</div>
+<!-- Category: Hamburguesas Dobles & Triples -->
+<div class="space-y-space-md" id="hamburguesas-dobles">
+<div class="flex items-baseline justify-between">
+<h2 class="font-headline-sm text-headline-sm text-on-surface font-semibold tracking-tight">Hamburguesas Dobles &amp; Triples</h2>
+<span class="font-caption-sm text-caption-sm text-secondary">Carne fresca smash 100% novillo</span>
+</div>
+<!-- Product Card 1: Golden Burger Doble -->
+<article class="bg-surface-container-lowest rounded-xl p-space-md shadow-sm hover:shadow-md transition-all flex flex-col sm:flex-row items-center justify-between gap-space-md group">
+<div class="flex-1 min-w-0 pr-0 sm:pr-space-xs">
+<div class="flex items-center gap-space-xs mb-1">
+<span class="material-symbols-outlined text-[16px] text-amber-500" style="font-variation-settings: 'FILL' 1;">workspace_premium</span>
+<span class="font-caption-bold text-caption-bold text-amber-600 uppercase tracking-wide">Más pedida</span>
+</div>
+<h3 class="font-title-md text-title-md text-on-surface font-semibold group-hover:text-primary-container transition-colors">Golden Burger Doble</h3>
+<p class="font-body-md text-body-md text-on-surface-variant line-clamp-2 mt-1">Doble medallón de carne smash de 120g, queso cheddar americano x4, bacon crocante y salsa Thousand Island en pan brioche de papa.</p>
+<div class="flex items-center justify-between sm:justify-start gap-space-md mt-space-md">
+<span class="font-title-md text-title-md text-on-surface font-bold tracking-tight">$ 7.800</span>
+<button class="h-10 px-space-md rounded-lg bg-primary-container text-on-primary font-body-md-medium text-body-md-medium flex items-center gap-1.5 shadow-sm hover:bg-primary transition-all active:scale-95" onclick="addToCart('Golden Burger Doble', 7800)">
+<span class="material-symbols-outlined text-[18px]">add</span>
+<span>Agregar</span>
+</button>
+</div>
+</div>
+<!-- Product Visual Thumbnail -->
+<div class="w-full sm:w-28 h-40 sm:h-28 rounded-lg overflow-hidden shrink-0 bg-surface-container relative">
+<img class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" data-alt="Close-up gourmet double cheeseburger with glossy toasted brioche bun, melting yellow American cheddar dripping over two crispy-edged smash beef patties, and smoky bacon rashers. Bright, professional commercial culinary photography." src="https://lh3.googleusercontent.com/aida-public/AB6AXuB7t795bqxueSyyudTf3h9RlXTN5hq9Ziwa0SviodCH80yt-n4r6WxvxIFZWKIO4Sceq8c1qWvX29QbFdqiwsQE_LQQRtS_erx7O1i_kCadB0RMPfSS-peKn_JERgxrVXcC335zsvAWD5VCZK0957r8OMaFLeHAa9NXpjVoElnx9LHwboA5U3vXRZPLUnumhq4N2mNCSIETongVMAEvWRWrlFj0Ypy-k1k4bVTQcaP2Wh1y8LPZUuYV">
+</div>
+</article>
+<!-- Product Card 2: Royale Burger -->
+<article class="bg-surface-container-lowest rounded-xl p-space-md shadow-sm hover:shadow-md transition-all flex flex-col sm:flex-row items-center justify-between gap-space-md group">
+<div class="flex-1 min-w-0 pr-0 sm:pr-space-xs">
+<h3 class="font-title-md text-title-md text-on-surface font-semibold group-hover:text-primary-container transition-colors">Royale Burger</h3>
+<p class="font-body-md text-body-md text-on-surface-variant line-clamp-2 mt-1">Medallón de carne novillo, cebolla caramelizada lentamente, queso brie fundido, rúcula fresca seleccionada y mayonesa ahumada artesanal.</p>
+<div class="flex items-center justify-between sm:justify-start gap-space-md mt-space-md">
+<span class="font-title-md text-title-md text-on-surface font-bold tracking-tight">$ 8.200</span>
+<button class="h-10 px-space-md rounded-lg bg-primary-container text-on-primary font-body-md-medium text-body-md-medium flex items-center gap-1.5 shadow-sm hover:bg-primary transition-all active:scale-95" onclick="addToCart('Royale Burger', 8200)">
+<span class="material-symbols-outlined text-[18px]">add</span>
+<span>Agregar</span>
+</button>
+</div>
+</div>
+<!-- Product Visual Thumbnail -->
+<div class="w-full sm:w-28 h-40 sm:h-28 rounded-lg overflow-hidden shrink-0 bg-surface-container relative">
+<img class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" data-alt="Artisanal smash burger with melted creamy French brie cheese, glossy dark caramelized onions, and crisp green wild arugula leaves on a golden glazed bun. High contrast soft editorial lighting." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAThWsrKj8xPtjr7NF57I38lZRFqretaT6c3ndC1UqNYEzb_7F2oQDvYmZnWTk9UjDDghKBA9cIV-A-f-xzJ9LhAnZorr9mAFCD7lzxxNLaUBe990Qb47SgaY22dVLqsHJJ7KHjbDnCozmBrPu6UTFn0qEOnyNlgnjLb2tIJI6UnkATAaB5O-Zhi68kLNBARFfkPm_2C4d9Wpk9tLFXJbSc1vAwQwlOLvz1zEpM7Iqmb0VYtpR4zzwV">
+</div>
+</article>
+<!-- Product Card 3: Truffle Bacon Smash (SIN STOCK / OUT OF STOCK STATE) -->
+<article class="bg-surface-container-lowest rounded-xl p-space-md shadow-sm opacity-60 relative overflow-hidden select-none">
+<!-- Out of Stock Badge Overlay -->
+<div class="absolute top-3 right-3 z-10">
+<span class="px-space-xs py-1 rounded-md bg-secondary-container text-on-secondary-container font-caption-bold text-caption-bold uppercase tracking-wider flex items-center gap-1">
+<span class="material-symbols-outlined text-[14px]">block</span>
+                Sin stock
+              </span>
+</div>
+<div class="flex flex-col sm:flex-row items-center justify-between gap-space-md">
+<div class="flex-1 min-w-0 pr-0 sm:pr-space-xs">
+<h3 class="font-title-md text-title-md text-secondary font-semibold">Truffle Bacon Smash</h3>
+<p class="font-body-md text-body-md text-secondary line-clamp-2 mt-1">Doble smash con mayonesa emulsionada de trufas negras europeas, panceta ahumada crujiente y cebolla morada grillada.</p>
+<div class="flex items-center justify-between sm:justify-start gap-space-md mt-space-md">
+<span class="font-title-md text-title-md text-secondary font-semibold line-through tracking-tight">$ 8.900</span>
+<button class="h-10 px-space-md rounded-lg bg-surface-container text-secondary font-body-md-medium text-body-md-medium flex items-center gap-1.5 cursor-not-allowed shadow-none" disabled="">
+<span class="material-symbols-outlined text-[18px]">remove_shopping_cart</span>
+<span>Agotado</span>
+</button>
+</div>
+</div>
+<!-- Greyed-out product image -->
+<div class="w-full sm:w-28 h-40 sm:h-28 rounded-lg overflow-hidden shrink-0 bg-surface-container-high relative grayscale">
+<img class="w-full h-full object-cover" data-alt="Decadent truffle smash burger with blackened savory beef crust, thick melted provolone cheese, and glossy dark truffle oil glazes on toasted bun. Moody dark background." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDQ0q_fDB-b0ukgd4FiDdvasxt-UXyd6RJbiILVO8-QSqbei2Uco6Yhq8ONK53JBjM1O33R1MSaxVK9uBJ3EkOtJyyrEaz_BH3CZomyU8CDiPEXVtuFIwDBAsjalldf7TysyClHQt9r3Mjziv6VjLrrOQUaecA-5eKa64ubJYB0JQlT7-fclZQrU8bHApuGAeP72Cuv-_F1Eqy0F51smlIjVhwfZfgI9OuPAef_cfSzLfQYtVbhPvUI">
+</div>
+</div>
+</article>
+</div>
+<!-- Category: Guarniciones & Papas -->
+<div class="space-y-space-md pt-space-md" id="guarniciones-papas">
+<div class="flex items-baseline justify-between">
+<h2 class="font-headline-sm text-headline-sm text-on-surface font-semibold tracking-tight">Guarniciones &amp; Papas</h2>
+<span class="font-caption-sm text-caption-sm text-secondary">Papas naturales doble cocción</span>
+</div>
+<!-- Product Card 4: Papas con Cheddar y Panceta -->
+<article class="bg-surface-container-lowest rounded-xl p-space-md shadow-sm hover:shadow-md transition-all flex flex-col sm:flex-row items-center justify-between gap-space-md group">
+<div class="flex-1 min-w-0 pr-0 sm:pr-space-xs">
+<h3 class="font-title-md text-title-md text-on-surface font-semibold group-hover:text-primary-container transition-colors">Papas con Cheddar y Panceta</h3>
+<p class="font-body-md text-body-md text-on-surface-variant line-clamp-2 mt-1">Papas bastón rústicas doble cocción, cheddar fundido de la casa, lluvia de panceta crocante y ciboulette finamente picado.</p>
+<div class="flex items-center justify-between sm:justify-start gap-space-md mt-space-md">
+<span class="font-title-md text-title-md text-on-surface font-bold tracking-tight">$ 3.900</span>
+<button class="h-10 px-space-md rounded-lg bg-primary-container text-on-primary font-body-md-medium text-body-md-medium flex items-center gap-1.5 shadow-sm hover:bg-primary transition-all active:scale-95" onclick="addToCart('Papas con Cheddar y Panceta', 3900)">
+<span class="material-symbols-outlined text-[18px]">add</span>
+<span>Agregar</span>
+</button>
+</div>
+</div>
+<div class="w-full sm:w-28 h-40 sm:h-28 rounded-lg overflow-hidden shrink-0 bg-surface-container relative">
+<img class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" data-alt="Rustic cut French fries smothered with golden cheddar cheese sauce, bits of crispy pan-fried bacon lardons, and fresh green scallions served in an enamel dish. Warm restaurant setting." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCGHa5RA8RzDMriystzytb3sHspgRiJtzmqbBV0JDsefRUvgBdwMKfTlJHdwOr2bGg0G4-1zMHnB6jXSRZoz6Hm6FQ7uClRu6hArGuTQZu9k0iU0vjU7_PysyhF7hPH41UvvP9U-EXLk2dJhSRJ75hXi9gtRg1LuV76eG7XNGVpWypGhCew5nYsOkyKuB4gLyZq92Pv2eXBXDKfGRpDfvAQqswD-AAmllIoQHmNsQ0U5ogRINWauRj0">
+</div>
+</article>
+</div>
+<!-- Category: Bebidas & Cervezas -->
+<div class="space-y-space-md pt-space-md" id="bebidas-cervezas">
+<div class="flex items-baseline justify-between">
+<h2 class="font-headline-sm text-headline-sm text-on-surface font-semibold tracking-tight">Bebidas &amp; Cervezas</h2>
+<span class="font-caption-sm text-caption-sm text-secondary">Bebidas frías y coctelería sin alcohol</span>
+</div>
+<!-- Product Card 5: Limonada con Menta y Jengibre -->
+<article class="bg-surface-container-lowest rounded-xl p-space-md shadow-sm hover:shadow-md transition-all flex flex-col sm:flex-row items-center justify-between gap-space-md group">
+<div class="flex-1 min-w-0 pr-0 sm:pr-space-xs">
+<div class="flex items-center gap-space-xs mb-1">
+<span class="material-symbols-outlined text-[16px] text-primary-container">eco</span>
+<span class="font-caption-bold text-caption-bold text-primary uppercase tracking-wide">100% Natural</span>
+</div>
+<h3 class="font-title-md text-title-md text-on-surface font-semibold group-hover:text-primary-container transition-colors">Limonada con Menta y Jengibre 500ml</h3>
+<p class="font-body-md text-body-md text-on-surface-variant line-clamp-2 mt-1">Fresca exprimida en el momento con jugo de limones tucumanos, hojas frescas de menta orgánica y un toque sutil de raíz de jengibre.</p>
+<div class="flex items-center justify-between sm:justify-start gap-space-md mt-space-md">
+<span class="font-title-md text-title-md text-on-surface font-bold tracking-tight">$ 2.100</span>
+<button class="h-10 px-space-md rounded-lg bg-primary-container text-on-primary font-body-md-medium text-body-md-medium flex items-center gap-1.5 shadow-sm hover:bg-primary transition-all active:scale-95" onclick="addToCart('Limonada con Menta y Jengibre 500ml', 2100)">
+<span class="material-symbols-outlined text-[18px]">add</span>
+<span>Agregar</span>
+</button>
+</div>
+</div>
+<div class="w-full sm:w-28 h-40 sm:h-28 rounded-lg overflow-hidden shrink-0 bg-surface-container relative">
+<img class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" data-alt="Tall clear glass filled with freshly squeezed cloudy lemonade, crushed ice cubes, fresh bright green mint leaves, and a slice of yellow lemon on a marble tabletop with morning natural light." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBhVLpVh3FQCT-kOuzURL31GIWht9ABJ9jNlPxxV4_72rPhxCTSiw-db2RM69LrN95bmKZnUsnTJKzwfstOwvgxH6SnyQAySs8WQqyw7PmcteAM5STeRzHUQ1C9GPusELrRAqZaXQ4UpMBSU3d8sFKuDnRltU7Txq9W3zGaQOeKegjnE-9XEM-bs9arwuNxK8C5HcWc7YTN6VL4W0Ea_DrqKSWHGtmSS1v3E2paV5Cle5c4md3_Z3hu">
+</div>
+</article>
+</div>
+</section>
+<!-- Right Column: Sticky Mini-Cart Rail (3 Cols) -->
+<aside class="col-span-1 lg:col-span-3 sticky top-24 space-y-space-md">
+<div class="bg-surface-container-lowest rounded-xl p-space-md shadow-md">
+<!-- Cart Header -->
+<div class="flex items-center justify-between pb-space-sm mb-space-sm">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-primary-container text-[22px]">shopping_cart</span>
+<h3 class="font-title-md text-title-md text-on-surface font-semibold">Tu pedido</h3>
+</div>
+<span class="font-caption-sm text-caption-sm px-2 py-0.5 rounded-full bg-surface-container text-on-surface-variant">2 items</span>
+</div>
+<p class="font-caption-bold text-caption-bold uppercase tracking-wider text-secondary mb-space-xs">La Birra Bar - Almagro</p>
+<!-- Cart Line Items -->
+<div class="space-y-space-sm divide-y-0">
+<!-- Item 1 -->
+<div class="flex items-start justify-between gap-space-xs py-space-xs bg-surface-container-low/50 p-space-xs rounded-lg">
+<div class="flex flex-col flex-1 min-w-0">
+<span class="font-body-md-medium text-body-md-medium text-on-surface truncate">Golden Burger Doble</span>
+<span class="font-caption-sm text-caption-sm text-secondary">Papas no incluidas</span>
+<span class="font-body-md text-body-md text-on-surface font-semibold mt-1">$ 7.800</span>
+</div>
+<!-- Stepper Pill -->
+<div class="flex items-center bg-surface-container-lowest rounded-md px-1 py-0.5 shadow-sm shrink-0">
+<button class="w-6 h-6 flex items-center justify-center text-on-surface-variant hover:text-primary transition-colors text-sm">-</button>
+<span class="w-5 text-center font-caption-bold text-caption-bold text-on-surface">1</span>
+<button class="w-6 h-6 flex items-center justify-center text-primary-container font-bold text-sm">+</button>
+</div>
+</div>
+<!-- Item 2 -->
+<div class="flex items-start justify-between gap-space-xs py-space-xs bg-surface-container-low/50 p-space-xs rounded-lg">
+<div class="flex flex-col flex-1 min-w-0">
+<span class="font-body-md-medium text-body-md-medium text-on-surface truncate">Papas con Cheddar</span>
+<span class="font-caption-sm text-caption-sm text-secondary">Porción Grande</span>
+<span class="font-body-md text-body-md text-on-surface font-semibold mt-1">$ 3.900</span>
+</div>
+<!-- Stepper Pill -->
+<div class="flex items-center bg-surface-container-lowest rounded-md px-1 py-0.5 shadow-sm shrink-0">
+<button class="w-6 h-6 flex items-center justify-center text-on-surface-variant hover:text-primary transition-colors text-sm">-</button>
+<span class="w-5 text-center font-caption-bold text-caption-bold text-on-surface">1</span>
+<button class="w-6 h-6 flex items-center justify-center text-primary-container font-bold text-sm">+</button>
+</div>
+</div>
+</div>
+<!-- Price Calculation Breakdown -->
+<div class="pt-space-md mt-space-md space-y-1.5">
+<div class="flex items-center justify-between font-body-md text-body-md text-on-surface-variant">
+<span>Subtotal</span>
+<span class="text-on-surface font-medium">$ 11.700</span>
+</div>
+<div class="flex items-center justify-between font-body-md text-body-md text-on-surface-variant">
+<div class="flex items-center gap-1">
+<span>Costo de envío</span>
+<span class="material-symbols-outlined text-outline text-[14px]">help</span>
+</div>
+<span class="text-on-surface font-medium">$ 850</span>
+</div>
+<div class="flex items-center justify-between font-title-md text-title-md text-on-surface font-bold pt-space-xs">
+<span>Total parcial</span>
+<span class="text-primary-container tracking-tight">$ 12.550</span>
+</div>
+</div>
+<!-- Checkout Primary Button -->
+<a class="w-full mt-space-md h-12 bg-primary-container hover:bg-primary text-on-primary rounded-xl font-body-lg-medium text-body-lg-medium flex items-center justify-between px-space-md shadow-md transition-all active:scale-[0.98]" data-path="carrito" href="#">
+<span>Ver carrito y pagar</span>
+<span class="font-bold">$ 12.550</span>
+</a>
+<!-- Safety / Promo Footnote -->
+<div class="mt-space-sm text-center">
+<p class="font-caption-sm text-caption-sm text-secondary flex items-center justify-center gap-1">
+<span class="material-symbols-outlined text-[14px] text-primary">lock</span>
+              Pagos procesados de forma 100% segura
+            </p>
+</div>
+</div>
+<!-- Sticky Special Merchant Banner -->
+<div class="p-space-md rounded-xl bg-gradient-to-br from-surface-container to-surface-container-high flex items-center gap-space-sm">
+<div class="p-space-xs rounded-lg bg-primary-fixed text-on-primary-fixed shrink-0">
+<span class="material-symbols-outlined text-[24px]">redeem</span>
+</div>
+<div class="flex flex-col min-w-0">
+<p class="font-caption-bold text-caption-bold text-on-surface">Agregá $3.450 más</p>
+<p class="font-caption-sm text-caption-sm text-on-surface-variant">¡Y desbloqueás Envío Gratis en este pedido!</p>
+</div>
+</div>
+</aside>
+</div>
+</main>
+<!-- Mobile Persistent Bottom Checkout Float Bar (Visible on mobile only) -->
+<div class="lg:hidden fixed bottom-0 left-0 right-0 z-40 bg-surface-container-lowest p-space-md shadow-[0_-4px_16px_rgba(0,0,0,0.08)]">
+<div class="flex items-center justify-between gap-space-md max-w-[1280px] mx-auto">
+<div class="flex flex-col">
+<span class="font-caption-sm text-caption-sm text-secondary">2 productos seleccionados</span>
+<span class="font-headline-sm text-headline-sm text-on-surface font-bold">$ 12.550</span>
+</div>
+<a class="h-12 px-space-lg bg-primary-container hover:bg-primary text-on-primary rounded-xl font-body-lg-medium text-body-lg-medium flex items-center justify-center gap-2 shadow-md flex-1" data-path="carrito" href="#">
+<span>Ir a pagar</span>
+<span class="material-symbols-outlined text-[20px]">arrow_forward</span>
+</a>
+</div>
+</div>
+</div>
+<script>
+  function toggleFavorite() {
+    const icon = document.getElementById('fav-icon');
+    const isFilled = icon.style.fontVariationSettings.includes("'FILL' 1");
+    if (isFilled) {
+      icon.style.fontVariationSettings = "'FILL' 0";
+      icon.classList.remove('text-error');
+      icon.classList.add('text-secondary');
+    } else {
+      icon.style.fontVariationSettings = "'FILL' 1";
+      icon.classList.remove('text-secondary');
+      icon.classList.add('text-error');
+    }
+  }
+
+  function shareStore() {
+    if (navigator.share) {
+      navigator.share({
+        title: 'La Birra Bar - Sucursal Almagro en DeliveryGo',
+        url: window.location.href
+      }).catch(() => {});
+    } else {
+      navigator.clipboard.writeText(window.location.href);
+      alert('¡Enlace de la tienda copiado al portapapeles!');
+    }
+  }
+
+  function addToCart(productName, price) {
+    // Micro-interaction feedback
+    const banner = document.createElement('div');
+    banner.className = 'fixed top-24 right-4 z-50 bg-on-surface text-inverse-on-surface px-4 py-2.5 rounded-xl shadow-xl flex items-center gap-2 transition-all transform duration-200 translate-y-0 opacity-100';
+    banner.innerHTML = '<span class="material-symbols-outlined text-primary-fixed text-[20px]">check_circle</span><span class="font-body-md-medium text-body-md-medium">' + productName + ' agregado al carrito</span>';
+    document.body.appendChild(banner);
+    setTimeout(() => {
+      banner.style.opacity = '0';
+      banner.style.transform = 'translateY(-8px)';
+      setTimeout(() => banner.remove(), 300);
+    }, 2200);
+  }
+</script></main><footer class="w-full bg-surface-container-lowest shadow-[0_-1px_8px_rgba(0,0,0,0.02)] mt-space-3xl"><div class="max-w-[1280px] mx-auto px-gutter-mobile lg:px-gutter-desktop py-space-2xl"><div class="grid grid-cols-1 md:grid-cols-4 gap-space-xl pb-space-2xl"><div class="space-y-space-sm"><div class="flex items-center gap-space-xs"><img alt="DeliveryGo Logo" class="h-7 w-auto object-contain" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAR10kqrtXin7jn-sIsvkfeTDKlpO5HZRYcxXpawKI1qNTtK26vuLJ8cYSoH5PGhne4hWGje1bm7RBt5MqZ9Sdemk_SZtByp6R-5ILMToWzRltEtGw2JSzns9m_PC_H8fvNiRtWAJ8-_1lC_bx8zSGvc4Iku6e1M7LRy7GFuP1FutlPKqqn_tPtQDAapUqnKTqyofC9ESW1il78PNUtTB3ZuiZAI5kWz-LjQt6cW-otkNcPcAGbwkcN"><span class="font-title-md text-title-md text-on-surface font-bold tracking-tight">Delivery<span class="text-primary-container">Go</span></span></div><p class="font-body-md text-body-md text-on-surface-variant max-w-xs">La plataforma urbana de entregas ultrarrápidas pensada para todo el país. Pedí lo que quieras, cuando quieras.</p></div><div class="flex flex-col gap-space-xs"><span class="font-caption-bold text-caption-bold uppercase tracking-wider text-secondary">Compañía</span><a class="font-body-md text-body-md text-on-surface-variant hover:text-primary transition-colors" data-path="ayuda-y-soporte" href="#">Ayuda y Soporte</a><a class="font-body-md text-body-md text-on-surface-variant hover:text-primary transition-colors" data-path="suma-tu-comercio" href="#">Sumá tu comercio</a><a class="font-body-md text-body-md text-on-surface-variant hover:text-primary transition-colors" data-path="contacto" href="#">Contacto</a></div><div class="flex flex-col gap-space-xs"><span class="font-caption-bold text-caption-bold uppercase tracking-wider text-secondary">Legal</span><a class="font-body-md text-body-md text-on-surface-variant hover:text-primary transition-colors" data-path="terminos-y-condiciones" href="#">Términos y Condiciones</a><a class="font-body-md text-body-md text-on-surface-variant hover:text-primary transition-colors" data-path="privacidad" href="#">Privacidad</a><a class="font-body-md text-body-md text-on-surface-variant hover:text-primary transition-colors" data-path="defensa-al-consumidor" href="#">Defensa al Consumidor</a></div><div class="flex flex-col gap-space-xs"><span class="font-caption-bold text-caption-bold uppercase tracking-wider text-secondary">Pagos Seguros</span><p class="font-body-md text-body-md text-on-surface-variant">Aceptamos todas las tarjetas de crédito, débito y dinero en cuenta con liquidación ARS inmediata.</p><div class="flex items-center gap-space-xs text-secondary mt-space-xs"><span class="material-symbols-outlined text-[24px]">credit_card</span><span class="material-symbols-outlined text-[24px]">account_balance_wallet</span><span class="material-symbols-outlined text-[24px]">qr_code_scanner</span></div></div></div><div class="pt-space-lg flex flex-col sm:flex-row items-center justify-between gap-space-md bg-surface-container-lowest text-center sm:text-left"><p class="font-caption-sm text-caption-sm text-on-surface-variant">© 2025 DeliveryGo Argentina S.A. Todos los derechos reservados.</p><span class="font-caption-sm text-caption-sm text-secondary">Buenos Aires, Argentina</span></div></div></footer></body></html>

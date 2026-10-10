@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+
+<html lang="es"><head><meta charset="utf-8"/><meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" name="viewport"/><title>DeliveryGo</title><link href="https://fonts.googleapis.com" rel="preconnect"/><link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/><link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/><link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/><style>@layer base{html,body{width:100%;min-height:100%;margin:0;padding:0;}body{overscroll-behavior-y:none;-webkit-tap-highlight-color:transparent;}.pb-safe{padding-bottom:env(safe-area-inset-bottom,0px);}.pt-safe{padding-top:env(safe-area-inset-top,0px);}main>:first-child{margin-top:0!important;}main>:last-child{margin-bottom:0!important;}}::-webkit-scrollbar{display:none;}</style><script src="https://cdn.tailwindcss.com"></script><script id="tailwind-config">tailwind.config = { darkMode: 'class', theme: { extend: { 'colors': { 'on-primary-fixed-variant': '#00513e', 'primary': '#006b53', 'secondary-fixed-dim': '#c5c7c9', 'on-secondary': '#ffffff', 'on-tertiary-container': '#002771', 'surface': '#f9f9ff', 'surface-container-lowest': '#ffffff', 'on-error': '#ffffff', 'on-secondary-fixed': '#191c1e', 'on-tertiary': '#ffffff', 'tertiary-fixed': '#dbe1ff', 'surface-bright': '#f9f9ff', 'background': '#f9f9ff', 'surface-container': '#e7eefe', 'tertiary': '#0053db', 'on-surface': '#151c27', 'surface-container-low': '#f0f3ff', 'tertiary-fixed-dim': '#b4c5ff', 'secondary-fixed': '#e1e2e5', 'on-surface-variant': '#3d4a44', 'on-error-container': '#93000a', 'surface-variant': '#dce2f3', 'inverse-surface': '#2a313d', 'on-secondary-fixed-variant': '#444749', 'surface-tint': '#006b53', 'outline-variant': '#bccac2', 'primary-container': '#00a884', 'primary-fixed-dim': '#59dcb5', 'on-tertiary-fixed-variant': '#003ea8', 'inverse-on-surface': '#ebf1ff', 'on-background': '#151c27', 'error-container': '#ffdad6', 'secondary-container': '#dee0e2', 'inverse-primary': '#59dcb5', 'on-primary-container': '#003427', 'outline': '#6c7a74', 'on-primary': '#ffffff', 'on-secondary-container': '#606365', 'primary-fixed': '#79f9d0', 'error': '#ba1a1a', 'on-primary-fixed': '#002117', 'surface-container-highest': '#dce2f3', 'tertiary-container': '#678fff', 'surface-container-high': '#e2e8f8', 'secondary': '#5c5f61', 'surface-dim': '#d3daea', 'on-tertiary-fixed': '#00174b' }, 'borderRadius': { 'DEFAULT': '0.25rem', 'lg': '0.5rem', 'xl': '0.75rem', 'full': '9999px' }, 'spacing': { 'container-max': '1280px', 'space-2xs': '0.25rem', 'space-md': '1rem', 'gutter-mobile': '1rem', 'space-2xl': '3rem', 'space-sm': '0.75rem', 'space-xl': '2rem', 'space-xs': '0.5rem', 'space-3xl': '4rem', 'gutter-desktop': '1.5rem', 'space-lg': '1.5rem' }, 'fontFamily': { 'display-hero': ['Inter'], 'body-md-medium': ['Inter'], 'title-md': ['Inter'], 'body-md': ['Inter'], 'headline-lg-mobile': ['Inter'], 'headline-sm': ['Inter'], 'body-lg-medium': ['Inter'], 'caption-bold': ['Inter'], 'display-hero-mobile': ['Inter'], 'caption-sm': ['Inter'], 'headline-lg': ['Inter'], 'headline-md': ['Inter'], 'label-md': ['Inter'], 'body-lg': ['Inter'] }, 'fontSize': { 'display-hero': ['40px', { 'lineHeight': '48px', 'letterSpacing': '-0.02em', 'fontWeight': '700' }], 'body-md-medium': ['14px', { 'lineHeight': '20px', 'letterSpacing': '0em', 'fontWeight': '500' }], 'title-md': ['18px', { 'lineHeight': '24px', 'letterSpacing': '0em', 'fontWeight': '600' }], 'body-md': ['14px', { 'lineHeight': '20px', 'letterSpacing': '0em', 'fontWeight': '400' }], 'headline-lg-mobile': ['26px', { 'lineHeight': '32px', 'letterSpacing': '-0.01em', 'fontWeight': '600' }], 'headline-sm': ['20px', { 'lineHeight': '28px', 'letterSpacing': '-0.005em', 'fontWeight': '600' }], 'body-lg-medium': ['16px', { 'lineHeight': '24px', 'letterSpacing': '0em', 'fontWeight': '500' }], 'caption-bold': ['12px', { 'lineHeight': '16px', 'letterSpacing': '0.02em', 'fontWeight': '600' }], 'display-hero-mobile': ['30px', { 'lineHeight': '36px', 'letterSpacing': '-0.015em', 'fontWeight': '700' }], 'caption-sm': ['12px', { 'lineHeight': '16px', 'letterSpacing': '0.01em', 'fontWeight': '400' }], 'headline-lg': ['32px', { 'lineHeight': '40px', 'letterSpacing': '-0.015em', 'fontWeight': '600' }], 'headline-md': ['24px', { 'lineHeight': '32px', 'letterSpacing': '-0.01em', 'fontWeight': '600' }], 'label-md': ['13px', { 'lineHeight': '18px', 'letterSpacing': '0.01em', 'fontWeight': '500' }], 'body-lg': ['16px', { 'lineHeight': '24px', 'letterSpacing': '0em', 'fontWeight': '400' }] } } } };</script><style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head><body class="bg-surface text-on-surface font-body-md min-h-screen flex flex-col selection:bg-primary/20"><header class="fixed top-0 inset-x-0 z-50 bg-surface/85 backdrop-blur-xl shadow-[0_1px_8px_rgba(0,0,0,0.04)] pt-safe"><div class="h-16 px-gutter-mobile flex items-center justify-between gap-space-xs"><button aria-label="Volver" class="w-11 h-11 flex items-center justify-center rounded-full text-on-surface hover:bg-surface-container active:scale-95 transition-all" onclick="history.back()" type="button"><span class="material-symbols-outlined">arrow_back</span></button><div class="flex-1 flex items-center justify-center gap-space-xs px-space-xs truncate"><img alt="DeliveryGo brand logo. Modern delivery and tech emblem: a stylized fast delivery bag with an arrow or lightning bolt / speed wing in vibrant green-teal #00A884 and slate dark accents. Clean geometric SVG style, professional e-commerce delivery branding.. Design context: - Primary color: #00a884
+- Font: inter
+- Mode: light
+- Roundness: rounded-md
+. The logo should be visually consistent with these brand tokens." class="h-6 w-auto object-contain" src="https://lh3.googleusercontent.com/aida/AEtjO1VbknMmwuWv6CuoI9J5GUSydsn0LVFVSwOrYjYTnl1PwkCSrzwTjYnyNk18OJz9O0VDT-a_GXQVnM7QgxBbCgPEyJLRq9Ot9FzZqpTDQHo0VNCGdlfIDE-aSsOapj2aOg1dVVP-lTrEvhMf-rUj1MtIEdMM3WRgo0NboYe6Rk-gPwCvZtwjizS6BIwMqSZusvs6QTqNGqAaUDq03acDfE8Hfbpn8WeBV8WpdFhuBiQCndrN2bn2_9bDPw4"/><h1 class="font-title-md text-title-md text-on-surface truncate">Seguimiento En Vivo</h1></div><div class="w-11 h-11 flex items-center justify-end"><img alt="Profile" class="w-8 h-8 rounded-full object-cover ring-2 ring-primary-container/30" src="https://lh3.googleusercontent.com/aida/AEtjO1WBuZxQdnPVPMRWPNFwxqw1oCMLF-u4IY-nKhbNRlS2gMcAGQ09BpSrGpMwiVucMI2r78xVJjZXYF-DEPfd8Qt2gYoJdRHO8d1GNOLZLTz7N5n39hEM_WiZe5n_R_BUPukJ-gJ-_J_UyhIxj2O4RzGI1A3ZypUbqKmNnH3Rwj69UdH-NrEeWnWq-qNL87kc7DXB4rlC6zxmE6f_g6B6_okapA_wPd2Pdbgi0WyaOkYbJi_iFI5nbP5jKA"/></div></div></header><main class="flex-1 flex flex-col w-full px-gutter-mobile pt-16 pb-safe bg-surface"><div class="flex flex-col w-full pb-32 relative select-none">
+<!-- Sub-header Comercio & Toggle Demo Mode -->
+<section class="flex items-center justify-between py-space-xs mb-space-sm">
+<div class="flex items-center gap-space-xs min-w-0">
+<span class="flex items-center justify-center w-8 h-8 rounded-full bg-primary-container/20 text-primary shrink-0">
+<span class="material-symbols-outlined text-base">storefront</span>
+</span>
+<div class="min-w-0">
+<h2 class="font-title-md text-title-md text-on-surface truncate leading-tight">La Birra Bar</h2>
+<p class="font-caption-sm text-caption-sm text-on-surface-variant truncate">Palermo Soho · 25-35 min</p>
+</div>
+</div>
+<!-- Pill Toggle Estado Vacío -->
+<button class="flex items-center gap-1 px-3 py-1.5 rounded-full bg-surface-container-high text-on-surface-variant hover:bg-surface-container-highest transition-colors active:scale-95" id="toggle-empty-state-btn" type="button">
+<span class="material-symbols-outlined text-sm text-primary">swap_horiz</span>
+<span class="font-caption-bold text-caption-bold" id="toggle-label">Simular Vacío</span>
+</button>
+</section>
+<!-- CONTENEDOR CON ÍTEMS (ESTADO LLENO) -->
+<div class="flex flex-col gap-space-md transition-all duration-300" id="cart-content-wrapper">
+<!-- Banner de Tiempo & Ahorro -->
+<div class="flex items-center justify-between p-space-sm rounded-xl bg-surface-container-low shadow-sm">
+<div class="flex items-center gap-space-xs text-primary font-body-md-medium text-body-md-medium">
+<span class="material-symbols-outlined text-xl text-primary animate-pulse" style="font-variation-settings: 'FILL' 1;">moped</span>
+<span>Entrega directa a tu puerta</span>
+</div>
+<span class="px-2 py-0.5 rounded-full bg-primary/10 text-primary font-caption-bold text-caption-bold">Ahorrás $ 1.500</span>
+</div>
+<!-- Lista de Productos -->
+<div class="flex flex-col gap-space-sm">
+<span class="font-label-md text-label-md text-on-surface-variant uppercase tracking-wider px-1">Tus productos (2)</span>
+<!-- Ítem 1: Golden Burger Doble -->
+<article class="p-space-sm rounded-xl bg-surface-container-lowest shadow-sm flex flex-col gap-space-xs relative transition-all duration-200" id="item-burger">
+<div class="flex gap-space-sm">
+<img class="w-20 h-20 rounded-xl object-cover shrink-0 bg-surface-container" data-alt="Artisanal smash burger with melted double cheddar, crispy bacon strips, and special sauce between toasted glossy brioche buns, studio culinary photography on neutral bright surface, warm natural light, food delivery showcase, high quality appetizing view" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCGITVrEUrAkP9e4K6n44Qihoghxd87JSWmXC6H7K55EWgxU2TQf2eZeR5D58PQVHAOjimiONj2ucTSYUPKDOLTGuH4wJyOI21s13tyOMqzk4ZRVTAv6UTpkINK6vui8OnFk_mYIsoosnMIcKCG7NOs8sru1mS63X-Ov4hjGpq7CdqIqxUTMFY8F8MNhLqC9P_eD8B21_3UCmyi5kaTMl6CNa0acQOHyW3pbFw192k0MfdIUrQBRkv1"/>
+<div class="flex-1 min-w-0 flex flex-col justify-between">
+<div>
+<div class="flex items-start justify-between gap-space-xs">
+<h3 class="font-body-lg-medium text-body-lg-medium text-on-surface truncate">Golden Burger Doble</h3>
+<button aria-label="Eliminar Golden Burger Doble" class="w-9 h-9 -mr-1 -mt-1 flex items-center justify-center rounded-full text-secondary hover:text-error hover:bg-error-container/20 transition-all active:scale-90" onclick="removeItem('item-burger')" type="button">
+<span class="material-symbols-outlined text-xl">delete</span>
+</button>
+</div>
+<p class="font-caption-sm text-caption-sm text-on-surface-variant line-clamp-2 mt-0.5">Punto: jugoso, salsa extra aparte</p>
+</div>
+<div class="flex items-center justify-between mt-space-xs pt-1">
+<span class="font-title-md text-title-md text-on-surface">$ 15.600</span>
+<!-- Stepper -->
+<div class="flex items-center bg-surface-container-low rounded-full p-0.5 shadow-sm">
+<button aria-label="Restar una hamburguesa" class="w-8 h-8 flex items-center justify-center rounded-full bg-surface-container-lowest text-on-surface hover:bg-surface-variant active:scale-90 transition-all font-body-lg-medium" type="button">
+<span class="material-symbols-outlined text-base">remove</span>
+</button>
+<span class="w-8 text-center font-body-md-medium text-body-md-medium text-on-surface">2</span>
+<button aria-label="Sumar una hamburguesa" class="w-8 h-8 flex items-center justify-center rounded-full bg-primary text-on-primary hover:bg-primary/90 active:scale-90 transition-all" type="button">
+<span class="material-symbols-outlined text-base">add</span>
+</button>
+</div>
+</div>
+</div>
+</div>
+</article>
+<!-- Ítem 2: Papas con Cheddar y Panceta -->
+<article class="p-space-sm rounded-xl bg-surface-container-lowest shadow-sm flex flex-col gap-space-xs relative transition-all duration-200" id="item-fries">
+<div class="flex gap-space-sm">
+<img class="w-20 h-20 rounded-xl object-cover shrink-0 bg-surface-container" data-alt="Generous portion of crispy rustic french fries covered in thick golden melted cheddar cheese and crunchy bacon bits in a delivery cardboard box, food photography, vibrant studio lighting with warm tones" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAPhy6Evb_yhpGxSn8fXIFzrnepaZ8mHKUZQRSSstUPONF0SJoG-VvJVI36O6b_1hz-hNmO9k1-ci55z-V0BpzxQkdRrlYkFtkF-tJjoj8dMj0Cc2cGM8hsPFxvdcQ7HKGdwK84Lqas10X1RHQnr_nGcrC2fzmvMtdoqd38Lb02sDQ6rs3Qlo8onq4GWqkIWKyk5yAs6h8DkAUa7M_7WismenPf43CXZv8pvMht3iWTKfaKpsMGgzOY"/>
+<div class="flex-1 min-w-0 flex flex-col justify-between">
+<div>
+<div class="flex items-start justify-between gap-space-xs">
+<h3 class="font-body-lg-medium text-body-lg-medium text-on-surface truncate">Papas con Cheddar y Panceta</h3>
+<button aria-label="Eliminar Papas Cheddar" class="w-9 h-9 -mr-1 -mt-1 flex items-center justify-center rounded-full text-secondary hover:text-error hover:bg-error-container/20 transition-all active:scale-90" onclick="removeItem('item-fries')" type="button">
+<span class="material-symbols-outlined text-xl">delete</span>
+</button>
+</div>
+<p class="font-caption-sm text-caption-sm text-on-surface-variant line-clamp-1 mt-0.5">Sin cebolla de verdeo</p>
+</div>
+<div class="flex items-center justify-between mt-space-xs pt-1">
+<span class="font-title-md text-title-md text-on-surface">$ 3.900</span>
+<!-- Stepper -->
+<div class="flex items-center bg-surface-container-low rounded-full p-0.5 shadow-sm">
+<button aria-label="Restar porción de papas" class="w-8 h-8 flex items-center justify-center rounded-full bg-surface-container-lowest text-on-surface hover:bg-surface-variant active:scale-90 transition-all" type="button">
+<span class="material-symbols-outlined text-base">remove</span>
+</button>
+<span class="w-8 text-center font-body-md-medium text-body-md-medium text-on-surface">1</span>
+<button aria-label="Sumar porción de papas" class="w-8 h-8 flex items-center justify-center rounded-full bg-primary text-on-primary hover:bg-primary/90 active:scale-90 transition-all" type="button">
+<span class="material-symbols-outlined text-base">add</span>
+</button>
+</div>
+</div>
+</div>
+</div>
+</article>
+<!-- Botón Agregar más platos -->
+<button class="w-full py-2.5 rounded-xl bg-surface-container-low text-primary hover:bg-surface-container font-body-md-medium text-body-md-medium flex items-center justify-center gap-1.5 transition-colors active:scale-98" type="button">
+<span class="material-symbols-outlined text-lg">add_circle</span>
+<span>Sumar más platos al pedido</span>
+</button>
+</div>
+<!-- Acordeones / Secciones Colapsables -->
+<div class="flex flex-col gap-space-xs">
+<!-- Acordeón 1: Aclaraciones para el comercio -->
+<details class="group rounded-xl bg-surface-container-lowest shadow-sm overflow-hidden" open="">
+<summary class="flex items-center justify-between p-space-sm cursor-pointer list-none select-none">
+<div class="flex items-center gap-space-xs text-on-surface font-body-md-medium text-body-md-medium">
+<span class="material-symbols-outlined text-secondary">edit_note</span>
+<span>Aclaraciones para el comercio</span>
+</div>
+<span class="material-symbols-outlined text-secondary transition-transform duration-200 group-open:rotate-180">expand_more</span>
+</summary>
+<div class="px-space-sm pb-space-sm">
+<label class="sr-only" for="comentarios-comercio">Instrucciones o aclaraciones para la cocina</label>
+<div class="relative">
+<input class="w-full h-11 px-3 py-2 rounded-lg bg-surface-container-low text-on-surface font-body-md text-body-md placeholder:text-secondary focus:outline-none focus:bg-surface-container transition-all" id="comentarios-comercio" placeholder="Ej: Tocar timbre 4B, no funciona el portero" type="text" value="Tocar timbre 4B, no funciona el portero"/>
+<span class="material-symbols-outlined absolute right-3 top-2.5 text-secondary pointer-events-none text-xl">chat_bubble_outline</span>
+</div>
+<p class="font-caption-sm text-caption-sm text-on-surface-variant mt-1.5 px-1">Indicaciones sobre el punto de carne, condimentos o entrega.</p>
+</div>
+</details>
+<!-- Acordeón 2: Cupón de descuento -->
+<details class="group rounded-xl bg-surface-container-lowest shadow-sm overflow-hidden" open="">
+<summary class="flex items-center justify-between p-space-sm cursor-pointer list-none select-none">
+<div class="flex items-center gap-space-xs text-on-surface font-body-md-medium text-body-md-medium">
+<span class="material-symbols-outlined text-primary-container">local_offer</span>
+<span>Cupón de descuento</span>
+</div>
+<span class="material-symbols-outlined text-secondary transition-transform duration-200 group-open:rotate-180">expand_more</span>
+</summary>
+<div class="px-space-sm pb-space-sm flex flex-col gap-space-xs">
+<!-- Cupón Aplicado -->
+<div class="flex items-center justify-between p-2.5 rounded-lg bg-primary-container/15 text-on-primary-container">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-primary text-xl" style="font-variation-settings: 'FILL' 1;">check_circle</span>
+<div class="flex flex-col">
+<span class="font-caption-bold text-caption-bold tracking-wide text-primary">DELIVERYGO20</span>
+<span class="font-caption-sm text-caption-sm text-on-surface-variant">Descuento de $ 1.500 aplicado</span>
+</div>
+</div>
+<button aria-label="Quitar cupón" class="w-8 h-8 flex items-center justify-center rounded-full text-secondary hover:text-error hover:bg-error-container/20 transition-all active:scale-95" type="button">
+<span class="material-symbols-outlined text-base">close</span>
+</button>
+</div>
+</div>
+</details>
+</div>
+<!-- Desglose de Pago -->
+<div class="p-space-sm rounded-xl bg-surface-container-lowest shadow-sm flex flex-col gap-2.5">
+<h4 class="font-body-md-medium text-body-md-medium text-on-surface">Resumen de costos</h4>
+<div class="flex items-center justify-between font-body-md text-body-md text-on-surface-variant">
+<span>Subtotal productos</span>
+<span class="text-on-surface font-body-md-medium text-body-md-medium">$ 19.500</span>
+</div>
+<div class="flex items-center justify-between font-body-md text-body-md text-on-surface-variant">
+<span class="flex items-center gap-1">
+          Costo de envío
+          <span class="material-symbols-outlined text-xs text-secondary cursor-help">info</span>
+</span>
+<span class="text-on-surface font-body-md-medium text-body-md-medium">$ 850</span>
+</div>
+<div class="flex items-center justify-between font-body-md text-body-md text-on-surface-variant">
+<span>Tarifa de servicio</span>
+<span class="text-on-surface font-body-md-medium text-body-md-medium">$ 450</span>
+</div>
+<div class="flex items-center justify-between font-body-md text-body-md text-primary">
+<span class="flex items-center gap-1 font-body-md-medium text-body-md-medium">
+<span class="material-symbols-outlined text-base">sell</span>
+          Cupón aplicado (DELIVERYGO20)
+        </span>
+<span class="font-body-md-medium text-body-md-medium">-$ 1.500</span>
+</div>
+<div class="pt-2.5 mt-1 flex items-baseline justify-between bg-surface-container-low -mx-space-sm -mb-space-sm p-space-sm rounded-b-xl">
+<div class="flex flex-col">
+<span class="font-headline-sm text-headline-sm text-on-surface">Total a pagar</span>
+<span class="font-caption-sm text-caption-sm text-on-surface-variant">Impuestos incluidos</span>
+</div>
+<span class="font-headline-lg-mobile text-headline-lg-mobile text-primary font-bold tracking-tight">$ 19.300</span>
+</div>
+</div>
+</div>
+<!-- ESTADO VACÍO (OCULTO POR DEFECTO) -->
+<div class="hidden flex-col items-center justify-center text-center py-12 px-4" id="cart-empty-wrapper">
+<!-- Ilustración Lúdica y Cálida en Inline SVG -->
+<div class="relative w-48 h-48 mb-6 flex items-center justify-center">
+<div class="absolute inset-0 bg-primary-container/10 rounded-full blur-2xl transform scale-90"></div>
+<svg class="relative w-40 h-40" fill="none" viewbox="0 0 160 160" xmlns="http://www.w3.org/2000/svg">
+<!-- Bolsa de compras amigable -->
+<path d="M44 60C44 51.1634 51.1634 44 60 44H100C108.837 44 116 51.1634 116 60V124C116 130.627 110.627 136 104 136H56C49.3726 136 44 130.627 44 124V60Z" fill="#E2E8F8"></path>
+<!-- Sombra interior plegada -->
+<path d="M44 64L60 76H100L116 64V60C116 51.1634 108.837 44 100 44H60C51.1634 44 44 51.1634 44 60V64Z" fill="#DCE2F3"></path>
+<!-- Asa de la bolsa -->
+<path d="M62 52V38C62 28.0589 70.0589 20 80 20C89.9411 20 98 28.0589 98 38V52" stroke="#00A884" stroke-linecap="round" stroke-width="6"></path>
+<!-- Rostro sonriente en la bolsa -->
+<circle cx="68" cy="94" fill="#151C27" r="4.5"></circle>
+<circle cx="92" cy="94" fill="#151C27" r="4.5"></circle>
+<path d="M72 106C75 110 85 110 88 106" stroke="#151C27" stroke-linecap="round" stroke-width="3"></path>
+<!-- Corazón flotando de antojos -->
+<path d="M120 40C120 35.5817 123.582 32 128 32C130.122 32 132.045 32.8284 133.5 34.1819C134.955 32.8284 136.878 32 139 32C143.418 32 147 35.5817 147 40C147 47 133.5 56 133.5 56C133.5 56 120 47 120 40Z" fill="#00A884"></path>
+<!-- Chispa decorativa -->
+<path d="M30 46L33 38L41 35L33 32L30 24L27 32L19 35L27 38L30 46Z" fill="#79F9D0"></path>
+</svg>
+</div>
+<h3 class="font-headline-lg-mobile text-headline-lg-mobile text-on-surface font-semibold mb-2">Tu carrito está vacío</h3>
+<p class="font-body-md text-body-md text-on-surface-variant max-w-xs mb-8">Sumá tus platos favoritos de los mejores comercios gastronómicos y recibilos calentitos.</p>
+<button class="h-12 px-8 rounded-xl bg-primary text-on-primary font-body-lg-medium text-body-lg-medium hover:bg-primary/90 active:scale-95 shadow-md flex items-center justify-center gap-2 transition-all" onclick="toggleCartState(false)" type="button">
+<span class="material-symbols-outlined text-xl">restaurant</span>
+<span>Explorar comercios</span>
+</button>
+</div>
+<!-- FIXED BOTTOM BAR (Checkout y Confirmación) -->
+<aside class="fixed bottom-0 inset-x-0 z-40 bg-surface-container-lowest shadow-[0_-4px_20px_rgba(0,0,0,0.08)] pb-safe transition-transform duration-300" id="fixed-bottom-bar">
+<div class="max-w-[440px] mx-auto px-gutter-mobile pt-3 pb-3 flex flex-col gap-2">
+<!-- Botón de Pago Principal 52px #00A884 -->
+<button class="w-full h-[52px] rounded-xl bg-primary-container text-on-primary font-title-md text-title-md flex items-center justify-between px-5 shadow-lg shadow-primary-container/25 hover:brightness-105 active:scale-[0.98] transition-all" type="button">
+<span class="flex items-center gap-2 font-semibold">
+<span class="material-symbols-outlined text-2xl">shopping_bag</span>
+<span>Pagar</span>
+</span>
+<span class="font-bold tracking-wide text-lg">$ 19.300</span>
+</button>
+<!-- Badge de Seguridad y Medios de Pago -->
+<div class="flex items-center justify-center gap-1.5 text-on-surface-variant">
+<span class="material-symbols-outlined text-sm text-primary" style="font-variation-settings: 'FILL' 1;">verified_user</span>
+<span class="font-caption-sm text-caption-sm font-medium">Pago seguro con encriptación SSL de 256-bits</span>
+</div>
+</div>
+</aside>
+</div>
+<!-- Microinteracciones y Control de Estado -->
+<script>
+  let isEmptyState = false;
+
+  function toggleCartState(forceState) {
+    if (typeof forceState === 'boolean') {
+      isEmptyState = forceState;
+    } else {
+      isEmptyState = !isEmptyState;
+    }
+
+    const filledContent = document.getElementById('cart-content-wrapper');
+    const emptyContent = document.getElementById('cart-empty-wrapper');
+    const bottomBar = document.getElementById('fixed-bottom-bar');
+    const toggleLabel = document.getElementById('toggle-label');
+
+    if (isEmptyState) {
+      filledContent.classList.add('hidden');
+      emptyContent.classList.remove('hidden');
+      emptyContent.classList.add('flex');
+      bottomBar.classList.add('translate-y-full');
+      toggleLabel.textContent = 'Ver Carrito Lleno';
+    } else {
+      emptyContent.classList.add('hidden');
+      emptyContent.classList.remove('flex');
+      filledContent.classList.remove('hidden');
+      bottomBar.classList.remove('translate-y-full');
+      toggleLabel.textContent = 'Simular Vacío';
+    }
+  }
+
+  document.getElementById('toggle-empty-state-btn').addEventListener('click', () => {
+    toggleCartState();
+  });
+
+  function removeItem(id) {
+    const el = document.getElementById(id);
+    if (!el) return;
+    el.classList.add('scale-95', 'opacity-0');
+    setTimeout(() => {
+      el.remove();
+      const remainingItems = document.querySelectorAll('#cart-content-wrapper article');
+      if (remainingItems.length === 0) {
+        toggleCartState(true);
+      }
+    }, 200);
+  }
+</script></main></body></html>

@@ -1,0 +1,275 @@
+<!DOCTYPE html><html lang="es"><head><meta charset="utf-8"><meta content="width=device-width, initial-scale=1.0" name="viewport"><link href="https://fonts.googleapis.com" rel="preconnect"><link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"><link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet"><link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"><style>@layer base { html, body { margin: 0; padding: 0; } body { overscroll-behavior: none; } main > :first-child { margin-top: 0 !important; } main > :last-child { margin-bottom: 0 !important; } } ::-webkit-scrollbar { display: none; }</style><script src="https://cdn.tailwindcss.com"></script><script id="tailwind-config">tailwind.config = { darkMode: "class", theme: { extend: { "colors": { "on-surface-variant": "#3d4a44", "on-secondary-fixed": "#191c1e", "on-primary-container": "#003427", "primary-fixed": "#79f9d0", "surface-tint": "#006b53", "secondary-fixed": "#e1e2e5", "outline": "#6c7a74", "secondary-fixed-dim": "#c5c7c9", "on-error": "#ffffff", "outline-variant": "#bccac2", "on-primary": "#ffffff", "tertiary-fixed": "#dbe1ff", "primary-container": "#00a884", "secondary": "#5c5f61", "surface-container-lowest": "#ffffff", "tertiary-fixed-dim": "#b4c5ff", "surface": "#f9f9ff", "on-surface": "#151c27", "on-error-container": "#93000a", "surface-container-low": "#f0f3ff", "on-background": "#151c27", "on-tertiary-container": "#002771", "primary": "#006b53", "inverse-on-surface": "#ebf1ff", "secondary-container": "#dee0e2", "on-secondary-fixed-variant": "#444749", "surface-bright": "#f9f9ff", "tertiary-container": "#678fff", "on-tertiary-fixed": "#00174b", "error": "#ba1a1a", "surface-container-highest": "#dce2f3", "on-tertiary-fixed-variant": "#003ea8", "on-tertiary": "#ffffff", "on-secondary-container": "#606365", "surface-container-high": "#e2e8f8", "on-secondary": "#ffffff", "background": "#f9f9ff", "surface-container": "#e7eefe", "on-primary-fixed-variant": "#00513e", "surface-variant": "#dce2f3", "primary-fixed-dim": "#59dcb5", "on-primary-fixed": "#002117", "inverse-primary": "#59dcb5", "tertiary": "#0053db", "error-container": "#ffdad6", "inverse-surface": "#2a313d", "surface-dim": "#d3daea" }, "borderRadius": { "DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px" }, "spacing": { "space-md": "1rem", "gutter-mobile": "1rem", "container-max": "1280px", "space-2xs": "0.25rem", "space-3xl": "4rem", "space-lg": "1.5rem", "gutter-desktop": "1.5rem", "space-xl": "2rem", "space-2xl": "3rem", "space-xs": "0.5rem", "space-sm": "0.75rem" }, "fontFamily": { "headline-lg-mobile": ["Inter"], "body-lg": ["Inter"], "headline-lg": ["Inter"], "body-md": ["Inter"], "title-md": ["Inter"], "body-md-medium": ["Inter"], "display-hero": ["Inter"], "headline-md": ["Inter"], "label-md": ["Inter"], "display-hero-mobile": ["Inter"], "body-lg-medium": ["Inter"], "caption-bold": ["Inter"], "headline-sm": ["Inter"], "caption-sm": ["Inter"] }, "fontSize": { "headline-lg-mobile": ["26px", { "lineHeight": "32px", "letterSpacing": "-0.01em", "fontWeight": "600" }], "body-lg": ["16px", { "lineHeight": "24px", "letterSpacing": "0em", "fontWeight": "400" }], "headline-lg": ["32px", { "lineHeight": "40px", "letterSpacing": "-0.015em", "fontWeight": "600" }], "body-md": ["14px", { "lineHeight": "20px", "letterSpacing": "0em", "fontWeight": "400" }], "title-md": ["18px", { "lineHeight": "24px", "letterSpacing": "0em", "fontWeight": "600" }], "body-md-medium": ["14px", { "lineHeight": "20px", "letterSpacing": "0em", "fontWeight": "500" }], "display-hero": ["40px", { "lineHeight": "48px", "letterSpacing": "-0.02em", "fontWeight": "700" }], "headline-md": ["24px", { "lineHeight": "32px", "letterSpacing": "-0.01em", "fontWeight": "600" }], "label-md": ["13px", { "lineHeight": "18px", "letterSpacing": "0.01em", "fontWeight": "500" }], "display-hero-mobile": ["30px", { "lineHeight": "36px", "letterSpacing": "-0.015em", "fontWeight": "700" }], "body-lg-medium": ["16px", { "lineHeight": "24px", "letterSpacing": "0em", "fontWeight": "500" }], "caption-bold": ["12px", { "lineHeight": "16px", "letterSpacing": "0.02em", "fontWeight": "600" }], "headline-sm": ["20px", { "lineHeight": "28px", "letterSpacing": "-0.005em", "fontWeight": "600" }], "caption-sm": ["12px", { "lineHeight": "16px", "letterSpacing": "0.01em", "fontWeight": "400" }] } } } };</script></head><body class="bg-background font-body-md text-on-surface antialiased"><main class="w-full min-h-screen flex items-center justify-center p-space-md"><div class="flex flex-col w-full max-w-[1180px] mx-auto py-space-md lg:py-space-xl px-space-xs sm:px-space-md">
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-space-lg lg:gap-space-xl items-stretch">
+<!-- Left Showcase Panel -->
+<div class="lg:col-span-5 flex flex-col justify-between relative overflow-hidden rounded-xl bg-surface-container p-space-lg lg:p-space-xl shadow-sm">
+<div class="absolute -top-24 -left-24 w-80 h-80 rounded-full bg-primary-container/15 blur-3xl pointer-events-none"></div>
+<div class="absolute -bottom-24 -right-24 w-72 h-72 rounded-full bg-primary-fixed/30 blur-3xl pointer-events-none"></div>
+<div class="relative z-10 flex flex-col gap-space-lg">
+<!-- Logo DeliveryGo -->
+<div class="flex items-center gap-space-xs">
+<div class="w-11 h-11 rounded-lg bg-primary-container flex items-center justify-center text-on-primary shadow-sm">
+<span class="material-symbols-outlined text-[28px]" style="font-variation-settings: 'FILL' 1;">shopping_bag</span>
+</div>
+<div class="flex items-baseline gap-0.5">
+<span class="font-headline-md text-headline-md tracking-tight text-on-surface">Delivery</span>
+<span class="font-headline-md text-headline-md tracking-tight text-primary-container">Go</span>
+</div>
+</div>
+<!-- Headline & Claim -->
+<div class="flex flex-col gap-space-xs mt-space-sm">
+<span class="font-caption-bold text-caption-bold uppercase tracking-wider text-primary">Buenos Aires al instante</span>
+<h1 class="font-headline-lg text-headline-lg text-on-surface font-bold leading-tight">
+            Tus comidas favoritas en la puerta de tu casa en minutos
+          </h1>
+<p class="font-body-md text-body-md text-on-surface-variant">
+            Pedí desde las mejores pizzerías de Corrientes, bodegones de Palermo y cafeterías de especialidad con entrega ultra rápida.
+          </p>
+</div>
+<!-- Feature Visual Mosaic -->
+<div class="relative rounded-xl overflow-hidden shadow-md my-space-xs group">
+<img class="w-full h-48 object-cover transition-transform duration-500 group-hover:scale-105" data-alt="A modern courier riding an urban electric scooter with an insulated green delivery backpack through a sunny street in Palermo, Buenos Aires, soft bokeh background with cozy cafes and jacaranda trees in soft teal and warm daylight tones" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBQ5TCbgNLAPAkKyKLnZlu1VEZWZ_sAG-SaTFS5itq3VdfQCOt5YfUDMZU4KyHT1zvDD-dLlGd--7E7V4Km3wtRf9Dw6eCbnjDDbNjlas5dXncsIk_HzdGmWQ4kNlm-fBskfayFMO_-ym-nfUjnH-2-Kd-B2YuzWTw_TtV0GKxH60bujP4qH2srnubARnWeEZhOidQ7UCc3PiKv02ZVREfeuNY9uvyfz6GMn8J5DHKXqYsyAnddXAyH">
+<div class="absolute inset-0 bg-gradient-to-t from-on-surface/80 via-on-surface/20 to-transparent flex items-end p-space-md">
+<div class="flex items-center gap-space-xs text-on-primary">
+<span class="flex h-2.5 w-2.5 rounded-full bg-primary-fixed-dim animate-pulse"></span>
+<span class="font-caption-bold text-caption-bold">Más de 2.400 locales activos en CABA y GBA</span>
+</div>
+</div>
+</div>
+<!-- Feature Bullets -->
+<div class="flex flex-col gap-space-sm">
+<div class="flex items-start gap-space-sm p-space-xs rounded-lg bg-surface-container-lowest/80 backdrop-blur-sm shadow-sm">
+<div class="w-8 h-8 rounded-full bg-primary-fixed flex items-center justify-center text-on-primary-fixed shrink-0 mt-0.5">
+<span class="material-symbols-outlined text-[18px]">near_me</span>
+</div>
+<div class="flex flex-col">
+<span class="font-body-md-medium text-body-md-medium text-on-surface">Seguimiento en tiempo real</span>
+<span class="font-caption-sm text-caption-sm text-on-surface-variant">Mirá el recorrido exacto del repartidor desde el despacho hasta tu timbre.</span>
+</div>
+</div>
+<div class="flex items-start gap-space-sm p-space-xs rounded-lg bg-surface-container-lowest/80 backdrop-blur-sm shadow-sm">
+<div class="w-8 h-8 rounded-full bg-primary-fixed flex items-center justify-center text-on-primary-fixed shrink-0 mt-0.5">
+<span class="material-symbols-outlined text-[18px]">payments</span>
+</div>
+<div class="flex flex-col">
+<span class="font-body-md-medium text-body-md-medium text-on-surface">Pagos protegidos en pesos</span>
+<span class="font-caption-sm text-caption-sm text-on-surface-variant">Tarjetas de débito, crédito en cuotas, Mercado Pago y efectivo contra entrega.</span>
+</div>
+</div>
+<div class="flex items-start gap-space-sm p-space-xs rounded-lg bg-surface-container-lowest/80 backdrop-blur-sm shadow-sm">
+<div class="w-8 h-8 rounded-full bg-primary-fixed flex items-center justify-center text-on-primary-fixed shrink-0 mt-0.5">
+<span class="material-symbols-outlined text-[18px]">support_agent</span>
+</div>
+<div class="flex flex-col">
+<span class="font-body-md-medium text-body-md-medium text-on-surface">Soporte 24/7 en vivo</span>
+<span class="font-caption-sm text-caption-sm text-on-surface-variant">Equipo dedicado por chat directo para resolver cualquier duda o demora al instante.</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Trust Badge -->
+<div class="relative z-10 pt-space-md mt-space-md flex items-center justify-between">
+<div class="flex items-center gap-1.5 text-on-surface-variant font-caption-bold text-caption-bold">
+<span class="material-symbols-outlined text-[18px] text-primary" style="font-variation-settings: 'FILL' 1;">verified</span>
+<span>Plataforma Oficial Verificada</span>
+</div>
+<span class="font-caption-sm text-caption-sm text-on-surface-variant">v2.4 Argentina</span>
+</div>
+</div>
+<!-- Right Auth Form Card -->
+<div class="lg:col-span-7 flex flex-col justify-center bg-surface-container-lowest rounded-xl p-space-lg sm:p-space-xl shadow-md relative">
+<!-- Segmented Tab Bar -->
+<div class="flex p-1 bg-surface-container-low rounded-xl mb-space-lg relative">
+<button class="flex-1 py-2.5 rounded-lg font-body-md-medium text-body-md-medium transition-all duration-200 bg-surface-container-lowest text-on-surface shadow-sm flex items-center justify-center gap-1.5" id="tab-login-btn" type="button">
+<span class="material-symbols-outlined text-[18px]">login</span>
+<span>Iniciar sesión</span>
+</button>
+<button class="flex-1 py-2.5 rounded-lg font-body-md-medium text-body-md-medium transition-all duration-200 text-on-surface-variant hover:text-on-surface flex items-center justify-center gap-1.5" id="tab-register-btn" type="button">
+<span class="material-symbols-outlined text-[18px]">person_add</span>
+<span>Registrarse</span>
+</button>
+</div>
+<!-- Form Section: Iniciar Sesión -->
+<div class="flex flex-col gap-space-md" id="form-login">
+<div>
+<h2 class="font-headline-md text-headline-md text-on-surface font-semibold">¡Hola de nuevo!</h2>
+<p class="font-body-md text-body-md text-on-surface-variant mt-1">Ingresá tus datos para continuar con tus pedidos.</p>
+</div>
+<!-- Social Logins -->
+<div class="grid grid-cols-2 gap-space-sm pt-space-xs">
+<button class="flex items-center justify-center gap-2 h-11 px-4 rounded-lg bg-surface-container-low hover:bg-surface-container text-on-surface font-body-md-medium text-body-md-medium transition-colors shadow-sm" type="button">
+<svg class="w-4 h-4" viewBox="0 0 24 24">
+<path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"></path>
+<path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"></path>
+<path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.06H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.94l2.85-2.22.81-.63z" fill="#FBBC05"></path>
+<path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.06l3.66 2.84c.87-2.6 3.3-4.52 6.16-4.52z" fill="#EA4335"></path>
+</svg>
+<span>Google</span>
+</button>
+<button class="flex items-center justify-center gap-2 h-11 px-4 rounded-lg bg-surface-container-low hover:bg-surface-container text-on-surface font-body-md-medium text-body-md-medium transition-colors shadow-sm" type="button">
+<svg class="w-4 h-4 fill-current text-on-surface" viewBox="0 0 24 24">
+<path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.81-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M15.97 6.38c.62-.75 1.04-1.8 0.92-2.85-.9.04-1.99.6-2.63 1.35-.57.66-.99 1.72-.88 2.74 1 .08 1.97-.49 2.59-1.24z"></path>
+</svg>
+<span>Apple</span>
+</button>
+</div>
+<!-- Separator -->
+<div class="relative flex items-center justify-center my-1">
+<div class="w-full h-px bg-surface-container-high"></div>
+<span class="absolute px-3 bg-surface-container-lowest font-caption-sm text-caption-sm text-on-surface-variant">O ingresá con tu correo</span>
+</div>
+<!-- Input: Email -->
+<div class="flex flex-col gap-1.5">
+<label class="font-label-md text-label-md text-on-surface" for="login-email">Correo electrónico</label>
+<div class="relative flex items-center">
+<span class="material-symbols-outlined absolute left-3 text-on-surface-variant text-[20px] pointer-events-none">mail</span>
+<input class="w-full h-11 pl-10 pr-3 rounded-lg bg-surface-container-lowest text-on-surface font-body-md text-body-md placeholder:text-outline shadow-sm focus:outline-none focus:ring-2 focus:ring-primary-container bg-surface-container-low" id="login-email" type="email" value="lucas.martinez@ejemplo.com.ar">
+</div>
+</div>
+<!-- Input: Contraseña -->
+<div class="flex flex-col gap-1.5">
+<div class="flex items-center justify-between">
+<label class="font-label-md text-label-md text-on-surface" for="login-password">Contraseña</label>
+<button class="font-caption-bold text-caption-bold text-primary hover:underline" type="button">¿Olvidaste tu contraseña?</button>
+</div>
+<div class="relative flex items-center">
+<span class="material-symbols-outlined absolute left-3 text-on-surface-variant text-[20px] pointer-events-none">lock</span>
+<input class="w-full h-11 pl-10 pr-10 rounded-lg bg-surface-container-lowest text-on-surface font-body-md text-body-md shadow-sm focus:outline-none focus:ring-2 focus:ring-error bg-surface-container-low" id="login-password" type="password" value="********">
+<button class="absolute right-3 text-on-surface-variant hover:text-on-surface flex items-center justify-center p-1" id="toggle-pwd-btn" type="button">
+<span class="material-symbols-outlined text-[20px]" id="toggle-pwd-icon">visibility</span>
+</button>
+</div>
+</div>
+<!-- Inline Error Alert Feedback -->
+<div class="flex items-center gap-2 p-2.5 rounded-lg bg-error-container text-on-error-container">
+<span class="material-symbols-outlined text-[20px] text-error shrink-0" style="font-variation-settings: 'FILL' 1;">error</span>
+<span class="font-caption-bold text-caption-bold">Por favor, verificá tus credenciales antes de continuar.</span>
+</div>
+<!-- Submit Button -->
+<button class="w-full h-12 rounded-lg bg-primary-container hover:bg-surface-tint active:scale-[0.99] text-on-primary font-body-lg-medium text-body-lg-medium transition-all duration-150 flex items-center justify-center gap-2 shadow-md hover:shadow-lg mt-1" id="submit-login" type="button">
+<span>Ingresar a DeliveryGo</span>
+<span class="material-symbols-outlined text-[20px]">arrow_forward</span>
+</button>
+<!-- Quick Switch Link -->
+<div class="text-center pt-2">
+<p class="font-body-md text-body-md text-on-surface-variant">
+            ¿No tenés una cuenta todavía?
+            <button class="font-body-md-medium text-body-md-medium text-primary hover:underline ml-1" id="link-to-register" type="button">Creá tu cuenta gratis</button>
+</p>
+</div>
+</div>
+<!-- Form Section: Registro (Hidden initially) -->
+<div class="hidden flex-col gap-space-md" id="form-register">
+<div>
+<h2 class="font-headline-md text-headline-md text-on-surface font-semibold">Creá tu cuenta</h2>
+<p class="font-body-md text-body-md text-on-surface-variant mt-1">Disfrutá envíos bonificados en tus primeros 3 pedidos.</p>
+</div>
+<div class="grid grid-cols-1 sm:grid-cols-2 gap-space-sm">
+<div class="flex flex-col gap-1.5">
+<label class="font-label-md text-label-md text-on-surface">Nombre</label>
+<input class="w-full h-11 px-3.5 rounded-lg bg-surface-container-low text-on-surface font-body-md text-body-md placeholder:text-outline focus:outline-none focus:ring-2 focus:ring-primary-container" placeholder="Lucas" type="text">
+</div>
+<div class="flex flex-col gap-1.5">
+<label class="font-label-md text-label-md text-on-surface">Apellido</label>
+<input class="w-full h-11 px-3.5 rounded-lg bg-surface-container-low text-on-surface font-body-md text-body-md placeholder:text-outline focus:outline-none focus:ring-2 focus:ring-primary-container" placeholder="Martínez" type="text">
+</div>
+</div>
+<div class="flex flex-col gap-1.5">
+<label class="font-label-md text-label-md text-on-surface">Correo electrónico</label>
+<input class="w-full h-11 px-3.5 rounded-lg bg-surface-container-low text-on-surface font-body-md text-body-md placeholder:text-outline focus:outline-none focus:ring-2 focus:ring-primary-container" placeholder="tu@correo.com.ar" type="email">
+</div>
+<div class="flex flex-col gap-1.5">
+<label class="font-label-md text-label-md text-on-surface">Dirección de entrega habitual</label>
+<div class="relative flex items-center">
+<span class="material-symbols-outlined absolute left-3 text-primary text-[20px] pointer-events-none">location_on</span>
+<input class="w-full h-11 pl-10 pr-24 rounded-lg bg-surface-container-low text-on-surface font-body-md text-body-md focus:outline-none focus:ring-2 focus:ring-primary-container" type="text" value="Av. Santa Fe 3200, Palermo, CABA">
+<span class="absolute right-2 px-2 py-1 rounded bg-surface-container text-on-surface font-caption-bold text-caption-bold">CABA</span>
+</div>
+</div>
+<div class="grid grid-cols-1 sm:grid-cols-2 gap-space-sm">
+<div class="flex flex-col gap-1.5">
+<label class="font-label-md text-label-md text-on-surface">Crear contraseña</label>
+<input class="w-full h-11 px-3.5 rounded-lg bg-surface-container-low text-on-surface font-body-md text-body-md placeholder:text-outline focus:outline-none focus:ring-2 focus:ring-primary-container" placeholder="Mínimo 8 caracteres" type="password">
+</div>
+<div class="flex flex-col gap-1.5">
+<label class="font-label-md text-label-md text-on-surface">Teléfono celular</label>
+<div class="relative flex items-center">
+<span class="absolute left-3 text-on-surface-variant font-caption-bold text-caption-bold">+54 9</span>
+<input class="w-full h-11 pl-16 pr-3.5 rounded-lg bg-surface-container-low text-on-surface font-body-md text-body-md placeholder:text-outline focus:outline-none focus:ring-2 focus:ring-primary-container" placeholder="11 5555-1234" type="tel">
+</div>
+</div>
+</div>
+<!-- Terms and Conditions Checkbox -->
+<label class="flex items-start gap-3 cursor-pointer select-none pt-1">
+<input checked="" class="w-5 h-5 mt-0.5 rounded accent-primary-container" type="checkbox">
+<span class="font-caption-sm text-caption-sm text-on-surface-variant leading-relaxed">
+            Acepto los <a class="text-primary font-caption-bold text-caption-bold hover:underline" href="#">Términos y Condiciones</a> y las <a class="text-primary font-caption-bold text-caption-bold hover:underline" href="#">Políticas de Privacidad</a> de DeliveryGo Argentina.
+          </span>
+</label>
+<!-- Register Submit Button -->
+<button class="w-full h-12 rounded-lg bg-primary-container hover:bg-surface-tint active:scale-[0.99] text-on-primary font-body-lg-medium text-body-lg-medium transition-all duration-150 flex items-center justify-center gap-2 shadow-md hover:shadow-lg mt-1" type="button">
+<span>Registrarme y empezar</span>
+<span class="material-symbols-outlined text-[20px]">rocket_launch</span>
+</button>
+<!-- Back to Login -->
+<div class="text-center pt-1">
+<p class="font-body-md text-body-md text-on-surface-variant">
+            ¿Ya tenés cuenta creada?
+            <button class="font-body-md-medium text-body-md-medium text-primary hover:underline ml-1" id="link-to-login" type="button">Iniciá sesión acá</button>
+</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+<script>
+  (function() {
+    const tabLogin = document.getElementById('tab-login-btn');
+    const tabRegister = document.getElementById('tab-register-btn');
+    const formLogin = document.getElementById('form-login');
+    const formRegister = document.getElementById('form-register');
+    const linkToRegister = document.getElementById('link-to-register');
+    const linkToLogin = document.getElementById('link-to-login');
+    const togglePwdBtn = document.getElementById('toggle-pwd-btn');
+    const togglePwdIcon = document.getElementById('toggle-pwd-icon');
+    const pwdInput = document.getElementById('login-password');
+
+    function switchToLogin() {
+      tabLogin.classList.add('bg-surface-container-lowest', 'text-on-surface', 'shadow-sm');
+      tabLogin.classList.remove('text-on-surface-variant');
+      tabRegister.classList.remove('bg-surface-container-lowest', 'text-on-surface', 'shadow-sm');
+      tabRegister.classList.add('text-on-surface-variant');
+      formLogin.classList.remove('hidden');
+      formLogin.classList.add('flex');
+      formRegister.classList.add('hidden');
+      formRegister.classList.remove('flex');
+    }
+
+    function switchToRegister() {
+      tabRegister.classList.add('bg-surface-container-lowest', 'text-on-surface', 'shadow-sm');
+      tabRegister.classList.remove('text-on-surface-variant');
+      tabLogin.classList.remove('bg-surface-container-lowest', 'text-on-surface', 'shadow-sm');
+      tabLogin.classList.add('text-on-surface-variant');
+      formRegister.classList.remove('hidden');
+      formRegister.classList.add('flex');
+      formLogin.classList.add('hidden');
+      formLogin.classList.remove('flex');
+    }
+
+    if (tabLogin && tabRegister) {
+      tabLogin.addEventListener('click', switchToLogin);
+      tabRegister.addEventListener('click', switchToRegister);
+    }
+
+    if (linkToRegister) linkToRegister.addEventListener('click', switchToRegister);
+    if (linkToLogin) linkToLogin.addEventListener('click', switchToLogin);
+
+    if (togglePwdBtn && pwdInput && togglePwdIcon) {
+      togglePwdBtn.addEventListener('click', function() {
+        const isPassword = pwdInput.getAttribute('type') === 'password';
+        pwdInput.setAttribute('type', isPassword ? 'text' : 'password');
+        togglePwdIcon.textContent = isPassword ? 'visibility_off' : 'visibility';
+      });
+    }
+  })();
+</script></main></body></html>

@@ -1,0 +1,591 @@
+<!DOCTYPE html><html lang="es"><head><meta charset="utf-8"><meta content="width=device-width, initial-scale=1.0" name="viewport"><link href="https://fonts.googleapis.com" rel="preconnect"><link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"><link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet"><link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"><style>@layer base { html, body { margin: 0; padding: 0; } body { overscroll-behavior: none; } main > :first-child { margin-top: 0 !important; } main > :last-child { margin-bottom: 0 !important; } } ::-webkit-scrollbar { display: none; }</style><script src="https://cdn.tailwindcss.com"></script><script id="tailwind-config">tailwind.config = { darkMode: "class", theme: { extend: { "colors": { "on-surface-variant": "#3d4a44", "on-secondary-fixed": "#191c1e", "on-primary-container": "#003427", "primary-fixed": "#79f9d0", "surface-tint": "#006b53", "secondary-fixed": "#e1e2e5", "outline": "#6c7a74", "secondary-fixed-dim": "#c5c7c9", "on-error": "#ffffff", "outline-variant": "#bccac2", "on-primary": "#ffffff", "tertiary-fixed": "#dbe1ff", "primary-container": "#00a884", "secondary": "#5c5f61", "surface-container-lowest": "#ffffff", "tertiary-fixed-dim": "#b4c5ff", "surface": "#f9f9ff", "on-surface": "#151c27", "on-error-container": "#93000a", "surface-container-low": "#f0f3ff", "on-background": "#151c27", "on-tertiary-container": "#002771", "primary": "#006b53", "inverse-on-surface": "#ebf1ff", "secondary-container": "#dee0e2", "on-secondary-fixed-variant": "#444749", "surface-bright": "#f9f9ff", "tertiary-container": "#678fff", "on-tertiary-fixed": "#00174b", "error": "#ba1a1a", "surface-container-highest": "#dce2f3", "on-tertiary-fixed-variant": "#003ea8", "on-tertiary": "#ffffff", "on-secondary-container": "#606365", "surface-container-high": "#e2e8f8", "on-secondary": "#ffffff", "background": "#f9f9ff", "surface-container": "#e7eefe", "on-primary-fixed-variant": "#00513e", "surface-variant": "#dce2f3", "primary-fixed-dim": "#59dcb5", "on-primary-fixed": "#002117", "inverse-primary": "#59dcb5", "tertiary": "#0053db", "error-container": "#ffdad6", "inverse-surface": "#2a313d", "surface-dim": "#d3daea" }, "borderRadius": { "DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px" }, "spacing": { "space-md": "1rem", "gutter-mobile": "1rem", "container-max": "1280px", "space-2xs": "0.25rem", "space-3xl": "4rem", "space-lg": "1.5rem", "gutter-desktop": "1.5rem", "space-xl": "2rem", "space-2xl": "3rem", "space-xs": "0.5rem", "space-sm": "0.75rem" }, "fontFamily": { "headline-lg-mobile": ["Inter"], "body-lg": ["Inter"], "headline-lg": ["Inter"], "body-md": ["Inter"], "title-md": ["Inter"], "body-md-medium": ["Inter"], "display-hero": ["Inter"], "headline-md": ["Inter"], "label-md": ["Inter"], "display-hero-mobile": ["Inter"], "body-lg-medium": ["Inter"], "caption-bold": ["Inter"], "headline-sm": ["Inter"], "caption-sm": ["Inter"] }, "fontSize": { "headline-lg-mobile": ["26px", { "lineHeight": "32px", "letterSpacing": "-0.01em", "fontWeight": "600" }], "body-lg": ["16px", { "lineHeight": "24px", "letterSpacing": "0em", "fontWeight": "400" }], "headline-lg": ["32px", { "lineHeight": "40px", "letterSpacing": "-0.015em", "fontWeight": "600" }], "body-md": ["14px", { "lineHeight": "20px", "letterSpacing": "0em", "fontWeight": "400" }], "title-md": ["18px", { "lineHeight": "24px", "letterSpacing": "0em", "fontWeight": "600" }], "body-md-medium": ["14px", { "lineHeight": "20px", "letterSpacing": "0em", "fontWeight": "500" }], "display-hero": ["40px", { "lineHeight": "48px", "letterSpacing": "-0.02em", "fontWeight": "700" }], "headline-md": ["24px", { "lineHeight": "32px", "letterSpacing": "-0.01em", "fontWeight": "600" }], "label-md": ["13px", { "lineHeight": "18px", "letterSpacing": "0.01em", "fontWeight": "500" }], "display-hero-mobile": ["30px", { "lineHeight": "36px", "letterSpacing": "-0.015em", "fontWeight": "700" }], "body-lg-medium": ["16px", { "lineHeight": "24px", "letterSpacing": "0em", "fontWeight": "500" }], "caption-bold": ["12px", { "lineHeight": "16px", "letterSpacing": "0.02em", "fontWeight": "600" }], "headline-sm": ["20px", { "lineHeight": "28px", "letterSpacing": "-0.005em", "fontWeight": "600" }], "caption-sm": ["12px", { "lineHeight": "16px", "letterSpacing": "0.01em", "fontWeight": "400" }] } } } };</script></head><body class="bg-background font-body-md text-on-surface antialiased selection:bg-primary-container selection:text-on-primary-container"><header class="fixed top-0 left-0 right-0 w-full z-50 bg-surface-container-lowest/90 backdrop-blur-xl shadow-[0_1px_8px_rgba(0,0,0,0.04)]"><div class="h-20 max-w-[1280px] mx-auto px-gutter-mobile lg:px-gutter-desktop flex items-center justify-between gap-space-md"><div class="flex items-center gap-space-lg shrink-0"><a class="flex items-center gap-space-xs" data-path="comercios" href="#"><img alt="DeliveryGo Logo" class="h-8 w-auto object-contain" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAR10kqrtXin7jn-sIsvkfeTDKlpO5HZRYcxXpawKI1qNTtK26vuLJ8cYSoH5PGhne4hWGje1bm7RBt5MqZ9Sdemk_SZtByp6R-5ILMToWzRltEtGw2JSzns9m_PC_H8fvNiRtWAJ8-_1lC_bx8zSGvc4Iku6e1M7LRy7GFuP1FutlPKqqn_tPtQDAapUqnKTqyofC9ESW1il78PNUtTB3ZuiZAI5kWz-LjQt6cW-otkNcPcAGbwkcN"><span class="font-title-md text-title-md text-on-surface hidden sm:inline-block tracking-tight">Delivery<span class="text-primary-container">Go</span></span></a><button class="flex items-center gap-space-xs py-space-xs px-space-sm rounded-full bg-surface-container-low hover:bg-surface-container hover:text-on-surface text-on-surface-variant transition-colors" type="button"><span class="material-symbols-outlined text-primary-container text-[20px]">location_on</span><div class="flex flex-col text-left"><span class="font-caption-sm text-caption-sm text-secondary leading-none">Entregar en</span><span class="font-body-md-medium text-body-md-medium text-on-surface truncate max-w-[150px] md:max-w-[200px] leading-tight">Av. Corrientes 1450, CABA</span></div><span class="material-symbols-outlined text-secondary text-[18px]">expand_more</span></button></div><div class="flex-1 max-w-xl hidden md:block"><div class="relative w-full"><span class="material-symbols-outlined absolute left-space-md top-1/2 -translate-y-1/2 text-outline text-[20px]">search</span><input class="w-full h-11 pl-11 pr-space-md rounded-xl bg-surface-container-low border border-outline-variant/30 text-on-surface placeholder:text-outline font-body-md focus:outline-none focus:ring-2 focus:ring-primary-container/20 focus:border-primary-container transition-all" placeholder="Buscar restaurantes, platos o bebidas..." type="text"></div></div><div class="flex items-center gap-space-sm shrink-0"><nav class="hidden xl:flex items-center gap-space-xs mr-space-xs" data-active-classes="bg-surface-container-high text-on-surface font-body-md-medium"><a aria-current="page" class="px-space-sm py-space-xs rounded-lg transition-colors bg-surface-container-high text-on-surface font-body-md-medium" data-path="comercios" href="#">Comercios</a><a class="px-space-sm py-space-xs rounded-lg font-body-md text-body-md text-on-surface-variant hover:text-on-surface hover:bg-surface-container-low transition-colors" data-path="promociones" href="#">Promociones</a><a class="px-space-sm py-space-xs rounded-lg font-body-md text-body-md text-on-surface-variant hover:text-on-surface hover:bg-surface-container-low transition-colors" data-path="pedidos-activos" href="#">Mis Pedidos</a></nav><a class="relative p-space-xs rounded-full hover:bg-surface-container-low text-on-surface-variant hover:text-on-surface transition-colors" data-path="notificaciones" href="#"><span class="material-symbols-outlined text-[24px]">notifications</span><span class="absolute top-1 right-1 flex items-center justify-center min-w-[18px] h-[18px] px-1 bg-error text-on-error rounded-full font-caption-bold text-[10px] leading-none">3</span></a><a class="flex items-center gap-space-xs py-space-xs px-space-sm rounded-xl bg-surface-container-low hover:bg-surface-container text-on-surface transition-colors" data-path="carrito" href="#"><div class="relative flex items-center"><span class="material-symbols-outlined text-primary-container text-[22px]">shopping_bag</span><span class="absolute -top-1.5 -right-2 flex items-center justify-center min-w-[16px] h-[16px] px-1 bg-primary-container text-on-primary rounded-full font-caption-bold text-[10px] leading-none">2</span></div><span class="hidden sm:inline-block font-body-md-medium text-body-md-medium text-on-surface">$8.450</span></a><a class="flex items-center gap-space-xs pl-space-xs py-space-xs rounded-full hover:bg-surface-container-low transition-colors" data-path="perfil" href="#"><img alt="Profile" class="w-8 h-8 rounded-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuB6H7_LwcTC-3P1tlRzTOM1gGsKRRI4C3WPhUC-h3xufJtxhYUSxlvF8E-806QGOsyDTm5ZWzg5fvnGSedo-auwT8GpTQH9Buz9Du6eFiDLzhDy7SozSvK9v2f2Nf-KpXgwaOQuwPTlJan18CmoxKvtOIvIKzbC147jW5W-2Zpxc14BJo0-4mA7Kx8Pa0iM1Xrj22CLFZSMtkYowTef_EBRn_lphfacnhKmBll1ulLyDeCZI8coezS6"><span class="font-body-md-medium text-body-md-medium text-on-surface hidden lg:inline-block pr-space-xs">Lucas M.</span></a></div></div></header><main class="w-full pt-20 bg-background min-h-[calc(100vh-280px)]"><div class="flex flex-col w-full">
+<div class="max-w-[1280px] mx-auto px-gutter-mobile lg:px-gutter-desktop w-full py-space-xl space-y-space-2xl">
+<!-- Breadcrumb & Order Reference -->
+<div class="flex flex-wrap items-center justify-between gap-space-sm">
+<div class="flex items-center gap-space-xs text-on-surface-variant">
+<a class="flex items-center gap-space-2xs hover:text-primary transition-colors font-body-md text-body-md" data-path="pedidos-activos" href="#">
+<span class="material-symbols-outlined text-[18px]">arrow_back</span>
+<span>Mis Pedidos</span>
+</a>
+<span class="text-outline-variant font-caption-sm text-caption-sm">/</span>
+<span class="font-body-md-medium text-body-md-medium text-on-surface">Pedido #DG-92813</span>
+</div>
+<div class="flex items-center gap-space-xs px-space-sm py-space-2xs bg-surface-container rounded-full">
+<span class="w-2 h-2 rounded-full bg-primary-container"></span>
+<span class="font-caption-bold text-caption-bold text-on-surface">Entregado hace 18 min</span>
+</div>
+</div>
+<!-- Main Grid: Interactive Post-Delivery Rating Card & Fast Details Rail -->
+<section class="grid grid-cols-1 lg:grid-cols-12 gap-space-xl items-start">
+<!-- Interactive Rating Container (8 cols) -->
+<div class="lg:col-span-8 bg-surface-container-lowest rounded-xl p-space-lg sm:p-space-xl shadow-md space-y-space-xl">
+<!-- Header Section with Store Info -->
+<div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-space-md bg-surface-container-low p-space-md sm:p-space-lg rounded-xl">
+<div class="flex items-center gap-space-md">
+<img class="w-16 h-16 rounded-xl object-cover shadow-sm shrink-0" data-alt="Branded gourmet smash burger restaurant logo icon showing craft burgers and artisanal aesthetics on teal and neutral tones" src="https://lh3.googleusercontent.com/aida-public/AB6AXuD39v5f1si71OcC7sY-RVuae41nmbZ-NqeJ5AD6vn2W0RnTiI_GSqptkTS3LPBkA2Hjw6R6DpnONJjbdG9L_7D3RvFJgeLepcL-dGjbBxeQzDenHV1HaFZjTCB-OUb293bPUO5lQ7wtOREXZBlM4hW2ERcMmBuMC8KqwpP7_OHM6tabmjFjzu8DW4I_1Rzoge-OF0QT34-ZanZqmzsV9lxBqe9zqdkY8jykSGapL198zLHDfE09VW8E">
+<div>
+<span class="inline-flex items-center gap-space-2xs px-space-xs py-0.5 rounded-full bg-primary-container/15 text-primary font-caption-bold text-caption-bold mb-1">
+<span class="material-symbols-outlined text-[14px]">task_alt</span> Entrega completada
+              </span>
+<h1 class="font-headline-md text-headline-md text-on-surface leading-snug">
+                ¡Tu pedido de La Birra Bar ya fue entregado!
+              </h1>
+<p class="font-body-md text-body-md text-on-surface-variant mt-0.5">
+                ¿Cómo estuvo tu experiencia gastronómica hoy?
+              </p>
+</div>
+</div>
+</div>
+<!-- Rating 1: Store & Food -->
+<div class="space-y-space-sm bg-surface rounded-xl p-space-lg">
+<div class="flex flex-col sm:flex-row sm:items-center justify-between gap-space-2xs">
+<div class="flex items-center gap-space-xs">
+<div class="w-8 h-8 rounded-lg bg-surface-container-high flex items-center justify-center text-primary">
+<span class="material-symbols-outlined text-[20px]">lunch_dining</span>
+</div>
+<label class="font-title-md text-title-md text-on-surface">
+                Calificá la comida y preparación de La Birra Bar
+              </label>
+</div>
+<span class="font-caption-bold text-caption-bold text-primary-container sm:text-right" id="store-rating-label">
+              Tocá una estrella
+            </span>
+</div>
+<div class="flex items-center gap-space-xs pt-space-xs" id="store-stars-group">
+<button class="star-btn-store p-1 rounded-lg text-secondary-container hover:scale-110 active:scale-95 transition-all text-[34px]" data-val="1" type="button">
+<span class="material-symbols-outlined text-[36px]" style="font-variation-settings: 'FILL' 1;">star</span>
+</button>
+<button class="star-btn-store p-1 rounded-lg text-secondary-container hover:scale-110 active:scale-95 transition-all text-[34px]" data-val="2" type="button">
+<span class="material-symbols-outlined text-[36px]" style="font-variation-settings: 'FILL' 1;">star</span>
+</button>
+<button class="star-btn-store p-1 rounded-lg text-secondary-container hover:scale-110 active:scale-95 transition-all text-[34px]" data-val="3" type="button">
+<span class="material-symbols-outlined text-[36px]" style="font-variation-settings: 'FILL' 1;">star</span>
+</button>
+<button class="star-btn-store p-1 rounded-lg text-secondary-container hover:scale-110 active:scale-95 transition-all text-[34px]" data-val="4" type="button">
+<span class="material-symbols-outlined text-[36px]" style="font-variation-settings: 'FILL' 1;">star</span>
+</button>
+<button class="star-btn-store p-1 rounded-lg text-secondary-container hover:scale-110 active:scale-95 transition-all text-[34px]" data-val="5" type="button">
+<span class="material-symbols-outlined text-[36px]" style="font-variation-settings: 'FILL' 1;">star</span>
+</button>
+</div>
+</div>
+<!-- Rating 2: Delivery Courier -->
+<div class="space-y-space-sm bg-surface rounded-xl p-space-lg">
+<div class="flex flex-col sm:flex-row sm:items-center justify-between gap-space-2xs">
+<div class="flex items-center gap-space-sm">
+<img class="w-10 h-10 rounded-full object-cover shadow-sm" data-alt="Portrait of friendly delivery courier driver Matias wearing a teal urban cycling jacket and safety helmet with a genuine smile" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAngRhrGDo9KVXK6nJPNjKsqrYaZGPAcaiQr-0C95Ug45JrHsUXS_QGISs2fmI-7I9UfEClMu2BiWnmtizzeepa6ai5FOWphCrcv-OpQjChiv3kWGF5TcKuda8fWCTviC5Vt2vVjENjC-D9IjoVI7ztY-MAePIAI3tyegAUMOUbpg-DJMmbp_0iKwg6PvN6zmn1XUu4u07BHreQPE7z_JaVVuGqfBwmXb24Ec_FdVW8hcXt83c2sS9x">
+<div>
+<label class="font-title-md text-title-md text-on-surface">
+                  Calificá el servicio y la atención de Matías G.
+                </label>
+<p class="font-caption-sm text-caption-sm text-on-surface-variant">Tu repartidor en bicicleta motorizada</p>
+</div>
+</div>
+<span class="font-caption-bold text-caption-bold text-primary-container sm:text-right" id="courier-rating-label">
+              Tocá una estrella
+            </span>
+</div>
+<div class="flex items-center gap-space-xs pt-space-xs" id="courier-stars-group">
+<button class="star-btn-courier p-1 rounded-lg text-secondary-container hover:scale-110 active:scale-95 transition-all" data-val="1" type="button">
+<span class="material-symbols-outlined text-[36px]" style="font-variation-settings: 'FILL' 1;">star</span>
+</button>
+<button class="star-btn-courier p-1 rounded-lg text-secondary-container hover:scale-110 active:scale-95 transition-all" data-val="2" type="button">
+<span class="material-symbols-outlined text-[36px]" style="font-variation-settings: 'FILL' 1;">star</span>
+</button>
+<button class="star-btn-courier p-1 rounded-lg text-secondary-container hover:scale-110 active:scale-95 transition-all" data-val="3" type="button">
+<span class="material-symbols-outlined text-[36px]" style="font-variation-settings: 'FILL' 1;">star</span>
+</button>
+<button class="star-btn-courier p-1 rounded-lg text-secondary-container hover:scale-110 active:scale-95 transition-all" data-val="4" type="button">
+<span class="material-symbols-outlined text-[36px]" style="font-variation-settings: 'FILL' 1;">star</span>
+</button>
+<button class="star-btn-courier p-1 rounded-lg text-secondary-container hover:scale-110 active:scale-95 transition-all" data-val="5" type="button">
+<span class="material-symbols-outlined text-[36px]" style="font-variation-settings: 'FILL' 1;">star</span>
+</button>
+</div>
+</div>
+<!-- Chips: Quick positive aspects -->
+<div class="space-y-space-xs">
+<div class="flex items-center justify-between">
+<label class="font-title-md text-title-md text-on-surface">
+              ¿Qué aspectos querés destacar de esta entrega?
+            </label>
+<span class="font-caption-sm text-caption-sm text-secondary">Elegí las que quieras</span>
+</div>
+<div class="flex flex-wrap gap-space-xs pt-space-2xs" id="chips-container">
+<button class="quick-chip flex items-center gap-space-2xs px-space-md py-space-xs rounded-full bg-surface text-on-surface hover:bg-surface-container text-body-md font-body-md transition-all" type="button">
+<span class="material-symbols-outlined text-[18px] text-primary-container">schedule</span>
+<span>Puntualidad impecable</span>
+</button>
+<button class="quick-chip flex items-center gap-space-2xs px-space-md py-space-xs rounded-full bg-surface text-on-surface hover:bg-surface-container text-body-md font-body-md transition-all" type="button">
+<span class="material-symbols-outlined text-[18px] text-primary-container">whatshot</span>
+<span>Comida caliente / temperatura ideal</span>
+</button>
+<button class="quick-chip flex items-center gap-space-2xs px-space-md py-space-xs rounded-full bg-surface text-on-surface hover:bg-surface-container text-body-md font-body-md transition-all" type="button">
+<span class="material-symbols-outlined text-[18px] text-primary-container">takeout_dining</span>
+<span>Presentación y empaque</span>
+</button>
+<button class="quick-chip flex items-center gap-space-2xs px-space-md py-space-xs rounded-full bg-surface text-on-surface hover:bg-surface-container text-body-md font-body-md transition-all" type="button">
+<span class="material-symbols-outlined text-[18px] text-primary-container">sentiment_very_satisfied</span>
+<span>Trato amable y cordial</span>
+</button>
+<button class="quick-chip flex items-center gap-space-2xs px-space-md py-space-xs rounded-full bg-surface text-on-surface hover:bg-surface-container text-body-md font-body-md transition-all" type="button">
+<span class="material-symbols-outlined text-[18px] text-primary-container">checklist</span>
+<span>Pedido completo</span>
+</button>
+</div>
+</div>
+<!-- Optional Comments Field -->
+<div class="space-y-space-2xs">
+<label class="font-title-md text-title-md text-on-surface flex items-center gap-space-2xs" for="review-textarea">
+<span>Contanos más sobre tu pedido</span>
+<span class="font-body-md text-body-md text-secondary font-normal">(opcional)</span>
+</label>
+<textarea class="w-full p-space-md rounded-xl bg-surface text-on-surface placeholder:text-outline font-body-md text-body-md focus:outline-none focus:ring-2 focus:ring-primary-container/20 transition-all resize-none shadow-sm" id="review-textarea" placeholder="¿Qué fue lo que más te gustó de las hamburguesas o qué podemos mejorar? Tu comentario ayuda a la comunidad." rows="3"></textarea>
+<div class="flex justify-between items-center px-1">
+<span class="font-caption-sm text-caption-sm text-on-surface-variant">Máximo 500 caracteres</span>
+<span class="font-caption-sm text-caption-sm text-secondary" id="char-counter">0 / 500</span>
+</div>
+</div>
+<!-- Action Section -->
+<div class="flex flex-col sm:flex-row items-center justify-between gap-space-md pt-space-xs">
+<div class="flex items-center gap-space-xs text-on-surface-variant">
+<span class="material-symbols-outlined text-primary-container text-[20px]">verified_user</span>
+<span class="font-caption-sm text-caption-sm">Tu valoración se publicará con tu nombre de usuario visible</span>
+</div>
+<button class="w-full sm:w-auto px-space-xl py-space-sm bg-primary-container hover:bg-primary text-on-primary rounded-lg font-title-md text-title-md flex items-center justify-center gap-space-xs shadow-sm hover:shadow-md active:scale-98 transition-all" id="submit-review-btn" type="button">
+<span>Enviar reseña y finalizar</span>
+<span class="material-symbols-outlined text-[20px]">arrow_forward</span>
+</button>
+</div>
+</div>
+<!-- Side Order Summary Card (4 cols) -->
+<div class="lg:col-span-4 space-y-space-md">
+<!-- Recycled Summary Details -->
+<div class="bg-surface-container-lowest rounded-xl p-space-lg shadow-sm space-y-space-md">
+<div class="flex items-center justify-between pb-space-xs">
+<span class="font-caption-bold text-caption-bold uppercase tracking-wider text-secondary">Resumen del pedido</span>
+<span class="font-caption-sm text-caption-sm text-on-surface-variant">13:42 hs</span>
+</div>
+<div class="space-y-space-sm">
+<div class="flex items-center justify-between gap-space-sm">
+<div class="flex items-center gap-space-xs min-w-0">
+<span class="font-body-md-medium text-body-md-medium px-1.5 py-0.5 rounded bg-surface-container-high text-on-surface shrink-0">1x</span>
+<span class="font-body-md text-body-md text-on-surface truncate">Golden Burger Doble Cheddar</span>
+</div>
+<span class="font-body-md-medium text-body-md-medium text-on-surface shrink-0">$6.200</span>
+</div>
+<div class="flex items-center justify-between gap-space-sm">
+<div class="flex items-center gap-space-xs min-w-0">
+<span class="font-body-md-medium text-body-md-medium px-1.5 py-0.5 rounded bg-surface-container-high text-on-surface shrink-0">1x</span>
+<span class="font-body-md text-body-md text-on-surface truncate">Papas Rústicas Trufadas</span>
+</div>
+<span class="font-body-md-medium text-body-md-medium text-on-surface shrink-0">$2.250</span>
+</div>
+</div>
+<div class="pt-space-xs flex items-center justify-between bg-surface-container-low p-space-sm rounded-lg">
+<span class="font-body-md-medium text-body-md-medium text-on-surface">Total abonado</span>
+<span class="font-title-md text-title-md text-primary font-bold">$8.450 ARS</span>
+</div>
+<!-- Micro Tips / Propina repartidor -->
+<div class="pt-space-2xs space-y-space-2xs">
+<span class="font-caption-bold text-caption-bold text-on-surface flex items-center gap-space-2xs">
+<span class="material-symbols-outlined text-[16px] text-primary-container">volunteer_activism</span>
+              Propina al repartidor
+            </span>
+<div class="grid grid-cols-4 gap-space-2xs text-center font-caption-bold text-caption-bold">
+<button class="py-1.5 rounded-lg bg-surface hover:bg-surface-container text-on-surface transition-colors" type="button">$200</button>
+<button class="py-1.5 rounded-lg bg-primary-container text-on-primary shadow-sm transition-colors" type="button">$400</button>
+<button class="py-1.5 rounded-lg bg-surface hover:bg-surface-container text-on-surface transition-colors" type="button">$600</button>
+<button class="py-1.5 rounded-lg bg-surface hover:bg-surface-container text-on-surface transition-colors" type="button">Otro</button>
+</div>
+</div>
+</div>
+<!-- Trust badge DeliveryGo -->
+<div class="p-space-md bg-surface-container-low rounded-xl flex items-start gap-space-sm">
+<span class="material-symbols-outlined text-primary-container text-[26px] shrink-0">shield_with_heart</span>
+<div>
+<span class="font-body-md-medium text-body-md-medium text-on-surface block">Garantía de Entrega y Calidad</span>
+<p class="font-caption-sm text-caption-sm text-on-surface-variant mt-0.5">
+              Si algo no salió según lo esperado con tu comida o entrega, podés abrir un reclamo inmediato desde el soporte 24/7.
+            </p>
+</div>
+</div>
+</div>
+</section>
+<!-- Lower Section: Store Review Public List & Global Metric Breakdown -->
+<section class="space-y-space-lg pt-space-md">
+<!-- Section Header -->
+<div class="flex flex-col sm:flex-row sm:items-end justify-between gap-space-xs">
+<div>
+<span class="font-caption-bold text-caption-bold uppercase tracking-wider text-primary">Comunidad DeliveryGo</span>
+<h2 class="font-headline-lg text-headline-lg text-on-surface tracking-tight">
+            Opiniones de la comunidad sobre La Birra Bar
+          </h2>
+</div>
+<div class="flex items-center gap-space-xs">
+<button class="flex items-center gap-space-2xs px-space-sm py-space-2xs rounded-lg bg-surface-container-low hover:bg-surface-container text-on-surface font-body-md-medium text-body-md-medium transition-colors" type="button">
+<span class="material-symbols-outlined text-[18px]">tune</span>
+<span>Más recientes</span>
+<span class="material-symbols-outlined text-[18px]">arrow_drop_down</span>
+</button>
+</div>
+</div>
+<!-- Bento Grid: Metric Summary & Star Histogram (Left) vs Real-User Reviews (Right) -->
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-space-xl">
+<!-- Metric Breakdown Card (4 cols) -->
+<div class="lg:col-span-4 bg-surface-container-lowest rounded-xl p-space-lg shadow-sm space-y-space-lg self-start">
+<div class="flex items-center gap-space-md">
+<div class="flex flex-col items-center justify-center p-space-md rounded-xl bg-surface-container-low min-w-[100px]">
+<span class="font-display-hero text-display-hero text-on-surface leading-none">4.8</span>
+<div class="flex items-center text-[#E5A000] mt-1">
+<span class="material-symbols-outlined text-[18px]" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined text-[18px]" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined text-[18px]" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined text-[18px]" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined text-[18px]" style="font-variation-settings: 'FILL' 1;">star_half</span>
+</div>
+</div>
+<div>
+<span class="font-title-md text-title-md text-on-surface block">Calificación general</span>
+<p class="font-body-md text-body-md text-on-surface-variant">Basado en <span class="font-body-md-medium text-body-md-medium text-on-surface">1.240 opiniones</span> de clientes verificados.</p>
+</div>
+</div>
+<!-- Star Distribution Histogram -->
+<div class="space-y-space-xs pt-space-xs">
+<!-- 5 stars -->
+<div class="flex items-center gap-space-sm font-caption-sm text-caption-sm">
+<span class="w-12 text-on-surface font-caption-bold text-caption-bold flex items-center gap-0.5">
+                5 <span class="material-symbols-outlined text-[14px] text-[#E5A000]" style="font-variation-settings: 'FILL' 1;">star</span>
+</span>
+<div class="flex-1 h-2.5 bg-surface-container rounded-full overflow-hidden">
+<div class="h-full bg-primary-container rounded-full" style="width: 82%;"></div>
+</div>
+<span class="w-10 text-right font-caption-bold text-caption-bold text-on-surface">82%</span>
+</div>
+<!-- 4 stars -->
+<div class="flex items-center gap-space-sm font-caption-sm text-caption-sm">
+<span class="w-12 text-on-surface font-caption-bold text-caption-bold flex items-center gap-0.5">
+                4 <span class="material-symbols-outlined text-[14px] text-[#E5A000]" style="font-variation-settings: 'FILL' 1;">star</span>
+</span>
+<div class="flex-1 h-2.5 bg-surface-container rounded-full overflow-hidden">
+<div class="h-full bg-primary-container/80 rounded-full" style="width: 12%;"></div>
+</div>
+<span class="w-10 text-right font-caption-bold text-caption-bold text-on-surface">12%</span>
+</div>
+<!-- 3 stars -->
+<div class="flex items-center gap-space-sm font-caption-sm text-caption-sm">
+<span class="w-12 text-on-surface font-caption-bold text-caption-bold flex items-center gap-0.5">
+                3 <span class="material-symbols-outlined text-[14px] text-[#E5A000]" style="font-variation-settings: 'FILL' 1;">star</span>
+</span>
+<div class="flex-1 h-2.5 bg-surface-container rounded-full overflow-hidden">
+<div class="h-full bg-primary-container/60 rounded-full" style="width: 4%;"></div>
+</div>
+<span class="w-10 text-right font-caption-bold text-caption-bold text-on-surface">4%</span>
+</div>
+<!-- 2 stars -->
+<div class="flex items-center gap-space-sm font-caption-sm text-caption-sm">
+<span class="w-12 text-on-surface font-caption-bold text-caption-bold flex items-center gap-0.5">
+                2 <span class="material-symbols-outlined text-[14px] text-[#E5A000]" style="font-variation-settings: 'FILL' 1;">star</span>
+</span>
+<div class="flex-1 h-2.5 bg-surface-container rounded-full overflow-hidden">
+<div class="h-full bg-primary-container/40 rounded-full" style="width: 1%;"></div>
+</div>
+<span class="w-10 text-right font-caption-bold text-caption-bold text-on-surface">1%</span>
+</div>
+<!-- 1 star -->
+<div class="flex items-center gap-space-sm font-caption-sm text-caption-sm">
+<span class="w-12 text-on-surface font-caption-bold text-caption-bold flex items-center gap-0.5">
+                1 <span class="material-symbols-outlined text-[14px] text-[#E5A000]" style="font-variation-settings: 'FILL' 1;">star</span>
+</span>
+<div class="flex-1 h-2.5 bg-surface-container rounded-full overflow-hidden">
+<div class="h-full bg-primary-container/25 rounded-full" style="width: 1%;"></div>
+</div>
+<span class="w-10 text-right font-caption-bold text-caption-bold text-on-surface">1%</span>
+</div>
+</div>
+<!-- Highlight criteria pills -->
+<div class="pt-space-xs space-y-space-xs">
+<span class="font-caption-bold text-caption-bold uppercase tracking-wider text-secondary">Destacados por usuarios</span>
+<div class="flex flex-wrap gap-space-xs">
+<span class="px-space-xs py-1 rounded-full bg-surface-container font-caption-sm text-caption-sm text-on-surface-variant flex items-center gap-1">
+<span class="material-symbols-outlined text-[14px] text-primary-container">thumb_up</span> Sabor auténtico (94%)
+              </span>
+<span class="px-space-xs py-1 rounded-full bg-surface-container font-caption-sm text-caption-sm text-on-surface-variant flex items-center gap-1">
+<span class="material-symbols-outlined text-[14px] text-primary-container">timer</span> Entrega en tiempo (91%)
+              </span>
+<span class="px-space-xs py-1 rounded-full bg-surface-container font-caption-sm text-caption-sm text-on-surface-variant flex items-center gap-1">
+<span class="material-symbols-outlined text-[14px] text-primary-container">inventory_2</span> Packaging térmico (88%)
+              </span>
+</div>
+</div>
+</div>
+<!-- Real Customer Reviews List (8 cols) -->
+<div class="lg:col-span-8 space-y-space-md">
+<!-- Review 1 -->
+<article class="bg-surface-container-lowest rounded-xl p-space-lg shadow-sm space-y-space-sm hover:shadow-md transition-shadow">
+<div class="flex items-start justify-between gap-space-sm">
+<div class="flex items-center gap-space-sm">
+<img class="w-11 h-11 rounded-full object-cover shadow-sm" data-alt="Profile avatar photo of young Argentine man named Agustin smiling casually outdoor coffee shop background" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCbogWicR3ljHbgozBH-mHT73nFACmQBTu2dAhLMGuefUtZ4sBE8a10VL5ae-uvxCDtzqyUD0kqIYTAj17FVeBips7XBpteiHJccR1asJeIb6jtBaf06QAOAdsj5fMS0CrLCiLr_axdYzCgOxLxE5nyI1Jgj6hLeVFLWCjJ9zbpop9_2TmsD-5Fobt10riBOkwQTYeq_xuk3SVAsDq4GzkFcr0fW5tDMlBwfDKG_KX9KiH-g7HkuxS6">
+<div>
+<div class="flex items-center gap-space-xs">
+<span class="font-title-md text-title-md text-on-surface">Agustín R.</span>
+<span class="material-symbols-outlined text-primary-container text-[16px]" title="Comprador verificado">verified</span>
+</div>
+<div class="flex items-center gap-space-xs mt-0.5">
+<div class="flex items-center text-[#E5A000]">
+<span class="material-symbols-outlined text-[16px]" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined text-[16px]" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined text-[16px]" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined text-[16px]" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined text-[16px]" style="font-variation-settings: 'FILL' 1;">star</span>
+</div>
+<span class="font-caption-sm text-caption-sm text-secondary">• Hace 2 días</span>
+</div>
+</div>
+</div>
+<span class="px-space-xs py-0.5 rounded-full bg-surface-container-low text-primary-container font-caption-bold text-caption-bold hidden sm:inline-block">
+                Hamburguesa Golden Doble
+              </span>
+</div>
+<p class="font-body-lg text-body-lg text-on-surface leading-relaxed">
+              “La hamburguesa Golden Doble llegó súper caliente y las papas bien crocantes. Excelente servicio de entrega.”
+            </p>
+<div class="flex items-center gap-space-sm pt-space-2xs text-secondary font-caption-sm text-caption-sm">
+<button class="flex items-center gap-1 hover:text-primary transition-colors" type="button">
+<span class="material-symbols-outlined text-[16px]">thumb_up</span>
+<span>Útil (14)</span>
+</button>
+<button class="flex items-center gap-1 hover:text-primary transition-colors" type="button">
+<span class="material-symbols-outlined text-[16px]">chat_bubble_outline</span>
+<span>Comentar</span>
+</button>
+</div>
+</article>
+<!-- Review 2 -->
+<article class="bg-surface-container-lowest rounded-xl p-space-lg shadow-sm space-y-space-sm hover:shadow-md transition-shadow">
+<div class="flex items-start justify-between gap-space-sm">
+<div class="flex items-center gap-space-sm">
+<img class="w-11 h-11 rounded-full object-cover shadow-sm" data-alt="Profile avatar photo of a woman Florencia with brown hair in bright natural sunlight smiling pleasantly" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDT6b0NyebDoYTWnvdsuJf0PEmTdb0Y956fkHtcnlCxfhMNHpRxAiIdHBp7_wpLDlTcABdWrQZ7GSm_ezgSdgVKc17LO6QjVNbCMSiIS8DAuT2c_-9235pTjVuLuLTBupE3csUygKo0if5BgEMdS1YudI-exEsySmPr4DWMHeiLDipUclzdI6qpk9IhHFDle03MxVZ2DGpQSH8Xt32OskWfZiT_ip7QdnUsnEx-xMmzcXxZjivjTNcA">
+<div>
+<div class="flex items-center gap-space-xs">
+<span class="font-title-md text-title-md text-on-surface">Florencia M.</span>
+<span class="material-symbols-outlined text-primary-container text-[16px]" title="Comprador verificado">verified</span>
+</div>
+<div class="flex items-center gap-space-xs mt-0.5">
+<div class="flex items-center text-[#E5A000]">
+<span class="material-symbols-outlined text-[16px]" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined text-[16px]" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined text-[16px]" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined text-[16px]" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined text-[16px]" style="font-variation-settings: 'FILL' 1;">star</span>
+</div>
+<span class="font-caption-sm text-caption-sm text-secondary">• Hace 5 días</span>
+</div>
+</div>
+</div>
+<span class="px-space-xs py-0.5 rounded-full bg-surface-container-low text-primary-container font-caption-bold text-caption-bold hidden sm:inline-block">
+                Empaque Térmico
+              </span>
+</div>
+<p class="font-body-lg text-body-lg text-on-surface leading-relaxed">
+              “Impecable La Birra Bar como siempre. El empaque térmico mantuvo todo en perfecto estado.”
+            </p>
+<div class="flex items-center gap-space-sm pt-space-2xs text-secondary font-caption-sm text-caption-sm">
+<button class="flex items-center gap-1 hover:text-primary transition-colors" type="button">
+<span class="material-symbols-outlined text-[16px]">thumb_up</span>
+<span>Útil (9)</span>
+</button>
+<button class="flex items-center gap-1 hover:text-primary transition-colors" type="button">
+<span class="material-symbols-outlined text-[16px]">chat_bubble_outline</span>
+<span>Comentar</span>
+</button>
+</div>
+</article>
+<!-- Review 3 -->
+<article class="bg-surface-container-lowest rounded-xl p-space-lg shadow-sm space-y-space-sm hover:shadow-md transition-shadow">
+<div class="flex items-start justify-between gap-space-sm">
+<div class="flex items-center gap-space-sm">
+<div class="w-11 h-11 rounded-full bg-surface-container-high flex items-center justify-center font-caption-bold text-caption-bold text-on-surface shadow-sm">
+                  MP
+                </div>
+<div>
+<div class="flex items-center gap-space-xs">
+<span class="font-title-md text-title-md text-on-surface">Martín P.</span>
+<span class="material-symbols-outlined text-primary-container text-[16px]" title="Comprador verificado">verified</span>
+</div>
+<div class="flex items-center gap-space-xs mt-0.5">
+<div class="flex items-center text-[#E5A000]">
+<span class="material-symbols-outlined text-[16px]" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined text-[16px]" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined text-[16px]" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined text-[16px]" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined text-[16px] text-secondary-container">star</span>
+</div>
+<span class="font-caption-sm text-caption-sm text-secondary">• Hace 1 semana</span>
+</div>
+</div>
+</div>
+<span class="px-space-xs py-0.5 rounded-full bg-surface-container-low text-primary-container font-caption-bold text-caption-bold hidden sm:inline-block">
+                Entrega Rápida
+              </span>
+</div>
+<p class="font-body-lg text-body-lg text-on-surface leading-relaxed">
+              “Muy ricas las salsas caseras. La entrega tardó solo 25 minutos.”
+            </p>
+<div class="flex items-center gap-space-sm pt-space-2xs text-secondary font-caption-sm text-caption-sm">
+<button class="flex items-center gap-1 hover:text-primary transition-colors" type="button">
+<span class="material-symbols-outlined text-[16px]">thumb_up</span>
+<span>Útil (5)</span>
+</button>
+<button class="flex items-center gap-1 hover:text-primary transition-colors" type="button">
+<span class="material-symbols-outlined text-[16px]">chat_bubble_outline</span>
+<span>Comentar</span>
+</button>
+</div>
+</article>
+<!-- More Reviews Pagination / Button -->
+<div class="pt-space-xs text-center">
+<button class="px-space-xl py-space-sm rounded-xl bg-surface-container-low hover:bg-surface-container text-on-surface font-body-md-medium text-body-md-medium transition-colors inline-flex items-center gap-space-xs" type="button">
+<span>Cargar más opiniones de clientes</span>
+<span class="material-symbols-outlined text-[18px]">expand_more</span>
+</button>
+</div>
+</div>
+</div>
+</section>
+<!-- Success Feedback Modal Banner (Hidden by default) -->
+<div class="fixed inset-0 z-50 bg-inverse-surface/40 backdrop-blur-sm hidden items-center justify-center p-space-md" id="review-success-modal">
+<div class="bg-surface-container-lowest rounded-2xl max-w-md w-full p-space-xl text-center space-y-space-md shadow-xl">
+<div class="w-16 h-16 rounded-full bg-primary-container/20 text-primary flex items-center justify-center mx-auto">
+<span class="material-symbols-outlined text-[36px]">check_circle</span>
+</div>
+<div class="space-y-space-2xs">
+<h3 class="font-headline-md text-headline-md text-on-surface">¡Muchas gracias por tu opinión!</h3>
+<p class="font-body-md text-body-md text-on-surface-variant">
+            Tu reseña fue publicada con éxito y ayuda a La Birra Bar y a Matías G. a seguir mejorando cada entrega.
+          </p>
+</div>
+<div class="pt-space-sm">
+<button class="w-full py-space-sm bg-primary-container text-on-primary rounded-lg font-title-md text-title-md hover:bg-primary transition-colors shadow-sm" id="close-modal-btn" type="button">
+            Volver al inicio
+          </button>
+</div>
+</div>
+</div>
+</div>
+</div>
+<script>
+  (function() {
+    const starDescriptions = {
+      1: "Malo - 1 estrella",
+      2: "Regular - 2 estrellas",
+      3: "Bueno - 3 estrellas",
+      4: "Muy bueno - 4 estrellas",
+      5: "Excelente - 5 estrellas"
+    };
+
+    function setupStarRating(groupSelector, labelSelector) {
+      const group = document.querySelector(groupSelector);
+      const label = document.querySelector(labelSelector);
+      if (!group || !label) return;
+
+      const buttons = group.querySelectorAll('button');
+      let currentRating = 0;
+
+      function updateStars(val) {
+        buttons.forEach(btn => {
+          const btnVal = parseInt(btn.getAttribute('data-val'), 10);
+          if (btnVal <= val) {
+            btn.classList.remove('text-secondary-container');
+            btn.classList.add('text-[#E5A000]');
+          } else {
+            btn.classList.remove('text-[#E5A000]');
+            btn.classList.add('text-secondary-container');
+          }
+        });
+      }
+
+      buttons.forEach(btn => {
+        const val = parseInt(btn.getAttribute('data-val'), 10);
+
+        btn.addEventListener('mouseenter', () => {
+          updateStars(val);
+          label.textContent = starDescriptions[val];
+        });
+
+        btn.addEventListener('mouseleave', () => {
+          updateStars(currentRating);
+          label.textContent = currentRating > 0 ? starDescriptions[currentRating] : "Tocá una estrella";
+        });
+
+        btn.addEventListener('click', () => {
+          currentRating = val;
+          updateStars(currentRating);
+          label.textContent = starDescriptions[currentRating];
+        });
+      });
+    }
+
+    setupStarRating('#store-stars-group', '#store-rating-label');
+    setupStarRating('#courier-stars-group', '#courier-rating-label');
+
+    // Quick chips toggle
+    const chips = document.querySelectorAll('.quick-chip');
+    chips.forEach(chip => {
+      chip.addEventListener('click', () => {
+        const isSelected = chip.classList.contains('bg-primary-container');
+        if (isSelected) {
+          chip.classList.remove('bg-primary-container', 'text-on-primary', 'shadow-sm');
+          chip.classList.add('bg-surface', 'text-on-surface');
+          const icon = chip.querySelector('.material-symbols-outlined');
+          if (icon) {
+            icon.classList.remove('text-on-primary');
+            icon.classList.add('text-primary-container');
+          }
+        } else {
+          chip.classList.remove('bg-surface', 'text-on-surface');
+          chip.classList.add('bg-primary-container', 'text-on-primary', 'shadow-sm');
+          const icon = chip.querySelector('.material-symbols-outlined');
+          if (icon) {
+            icon.classList.remove('text-primary-container');
+            icon.classList.add('text-on-primary');
+          }
+        }
+      });
+    });
+
+    // Character counter
+    const textarea = document.getElementById('review-textarea');
+    const charCounter = document.getElementById('char-counter');
+    if (textarea && charCounter) {
+      textarea.addEventListener('input', () => {
+        const len = textarea.value.length;
+        charCounter.textContent = `${len} / 500`;
+        if (len > 500) {
+          textarea.value = textarea.value.substring(0, 500);
+          charCounter.textContent = `500 / 500`;
+        }
+      });
+    }
+
+    // Submit handler & modal display
+    const submitBtn = document.getElementById('submit-review-btn');
+    const modal = document.getElementById('review-success-modal');
+    const closeModal = document.getElementById('close-modal-btn');
+
+    if (submitBtn && modal) {
+      submitBtn.addEventListener('click', () => {
+        modal.classList.remove('hidden');
+        modal.classList.add('flex');
+      });
+    }
+
+    if (closeModal && modal) {
+      closeModal.addEventListener('click', () => {
+        modal.classList.remove('flex');
+        modal.classList.add('hidden');
+      });
+    }
+  })();
+</script></main><footer class="w-full bg-surface-container-lowest shadow-[0_-1px_8px_rgba(0,0,0,0.02)] mt-space-3xl"><div class="max-w-[1280px] mx-auto px-gutter-mobile lg:px-gutter-desktop py-space-2xl"><div class="grid grid-cols-1 md:grid-cols-4 gap-space-xl pb-space-2xl"><div class="space-y-space-sm"><div class="flex items-center gap-space-xs"><img alt="DeliveryGo Logo" class="h-7 w-auto object-contain" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAR10kqrtXin7jn-sIsvkfeTDKlpO5HZRYcxXpawKI1qNTtK26vuLJ8cYSoH5PGhne4hWGje1bm7RBt5MqZ9Sdemk_SZtByp6R-5ILMToWzRltEtGw2JSzns9m_PC_H8fvNiRtWAJ8-_1lC_bx8zSGvc4Iku6e1M7LRy7GFuP1FutlPKqqn_tPtQDAapUqnKTqyofC9ESW1il78PNUtTB3ZuiZAI5kWz-LjQt6cW-otkNcPcAGbwkcN"><span class="font-title-md text-title-md text-on-surface font-bold tracking-tight">Delivery<span class="text-primary-container">Go</span></span></div><p class="font-body-md text-body-md text-on-surface-variant max-w-xs">La plataforma urbana de entregas ultrarrápidas pensada para todo el país. Pedí lo que quieras, cuando quieras.</p></div><div class="flex flex-col gap-space-xs"><span class="font-caption-bold text-caption-bold uppercase tracking-wider text-secondary">Compañía</span><a class="font-body-md text-body-md text-on-surface-variant hover:text-primary transition-colors" data-path="ayuda-y-soporte" href="#">Ayuda y Soporte</a><a class="font-body-md text-body-md text-on-surface-variant hover:text-primary transition-colors" data-path="suma-tu-comercio" href="#">Sumá tu comercio</a><a class="font-body-md text-body-md text-on-surface-variant hover:text-primary transition-colors" data-path="contacto" href="#">Contacto</a></div><div class="flex flex-col gap-space-xs"><span class="font-caption-bold text-caption-bold uppercase tracking-wider text-secondary">Legal</span><a class="font-body-md text-body-md text-on-surface-variant hover:text-primary transition-colors" data-path="terminos-y-condiciones" href="#">Términos y Condiciones</a><a class="font-body-md text-body-md text-on-surface-variant hover:text-primary transition-colors" data-path="privacidad" href="#">Privacidad</a><a class="font-body-md text-body-md text-on-surface-variant hover:text-primary transition-colors" data-path="defensa-al-consumidor" href="#">Defensa al Consumidor</a></div><div class="flex flex-col gap-space-xs"><span class="font-caption-bold text-caption-bold uppercase tracking-wider text-secondary">Pagos Seguros</span><p class="font-body-md text-body-md text-on-surface-variant">Aceptamos todas las tarjetas de crédito, débito y dinero en cuenta con liquidación ARS inmediata.</p><div class="flex items-center gap-space-xs text-secondary mt-space-xs"><span class="material-symbols-outlined text-[24px]">credit_card</span><span class="material-symbols-outlined text-[24px]">account_balance_wallet</span><span class="material-symbols-outlined text-[24px]">qr_code_scanner</span></div></div></div><div class="pt-space-lg flex flex-col sm:flex-row items-center justify-between gap-space-md bg-surface-container-lowest text-center sm:text-left"><p class="font-caption-sm text-caption-sm text-on-surface-variant">© 2025 DeliveryGo Argentina S.A. Todos los derechos reservados.</p><span class="font-caption-sm text-caption-sm text-secondary">Buenos Aires, Argentina</span></div></div></footer></body></html>

@@ -1,0 +1,547 @@
+<!DOCTYPE html><html lang="es"><head><meta charset="utf-8"><meta content="width=device-width, initial-scale=1.0" name="viewport"><link href="https://fonts.googleapis.com" rel="preconnect"><link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"><link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet"><link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"><style>@layer base { html, body { margin: 0; padding: 0; } body { overscroll-behavior: none; } main > :first-child { margin-top: 0 !important; } main > :last-child { margin-bottom: 0 !important; } } ::-webkit-scrollbar { display: none; }</style><script src="https://cdn.tailwindcss.com"></script><script id="tailwind-config">tailwind.config = { darkMode: "class", theme: { extend: { "colors": { "on-surface-variant": "#3d4a44", "on-secondary-fixed": "#191c1e", "on-primary-container": "#003427", "primary-fixed": "#79f9d0", "surface-tint": "#006b53", "secondary-fixed": "#e1e2e5", "outline": "#6c7a74", "secondary-fixed-dim": "#c5c7c9", "on-error": "#ffffff", "outline-variant": "#bccac2", "on-primary": "#ffffff", "tertiary-fixed": "#dbe1ff", "primary-container": "#00a884", "secondary": "#5c5f61", "surface-container-lowest": "#ffffff", "tertiary-fixed-dim": "#b4c5ff", "surface": "#f9f9ff", "on-surface": "#151c27", "on-error-container": "#93000a", "surface-container-low": "#f0f3ff", "on-background": "#151c27", "on-tertiary-container": "#002771", "primary": "#006b53", "inverse-on-surface": "#ebf1ff", "secondary-container": "#dee0e2", "on-secondary-fixed-variant": "#444749", "surface-bright": "#f9f9ff", "tertiary-container": "#678fff", "on-tertiary-fixed": "#00174b", "error": "#ba1a1a", "surface-container-highest": "#dce2f3", "on-tertiary-fixed-variant": "#003ea8", "on-tertiary": "#ffffff", "on-secondary-container": "#606365", "surface-container-high": "#e2e8f8", "on-secondary": "#ffffff", "background": "#f9f9ff", "surface-container": "#e7eefe", "on-primary-fixed-variant": "#00513e", "surface-variant": "#dce2f3", "primary-fixed-dim": "#59dcb5", "on-primary-fixed": "#002117", "inverse-primary": "#59dcb5", "tertiary": "#0053db", "error-container": "#ffdad6", "inverse-surface": "#2a313d", "surface-dim": "#d3daea" }, "borderRadius": { "DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px" }, "spacing": { "space-md": "1rem", "gutter-mobile": "1rem", "container-max": "1280px", "space-2xs": "0.25rem", "space-3xl": "4rem", "space-lg": "1.5rem", "gutter-desktop": "1.5rem", "space-xl": "2rem", "space-2xl": "3rem", "space-xs": "0.5rem", "space-sm": "0.75rem" }, "fontFamily": { "headline-lg-mobile": ["Inter"], "body-lg": ["Inter"], "headline-lg": ["Inter"], "body-md": ["Inter"], "title-md": ["Inter"], "body-md-medium": ["Inter"], "display-hero": ["Inter"], "headline-md": ["Inter"], "label-md": ["Inter"], "display-hero-mobile": ["Inter"], "body-lg-medium": ["Inter"], "caption-bold": ["Inter"], "headline-sm": ["Inter"], "caption-sm": ["Inter"] }, "fontSize": { "headline-lg-mobile": ["26px", { "lineHeight": "32px", "letterSpacing": "-0.01em", "fontWeight": "600" }], "body-lg": ["16px", { "lineHeight": "24px", "letterSpacing": "0em", "fontWeight": "400" }], "headline-lg": ["32px", { "lineHeight": "40px", "letterSpacing": "-0.015em", "fontWeight": "600" }], "body-md": ["14px", { "lineHeight": "20px", "letterSpacing": "0em", "fontWeight": "400" }], "title-md": ["18px", { "lineHeight": "24px", "letterSpacing": "0em", "fontWeight": "600" }], "body-md-medium": ["14px", { "lineHeight": "20px", "letterSpacing": "0em", "fontWeight": "500" }], "display-hero": ["40px", { "lineHeight": "48px", "letterSpacing": "-0.02em", "fontWeight": "700" }], "headline-md": ["24px", { "lineHeight": "32px", "letterSpacing": "-0.01em", "fontWeight": "600" }], "label-md": ["13px", { "lineHeight": "18px", "letterSpacing": "0.01em", "fontWeight": "500" }], "display-hero-mobile": ["30px", { "lineHeight": "36px", "letterSpacing": "-0.015em", "fontWeight": "700" }], "body-lg-medium": ["16px", { "lineHeight": "24px", "letterSpacing": "0em", "fontWeight": "500" }], "caption-bold": ["12px", { "lineHeight": "16px", "letterSpacing": "0.02em", "fontWeight": "600" }], "headline-sm": ["20px", { "lineHeight": "28px", "letterSpacing": "-0.005em", "fontWeight": "600" }], "caption-sm": ["12px", { "lineHeight": "16px", "letterSpacing": "0.01em", "fontWeight": "400" }] } } } };</script></head><body class="bg-background font-body-md text-on-surface antialiased selection:bg-primary-container selection:text-on-primary-container"><header class="fixed top-0 left-0 right-0 w-full z-50 bg-surface-container-lowest/90 backdrop-blur-xl shadow-[0_1px_8px_rgba(0,0,0,0.04)]"><div class="h-20 max-w-[1280px] mx-auto px-gutter-mobile lg:px-gutter-desktop flex items-center justify-between gap-space-md"><div class="flex items-center gap-space-lg shrink-0"><a class="flex items-center gap-space-xs" data-path="comercios" href="#"><img alt="DeliveryGo Logo" class="h-8 w-auto object-contain" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAR10kqrtXin7jn-sIsvkfeTDKlpO5HZRYcxXpawKI1qNTtK26vuLJ8cYSoH5PGhne4hWGje1bm7RBt5MqZ9Sdemk_SZtByp6R-5ILMToWzRltEtGw2JSzns9m_PC_H8fvNiRtWAJ8-_1lC_bx8zSGvc4Iku6e1M7LRy7GFuP1FutlPKqqn_tPtQDAapUqnKTqyofC9ESW1il78PNUtTB3ZuiZAI5kWz-LjQt6cW-otkNcPcAGbwkcN"><span class="font-title-md text-title-md text-on-surface hidden sm:inline-block tracking-tight">Delivery<span class="text-primary-container">Go</span></span></a><button class="flex items-center gap-space-xs py-space-xs px-space-sm rounded-full bg-surface-container-low hover:bg-surface-container hover:text-on-surface text-on-surface-variant transition-colors" type="button"><span class="material-symbols-outlined text-primary-container text-[20px]">location_on</span><div class="flex flex-col text-left"><span class="font-caption-sm text-caption-sm text-secondary leading-none">Entregar en</span><span class="font-body-md-medium text-body-md-medium text-on-surface truncate max-w-[150px] md:max-w-[200px] leading-tight">Av. Corrientes 1450, CABA</span></div><span class="material-symbols-outlined text-secondary text-[18px]">expand_more</span></button></div><div class="flex-1 max-w-xl hidden md:block"><div class="relative w-full"><span class="material-symbols-outlined absolute left-space-md top-1/2 -translate-y-1/2 text-outline text-[20px]">search</span><input class="w-full h-11 pl-11 pr-space-md rounded-xl bg-surface-container-low border border-outline-variant/30 text-on-surface placeholder:text-outline font-body-md focus:outline-none focus:ring-2 focus:ring-primary-container/20 focus:border-primary-container transition-all" placeholder="Buscar restaurantes, platos o bebidas..." type="text"></div></div><div class="flex items-center gap-space-sm shrink-0"><nav class="hidden xl:flex items-center gap-space-xs mr-space-xs" data-active-classes="bg-surface-container-high text-on-surface font-body-md-medium"><a aria-current="page" class="px-space-sm py-space-xs rounded-lg transition-colors bg-surface-container-high text-on-surface font-body-md-medium" data-path="comercios" href="#">Comercios</a><a class="px-space-sm py-space-xs rounded-lg font-body-md text-body-md text-on-surface-variant hover:text-on-surface hover:bg-surface-container-low transition-colors" data-path="promociones" href="#">Promociones</a><a class="px-space-sm py-space-xs rounded-lg font-body-md text-body-md text-on-surface-variant hover:text-on-surface hover:bg-surface-container-low transition-colors" data-path="pedidos-activos" href="#">Mis Pedidos</a></nav><a class="relative p-space-xs rounded-full hover:bg-surface-container-low text-on-surface-variant hover:text-on-surface transition-colors" data-path="notificaciones" href="#"><span class="material-symbols-outlined text-[24px]">notifications</span><span class="absolute top-1 right-1 flex items-center justify-center min-w-[18px] h-[18px] px-1 bg-error text-on-error rounded-full font-caption-bold text-[10px] leading-none">3</span></a><a class="flex items-center gap-space-xs py-space-xs px-space-sm rounded-xl bg-surface-container-low hover:bg-surface-container text-on-surface transition-colors" data-path="carrito" href="#"><div class="relative flex items-center"><span class="material-symbols-outlined text-primary-container text-[22px]">shopping_bag</span><span class="absolute -top-1.5 -right-2 flex items-center justify-center min-w-[16px] h-[16px] px-1 bg-primary-container text-on-primary rounded-full font-caption-bold text-[10px] leading-none">2</span></div><span class="hidden sm:inline-block font-body-md-medium text-body-md-medium text-on-surface">$8.450</span></a><a class="flex items-center gap-space-xs pl-space-xs py-space-xs rounded-full hover:bg-surface-container-low transition-colors" data-path="perfil" href="#"><img alt="Profile" class="w-8 h-8 rounded-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuB6H7_LwcTC-3P1tlRzTOM1gGsKRRI4C3WPhUC-h3xufJtxhYUSxlvF8E-806QGOsyDTm5ZWzg5fvnGSedo-auwT8GpTQH9Buz9Du6eFiDLzhDy7SozSvK9v2f2Nf-KpXgwaOQuwPTlJan18CmoxKvtOIvIKzbC147jW5W-2Zpxc14BJo0-4mA7Kx8Pa0iM1Xrj22CLFZSMtkYowTef_EBRn_lphfacnhKmBll1ulLyDeCZI8coezS6"><span class="font-body-md-medium text-body-md-medium text-on-surface hidden lg:inline-block pr-space-xs">Lucas M.</span></a></div></div></header><main class="w-full pt-20 bg-background min-h-[calc(100vh-280px)]"><div class="flex flex-col w-full max-w-[1280px] mx-auto px-gutter-mobile lg:px-gutter-desktop py-space-lg space-y-space-xl">
+<!-- Top Saludo & Selector Editable de Dirección -->
+<section class="flex flex-col md:flex-row md:items-end justify-between gap-space-md">
+<div class="space-y-space-2xs">
+<div class="inline-flex items-center gap-space-2xs px-space-xs py-1 rounded-full bg-surface-container-high text-primary font-caption-bold text-caption-bold">
+<span class="w-2 h-2 rounded-full bg-primary-container animate-pulse"></span>
+        Entregas activas en tu zona
+      </div>
+<h1 class="font-display-hero text-display-hero text-on-surface tracking-tight">
+        ¡Hola Lucas! <span class="text-on-surface-variant font-headline-lg font-normal">¿Qué vas a pedir hoy?</span>
+</h1>
+<div class="flex items-center gap-space-xs text-on-surface-variant pt-space-2xs">
+<span class="material-symbols-outlined text-primary-container text-[20px]">near_me</span>
+<span class="font-body-md-medium text-body-md-medium text-on-surface">Av. Corrientes 1450, Piso 4 B, Balvanera, CABA</span>
+<span class="text-secondary opacity-40">•</span>
+<button class="text-primary font-body-md-medium text-body-md-medium hover:underline inline-flex items-center gap-0.5 cursor-pointer" id="btn-change-address" type="button">
+          Cambiar dirección
+          <span class="material-symbols-outlined text-[16px]">expand_more</span>
+</button>
+</div>
+</div>
+<!-- Mini stats / Banner rápido de cupón -->
+<div class="hidden xl:flex items-center gap-space-md p-space-sm rounded-xl bg-surface-container-low shadow-sm">
+<div class="w-10 h-10 rounded-lg bg-primary-container/15 flex items-center justify-center text-primary">
+<span class="material-symbols-outlined text-[24px]">local_offer</span>
+</div>
+<div>
+<span class="font-caption-bold text-caption-bold text-primary block leading-tight">CUPÓN BIENVENIDA</span>
+<span class="font-title-md text-title-md text-on-surface font-bold">25% OFF en tu pedido</span>
+</div>
+</div>
+</section>
+<!-- Tarjeta destacada de Pedido Activo (Active Order Highlight Card) -->
+<section class="relative overflow-hidden rounded-xl bg-surface-container-lowest shadow-md p-space-lg">
+<!-- Accent line superior -->
+<div class="absolute top-0 left-0 right-0 h-1.5 bg-gradient-to-r from-primary-container via-primary to-tertiary-container"></div>
+<div class="flex flex-col lg:flex-row lg:items-center justify-between gap-space-lg">
+<!-- Lado izquierdo: Metadata y progreso -->
+<div class="flex-1 space-y-space-md">
+<div class="flex flex-wrap items-center justify-between gap-space-xs pb-space-xs">
+<div class="flex items-center gap-space-xs">
+<span class="inline-flex items-center justify-center w-8 h-8 rounded-full bg-primary-container/15 text-primary">
+<span class="material-symbols-outlined text-[18px]">moped</span>
+</span>
+<div>
+<span class="font-caption-bold text-caption-bold text-secondary uppercase tracking-wide">Pedido en curso</span>
+<h2 class="font-title-md text-title-md text-on-surface font-bold">#AR-8942 • La Birra Bar</h2>
+</div>
+</div>
+<div class="flex items-center gap-space-2xs px-space-sm py-1 rounded-full bg-primary-fixed text-on-primary-container font-caption-bold text-caption-bold">
+<span class="w-2 h-2 rounded-full bg-primary animate-ping"></span>
+            Llega entre 20:45 y 21:00 hs (~15 min)
+          </div>
+</div>
+<!-- Stepper interactivo de 4 pasos -->
+<div class="relative pt-space-xs">
+<div class="grid grid-cols-4 relative z-10">
+<!-- Paso 1 -->
+<div class="flex flex-col items-start gap-1">
+<div class="w-7 h-7 rounded-full bg-primary-container text-on-primary flex items-center justify-center shadow-sm">
+<span class="material-symbols-outlined text-[16px] font-bold">check</span>
+</div>
+<span class="font-caption-bold text-caption-bold text-on-surface">Confirmado</span>
+<span class="font-caption-sm text-caption-sm text-secondary">20:12 hs</span>
+</div>
+<!-- Paso 2 -->
+<div class="flex flex-col items-center gap-1">
+<div class="w-7 h-7 rounded-full bg-primary-container text-on-primary flex items-center justify-center shadow-sm">
+<span class="material-symbols-outlined text-[16px] font-bold">check</span>
+</div>
+<span class="font-caption-bold text-caption-bold text-on-surface text-center">En preparación</span>
+<span class="font-caption-sm text-caption-sm text-secondary">20:25 hs</span>
+</div>
+<!-- Paso 3 (Activo con pulso) -->
+<div class="flex flex-col items-center gap-1">
+<div class="relative flex items-center justify-center">
+<span class="absolute w-9 h-9 rounded-full bg-primary-container/30 animate-ping"></span>
+<div class="w-7 h-7 rounded-full bg-primary-container text-on-primary flex items-center justify-center shadow-md">
+<span class="material-symbols-outlined text-[16px]">two_wheeler</span>
+</div>
+</div>
+<span class="font-caption-bold text-caption-bold text-primary text-center">En camino</span>
+<span class="font-caption-sm text-caption-sm text-primary-container font-semibold">En tránsito</span>
+</div>
+<!-- Paso 4 -->
+<div class="flex flex-col items-end gap-1">
+<div class="w-7 h-7 rounded-full bg-surface-container-high text-outline flex items-center justify-center">
+<span class="material-symbols-outlined text-[16px]">home</span>
+</div>
+<span class="font-caption-bold text-caption-bold text-secondary text-right">Entregado</span>
+<span class="font-caption-sm text-caption-sm text-secondary">Pendiente</span>
+</div>
+</div>
+<!-- Barra de fondo del progreso -->
+<div class="absolute top-[18px] left-3 right-3 h-1 bg-surface-container-highest -z-0">
+<div class="h-full bg-primary-container rounded-full" style="width: 72%;"></div>
+</div>
+</div>
+<!-- Info del Repartidor -->
+<div class="flex flex-wrap items-center justify-between gap-space-sm pt-space-xs bg-surface-container-low rounded-xl p-space-sm">
+<div class="flex items-center gap-space-sm">
+<div class="relative">
+<img class="w-10 h-10 rounded-full object-cover shadow-sm" data-alt="A warm portrait of a friendly Argentine delivery courier smiling in his twenties wearing a black helmet and reflective urban vest, soft studio daylight, clean composition" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCgdACWABDo73BlhQWcwd4eng_1aQzq12PWHkovNSHWlC3yJo0-JE5TIbQC3KDpbUbYGV2wcdpcPfijbKQ5C60BitWDFht03eVMpCpaX5yOJ2nMxU86TT1ZECRa4qWuVorTzh5qvBD2p9SYXq7Iq6OYCjF4iFKkxGG_w7ChZoPjmhB7SYCTi1V24dtrijOP7pNNwZSz9Ti6V0KAZI2uTChQT09R0fcWOun4hWaSCVJVA6PhbKetmPsX">
+<span class="absolute -bottom-1 -right-1 w-4 h-4 rounded-full bg-primary-container text-on-primary flex items-center justify-center text-[10px]">
+<span class="material-symbols-outlined text-[10px]">check</span>
+</span>
+</div>
+<div class="flex flex-col">
+<div class="flex items-center gap-space-xs">
+<span class="font-body-md-medium text-body-md-medium text-on-surface">Matías G.</span>
+<span class="inline-flex items-center gap-0.5 px-1.5 py-0.5 rounded bg-surface-container-lowest text-on-surface font-caption-bold text-[11px] shadow-sm">
+<span class="material-symbols-outlined text-primary-container text-[12px]" style="font-variation-settings: 'FILL' 1;">star</span> 4.9
+                </span>
+</div>
+<span class="font-caption-sm text-caption-sm text-on-surface-variant">Moto Honda Wave (Casco negro) • Valija térmica #42</span>
+</div>
+</div>
+<div class="flex items-center gap-space-xs">
+<button aria-label="Llamar al repartidor" class="p-2 rounded-lg bg-surface-container-lowest text-on-surface hover:bg-surface-container-high transition-colors shadow-sm" type="button">
+<span class="material-symbols-outlined text-[18px]">phone</span>
+</button>
+<button aria-label="Enviar mensaje al repartidor" class="p-2 rounded-lg bg-surface-container-lowest text-on-surface hover:bg-surface-container-high transition-colors shadow-sm" type="button">
+<span class="material-symbols-outlined text-[18px]">chat</span>
+</button>
+</div>
+</div>
+</div>
+<!-- Lado derecho: Acción rápida y minimapa estático -->
+<div class="lg:w-72 flex flex-col justify-between gap-space-sm shrink-0">
+<div class="w-full h-32 rounded-xl bg-cover bg-center shadow-sm relative overflow-hidden flex items-end p-space-xs" data-location="Balvanera, Buenos Aires, Argentina" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuAuvdgS7kUi3KTOeIhvUbenvPpe7ovzMnKjrZtAf1SPjCVkrzXrylhwYVtjjDAR2LjDSIuFP_dFlABggDoaLnMbGW_11BWZZIyKrfmWk0QFDKbW-DbFMwG__f_ysyt5xLT5d9L79D92mAlOLgem4JETlUI8zjFk442uISQoML5tIDsDqfJT7jWBN9Sj6sDt5xzDWIeNxz3eNyWe4nGzlXp7Io1ea6TYyUqTOMzoGQgru5L3imv_5VWI');">
+<div class="absolute inset-0 bg-gradient-to-t from-on-surface/70 via-transparent to-transparent"></div>
+<div class="relative z-10 flex items-center justify-between w-full text-on-primary">
+<span class="font-caption-bold text-caption-bold flex items-center gap-1">
+<span class="material-symbols-outlined text-[16px] text-primary-fixed">navigation</span>
+              A 8 cuadras de tu domicilio
+            </span>
+<span class="font-caption-sm text-caption-sm bg-inverse-surface/80 px-2 py-0.5 rounded backdrop-blur-sm">En vivo</span>
+</div>
+</div>
+<a class="w-full h-11 px-space-md rounded-xl bg-surface-container-lowest hover:bg-primary/5 text-primary font-body-md-medium text-body-md-medium flex items-center justify-center gap-space-xs shadow-sm transition-all hover:shadow" data-path="seguimiento-pedido" href="#">
+<span class="material-symbols-outlined text-[18px] text-primary-container">explore</span>
+          Ver seguimiento en vivo
+        </a>
+</div>
+</div>
+</section>
+<!-- Filtros y Categorías -->
+<section class="space-y-space-md">
+<!-- Scroll horizontal de chips de categorías con iconos -->
+<div class="relative flex items-center">
+<div class="flex items-center gap-space-xs overflow-x-auto no-scrollbar py-1 pr-8 w-full scroll-smooth" id="categories-scroll">
+<!-- Chip Todos / Activo -->
+<button class="category-chip shrink-0 h-10 px-space-md rounded-full bg-primary-container text-on-primary font-body-md-medium text-body-md-medium flex items-center gap-space-xs shadow-sm transition-all" type="button">
+<span class="material-symbols-outlined text-[18px]">restaurant</span>
+          Todos
+        </button>
+<!-- Hamburguesas -->
+<button class="category-chip shrink-0 h-10 px-space-md rounded-full bg-surface-container-lowest text-on-surface hover:bg-surface-container-low font-body-md-medium text-body-md-medium flex items-center gap-space-xs shadow-sm transition-all" type="button">
+<span class="material-symbols-outlined text-[18px] text-on-surface-variant">lunch_dining</span>
+          Hamburguesas
+        </button>
+<!-- Pizza -->
+<button class="category-chip shrink-0 h-10 px-space-md rounded-full bg-surface-container-lowest text-on-surface hover:bg-surface-container-low font-body-md-medium text-body-md-medium flex items-center gap-space-xs shadow-sm transition-all" type="button">
+<span class="material-symbols-outlined text-[18px] text-on-surface-variant">local_pizza</span>
+          Pizza
+        </button>
+<!-- Sushi -->
+<button class="category-chip shrink-0 h-10 px-space-md rounded-full bg-surface-container-lowest text-on-surface hover:bg-surface-container-low font-body-md-medium text-body-md-medium flex items-center gap-space-xs shadow-sm transition-all" type="button">
+<span class="material-symbols-outlined text-[18px] text-on-surface-variant">set_meal</span>
+          Sushi
+        </button>
+<!-- Saludable & Bowls -->
+<button class="category-chip shrink-0 h-10 px-space-md rounded-full bg-surface-container-lowest text-on-surface hover:bg-surface-container-low font-body-md-medium text-body-md-medium flex items-center gap-space-xs shadow-sm transition-all" type="button">
+<span class="material-symbols-outlined text-[18px] text-on-surface-variant">eco</span>
+          Saludable &amp; Bowls
+        </button>
+<!-- Postres & Helados -->
+<button class="category-chip shrink-0 h-10 px-space-md rounded-full bg-surface-container-lowest text-on-surface hover:bg-surface-container-low font-body-md-medium text-body-md-medium flex items-center gap-space-xs shadow-sm transition-all" type="button">
+<span class="material-symbols-outlined text-[18px] text-on-surface-variant">icecream</span>
+          Postres &amp; Helados
+        </button>
+<!-- Cafetería -->
+<button class="category-chip shrink-0 h-10 px-space-md rounded-full bg-surface-container-lowest text-on-surface hover:bg-surface-container-low font-body-md-medium text-body-md-medium flex items-center gap-space-xs shadow-sm transition-all" type="button">
+<span class="material-symbols-outlined text-[18px] text-on-surface-variant">coffee</span>
+          Cafetería
+        </button>
+<!-- Empanadas -->
+<button class="category-chip shrink-0 h-10 px-space-md rounded-full bg-surface-container-lowest text-on-surface hover:bg-surface-container-low font-body-md-medium text-body-md-medium flex items-center gap-space-xs shadow-sm transition-all" type="button">
+<span class="material-symbols-outlined text-[18px] text-on-surface-variant">bakery_dining</span>
+          Empanadas
+        </button>
+</div>
+</div>
+<!-- Controles de filtrado secundario -->
+<div class="flex flex-wrap items-center justify-between gap-space-sm pt-space-2xs">
+<div class="flex flex-wrap items-center gap-space-xs">
+<!-- Filtro Rápido: Tiempo < 30min -->
+<button class="filter-toggle px-space-sm py-1.5 rounded-full bg-surface-container-lowest hover:bg-surface-container-low text-on-surface font-caption-bold text-caption-bold flex items-center gap-1.5 shadow-sm transition-all" type="button">
+<span class="material-symbols-outlined text-[16px] text-primary-container">timer</span>
+          Menos de 30 min
+        </button>
+<!-- Filtro: 4.5+ ⭐ -->
+<button class="filter-toggle px-space-sm py-1.5 rounded-full bg-surface-container-lowest hover:bg-surface-container-low text-on-surface font-caption-bold text-caption-bold flex items-center gap-1.5 shadow-sm transition-all" type="button">
+<span class="material-symbols-outlined text-[16px] text-amber-500" style="font-variation-settings: 'FILL' 1;">star</span>
+          Calificación 4.5+
+        </button>
+<!-- Filtro: Envío gratis -->
+<button class="filter-toggle px-space-sm py-1.5 rounded-full bg-surface-container-lowest hover:bg-surface-container-low text-on-surface font-caption-bold text-caption-bold flex items-center gap-1.5 shadow-sm transition-all" type="button">
+<span class="material-symbols-outlined text-[16px] text-primary">local_shipping</span>
+          Envío gratis
+        </button>
+</div>
+<!-- Selector de Ordenamiento -->
+<div class="flex items-center gap-space-xs">
+<label class="font-caption-sm text-caption-sm text-secondary" for="sort-select">Ordenar por:</label>
+<div class="relative">
+<select class="appearance-none bg-surface-container-lowest pl-space-sm pr-space-xl py-1.5 rounded-xl font-body-md-medium text-body-md-medium text-on-surface shadow-sm focus:outline-none focus:ring-2 focus:ring-primary-container cursor-pointer" id="sort-select">
+<option value="popular">Más populares</option>
+<option value="rating">Mejor puntuados</option>
+<option value="delivery_time">Menor tiempo de entrega</option>
+<option value="price_delivery">Costo de envío</option>
+</select>
+<span class="material-symbols-outlined absolute right-2 top-1/2 -translate-y-1/2 pointer-events-none text-secondary text-[18px]">expand_more</span>
+</div>
+</div>
+</div>
+</section>
+<!-- Grilla de Comercios (4 columnas desktop) -->
+<section class="space-y-space-md">
+<div class="flex items-baseline justify-between">
+<h2 class="font-headline-md text-headline-md text-on-surface tracking-tight">Comercios destacados cerca de vos</h2>
+<span class="font-caption-bold text-caption-bold text-secondary">8 disponibles en Balvanera</span>
+</div>
+<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-space-lg">
+<!-- Comercio 1: La Birra Bar -->
+<article class="group flex flex-col rounded-xl bg-surface-container-lowest shadow-sm hover:shadow-md transition-all duration-200 overflow-hidden cursor-pointer">
+<div class="relative w-full aspect-[16/10] overflow-hidden bg-surface-container">
+<img class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" data-alt="Gourmet smash double bacon cheeseburger with melted cheddar and caramelized onions on artisanal brioche bun, editorial culinary food photography, warm ambient lighting" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCgDhG6qYOcC8UDXcp-W_B7YnZtq5xPDbSRByxY47E7sRMWMlvWVnReANkairaAcAnbKRQzIikIp3EQJYRDRcB2Wu4L2ighkljmn6P5bPUaSli-IiMz8tLkJkLQHmeoqyOG0e25ainKHdy7MGOmm5VcHOkGIkbs3rELtwrG1jhVwtEXMCsfVHktxjoP1pEWKmsqjGYrCdK9IHjMQBgcMDn7eUnaOg5NTOyv1C9qWlQK8miDrL6v_vFg">
+<span class="absolute top-space-xs left-space-xs px-2.5 py-1 rounded-full bg-primary-container text-on-primary font-caption-bold text-[11px] shadow-sm flex items-center gap-1">
+<span class="w-1.5 h-1.5 rounded-full bg-white animate-pulse"></span>
+            Abierto
+          </span>
+<button aria-label="Guardar en favoritos" class="absolute top-space-xs right-space-xs w-8 h-8 rounded-full bg-surface-container-lowest/90 backdrop-blur-sm text-on-surface hover:text-error flex items-center justify-center shadow-sm transition-colors" type="button">
+<span class="material-symbols-outlined text-[18px]">favorite</span>
+</button>
+</div>
+<div class="p-space-md flex-1 flex flex-col justify-between space-y-space-xs">
+<div>
+<div class="flex items-start justify-between gap-space-xs">
+<h3 class="font-title-md text-title-md text-on-surface font-bold group-hover:text-primary transition-colors line-clamp-1">La Birra Bar</h3>
+<span class="inline-flex items-center gap-0.5 px-1.5 py-0.5 rounded bg-surface-container-low text-on-surface font-caption-bold text-[12px] shrink-0">
+<span class="material-symbols-outlined text-primary-container text-[14px]" style="font-variation-settings: 'FILL' 1;">star</span> 4.8
+              </span>
+</div>
+<p class="font-caption-sm text-caption-sm text-on-surface-variant line-clamp-1">Hamburguesas • Cervezas artesanales (1.240)</p>
+</div>
+<div class="flex items-center justify-between pt-space-xs text-on-surface-variant font-caption-bold text-caption-bold">
+<span class="flex items-center gap-1 text-on-surface">
+<span class="material-symbols-outlined text-[16px] text-secondary">schedule</span> 25-35 min
+            </span>
+<span class="flex items-center gap-1">
+<span class="material-symbols-outlined text-[16px] text-secondary">delivery_dining</span> Envío $850
+            </span>
+</div>
+</div>
+</article>
+<!-- Comercio 2: Pizzería Güerrín -->
+<article class="group flex flex-col rounded-xl bg-surface-container-lowest shadow-sm hover:shadow-md transition-all duration-200 overflow-hidden cursor-pointer">
+<div class="relative w-full aspect-[16/10] overflow-hidden bg-surface-container">
+<img class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" data-alt="Traditional Argentine thick crust mozzarella pizza slice dripping with melted golden cheese and oregano, Buenos Aires pizzeria classic style, appetizing close up" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAbmtOLTzhj02em9tgI4LPkn2ZL4okTPj45iNOZbfh980M3tiQ2T9vlnRU8yYEn8mpnaWiOY1uye-NCv8guwJW7_zSqphXzB2_dQ7KhzbR70_5bcu4EPeuefLkWVUq5rho6k8aBYOQkhEadlM11ta5HE7N72eKrbqd2AR4IpQlydPBsh0d7gViK-dLwI53K0lISbii4MjIPI33QAdP3qQQgPicI9Bs6e7-Dvh-1WkgHLv037zKj25DB">
+<span class="absolute top-space-xs left-space-xs px-2.5 py-1 rounded-full bg-primary-container text-on-primary font-caption-bold text-[11px] shadow-sm flex items-center gap-1">
+<span class="w-1.5 h-1.5 rounded-full bg-white animate-pulse"></span>
+            Abierto
+          </span>
+<button aria-label="Guardar en favoritos" class="absolute top-space-xs right-space-xs w-8 h-8 rounded-full bg-surface-container-lowest/90 backdrop-blur-sm text-on-surface hover:text-error flex items-center justify-center shadow-sm transition-colors" type="button">
+<span class="material-symbols-outlined text-[18px]">favorite</span>
+</button>
+</div>
+<div class="p-space-md flex-1 flex flex-col justify-between space-y-space-xs">
+<div>
+<div class="flex items-start justify-between gap-space-xs">
+<h3 class="font-title-md text-title-md text-on-surface font-bold group-hover:text-primary transition-colors line-clamp-1">Pizzería Güerrín</h3>
+<span class="inline-flex items-center gap-0.5 px-1.5 py-0.5 rounded bg-surface-container-low text-on-surface font-caption-bold text-[12px] shrink-0">
+<span class="material-symbols-outlined text-primary-container text-[14px]" style="font-variation-settings: 'FILL' 1;">star</span> 4.9
+              </span>
+</div>
+<p class="font-caption-sm text-caption-sm text-on-surface-variant line-clamp-1">Pizza clásica porteña • Fugazzeta (3.410)</p>
+</div>
+<div class="flex items-center justify-between pt-space-xs text-on-surface-variant font-caption-bold text-caption-bold">
+<span class="flex items-center gap-1 text-on-surface">
+<span class="material-symbols-outlined text-[16px] text-secondary">schedule</span> 30-40 min
+            </span>
+<span class="flex items-center gap-1">
+<span class="material-symbols-outlined text-[16px] text-secondary">delivery_dining</span> Envío $950
+            </span>
+</div>
+</div>
+</article>
+<!-- Comercio 3: Sushiclub Recoleta -->
+<article class="group flex flex-col rounded-xl bg-surface-container-lowest shadow-sm hover:shadow-md transition-all duration-200 overflow-hidden cursor-pointer">
+<div class="relative w-full aspect-[16/10] overflow-hidden bg-surface-container">
+<img class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" data-alt="Elegant assortment of premium fresh salmon sushi rolls, nigiri and sashimi placed on a dark slate tray with pickled ginger and chopsticks, high end Japanese culinary photography" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAzHPGYexo_dk3s1cKDaWDQ0SaVjq88_TIcOM2oy93XqpDtr_AtFyg7CitjzQP3jdz8f7DoanRBb_u0WmDA30ayl-K0Qw4If_llLdbPuYe3e6Int7eqNJ9w74PGzejz18t7gvOPvVI_JPohOzjT0VdXducL3tVlEyz6Fb7lQ1UXzONusNIgQQwRXT2GBMHeGj1az6A7tKCWHr9z2kvpC8bVuQmvOh8PpnkW19oJ5ydGiFvzQklV_qgW">
+<span class="absolute top-space-xs left-space-xs px-2.5 py-1 rounded-full bg-primary-container text-on-primary font-caption-bold text-[11px] shadow-sm flex items-center gap-1">
+<span class="w-1.5 h-1.5 rounded-full bg-white animate-pulse"></span>
+            Abierto
+          </span>
+<span class="absolute bottom-space-xs left-space-xs px-2 py-0.5 rounded bg-tertiary text-on-tertiary font-caption-bold text-[10px] shadow-sm">
+            Envío Gratis
+          </span>
+<button aria-label="Guardar en favoritos" class="absolute top-space-xs right-space-xs w-8 h-8 rounded-full bg-surface-container-lowest/90 backdrop-blur-sm text-on-surface hover:text-error flex items-center justify-center shadow-sm transition-colors" type="button">
+<span class="material-symbols-outlined text-[18px]">favorite</span>
+</button>
+</div>
+<div class="p-space-md flex-1 flex flex-col justify-between space-y-space-xs">
+<div>
+<div class="flex items-start justify-between gap-space-xs">
+<h3 class="font-title-md text-title-md text-on-surface font-bold group-hover:text-primary transition-colors line-clamp-1">Sushiclub Recoleta</h3>
+<span class="inline-flex items-center gap-0.5 px-1.5 py-0.5 rounded bg-surface-container-low text-on-surface font-caption-bold text-[12px] shrink-0">
+<span class="material-symbols-outlined text-primary-container text-[14px]" style="font-variation-settings: 'FILL' 1;">star</span> 4.7
+              </span>
+</div>
+<p class="font-caption-sm text-caption-sm text-on-surface-variant line-clamp-1">Sushi &amp; Fusión • Woks (890)</p>
+</div>
+<div class="flex items-center justify-between pt-space-xs text-on-surface-variant font-caption-bold text-caption-bold">
+<span class="flex items-center gap-1 text-on-surface">
+<span class="material-symbols-outlined text-[16px] text-secondary">schedule</span> 40-50 min
+            </span>
+<span class="flex items-center gap-1 text-primary font-bold">
+<span class="material-symbols-outlined text-[16px]">redeem</span> Gratis
+            </span>
+</div>
+</div>
+</article>
+<!-- Comercio 4: Green Eat Palermo -->
+<article class="group flex flex-col rounded-xl bg-surface-container-lowest shadow-sm hover:shadow-md transition-all duration-200 overflow-hidden cursor-pointer">
+<div class="relative w-full aspect-[16/10] overflow-hidden bg-surface-container">
+<img class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" data-alt="Vibrant healthy poke bowl with avocado slices, edamame, fresh salmon cubes, sesame seeds, quinoa and mixed greens in a ceramic white bowl, crisp clean natural light" src="https://lh3.googleusercontent.com/aida-public/AB6AXuC1SSrbJjWy--8dmDKyhU6jIvOvtZx4TZrMwz9z8VOnD-jHiVTAM9kijHt9gAVrxZh24qMduzS9OEhk2f_ivG5MWsVfZApTKrGRoPGfMycYQ1fEMY2v-ksU92goCs0ER55RtlWv3mm59_-cTlaycaRRJVO6fzO6ENGdkFBRZhX2_kwOZhnANVnOX3gwFQFqBha80r1lq39fEGAq_d_t9lz9No6zDqMRQCbkDNkEf70i6N3V99ogupjL">
+<span class="absolute top-space-xs left-space-xs px-2.5 py-1 rounded-full bg-primary-container text-on-primary font-caption-bold text-[11px] shadow-sm flex items-center gap-1">
+<span class="w-1.5 h-1.5 rounded-full bg-white animate-pulse"></span>
+            Abierto
+          </span>
+<button aria-label="Guardar en favoritos" class="absolute top-space-xs right-space-xs w-8 h-8 rounded-full bg-surface-container-lowest/90 backdrop-blur-sm text-on-surface hover:text-error flex items-center justify-center shadow-sm transition-colors" type="button">
+<span class="material-symbols-outlined text-[18px]">favorite</span>
+</button>
+</div>
+<div class="p-space-md flex-1 flex flex-col justify-between space-y-space-xs">
+<div>
+<div class="flex items-start justify-between gap-space-xs">
+<h3 class="font-title-md text-title-md text-on-surface font-bold group-hover:text-primary transition-colors line-clamp-1">Green Eat Palermo</h3>
+<span class="inline-flex items-center gap-0.5 px-1.5 py-0.5 rounded bg-surface-container-low text-on-surface font-caption-bold text-[12px] shrink-0">
+<span class="material-symbols-outlined text-primary-container text-[14px]" style="font-variation-settings: 'FILL' 1;">star</span> 4.6
+              </span>
+</div>
+<p class="font-caption-sm text-caption-sm text-on-surface-variant line-clamp-1">Bowls &amp; Ensaladas • Wraps (530)</p>
+</div>
+<div class="flex items-center justify-between pt-space-xs text-on-surface-variant font-caption-bold text-caption-bold">
+<span class="flex items-center gap-1 text-on-surface">
+<span class="material-symbols-outlined text-[16px] text-secondary">schedule</span> 20-30 min
+            </span>
+<span class="flex items-center gap-1">
+<span class="material-symbols-outlined text-[16px] text-secondary">delivery_dining</span> Envío $750
+            </span>
+</div>
+</div>
+</article>
+<!-- Comercio 5: Rapanui Helados -->
+<article class="group flex flex-col rounded-xl bg-surface-container-lowest shadow-sm hover:shadow-md transition-all duration-200 overflow-hidden cursor-pointer">
+<div class="relative w-full aspect-[16/10] overflow-hidden bg-surface-container">
+<img class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" data-alt="Artisanal creamy Italian style gelato scoops of dark chocolate and dulce de leche in an artisanal paper cup with chocolate drizzle and frambuesa garnishes" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCDv5p4nHJjjijLayU2GW-CU6MMTK-vz9abfeSMrmP4_OuTbDmeS0H2r3SYywjxPj633UBq2bCziRhR9qMJ4dh5xnPCK36dIRFZgZin7TCR2ey_fcaNEbRrAwW5Gt3i3wR9lagF5_U2YSbiDrGumLtKj3mvVwekGnKQeRFajVLM-IAwusRn8FiON-pDAOW0mGfknEI6MGWoV-kW-XMiEPB3LayJnfFAuHquuwTA8xArZKGIKLr0YxG0">
+<span class="absolute top-space-xs left-space-xs px-2.5 py-1 rounded-full bg-primary-container text-on-primary font-caption-bold text-[11px] shadow-sm flex items-center gap-1">
+<span class="w-1.5 h-1.5 rounded-full bg-white animate-pulse"></span>
+            Abierto
+          </span>
+<button aria-label="Guardar en favoritos" class="absolute top-space-xs right-space-xs w-8 h-8 rounded-full bg-surface-container-lowest/90 backdrop-blur-sm text-on-surface hover:text-error flex items-center justify-center shadow-sm transition-colors" type="button">
+<span class="material-symbols-outlined text-[18px]">favorite</span>
+</button>
+</div>
+<div class="p-space-md flex-1 flex flex-col justify-between space-y-space-xs">
+<div>
+<div class="flex items-start justify-between gap-space-xs">
+<h3 class="font-title-md text-title-md text-on-surface font-bold group-hover:text-primary transition-colors line-clamp-1">Rapanui Helados</h3>
+<span class="inline-flex items-center gap-0.5 px-1.5 py-0.5 rounded bg-surface-container-low text-on-surface font-caption-bold text-[12px] shrink-0">
+<span class="material-symbols-outlined text-primary-container text-[14px]" style="font-variation-settings: 'FILL' 1;">star</span> 4.9
+              </span>
+</div>
+<p class="font-caption-sm text-caption-sm text-on-surface-variant line-clamp-1">Heladería artesanal • Chocolates (2.150)</p>
+</div>
+<div class="flex items-center justify-between pt-space-xs text-on-surface-variant font-caption-bold text-caption-bold">
+<span class="flex items-center gap-1 text-on-surface">
+<span class="material-symbols-outlined text-[16px] text-secondary">schedule</span> 20-30 min
+            </span>
+<span class="flex items-center gap-1">
+<span class="material-symbols-outlined text-[16px] text-secondary">delivery_dining</span> Envío $800
+            </span>
+</div>
+</div>
+</article>
+<!-- Comercio 6: Don Julio Parrilla (Cerrado) -->
+<article class="group flex flex-col rounded-xl bg-surface-container-lowest shadow-sm hover:shadow-md transition-all duration-200 overflow-hidden cursor-pointer opacity-85">
+<div class="relative w-full aspect-[16/10] overflow-hidden bg-surface-container">
+<img class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300 grayscale-[30%]" data-alt="Traditional Argentine beef steak sizzling on an open charcoal grill with wood fire flames in the background, authentic asado presentation" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDL7Fs105qIVNr0naT02jFVUiMp3O682bSEgSvQCZpDMqJtrBOH1nH3ud1ejZW7MLIUixD-limMTbCCQhado7D6icyt5ABx9hkbetaViH37nCXnVxgf0VMSP48l24yhdIF1_c2KrjdLMvKUSikfbxAFazxsxc2Uaya-BM43XQZKPV6h6cgRT2K6enKE2Av-S2zLvGDeLbNNT70BMuJydVxKqzeAOBWtiqcX4rho4HAlkNuEsUHO_6kF">
+<!-- Badge Cerrado -->
+<span class="absolute top-space-xs left-space-xs px-2.5 py-1 rounded-full bg-secondary-container text-on-secondary-container font-caption-bold text-[11px] shadow-sm flex items-center gap-1">
+<span class="material-symbols-outlined text-[13px]">schedule</span>
+            Cerrado • Abre 20:00 hs
+          </span>
+<button aria-label="Guardar en favoritos" class="absolute top-space-xs right-space-xs w-8 h-8 rounded-full bg-surface-container-lowest/90 backdrop-blur-sm text-on-surface hover:text-error flex items-center justify-center shadow-sm transition-colors" type="button">
+<span class="material-symbols-outlined text-[18px]">favorite</span>
+</button>
+</div>
+<div class="p-space-md flex-1 flex flex-col justify-between space-y-space-xs">
+<div>
+<div class="flex items-start justify-between gap-space-xs">
+<h3 class="font-title-md text-title-md text-on-surface font-bold group-hover:text-primary transition-colors line-clamp-1">Don Julio Parrilla</h3>
+<span class="inline-flex items-center gap-0.5 px-1.5 py-0.5 rounded bg-surface-container-low text-on-surface font-caption-bold text-[12px] shrink-0">
+<span class="material-symbols-outlined text-primary-container text-[14px]" style="font-variation-settings: 'FILL' 1;">star</span> 4.9
+              </span>
+</div>
+<p class="font-caption-sm text-caption-sm text-on-surface-variant line-clamp-1">Carnes y Asado argentino (4.800)</p>
+</div>
+<div class="flex items-center justify-between pt-space-xs text-secondary font-caption-bold text-caption-bold">
+<span class="flex items-center gap-1">
+<span class="material-symbols-outlined text-[16px] text-secondary">schedule</span> 50-60 min
+            </span>
+<span class="flex items-center gap-1">
+<span class="material-symbols-outlined text-[16px] text-secondary">delivery_dining</span> Envío $1.200
+            </span>
+</div>
+</div>
+</article>
+<!-- Comercio 7: Kentucky Pizzería -->
+<article class="group flex flex-col rounded-xl bg-surface-container-lowest shadow-sm hover:shadow-md transition-all duration-200 overflow-hidden cursor-pointer">
+<div class="relative w-full aspect-[16/10] overflow-hidden bg-surface-container">
+<img class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" data-alt="Traditional Argentine pizza al corte with crispy fugazza and fainá slice on retro counter, authentic Buenos Aires street food vibe" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBvq1oxijarEYpn6KIIIX8R6jgJeIx98MhmGmo3-U9YEH1XB1OU8DcTu-lIlAYdofKGPMmkhkwDiDEQgRXbhNBIQouLug2XJicrjSpoM3UkFngCuVwDYGwdOIl7osj3d2qNJDRdwgo3sbgoN59epd6jCXi34gC5CafxGQqNAlRUgSgG9OCSAclypf44TocHuO_DV6Az1LZ64aNq8y11z9lm00qMYK_4q_f2Aw-ac5V9GsMSJvN6iW_f">
+<span class="absolute top-space-xs left-space-xs px-2.5 py-1 rounded-full bg-primary-container text-on-primary font-caption-bold text-[11px] shadow-sm flex items-center gap-1">
+<span class="w-1.5 h-1.5 rounded-full bg-white animate-pulse"></span>
+            Abierto
+          </span>
+<button aria-label="Guardar en favoritos" class="absolute top-space-xs right-space-xs w-8 h-8 rounded-full bg-surface-container-lowest/90 backdrop-blur-sm text-on-surface hover:text-error flex items-center justify-center shadow-sm transition-colors" type="button">
+<span class="material-symbols-outlined text-[18px]">favorite</span>
+</button>
+</div>
+<div class="p-space-md flex-1 flex flex-col justify-between space-y-space-xs">
+<div>
+<div class="flex items-start justify-between gap-space-xs">
+<h3 class="font-title-md text-title-md text-on-surface font-bold group-hover:text-primary transition-colors line-clamp-1">Kentucky Pizzería</h3>
+<span class="inline-flex items-center gap-0.5 px-1.5 py-0.5 rounded bg-surface-container-low text-on-surface font-caption-bold text-[12px] shrink-0">
+<span class="material-symbols-outlined text-primary-container text-[14px]" style="font-variation-settings: 'FILL' 1;">star</span> 4.3
+              </span>
+</div>
+<p class="font-caption-sm text-caption-sm text-on-surface-variant line-clamp-1">Pizza al corte • Fainá • Empanadas (980)</p>
+</div>
+<div class="flex items-center justify-between pt-space-xs text-on-surface-variant font-caption-bold text-caption-bold">
+<span class="flex items-center gap-1 text-on-surface">
+<span class="material-symbols-outlined text-[16px] text-secondary">schedule</span> 25-35 min
+            </span>
+<span class="flex items-center gap-1">
+<span class="material-symbols-outlined text-[16px] text-secondary">delivery_dining</span> Envío $700
+            </span>
+</div>
+</div>
+</article>
+<!-- Comercio 8: El Techo Dulce -->
+<article class="group flex flex-col rounded-xl bg-surface-container-lowest shadow-sm hover:shadow-md transition-all duration-200 overflow-hidden cursor-pointer">
+<div class="relative w-full aspect-[16/10] overflow-hidden bg-surface-container">
+<img class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" data-alt="Decadent chocolate cake portion with layers of dulce de leche and whipped cream topped with berries on a rustic ceramic plate, artisan bakery mood" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCxW6BbaNpp2p4n7VMLUceWq7F6DKBC3KMdSzwhO4C8I98a1OuQCMvrlTrFkeY1DFH74utOTija5JYbIc1BzPR8I_B9NU5exLYtfa-i6dhr2ekumW8gH0xJsPwvGkM5eFSytaNuHUfTXyosX4Yk3JxN9NXlYx9F7DZXF_5u38-TAb1sod7cEZqxwJ_vYFSSk7o_9u5BJKA7TC8Uo6rlOY83iVZruGuyADx5b2vKiT3ruPs1-EmToYiO">
+<span class="absolute top-space-xs left-space-xs px-2.5 py-1 rounded-full bg-primary-container text-on-primary font-caption-bold text-[11px] shadow-sm flex items-center gap-1">
+<span class="w-1.5 h-1.5 rounded-full bg-white animate-pulse"></span>
+            Abierto
+          </span>
+<button aria-label="Guardar en favoritos" class="absolute top-space-xs right-space-xs w-8 h-8 rounded-full bg-surface-container-lowest/90 backdrop-blur-sm text-on-surface hover:text-error flex items-center justify-center shadow-sm transition-colors" type="button">
+<span class="material-symbols-outlined text-[18px]">favorite</span>
+</button>
+</div>
+<div class="p-space-md flex-1 flex flex-col justify-between space-y-space-xs">
+<div>
+<div class="flex items-start justify-between gap-space-xs">
+<h3 class="font-title-md text-title-md text-on-surface font-bold group-hover:text-primary transition-colors line-clamp-1">El Techo Dulce</h3>
+<span class="inline-flex items-center gap-0.5 px-1.5 py-0.5 rounded bg-surface-container-low text-on-surface font-caption-bold text-[12px] shrink-0">
+<span class="material-symbols-outlined text-primary-container text-[14px]" style="font-variation-settings: 'FILL' 1;">star</span> 4.7
+              </span>
+</div>
+<p class="font-caption-sm text-caption-sm text-on-surface-variant line-clamp-1">Postres &amp; Bakery • Medialunas (420)</p>
+</div>
+<div class="flex items-center justify-between pt-space-xs text-on-surface-variant font-caption-bold text-caption-bold">
+<span class="flex items-center gap-1 text-on-surface">
+<span class="material-symbols-outlined text-[16px] text-secondary">schedule</span> 30-40 min
+            </span>
+<span class="flex items-center gap-1">
+<span class="material-symbols-outlined text-[16px] text-secondary">delivery_dining</span> Envío $850
+            </span>
+</div>
+</div>
+</article>
+</div>
+</section>
+<!-- Banner informativo de fidelidad DeliveryGo Prime -->
+<section class="rounded-xl bg-gradient-to-r from-surface-container-highest via-surface-container to-surface-container-low p-space-lg shadow-sm flex flex-col md:flex-row items-center justify-between gap-space-md">
+<div class="flex items-center gap-space-md">
+<div class="w-12 h-12 rounded-xl bg-primary-container flex items-center justify-center text-on-primary shadow-sm shrink-0">
+<span class="material-symbols-outlined text-[28px]">verified</span>
+</div>
+<div>
+<h3 class="font-headline-sm text-headline-sm text-on-surface">Sumate a DeliveryGo Prime por $1.499/mes</h3>
+<p class="font-body-md text-body-md text-on-surface-variant">Envíos gratis ilimitados en compras mayores a $6.000 y promociones exclusivas cada jueves.</p>
+</div>
+</div>
+<button class="shrink-0 h-11 px-space-lg rounded-xl bg-primary-container hover:bg-primary text-on-primary font-body-md-medium text-body-md-medium transition-colors shadow-sm" type="button">
+      Probar 30 días gratis
+    </button>
+</section>
+</div>
+<script>
+  // Micro-interacciones de selección de chips y filtros
+  document.querySelectorAll('.category-chip').forEach(btn => {
+    btn.addEventListener('click', () => {
+      document.querySelectorAll('.category-chip').forEach(c => {
+        c.className = 'category-chip shrink-0 h-10 px-space-md rounded-full bg-surface-container-lowest text-on-surface hover:bg-surface-container-low font-body-md-medium text-body-md-medium flex items-center gap-space-xs shadow-sm transition-all';
+        const icon = c.querySelector('.material-symbols-outlined');
+        if (icon) icon.className = 'material-symbols-outlined text-[18px] text-on-surface-variant';
+      });
+      btn.className = 'category-chip shrink-0 h-10 px-space-md rounded-full bg-primary-container text-on-primary font-body-md-medium text-body-md-medium flex items-center gap-space-xs shadow-sm transition-all';
+      const activeIcon = btn.querySelector('.material-symbols-outlined');
+      if (activeIcon) activeIcon.className = 'material-symbols-outlined text-[18px] text-on-primary';
+    });
+  });
+
+  document.querySelectorAll('.filter-toggle').forEach(pill => {
+    pill.addEventListener('click', () => {
+      pill.classList.toggle('bg-surface-container-high');
+      pill.classList.toggle('shadow-md');
+    });
+  });
+
+  // Evento simple para el botón de dirección
+  const addressBtn = document.getElementById('btn-change-address');
+  if (addressBtn) {
+    addressBtn.addEventListener('click', () => {
+      const currentText = addressBtn.previousElementSibling.previousElementSibling;
+      const nuevo = prompt('Ingresá tu nueva dirección de entrega:', currentText.textContent);
+      if (nuevo && nuevo.trim() !== '') {
+        currentText.textContent = nuevo.trim();
+      }
+    });
+  }
+</script></main><footer class="w-full bg-surface-container-lowest shadow-[0_-1px_8px_rgba(0,0,0,0.02)] mt-space-3xl"><div class="max-w-[1280px] mx-auto px-gutter-mobile lg:px-gutter-desktop py-space-2xl"><div class="grid grid-cols-1 md:grid-cols-4 gap-space-xl pb-space-2xl"><div class="space-y-space-sm"><div class="flex items-center gap-space-xs"><img alt="DeliveryGo Logo" class="h-7 w-auto object-contain" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAR10kqrtXin7jn-sIsvkfeTDKlpO5HZRYcxXpawKI1qNTtK26vuLJ8cYSoH5PGhne4hWGje1bm7RBt5MqZ9Sdemk_SZtByp6R-5ILMToWzRltEtGw2JSzns9m_PC_H8fvNiRtWAJ8-_1lC_bx8zSGvc4Iku6e1M7LRy7GFuP1FutlPKqqn_tPtQDAapUqnKTqyofC9ESW1il78PNUtTB3ZuiZAI5kWz-LjQt6cW-otkNcPcAGbwkcN"><span class="font-title-md text-title-md text-on-surface font-bold tracking-tight">Delivery<span class="text-primary-container">Go</span></span></div><p class="font-body-md text-body-md text-on-surface-variant max-w-xs">La plataforma urbana de entregas ultrarrápidas pensada para todo el país. Pedí lo que quieras, cuando quieras.</p></div><div class="flex flex-col gap-space-xs"><span class="font-caption-bold text-caption-bold uppercase tracking-wider text-secondary">Compañía</span><a class="font-body-md text-body-md text-on-surface-variant hover:text-primary transition-colors" data-path="ayuda-y-soporte" href="#">Ayuda y Soporte</a><a class="font-body-md text-body-md text-on-surface-variant hover:text-primary transition-colors" data-path="suma-tu-comercio" href="#">Sumá tu comercio</a><a class="font-body-md text-body-md text-on-surface-variant hover:text-primary transition-colors" data-path="contacto" href="#">Contacto</a></div><div class="flex flex-col gap-space-xs"><span class="font-caption-bold text-caption-bold uppercase tracking-wider text-secondary">Legal</span><a class="font-body-md text-body-md text-on-surface-variant hover:text-primary transition-colors" data-path="terminos-y-condiciones" href="#">Términos y Condiciones</a><a class="font-body-md text-body-md text-on-surface-variant hover:text-primary transition-colors" data-path="privacidad" href="#">Privacidad</a><a class="font-body-md text-body-md text-on-surface-variant hover:text-primary transition-colors" data-path="defensa-al-consumidor" href="#">Defensa al Consumidor</a></div><div class="flex flex-col gap-space-xs"><span class="font-caption-bold text-caption-bold uppercase tracking-wider text-secondary">Pagos Seguros</span><p class="font-body-md text-body-md text-on-surface-variant">Aceptamos todas las tarjetas de crédito, débito y dinero en cuenta con liquidación ARS inmediata.</p><div class="flex items-center gap-space-xs text-secondary mt-space-xs"><span class="material-symbols-outlined text-[24px]">credit_card</span><span class="material-symbols-outlined text-[24px]">account_balance_wallet</span><span class="material-symbols-outlined text-[24px]">qr_code_scanner</span></div></div></div><div class="pt-space-lg flex flex-col sm:flex-row items-center justify-between gap-space-md bg-surface-container-lowest text-center sm:text-left"><p class="font-caption-sm text-caption-sm text-on-surface-variant">© 2025 DeliveryGo Argentina S.A. Todos los derechos reservados.</p><span class="font-caption-sm text-caption-sm text-secondary">Buenos Aires, Argentina</span></div></div></footer></body></html>

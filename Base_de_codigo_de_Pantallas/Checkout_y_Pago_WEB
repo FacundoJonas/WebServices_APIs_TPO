@@ -1,0 +1,500 @@
+<!DOCTYPE html><html lang="es"><head><meta charset="utf-8"><meta content="width=device-width, initial-scale=1.0" name="viewport"><link href="https://fonts.googleapis.com" rel="preconnect"><link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"><link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet"><link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"><style>@layer base { html, body { margin: 0; padding: 0; } body { overscroll-behavior: none; } main > :first-child { margin-top: 0 !important; } main > :last-child { margin-bottom: 0 !important; } } ::-webkit-scrollbar { display: none; }</style><script src="https://cdn.tailwindcss.com"></script><script id="tailwind-config">tailwind.config = { darkMode: "class", theme: { extend: { "colors": { "on-surface-variant": "#3d4a44", "on-secondary-fixed": "#191c1e", "on-primary-container": "#003427", "primary-fixed": "#79f9d0", "surface-tint": "#006b53", "secondary-fixed": "#e1e2e5", "outline": "#6c7a74", "secondary-fixed-dim": "#c5c7c9", "on-error": "#ffffff", "outline-variant": "#bccac2", "on-primary": "#ffffff", "tertiary-fixed": "#dbe1ff", "primary-container": "#00a884", "secondary": "#5c5f61", "surface-container-lowest": "#ffffff", "tertiary-fixed-dim": "#b4c5ff", "surface": "#f9f9ff", "on-surface": "#151c27", "on-error-container": "#93000a", "surface-container-low": "#f0f3ff", "on-background": "#151c27", "on-tertiary-container": "#002771", "primary": "#006b53", "inverse-on-surface": "#ebf1ff", "secondary-container": "#dee0e2", "on-secondary-fixed-variant": "#444749", "surface-bright": "#f9f9ff", "tertiary-container": "#678fff", "on-tertiary-fixed": "#00174b", "error": "#ba1a1a", "surface-container-highest": "#dce2f3", "on-tertiary-fixed-variant": "#003ea8", "on-tertiary": "#ffffff", "on-secondary-container": "#606365", "surface-container-high": "#e2e8f8", "on-secondary": "#ffffff", "background": "#f9f9ff", "surface-container": "#e7eefe", "on-primary-fixed-variant": "#00513e", "surface-variant": "#dce2f3", "primary-fixed-dim": "#59dcb5", "on-primary-fixed": "#002117", "inverse-primary": "#59dcb5", "tertiary": "#0053db", "error-container": "#ffdad6", "inverse-surface": "#2a313d", "surface-dim": "#d3daea" }, "borderRadius": { "DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px" }, "spacing": { "space-md": "1rem", "gutter-mobile": "1rem", "container-max": "1280px", "space-2xs": "0.25rem", "space-3xl": "4rem", "space-lg": "1.5rem", "gutter-desktop": "1.5rem", "space-xl": "2rem", "space-2xl": "3rem", "space-xs": "0.5rem", "space-sm": "0.75rem" }, "fontFamily": { "headline-lg-mobile": ["Inter"], "body-lg": ["Inter"], "headline-lg": ["Inter"], "body-md": ["Inter"], "title-md": ["Inter"], "body-md-medium": ["Inter"], "display-hero": ["Inter"], "headline-md": ["Inter"], "label-md": ["Inter"], "display-hero-mobile": ["Inter"], "body-lg-medium": ["Inter"], "caption-bold": ["Inter"], "headline-sm": ["Inter"], "caption-sm": ["Inter"] }, "fontSize": { "headline-lg-mobile": ["26px", { "lineHeight": "32px", "letterSpacing": "-0.01em", "fontWeight": "600" }], "body-lg": ["16px", { "lineHeight": "24px", "letterSpacing": "0em", "fontWeight": "400" }], "headline-lg": ["32px", { "lineHeight": "40px", "letterSpacing": "-0.015em", "fontWeight": "600" }], "body-md": ["14px", { "lineHeight": "20px", "letterSpacing": "0em", "fontWeight": "400" }], "title-md": ["18px", { "lineHeight": "24px", "letterSpacing": "0em", "fontWeight": "600" }], "body-md-medium": ["14px", { "lineHeight": "20px", "letterSpacing": "0em", "fontWeight": "500" }], "display-hero": ["40px", { "lineHeight": "48px", "letterSpacing": "-0.02em", "fontWeight": "700" }], "headline-md": ["24px", { "lineHeight": "32px", "letterSpacing": "-0.01em", "fontWeight": "600" }], "label-md": ["13px", { "lineHeight": "18px", "letterSpacing": "0.01em", "fontWeight": "500" }], "display-hero-mobile": ["30px", { "lineHeight": "36px", "letterSpacing": "-0.015em", "fontWeight": "700" }], "body-lg-medium": ["16px", { "lineHeight": "24px", "letterSpacing": "0em", "fontWeight": "500" }], "caption-bold": ["12px", { "lineHeight": "16px", "letterSpacing": "0.02em", "fontWeight": "600" }], "headline-sm": ["20px", { "lineHeight": "28px", "letterSpacing": "-0.005em", "fontWeight": "600" }], "caption-sm": ["12px", { "lineHeight": "16px", "letterSpacing": "0.01em", "fontWeight": "400" }] } } } };</script></head><body class="bg-background font-body-md text-on-surface antialiased selection:bg-primary-container selection:text-on-primary-container"><header class="fixed top-0 left-0 right-0 w-full z-50 bg-surface-container-lowest/90 backdrop-blur-xl shadow-[0_1px_8px_rgba(0,0,0,0.04)]"><div class="h-20 max-w-[1280px] mx-auto px-gutter-mobile lg:px-gutter-desktop flex items-center justify-between gap-space-md"><div class="flex items-center gap-space-lg shrink-0"><a class="flex items-center gap-space-xs" data-path="comercios" href="#"><img alt="DeliveryGo Logo" class="h-8 w-auto object-contain" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAR10kqrtXin7jn-sIsvkfeTDKlpO5HZRYcxXpawKI1qNTtK26vuLJ8cYSoH5PGhne4hWGje1bm7RBt5MqZ9Sdemk_SZtByp6R-5ILMToWzRltEtGw2JSzns9m_PC_H8fvNiRtWAJ8-_1lC_bx8zSGvc4Iku6e1M7LRy7GFuP1FutlPKqqn_tPtQDAapUqnKTqyofC9ESW1il78PNUtTB3ZuiZAI5kWz-LjQt6cW-otkNcPcAGbwkcN"><span class="font-title-md text-title-md text-on-surface hidden sm:inline-block tracking-tight">Delivery<span class="text-primary-container">Go</span></span></a><button class="flex items-center gap-space-xs py-space-xs px-space-sm rounded-full bg-surface-container-low hover:bg-surface-container hover:text-on-surface text-on-surface-variant transition-colors" type="button"><span class="material-symbols-outlined text-primary-container text-[20px]">location_on</span><div class="flex flex-col text-left"><span class="font-caption-sm text-caption-sm text-secondary leading-none">Entregar en</span><span class="font-body-md-medium text-body-md-medium text-on-surface truncate max-w-[150px] md:max-w-[200px] leading-tight">Av. Corrientes 1450, CABA</span></div><span class="material-symbols-outlined text-secondary text-[18px]">expand_more</span></button></div><div class="flex-1 max-w-xl hidden md:block"><div class="relative w-full"><span class="material-symbols-outlined absolute left-space-md top-1/2 -translate-y-1/2 text-outline text-[20px]">search</span><input class="w-full h-11 pl-11 pr-space-md rounded-xl bg-surface-container-low border border-outline-variant/30 text-on-surface placeholder:text-outline font-body-md focus:outline-none focus:ring-2 focus:ring-primary-container/20 focus:border-primary-container transition-all" placeholder="Buscar restaurantes, platos o bebidas..." type="text"></div></div><div class="flex items-center gap-space-sm shrink-0"><nav class="hidden xl:flex items-center gap-space-xs mr-space-xs" data-active-classes="bg-surface-container-high text-on-surface font-body-md-medium"><a class="px-space-sm py-space-xs rounded-lg font-body-md text-body-md text-on-surface-variant hover:text-on-surface hover:bg-surface-container-low transition-colors" data-path="comercios" href="#">Comercios</a><a class="px-space-sm py-space-xs rounded-lg font-body-md text-body-md text-on-surface-variant hover:text-on-surface hover:bg-surface-container-low transition-colors" data-path="promociones" href="#">Promociones</a><a class="px-space-sm py-space-xs rounded-lg font-body-md text-body-md text-on-surface-variant hover:text-on-surface hover:bg-surface-container-low transition-colors" data-path="pedidos-activos" href="#">Mis Pedidos</a></nav><a class="relative p-space-xs rounded-full hover:bg-surface-container-low text-on-surface-variant hover:text-on-surface transition-colors" data-path="notificaciones" href="#"><span class="material-symbols-outlined text-[24px]">notifications</span><span class="absolute top-1 right-1 flex items-center justify-center min-w-[18px] h-[18px] px-1 bg-error text-on-error rounded-full font-caption-bold text-[10px] leading-none">3</span></a><a class="flex items-center gap-space-xs py-space-xs px-space-sm rounded-xl bg-surface-container-low hover:bg-surface-container text-on-surface transition-colors" data-path="carrito" href="#"><div class="relative flex items-center"><span class="material-symbols-outlined text-primary-container text-[22px]">shopping_bag</span><span class="absolute -top-1.5 -right-2 flex items-center justify-center min-w-[16px] h-[16px] px-1 bg-primary-container text-on-primary rounded-full font-caption-bold text-[10px] leading-none">2</span></div><span class="hidden sm:inline-block font-body-md-medium text-body-md-medium text-on-surface">$8.450</span></a><a class="flex items-center gap-space-xs pl-space-xs py-space-xs rounded-full hover:bg-surface-container-low transition-colors" data-path="perfil" href="#"><img alt="Profile" class="w-8 h-8 rounded-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuB6H7_LwcTC-3P1tlRzTOM1gGsKRRI4C3WPhUC-h3xufJtxhYUSxlvF8E-806QGOsyDTm5ZWzg5fvnGSedo-auwT8GpTQH9Buz9Du6eFiDLzhDy7SozSvK9v2f2Nf-KpXgwaOQuwPTlJan18CmoxKvtOIvIKzbC147jW5W-2Zpxc14BJo0-4mA7Kx8Pa0iM1Xrj22CLFZSMtkYowTef_EBRn_lphfacnhKmBll1ulLyDeCZI8coezS6"><span class="font-body-md-medium text-body-md-medium text-on-surface hidden lg:inline-block pr-space-xs">Lucas M.</span></a></div></div></header><main class="w-full pt-20 bg-background min-h-[calc(100vh-280px)]"><div class="flex flex-col w-full">
+<!-- Dynamic Notification / Error Banner (Rejected Payment Scenario) -->
+<section class="w-full bg-error-container text-on-error-container px-gutter-mobile lg:px-gutter-desktop py-space-md shadow-sm transition-all duration-300" id="payment-error-banner">
+<div class="max-w-[1280px] mx-auto flex flex-col md:flex-row items-start md:items-center justify-between gap-space-md">
+<div class="flex items-start gap-space-sm">
+<span class="material-symbols-outlined text-error text-[28px] shrink-0 mt-0.5" style="font-variation-settings: 'FILL' 1;">error</span>
+<div class="space-y-1">
+<div class="flex items-center gap-space-xs">
+<span class="font-caption-bold text-caption-bold uppercase tracking-wider text-error bg-surface-container-lowest px-2 py-0.5 rounded-full shadow-xs">Pago Rechazado</span>
+<span class="font-caption-sm text-caption-sm text-on-error-container opacity-80">Código de respuesta: ERR_INSUFFICIENT_FUNDS_704</span>
+</div>
+<p class="font-body-md text-body-md text-on-error-container font-normal">
+            Tu pago no pudo ser procesado por la entidad emisora (Tarjeta rechazada por fondos insuficientes o límite operativo excedido). Por favor, seleccioná otro método de pago para completar tu pedido sin perder la reserva.
+          </p>
+</div>
+</div>
+<div class="flex items-center gap-space-xs shrink-0 self-end md:self-center">
+<button class="h-10 px-space-md rounded-xl bg-error text-on-error font-body-md-medium text-body-md-medium hover:bg-error/90 shadow-sm transition-transform active:scale-95 flex items-center gap-1.5" onclick="focusPaymentMethod()" type="button">
+<span class="material-symbols-outlined text-[18px]">credit_card</span>
+          Probar con otro medio de pago
+        </button>
+</div>
+</div>
+</section>
+<!-- Main Checkout Container -->
+<main class="w-full max-w-[1280px] mx-auto px-gutter-mobile lg:px-gutter-desktop py-space-xl">
+<!-- Breadcrumb & Step Indicators -->
+<nav class="flex items-center justify-between pb-space-lg">
+<div class="flex items-center gap-space-xs text-secondary font-caption-sm text-caption-sm">
+<a class="hover:text-primary transition-colors flex items-center gap-1" data-path="carrito" href="#">
+<span class="material-symbols-outlined text-[16px]">arrow_back</span> Volver al carrito
+        </a>
+<span>/</span>
+<span class="text-on-surface font-caption-bold">Checkout seguro</span>
+</div>
+<div class="hidden sm:flex items-center gap-space-sm font-caption-bold text-caption-bold text-secondary">
+<span class="flex items-center gap-1 text-primary-container">
+<span class="material-symbols-outlined text-[18px]" style="font-variation-settings: 'FILL' 1;">check_circle</span> 1. Carrito
+        </span>
+<span class="w-6 h-0.5 bg-primary-container rounded-full"></span>
+<span class="flex items-center gap-1 text-on-surface">
+<span class="w-5 h-5 rounded-full bg-primary-container text-on-primary flex items-center justify-center text-[11px] font-bold">2</span> Pago y Entrega
+        </span>
+<span class="w-6 h-0.5 bg-surface-container-highest rounded-full"></span>
+<span class="flex items-center gap-1 opacity-60">
+<span class="w-5 h-5 rounded-full bg-surface-container text-on-surface-variant flex items-center justify-center text-[11px]">3</span> En preparación
+        </span>
+</div>
+</nav>
+<!-- 2-Column Responsive Layout -->
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-space-xl items-start">
+<!-- LEFT COLUMN: Shipping & Payment Flow (Cols 1-7) -->
+<section class="lg:col-span-7 flex flex-col gap-space-lg">
+<!-- 1. Delivery Address Card -->
+<article class="bg-surface-container-lowest rounded-xl p-space-lg shadow-sm hover:shadow-md transition-shadow">
+<div class="flex items-start justify-between gap-space-md mb-space-sm">
+<div class="flex items-center gap-space-xs">
+<div class="w-9 h-9 rounded-lg bg-surface-container-low text-primary-container flex items-center justify-center">
+<span class="material-symbols-outlined text-[22px]">location_on</span>
+</div>
+<div>
+<span class="font-caption-bold text-caption-bold uppercase tracking-wider text-secondary">Punto de Entrega</span>
+<h2 class="font-headline-sm text-headline-sm text-on-surface">Dirección de entrega</h2>
+</div>
+</div>
+<button class="h-9 px-space-sm rounded-lg bg-surface-container-low hover:bg-surface-container text-on-surface font-body-md-medium text-body-md-medium transition-colors flex items-center gap-1" type="button">
+<span class="material-symbols-outlined text-[16px]">edit</span>
+              Editar dirección
+            </button>
+</div>
+<div class="bg-surface-container-low rounded-xl p-space-md mt-space-sm flex flex-col sm:flex-row items-start sm:items-center justify-between gap-space-md">
+<div class="space-y-1">
+<p class="font-body-lg-medium text-body-lg-medium text-on-surface flex items-center gap-2">
+                Av. Corrientes 1450, Piso 4 Depto B
+                <span class="font-caption-bold text-caption-bold px-2 py-0.5 rounded-full bg-surface-container text-on-surface-variant">Depto</span>
+</p>
+<p class="font-body-md text-body-md text-on-surface-variant">Balvanera, Ciudad Autónoma de Buenos Aires (C1042AAN)</p>
+<div class="flex items-center gap-2 pt-1">
+<span class="material-symbols-outlined text-[16px] text-primary-container">notifications_active</span>
+<p class="font-caption-sm text-caption-sm text-on-surface-variant">Timbre: "4B Rossi" • Dejar en conserjería si no atiende de inmediato.</p>
+</div>
+</div>
+<span class="shrink-0 flex items-center gap-1 font-caption-bold text-caption-bold text-primary px-2.5 py-1 rounded-full bg-primary-fixed text-on-primary-fixed">
+<span class="material-symbols-outlined text-[14px]">bolt</span> 25-35 min
+            </span>
+</div>
+</article>
+<!-- 2. Payment Method Selector -->
+<article class="bg-surface-container-lowest rounded-xl p-space-lg shadow-sm hover:shadow-md transition-shadow" id="payment-methods-section">
+<div class="flex items-center justify-between gap-space-md mb-space-md">
+<div class="flex items-center gap-space-xs">
+<div class="w-9 h-9 rounded-lg bg-surface-container-low text-primary-container flex items-center justify-center">
+<span class="material-symbols-outlined text-[22px]">payments</span>
+</div>
+<div>
+<span class="font-caption-bold text-caption-bold uppercase tracking-wider text-secondary">Transacción Encriptada 256-bit</span>
+<h2 class="font-headline-sm text-headline-sm text-on-surface">Elegí cómo pagar</h2>
+</div>
+</div>
+<span class="font-caption-sm text-caption-sm text-secondary flex items-center gap-1">
+<span class="material-symbols-outlined text-[16px] text-primary-container">lock</span> Checkout 100% Protegido
+            </span>
+</div>
+<!-- Stored Payment Options List -->
+<div class="flex flex-col gap-space-sm" id="stored-cards-group">
+<!-- Option A: Visa Debito (Selected initially, showing error alert trigger) -->
+<label class="relative flex items-center justify-between p-space-md rounded-xl bg-surface-container-low hover:bg-surface-container cursor-pointer transition-all duration-200">
+<div class="flex items-center gap-space-md">
+<input checked="" class="w-5 h-5 accent-primary-container text-primary-container cursor-pointer" name="payment_method" onchange="toggleCardForm(false)" type="radio" value="visa_4821">
+<div class="w-12 h-8 rounded-md bg-surface-container-lowest flex items-center justify-center shadow-xs">
+<!-- Visa Vector Signature -->
+<svg class="h-4 w-auto" fill="none" viewBox="0 0 48 16" xmlns="http://www.w3.org/2000/svg">
+<path d="M19.1 0.7L12.5 15.3H8.2L5 3.3C4.8 2.5 4.6 2.2 4 1.8C3 1.3 1.4 0.8 0 0.5L0.1 0L7.3 0C8.2 0 9 0.6 9.2 1.7L10.9 10.6L15.1 0.7H19.1Z" fill="#1A1F71"></path>
+<path d="M26.5 10.4C26.5 6.4 21 6.2 21 4.5C21 3.9 21.6 3.2 22.9 3C23.6 2.9 25.4 2.8 27.2 3.6L27.9 0.6C26.9 0.2 25.6 0 24 0C20 0 17.2 2.1 17.2 5.1C17.2 7.3 19.2 8.5 20.7 9.2C22.2 9.9 22.7 10.4 22.7 11.1C22.7 12.1 21.4 12.6 20.2 12.6C18.4 12.6 17.3 12.1 16.5 11.7L15.8 14.8C16.8 15.2 18.6 15.6 20.5 15.6C24.8 15.6 26.5 13.4 26.5 10.4Z" fill="#1A1F71"></path>
+<path d="M34.4 15.3H38.1L35.7 0.7H32.3C31.5 0.7 30.9 1.1 30.6 1.8L26.1 15.3H30.1L30.9 13.1H35.8L34.4 15.3ZM31.9 10.3L33.9 4.7L35.1 10.3H31.9Z" fill="#1A1F71"></path>
+<path d="M47.7 0.7L44.6 15.3H41L44.1 0.7H47.7Z" fill="#1A1F71"></path>
+</svg>
+</div>
+<div>
+<div class="flex items-center gap-space-xs">
+<span class="font-body-md-medium text-body-md-medium text-on-surface">Visa Débito •••• 4821</span>
+<span class="font-caption-bold text-caption-bold px-2 py-0.5 rounded-full bg-error text-on-error">Rechazada</span>
+</div>
+<p class="font-caption-sm text-caption-sm text-secondary">Vence 08/27 • Banco Galicia</p>
+</div>
+</div>
+<span class="text-error font-caption-bold text-caption-bold hidden sm:inline-block">Fondos insuficientes</span>
+</label>
+<!-- Option B: Mastercard Credito -->
+<label class="relative flex items-center justify-between p-space-md rounded-xl bg-surface-container-low hover:bg-surface-container cursor-pointer transition-all duration-200">
+<div class="flex items-center gap-space-md">
+<input class="w-5 h-5 accent-primary-container text-primary-container cursor-pointer" name="payment_method" onchange="toggleCardForm(false); selectInstallmentOption(true);" type="radio" value="mc_9012">
+<div class="w-12 h-8 rounded-md bg-surface-container-lowest flex items-center justify-center shadow-xs">
+<!-- Mastercard Vector Symbol -->
+<svg class="h-5 w-auto" fill="none" viewBox="0 0 36 24" xmlns="http://www.w3.org/2000/svg">
+<circle cx="12" cy="12" fill="#EB001B" r="10"></circle>
+<circle cx="24" cy="12" fill="#F79E1B" fill-opacity="0.92" r="10"></circle>
+<path d="M18 5.6C19.8 7.4 20.9 9.8 20.9 12.5C20.9 15.2 19.8 17.6 18 19.4C16.2 17.6 15.1 15.2 15.1 12.5C15.1 9.8 16.2 7.4 18 5.6Z" fill="#FF5F00"></path>
+</svg>
+</div>
+<div>
+<div class="flex items-center gap-space-xs">
+<span class="font-body-md-medium text-body-md-medium text-on-surface">Mastercard Crédito •••• 9012</span>
+<span class="font-caption-bold text-caption-bold px-2 py-0.5 rounded-full bg-primary-fixed text-on-primary-fixed">Recomendado</span>
+</div>
+<p class="font-caption-sm text-caption-sm text-secondary">Vence 11/26 • Santander Río</p>
+</div>
+</div>
+<span class="font-caption-bold text-caption-bold text-primary-container">Apta cuotas</span>
+</label>
+<!-- Option C: DeliveryGo Pagos (Account Balance) -->
+<label class="relative flex items-center justify-between p-space-md rounded-xl bg-surface-container-low hover:bg-surface-container cursor-pointer transition-all duration-200">
+<div class="flex items-center gap-space-md">
+<input class="w-5 h-5 accent-primary-container text-primary-container cursor-pointer" name="payment_method" onchange="toggleCardForm(false); selectInstallmentOption(false);" type="radio" value="wallet_balance">
+<div class="w-12 h-8 rounded-md bg-primary-container/10 flex items-center justify-center">
+<span class="material-symbols-outlined text-primary-container text-[22px]">account_balance_wallet</span>
+</div>
+<div>
+<span class="font-body-md-medium text-body-md-medium text-on-surface">Dinero en cuenta DeliveryGo Pagos</span>
+<p class="font-caption-sm text-caption-sm text-on-surface-variant">Saldo disponible: <strong class="text-on-surface">$18.200,00</strong></p>
+</div>
+</div>
+<span class="font-caption-bold text-caption-bold text-primary-container bg-surface-container-lowest px-2.5 py-1 rounded-full shadow-xs">Aprobación Inmediata</span>
+</label>
+</div>
+<!-- Add New Card Trigger Accordion -->
+<div class="mt-space-md pt-space-md bg-surface-container-lowest">
+<button class="w-full py-space-sm px-space-md rounded-xl bg-surface-container-low hover:bg-surface-container text-on-surface font-body-md-medium text-body-md-medium flex items-center justify-between transition-colors" id="toggle-new-card-btn" onclick="toggleCardFormManual()" type="button">
+<span class="flex items-center gap-2">
+<span class="material-symbols-outlined text-primary-container text-[20px]">add_circle</span>
+                Agregar una nueva tarjeta de crédito o débito
+              </span>
+<span class="material-symbols-outlined text-secondary transition-transform duration-200" id="accordion-arrow">expand_more</span>
+</button>
+<!-- Expanded New Card Form -->
+<form class="hidden mt-space-md p-space-md rounded-xl bg-surface-container-low space-y-space-md" id="new-card-form">
+<div class="flex items-center justify-between">
+<span class="font-caption-bold text-caption-bold uppercase tracking-wider text-secondary">Nueva Tarjeta Nacional / Internacional</span>
+<div class="flex items-center gap-1 text-secondary opacity-75">
+<span class="material-symbols-outlined text-[18px]">credit_card</span>
+<span class="font-caption-sm text-caption-sm">Emisión bancaria argentina</span>
+</div>
+</div>
+<!-- Card Number with Live Brand Detection -->
+<div class="space-y-1">
+<div class="flex items-center justify-between">
+<label class="font-label-md text-label-md text-on-surface" for="input-card-number">Número de tarjeta (16 dígitos)</label>
+<span class="font-caption-bold text-caption-bold px-2 py-0.5 rounded bg-surface-container text-on-surface-variant" id="card-brand-badge">Detectando...</span>
+</div>
+<div class="relative">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-outline text-[20px]">payment</span>
+<input class="w-full h-11 pl-10 pr-space-md rounded-lg bg-surface-container-lowest text-on-surface font-body-md placeholder:text-outline focus:outline-none focus:ring-2 focus:ring-primary-container/20" id="input-card-number" maxlength="19" onkeyup="detectBrand(this)" placeholder="4500 0000 0000 0000" type="text">
+</div>
+</div>
+<!-- Holder Full Name -->
+<div class="space-y-1">
+<label class="font-label-md text-label-md text-on-surface" for="input-holder-name">Nombre y apellido del titular</label>
+<input class="w-full h-11 px-space-md rounded-lg bg-surface-container-lowest text-on-surface font-body-md placeholder:text-outline focus:outline-none focus:ring-2 focus:ring-primary-container/20 uppercase" id="input-holder-name" placeholder="Como figura grabado en el plástico" type="text">
+</div>
+<!-- Expiry & CVV Grid -->
+<div class="grid grid-cols-1 sm:grid-cols-2 gap-space-md">
+<div class="space-y-1">
+<label class="font-label-md text-label-md text-on-surface" for="input-expiry">Vencimiento (MM/AA)</label>
+<input class="w-full h-11 px-space-md rounded-lg bg-surface-container-lowest text-on-surface font-body-md placeholder:text-outline focus:outline-none focus:ring-2 focus:ring-primary-container/20" id="input-expiry" maxlength="5" placeholder="MM/AA" type="text">
+</div>
+<div class="space-y-1">
+<div class="flex items-center justify-between">
+<label class="font-label-md text-label-md text-on-surface" for="input-cvv">Código de seguridad (CVV)</label>
+<button class="text-secondary hover:text-on-surface flex items-center gap-0.5 font-caption-sm text-caption-sm" title="3 dígitos al dorso de la tarjeta o 4 dígitos al frente para American Express" type="button">
+<span class="material-symbols-outlined text-[15px]">info</span> ¿Qué es?
+                    </button>
+</div>
+<div class="relative">
+<input class="w-full h-11 px-space-md rounded-lg bg-surface-container-lowest text-on-surface font-body-md placeholder:text-outline focus:outline-none focus:ring-2 focus:ring-primary-container/20" id="input-cvv" maxlength="4" placeholder="123" type="password">
+<span class="material-symbols-outlined absolute right-3 top-1/2 -translate-y-1/2 text-outline text-[18px]">lock</span>
+</div>
+</div>
+</div>
+<!-- Argentine DNI / Tax Validation Input -->
+<div class="space-y-1">
+<div class="flex items-center justify-between">
+<label class="font-label-md text-label-md text-on-surface" for="input-dni">DNI del titular de la tarjeta</label>
+<span class="font-caption-sm text-caption-sm text-secondary">Requisito ARCA / AFIP</span>
+</div>
+<div class="relative">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-outline text-[20px]">badge</span>
+<input class="w-full h-11 pl-10 pr-space-md rounded-lg bg-surface-container-lowest text-on-surface font-body-md placeholder:text-outline focus:outline-none focus:ring-2 focus:ring-primary-container/20" id="input-dni" maxlength="9" placeholder="Número de documento sin puntos" type="text">
+</div>
+<p class="font-caption-sm text-caption-sm text-secondary">Se utiliza para emitir la factura legal 'B' consumidor final asociada a tu compra.</p>
+</div>
+<div class="pt-space-xs flex items-center justify-end gap-space-sm">
+<button class="px-space-md h-10 rounded-lg text-secondary hover:text-on-surface font-body-md-medium text-body-md-medium" onclick="toggleCardForm(false)" type="button">Cancelar</button>
+<button class="px-space-md h-10 rounded-lg bg-primary-container text-on-primary font-body-md-medium text-body-md-medium hover:bg-primary transition-colors" onclick="saveMockCard()" type="button">Guardar y usar tarjeta</button>
+</div>
+</form>
+</div>
+<!-- 3. Installments Selector (Selector de Cuotas) -->
+<div class="mt-space-lg p-space-md rounded-xl bg-surface-container-low space-y-space-sm" id="installments-container">
+<div class="flex items-center justify-between">
+<label class="font-body-md-medium text-body-md-medium text-on-surface flex items-center gap-1.5" for="installments-select">
+<span class="material-symbols-outlined text-primary-container text-[20px]">tune</span>
+                Seleccioná la cantidad de cuotas
+              </label>
+<span class="font-caption-bold text-caption-bold text-primary-container">Planes Ahora / Cuota Simple</span>
+</div>
+<div class="relative">
+<select class="w-full h-12 pl-space-md pr-10 rounded-lg bg-surface-container-lowest text-on-surface font-body-md-medium appearance-none cursor-pointer focus:outline-none focus:ring-2 focus:ring-primary-container/20" id="installments-select">
+<option value="1">1 pago de $15.300,00 (Sin interés - TNA 0,00%)</option>
+<option value="3">3 cuotas fijas de $5.610,00 (CFT: 38,40% • Total financiado: $16.830,00)</option>
+<option value="6">6 cuotas fijas de $3.150,00 (CFT: 45,10% • Total financiado: $18.900,00)</option>
+</select>
+<span class="material-symbols-outlined absolute right-3 top-1/2 -translate-y-1/2 text-secondary pointer-events-none text-[20px]">unfold_more</span>
+</div>
+<p class="font-caption-sm text-caption-sm text-secondary">
+              Promociones bancarias aplicadas automáticamente sobre el precio de lista al seleccionar el plan.
+            </p>
+</div>
+</article>
+<!-- Extra Note / Instructions for Dispatcher -->
+<article class="bg-surface-container-lowest rounded-xl p-space-lg shadow-sm">
+<div class="flex items-center gap-space-xs mb-space-sm">
+<span class="material-symbols-outlined text-primary-container text-[20px]">delivery_dining</span>
+<h3 class="font-title-md text-title-md text-on-surface">Instrucciones para el repartidor</h3>
+</div>
+<div class="relative">
+<textarea class="w-full p-space-sm rounded-lg bg-surface-container-low text-on-surface font-body-md placeholder:text-outline focus:outline-none focus:ring-2 focus:ring-primary-container/20 resize-none" placeholder="Ej: No toques timbre que duerme el bebé, mandame un mensaje de WhatsApp cuando llegues." rows="2"></textarea>
+</div>
+</article>
+</section>
+<!-- RIGHT COLUMN: Collapsible Order Summary & Confirmation CTA (Cols 8-12) -->
+<aside class="lg:col-span-5 flex flex-col gap-space-md sticky top-24">
+<!-- Summary Card -->
+<div class="bg-surface-container-lowest rounded-xl p-space-lg shadow-md space-y-space-md">
+<!-- Store Header & Collapsible Toggle -->
+<div class="flex items-center justify-between pb-space-xs">
+<div class="flex items-center gap-space-sm">
+<div class="w-11 h-11 rounded-lg bg-surface-container overflow-hidden shrink-0 shadow-xs">
+<img class="w-full h-full object-cover" data-alt="Close up gourmet hamburger with melted cheddar cheese and caramelized bacon inside a rustic artisan bun on a moody dark wooden restaurant table" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCJvf0wRvPzbsYDsM0ENqrMZT0CB2ln3gS9giavJyRgfGkHmDMZIIS0Jd3zxpROYwLPXymkBd6eCMSx2CGOIt0CuKPqSk-BoU8xqeOKfrnSbBD1fxpYO3Sgbf1q-MAscvxSPQN2dXIx0GN7kvJua8mkr5ps1LaU3vmGymGv4NWrDzuQx_hWqvdwESRA2soEcEymP4DTpauHYD039FNhePLEubiXsSdCjZ1vS8HIhmobXuMes1jnqc8E">
+</div>
+<div>
+<span class="font-caption-bold text-caption-bold uppercase tracking-wider text-secondary">Comercio</span>
+<h3 class="font-title-md text-title-md text-on-surface leading-tight">La Birra Bar</h3>
+<p class="font-caption-sm text-caption-sm text-primary flex items-center gap-1">
+<span class="w-2 h-2 rounded-full bg-primary-container inline-block"></span> Cocinando tus platos
+                </p>
+</div>
+</div>
+<button class="text-secondary hover:text-on-surface p-1 rounded-md hover:bg-surface-container-low transition-colors" onclick="toggleOrderItems()" title="Colapsar o expandir detalle de productos" type="button">
+<span class="material-symbols-outlined text-[24px]" id="items-collapse-icon">expand_less</span>
+</button>
+</div>
+<!-- Items List (Collapsible) -->
+<div class="space-y-space-sm pt-space-xs transition-all duration-300" id="order-items-list">
+<!-- Item 1 -->
+<div class="flex items-start justify-between gap-space-sm pb-space-sm">
+<div class="flex items-start gap-space-xs">
+<span class="w-6 h-6 rounded-md bg-surface-container-high text-on-surface font-caption-bold text-caption-bold flex items-center justify-center shrink-0 mt-0.5">1x</span>
+<div class="space-y-0.5">
+<h4 class="font-body-md-medium text-body-md-medium text-on-surface leading-snug">Golden Burger Triple Edición Especial</h4>
+<p class="font-caption-sm text-caption-sm text-on-surface-variant">Papas rústicas + salsa barbacoa de la casa • Sin cebolla cruda</p>
+</div>
+</div>
+<span class="font-body-md-medium text-body-md-medium text-on-surface shrink-0">$9.800</span>
+</div>
+<!-- Item 2 -->
+<div class="flex items-start justify-between gap-space-sm pb-space-sm">
+<div class="flex items-start gap-space-xs">
+<span class="w-6 h-6 rounded-md bg-surface-container-high text-on-surface font-caption-bold text-caption-bold flex items-center justify-center shrink-0 mt-0.5">1x</span>
+<div class="space-y-0.5">
+<h4 class="font-body-md-medium text-body-md-medium text-on-surface leading-snug">Papas Birra Especiales con Panceta y Cheddar</h4>
+<p class="font-caption-sm text-caption-sm text-on-surface-variant">Porción grande para compartir</p>
+</div>
+</div>
+<span class="font-body-md-medium text-body-md-medium text-on-surface shrink-0">$5.800</span>
+</div>
+</div>
+<!-- Price Breakdown Table -->
+<div class="space-y-space-xs pt-space-sm bg-surface-container-lowest">
+<div class="flex items-center justify-between font-body-md text-body-md text-on-surface-variant">
+<span>Subtotal productos</span>
+<span class="text-on-surface font-body-md-medium text-body-md-medium">$15.600</span>
+</div>
+<div class="flex items-center justify-between font-body-md text-body-md text-on-surface-variant">
+<span class="flex items-center gap-1">
+                Costo de entrega
+                <span class="material-symbols-outlined text-outline text-[16px]" title="Envío urbano express en moto con seguimiento en tiempo real">help</span>
+</span>
+<span class="text-on-surface font-body-md-medium text-body-md-medium">$850</span>
+</div>
+<div class="flex items-center justify-between font-body-md text-body-md text-on-surface-variant">
+<span>Tarifa de servicio y plataforma</span>
+<span class="text-on-surface font-body-md-medium text-body-md-medium">$350</span>
+</div>
+<div class="flex items-center justify-between font-body-md text-body-md text-primary-container">
+<span class="flex items-center gap-1 font-body-md-medium text-body-md-medium">
+<span class="material-symbols-outlined text-[18px]">local_offer</span>
+                Descuento cupón "BIRRAFEST"
+              </span>
+<span class="font-body-md-medium text-body-md-medium">-$1.500</span>
+</div>
+</div>
+<!-- Total Bill Final -->
+<div class="pt-space-md flex items-baseline justify-between">
+<div class="flex flex-col">
+<span class="font-caption-bold text-caption-bold uppercase tracking-wider text-secondary">Total a pagar</span>
+<span class="font-caption-sm text-caption-sm text-on-surface-variant">IVA e impuestos incluidos (ARS)</span>
+</div>
+<div class="text-right">
+<span class="font-headline-lg text-headline-lg text-on-surface font-bold tracking-tight">$15.300</span>
+</div>
+</div>
+<!-- Main CTA Payment Button -->
+<button class="w-full h-14 rounded-xl bg-primary-container hover:bg-primary text-on-primary font-headline-sm text-headline-sm flex items-center justify-center gap-space-xs shadow-md hover:shadow-lg transition-all active:scale-[0.99] group" id="pay-confirm-button" onclick="handlePayAction()" type="button">
+<span class="material-symbols-outlined text-[24px] transition-transform group-hover:translate-x-1">lock</span>
+<span>Confirmar y pagar $15.300</span>
+</button>
+<!-- Micro disclaimer -->
+<p class="font-caption-sm text-caption-sm text-secondary text-center leading-relaxed">
+            Al tocar en "Confirmar y pagar" aceptás los Términos de Servicio de DeliveryGo Argentina S.A. y autorizás el débito en el medio seleccionado.
+          </p>
+<!-- Trust Badges & Guarantee Seals -->
+<div class="pt-space-md bg-surface-container-low rounded-xl p-space-md space-y-space-sm">
+<div class="flex items-center gap-space-sm">
+<div class="w-8 h-8 rounded-full bg-surface-container-lowest text-primary-container flex items-center justify-center shrink-0 shadow-xs">
+<span class="material-symbols-outlined text-[20px]">verified_user</span>
+</div>
+<div class="space-y-0.5">
+<h5 class="font-caption-bold text-caption-bold text-on-surface">Protección Total al Comprador DeliveryGo</h5>
+<p class="font-caption-sm text-caption-sm text-on-surface-variant">Si tu pedido no llega en perfecto estado, te devolvemos el dinero en minutos.</p>
+</div>
+</div>
+<div class="flex items-center justify-between pt-space-xs font-caption-sm text-caption-sm text-secondary">
+<span class="flex items-center gap-1">
+<span class="material-symbols-outlined text-[16px] text-primary-container">shield</span> Encriptación TLS 1.3
+              </span>
+<span class="flex items-center gap-1">
+<span class="material-symbols-outlined text-[16px] text-primary-container">security</span> Certificado PCI-DSS Nivel 1
+              </span>
+</div>
+</div>
+</div>
+<!-- Argentine Consumer Protection Compliance Stamp -->
+<div class="px-space-xs flex items-center justify-between text-secondary font-caption-sm text-caption-sm">
+<span class="flex items-center gap-1">
+<span class="material-symbols-outlined text-[14px]">policy</span> Defensa de las y los Consumidores
+          </span>
+<a class="text-primary hover:underline" href="#">Botón de arrepentimiento</a>
+</div>
+</aside>
+</div>
+</main>
+</div>
+<script>
+  function focusPaymentMethod() {
+    const section = document.getElementById('payment-methods-section');
+    if (section) {
+      section.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      // Suggest alternate method
+      const mcRadio = document.querySelector('input[value="mc_9012"]');
+      if (mcRadio) {
+        mcRadio.checked = true;
+        mcRadio.dispatchEvent(new Event('change'));
+      }
+    }
+  }
+
+  function toggleCardFormManual() {
+    const form = document.getElementById('new-card-form');
+    const arrow = document.getElementById('accordion-arrow');
+    const isHidden = form.classList.contains('hidden');
+    
+    if (isHidden) {
+      form.classList.remove('hidden');
+      arrow.textContent = 'expand_less';
+      // uncheck stored radios
+      document.querySelectorAll('input[name="payment_method"]').forEach(r => r.checked = false);
+    } else {
+      form.classList.add('hidden');
+      arrow.textContent = 'expand_more';
+    }
+  }
+
+  function toggleCardForm(show) {
+    const form = document.getElementById('new-card-form');
+    const arrow = document.getElementById('accordion-arrow');
+    if (!form || !arrow) return;
+    if (show) {
+      form.classList.remove('hidden');
+      arrow.textContent = 'expand_less';
+    } else {
+      form.classList.add('hidden');
+      arrow.textContent = 'expand_more';
+    }
+  }
+
+  function selectInstallmentOption(show) {
+    const inst = document.getElementById('installments-container');
+    if (inst) {
+      inst.style.display = show ? 'block' : 'none';
+    }
+  }
+
+  function toggleOrderItems() {
+    const list = document.getElementById('order-items-list');
+    const icon = document.getElementById('items-collapse-icon');
+    if (list.classList.contains('hidden')) {
+      list.classList.remove('hidden');
+      icon.textContent = 'expand_less';
+    } else {
+      list.classList.add('hidden');
+      icon.textContent = 'expand_more';
+    }
+  }
+
+  function detectBrand(input) {
+    const badge = document.getElementById('card-brand-badge');
+    const value = input.value.replace(/\s+/g, '');
+    if (value.startsWith('4')) {
+      badge.textContent = 'Visa Débito / Crédito';
+      badge.className = 'font-caption-bold text-caption-bold px-2 py-0.5 rounded bg-primary-fixed text-on-primary-fixed';
+    } else if (value.startsWith('5')) {
+      badge.textContent = 'Mastercard';
+      badge.className = 'font-caption-bold text-caption-bold px-2 py-0.5 rounded bg-tertiary-fixed text-on-tertiary-fixed';
+    } else if (value.startsWith('3')) {
+      badge.textContent = 'American Express';
+      badge.className = 'font-caption-bold text-caption-bold px-2 py-0.5 rounded bg-surface-container-highest text-on-surface';
+    } else if (value.length === 0) {
+      badge.textContent = 'Detectando...';
+      badge.className = 'font-caption-bold text-caption-bold px-2 py-0.5 rounded bg-surface-container text-on-surface-variant';
+    }
+  }
+
+  function saveMockCard() {
+    const num = document.getElementById('input-card-number').value || '5500 1234 5678 9900';
+    const lastFour = num.slice(-4);
+    alert('Nueva tarjeta terminada en ' + lastFour + ' agregada con éxito. Ya podés confirmar tu compra.');
+    toggleCardForm(false);
+  }
+
+  function handlePayAction() {
+    const selected = document.querySelector('input[name="payment_method"]:checked');
+    if (selected && selected.value === 'visa_4821') {
+      const banner = document.getElementById('payment-error-banner');
+      banner.classList.add('animate-pulse');
+      setTimeout(() => banner.classList.remove('animate-pulse'), 1000);
+      alert('Atención: La tarjeta Visa Débito •••• 4821 está rechazada por fondos insuficientes. Por favor seleccioná otro medio de pago.');
+      return;
+    }
+
+    const btn = document.getElementById('pay-confirm-button');
+    btn.disabled = true;
+    btn.innerHTML = '<span class="material-symbols-outlined text-[24px] animate-spin">refresh</span><span>Procesando pago seguro en ARS...</span>';
+    setTimeout(() => {
+      btn.innerHTML = '<span class="material-symbols-outlined text-[24px]">check_circle</span><span>¡Pago acreditado! Redirigiendo...</span>';
+      btn.classList.remove('bg-primary-container');
+      btn.classList.add('bg-primary');
+    }, 1800);
+  }
+</script></main><footer class="w-full bg-surface-container-lowest shadow-[0_-1px_8px_rgba(0,0,0,0.02)] mt-space-3xl"><div class="max-w-[1280px] mx-auto px-gutter-mobile lg:px-gutter-desktop py-space-2xl"><div class="grid grid-cols-1 md:grid-cols-4 gap-space-xl pb-space-2xl"><div class="space-y-space-sm"><div class="flex items-center gap-space-xs"><img alt="DeliveryGo Logo" class="h-7 w-auto object-contain" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAR10kqrtXin7jn-sIsvkfeTDKlpO5HZRYcxXpawKI1qNTtK26vuLJ8cYSoH5PGhne4hWGje1bm7RBt5MqZ9Sdemk_SZtByp6R-5ILMToWzRltEtGw2JSzns9m_PC_H8fvNiRtWAJ8-_1lC_bx8zSGvc4Iku6e1M7LRy7GFuP1FutlPKqqn_tPtQDAapUqnKTqyofC9ESW1il78PNUtTB3ZuiZAI5kWz-LjQt6cW-otkNcPcAGbwkcN"><span class="font-title-md text-title-md text-on-surface font-bold tracking-tight">Delivery<span class="text-primary-container">Go</span></span></div><p class="font-body-md text-body-md text-on-surface-variant max-w-xs">La plataforma urbana de entregas ultrarrápidas pensada para todo el país. Pedí lo que quieras, cuando quieras.</p></div><div class="flex flex-col gap-space-xs"><span class="font-caption-bold text-caption-bold uppercase tracking-wider text-secondary">Compañía</span><a class="font-body-md text-body-md text-on-surface-variant hover:text-primary transition-colors" data-path="ayuda-y-soporte" href="#">Ayuda y Soporte</a><a class="font-body-md text-body-md text-on-surface-variant hover:text-primary transition-colors" data-path="suma-tu-comercio" href="#">Sumá tu comercio</a><a class="font-body-md text-body-md text-on-surface-variant hover:text-primary transition-colors" data-path="contacto" href="#">Contacto</a></div><div class="flex flex-col gap-space-xs"><span class="font-caption-bold text-caption-bold uppercase tracking-wider text-secondary">Legal</span><a class="font-body-md text-body-md text-on-surface-variant hover:text-primary transition-colors" data-path="terminos-y-condiciones" href="#">Términos y Condiciones</a><a class="font-body-md text-body-md text-on-surface-variant hover:text-primary transition-colors" data-path="privacidad" href="#">Privacidad</a><a class="font-body-md text-body-md text-on-surface-variant hover:text-primary transition-colors" data-path="defensa-al-consumidor" href="#">Defensa al Consumidor</a></div><div class="flex flex-col gap-space-xs"><span class="font-caption-bold text-caption-bold uppercase tracking-wider text-secondary">Pagos Seguros</span><p class="font-body-md text-body-md text-on-surface-variant">Aceptamos todas las tarjetas de crédito, débito y dinero en cuenta con liquidación ARS inmediata.</p><div class="flex items-center gap-space-xs text-secondary mt-space-xs"><span class="material-symbols-outlined text-[24px]">credit_card</span><span class="material-symbols-outlined text-[24px]">account_balance_wallet</span><span class="material-symbols-outlined text-[24px]">qr_code_scanner</span></div></div></div><div class="pt-space-lg flex flex-col sm:flex-row items-center justify-between gap-space-md bg-surface-container-lowest text-center sm:text-left"><p class="font-caption-sm text-caption-sm text-on-surface-variant">© 2025 DeliveryGo Argentina S.A. Todos los derechos reservados.</p><span class="font-caption-sm text-caption-sm text-secondary">Buenos Aires, Argentina</span></div></div></footer></body></html>
