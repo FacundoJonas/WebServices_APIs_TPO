@@ -7,6 +7,7 @@ import AuthPage from './pages/AuthPage'
 import StorePage from './pages/StorePage'
 import OrderReviewPage from './pages/OrderReviewPage'
 import NotificationsPage from './pages/NotificationsPage'
+import HomePage from './pages/HomePage'
 
 createRoot(document.getElementById('root')).render(
     <StrictMode>
@@ -18,6 +19,7 @@ createRoot(document.getElementById('root')).render(
                 <Route path="/login" element={<AuthPage />} />
 
                 <Route element={<MainLayout />}>
+                    <Route path="/inicio" element={<HomePage />} />
                     <Route path="/comercio" element={<StorePage />} />
                     <Route path="/pedido" element={<OrderReviewPage />} />
                     <Route path="/notificaciones" element={<NotificationsPage />} />
