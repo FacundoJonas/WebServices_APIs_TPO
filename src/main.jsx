@@ -8,6 +8,7 @@ import StorePage from './pages/StorePage'
 import OrderReviewPage from './pages/OrderReviewPage'
 import NotificationsPage from './pages/NotificationsPage'
 import HomePage from './pages/HomePage'
+import LoginLayout from "./layouts/LoginLayout.jsx";
 
 createRoot(document.getElementById('root')).render(
     <StrictMode>
@@ -15,9 +16,9 @@ createRoot(document.getElementById('root')).render(
             <Routes>
                 <Route path="/" element={<Navigate to="/login" replace />} />
 
-
-                <Route path="/login" element={<AuthPage />} />
-
+                <Route element={<LoginLayout/>}>
+                    <Route path="/login" element={<AuthPage />} />
+                </Route>
                 <Route element={<MainLayout />}>
                     <Route path="/inicio" element={<HomePage />} />
                     <Route path="/comercio" element={<StorePage />} />

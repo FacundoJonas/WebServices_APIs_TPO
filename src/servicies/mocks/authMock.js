@@ -2,15 +2,21 @@
 const usuariosMock = [
     {
         username: "admin@gmail.com",
-        password: "123456",
+        password: "1234",
         rol: "ADMIN",
         nombre: "Administrador"
     },
     {
         username: "cliente@gmail.com",
-        password: "123456",
+        password: "1234",
         rol: "CLIENTE",
         nombre: "Cliente de prueba"
+    },
+    {
+        username: "local@gmail.com",
+        password: "1234",
+        rol: "LOCAL",
+        nombre: "Local de prueba"
     }
 ];
 
