@@ -1,3 +1,5 @@
+import { Link } from "react-router"
+
 /**
  * Fila reutilizable para mostrar un concepto
  * y su importe dentro del resumen del carrito.
@@ -182,9 +184,9 @@ function MiniCart({ cart, onIncrease, onDecrease }) {
           </div>
         </div>
 
-        {/* Checkout */}
-        <a
-          href="#top"
+        {/* Checkout (NAV-03) */}
+        <Link
+          to="/carrito"
           className="w-full mt-space-md h-12 bg-primary-container hover:bg-primary text-on-primary rounded-xl font-body-lg-medium text-body-lg-medium flex items-center justify-between px-space-md shadow-md transition-all active:scale-[0.98]"
         >
 
@@ -195,7 +197,7 @@ function MiniCart({ cart, onIncrease, onDecrease }) {
           <span className="font-bold">
             $ {total.toLocaleString("es-AR")}
           </span>
-        </a>
+        </Link>
 
         {/* Información de seguridad */}
         <div className="mt-space-sm text-center">

@@ -1,19 +1,38 @@
 import { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
+import { BrowserRouter, Routes, Route, Navigate } from 'react-router'
 import './index.css'
-import Header from './components/Header'
-import Footer from './components/Footer'
-//import AuthPage from './pages/AuthPage'
+import MainLayout from './layouts/MainLayout'
+import AuthPage from './pages/AuthPage'
+import StorePage from './pages/StorePage'
 import OrderReviewPage from './pages/OrderReviewPage'
-//import StorePage from './pages/StorePage'
+import NotificationsPage from './pages/NotificationsPage'
+import HomePage from './pages/HomePage'
+import LoginLayout from "./layouts/LoginLayout.jsx";
+import CartPage from './pages/CartPage'
+import CheckoutPage from './pages/CheckoutPage'
+import { CartProvider } from './context/CartProvider'
 
 createRoot(document.getElementById('root')).render(
-  
-  <StrictMode>
-    <Header />
-    {/* <AuthPage /> */}
-    <OrderReviewPage />
-    {/* <StorePage /> */}
-    <Footer />
-  </StrictMode>,
+    <StrictMode>
+      <CartProvider>
+        <BrowserRouter>
+            <Routes>
+                <Route path="/" element={<Navigate to="/login" replace />} />
+
+                <Route element={<LoginLayout/>}>
+                    <Route path="/login" element={<AuthPage />} />
+                </Route>
+                <Route element={<MainLayout />}>
+                    <Route path="/inicio" element={<HomePage />} />
+                    <Route path="/comercio" element={<StorePage />} />
+                    <Route path="/pedido" element={<OrderReviewPage />} />
+                    <Route path="/notificaciones" element={<NotificationsPage />} />
+                    <Route path="/carrito" element={<CartPage />} />
+                    <Route path="/pagar" element={<CheckoutPage />} />
+                </Route>
+            </Routes>
+        </BrowserRouter>
+      </CartProvider>
+    </StrictMode>,
 )

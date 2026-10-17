@@ -38,14 +38,14 @@ function RatingSummary() {
           </span>
 
           {/* Representación del promedio mediante estrellas */}
-          <div className="flex items-center text-selected-stars mt-1">
+          <div className="flex items-center justify-center text-selected-stars mt-1">
 
             {[1, 2, 3, 4].map((star) => (
 
               <span
                 key={star}
-                className="material-symbols-outlined text-[18px]"
-                style={{ fontVariationSettings: "'FILL' 1" }}
+                className="material-symbols-outlined"
+                style={{ fontVariationSettings: "'FILL' 1", fontSize: "18px" }}
               >
                 star
               </span>
@@ -54,8 +54,8 @@ function RatingSummary() {
 
             {/* Media estrella para representar la calificación 4.8 */}
             <span
-              className="material-symbols-outlined text-[18px]"
-              style={{ fontVariationSettings: "'FILL' 1" }}
+              className="material-symbols-outlined"
+              style={{ fontVariationSettings: "'FILL' 1", fontSize: "18px" }}
             >
               star_half
             </span>

@@ -1,4 +1,7 @@
 import { useState } from "react"
+import { Link } from "react-router"
+
+import { useCart } from "../context/useCart"
 
 import StoreHero from "../components/storePage/StoreHero"
 import CategorySidebar from "../components/storePage/CategorySidebar"
@@ -124,28 +127,10 @@ function StorePage() {
   const [favorite, setFavorite] = useState(true)
 
   /*
-   * Estado principal del carrito.
-   *
-   * Cada elemento contiene:
-   * - id
-   * - name
-   * - price
-   * - quantity
+   * El carrito ahora vive en CartContext (DM-01)
+   * para que CartPage y CheckoutPage puedan usarlo.
    */
-  const [cart, setCart] = useState([
-    {
-      id: 1,
-      name: "Golden Burger Doble",
-      price: 7800,
-      quantity: 1,
-    },
-    {
-      id: 4,
-      name: "Papas con Cheddar y Panceta",
-      price: 3900,
-      quantity: 1,
-    },
-  ])
+  const { cart, addToCart: addProductToCart, changeQuantity } = useCart()
 
   /*
    * Mensaje temporal utilizado por el componente Toast.
@@ -162,34 +147,7 @@ function StorePage() {
    */
   function addToCart(product) {
 
-    setCart((currentCart) => {
-
-      const existingItem = currentCart.find(
-        (item) => item.id === product.id
-      )
-
-      if (existingItem) {
-
-        return currentCart.map((item) =>
-          item.id === product.id
-            ? {
-                ...item,
-                quantity: item.quantity + 1,
-              }
-            : item
-        )
-      }
-
-      return [
-        ...currentCart,
-        {
-          id: product.id,
-          name: product.name,
-          price: product.price,
-          quantity: 1,
-        },
-      ]
-    })
+    addProductToCart(product)
 
     /*
      * Informa visualmente que el producto
@@ -208,16 +166,7 @@ function StorePage() {
    */
   function increaseQuantity(id) {
 
-    setCart((currentCart) =>
-      currentCart.map((item) =>
-        item.id === id
-          ? {
-              ...item,
-              quantity: item.quantity + 1,
-            }
-          : item
-      )
-    )
+    changeQuantity(id, 1)
   }
 
   /**
@@ -229,18 +178,7 @@ function StorePage() {
    */
   function decreaseQuantity(id) {
 
-    setCart((currentCart) =>
-      currentCart
-        .map((item) =>
-          item.id === id
-            ? {
-                ...item,
-                quantity: item.quantity - 1,
-              }
-            : item
-        )
-        .filter((item) => item.quantity > 0)
-    )
+    changeQuantity(id, -1)
   }
 
   /*
@@ -395,9 +333,9 @@ function StorePage() {
                 </span>
               </div>
 
-              {/* Checkout */}
-              <a
-                href="#top"
+              {/* Checkout (NAV-03) */}
+              <Link
+                to="/carrito"
                 className="h-12 px-space-lg bg-primary-container hover:bg-primary text-on-primary rounded-xl font-body-lg-medium text-body-lg-medium flex items-center justify-center gap-2 shadow-md flex-1"
               >
 
@@ -408,7 +346,7 @@ function StorePage() {
                 <span className="material-symbols-outlined text-[20px]">
                   arrow_forward
                 </span>
-              </a>
+              </Link>
             </div>
           </div>
 
