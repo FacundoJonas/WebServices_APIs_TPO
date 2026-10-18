@@ -19,14 +19,16 @@ function PaymentOption({ method, selected, rejectionCode, onSelect }) {
 
   return (
     <label
-      className={`flex items-center gap-space-md p-space-md rounded-lg cursor-pointer transition-colors
-        ${selected ? "bg-primary-fixed/30 ring-2 ring-primary-container" : "bg-surface-container-low hover:bg-surface-container"}`}
+      className={`flex items-center gap-space-md p-space-md rounded-lg transition-colors
+        ${rejected ? "bg-surface-container-low opacity-60 cursor-not-allowed" : selected ? "bg-primary-fixed/30 ring-2 ring-primary-container cursor-pointer" : "bg-surface-container-low hover:bg-surface-container cursor-pointer"}`}
     >
 
+      {/* Un medio rechazado no se puede volver a elegir (RN-05) */}
       <input
         type="radio"
         name="payment-method"
         checked={selected}
+        disabled={rejected}
         onChange={() => onSelect(method.id)}
         className="w-5 h-5 accent-primary shrink-0"
       />

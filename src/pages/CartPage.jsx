@@ -1,4 +1,4 @@
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import { Link, useNavigate } from "react-router"
 
 import CartItem from "../components/cartPage/CartItem"
@@ -25,7 +25,7 @@ function CartPage() {
     address,
     cart,
     notes,
-    setNotes,
+    updateNotes,
     coupon,
     setCoupon,
     order,
@@ -36,6 +36,13 @@ function CartPage() {
     amounts,
     getCartVersion,
   } = useCart()
+
+  /*
+   * React Router no resetea el scroll al cambiar de ruta.
+   */
+  useEffect(() => {
+    window.scrollTo(0, 0)
+  }, [])
 
   const [couponLoading, setCouponLoading] = useState(false)
   const [couponError, setCouponError] = useState("")
@@ -117,6 +124,18 @@ function CartPage() {
   function handleRemoveCoupon() {
     setCoupon(null)
     setOrder(null)
+  }
+
+  /**
+   * Cambiar las notas recrea el pedido, así que el cupón se pierde.
+   */
+  function handleNotesChange(text) {
+
+    if (coupon) {
+      setCouponError("Modificaste las aclaraciones. Volvé a aplicar el cupón.")
+    }
+
+    updateNotes(text)
   }
 
   /**
@@ -205,17 +224,18 @@ function CartPage() {
                       {store.area}
                       <span>•</span>
                       <span className="material-symbols-outlined text-[16px] text-primary">schedule</span>
-                      {store.deliveryTime}
+                      <span className="whitespace-nowrap">{store.deliveryTime}</span>
                     </p>
                   </div>
                 </div>
 
                 <Link
                   to="/comercio"
-                  className="h-10 px-space-md rounded-lg bg-surface-container-low hover:bg-surface-container text-primary font-body-md-medium text-body-md-medium flex items-center gap-1 shrink-0"
+                  aria-label="Agregar más productos"
+                  className="h-10 px-space-sm sm:px-space-md rounded-lg bg-surface-container-low hover:bg-surface-container text-primary font-body-md-medium text-body-md-medium flex items-center gap-1 shrink-0"
                 >
                   <span className="material-symbols-outlined text-[18px]">add</span>
-                  Agregar más
+                  <span className="hidden sm:inline">Agregar más</span>
                 </Link>
               </div>
 
@@ -254,7 +274,8 @@ function CartPage() {
                   rows={3}
                   maxLength={200}
                   value={notes}
-                  onChange={(e) => setNotes(e.target.value)}
+                  onChange={(e) => handleNotesChange(e.target.value)}
+                  disabled={busy}
                   placeholder="Ej: Timbre 4B no anda, mandar WhatsApp al llegar"
                   className="w-full p-space-sm rounded-lg bg-surface-container-low text-on-surface font-body-md text-body-md resize-none outline-none focus:ring-2 focus:ring-primary-container"
                 />

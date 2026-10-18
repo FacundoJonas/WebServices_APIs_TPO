@@ -1,5 +1,5 @@
-import { useState } from "react"
-import { Link, Navigate, useNavigate } from "react-router"
+import { useEffect, useState } from "react"
+import { Link, Navigate } from "react-router"
 
 import CheckoutSteps from "../components/checkoutPage/CheckoutSteps"
 import DeliveryAddress from "../components/checkoutPage/DeliveryAddress"
@@ -49,11 +49,67 @@ const paymentMethods = [
  * Muestra la dirección, los medios de pago y el resumen del pedido.
  * Maneja el pago aprobado (NAV-06) y el rechazado (RN-05, NAV-05).
  */
+/**
+ * Confirmación del pago (paso 3: En preparación).
+ */
+function PaymentSuccess({ order }) {
+
+  return (
+    <main className="w-full pt-20 bg-background min-h-[calc(100vh-280px)]">
+
+      <div className="max-w-[720px] mx-auto w-full px-gutter-mobile lg:px-gutter-desktop py-space-xl space-y-space-lg">
+
+        <div className="flex justify-center">
+          <CheckoutSteps current={3} />
+        </div>
+
+        <section
+          role="status"
+          className="bg-surface-container-lowest rounded-xl p-space-xl shadow-md flex flex-col items-center text-center gap-space-md"
+        >
+
+          <span className="w-16 h-16 rounded-full bg-primary-fixed flex items-center justify-center">
+            <span
+              className="material-symbols-outlined text-primary text-[36px]"
+              style={{ fontVariationSettings: "'FILL' 1" }}
+            >
+              check_circle
+            </span>
+          </span>
+
+          <div>
+            <h1 className="font-headline-md text-headline-md text-on-surface font-semibold">
+              ¡Pago confirmado!
+            </h1>
+
+            <p className="font-body-md text-body-md text-on-surface-variant mt-1">
+              Tu pedido #{order.id} por $ {order.total.toLocaleString("es-AR")} ya está en preparación.
+            </p>
+          </div>
+
+          <Link
+            to="/inicio"
+            className="h-11 px-space-lg rounded-xl bg-primary-container hover:bg-primary text-on-primary font-body-md-medium text-body-md-medium flex items-center gap-2"
+          >
+            <span className="material-symbols-outlined text-[20px]">home</span>
+            Volver al inicio
+          </Link>
+        </section>
+      </div>
+    </main>
+  )
+}
+
 function CheckoutPage() {
 
-  const navigate = useNavigate()
-
   const { store, address, cart, coupon, order, itemCount, amounts, clearCart } = useCart()
+
+  /*
+   * React Router no resetea el scroll al cambiar de ruta.
+   */
+  useEffect(() => {
+    window.scrollTo(0, 0)
+  }, [])
 
   const [selectedMethodId, setSelectedMethodId] = useState(null)
   const [installments, setInstallments] = useState(1)
@@ -76,15 +132,20 @@ function CheckoutPage() {
   const [paymentError, setPaymentError] = useState("")
 
   /*
-   * Evita volver al carrito mientras se navega al Home tras pagar.
+   * Pedido pagado: { id, total }. Se guarda antes de vaciar el carrito
+   * para poder mostrar la confirmación (paso 3).
    */
-  const [paid, setPaid] = useState(false)
+  const [paidOrder, setPaidOrder] = useState(null)
+
+  if (paidOrder) {
+    return <PaymentSuccess order={paidOrder} />
+  }
 
   /*
    * Sin pedido creado no se puede pagar: se vuelve al carrito.
    */
   if (!order) {
-    return paid ? null : <Navigate to="/carrito" replace />
+    return <Navigate to="/carrito" replace />
   }
 
   function handleSelectMethod(id) {
@@ -115,16 +176,17 @@ function CheckoutPage() {
         await procesarPago(pagoRequest)
       }
 
-      // NAV-06: PNT-08 Seguimiento todavía no existe, se vuelve al Home.
-      setPaid(true)
-      navigate("/inicio")
+      // NAV-06: PNT-08 Seguimiento todavía no existe, se muestra la confirmación.
+      setPaidOrder({ id: order.id, total: amounts.total })
       clearCart()
+      window.scrollTo(0, 0)
     } catch (err) {
 
       if (err.codigo) {
         // RN-05: el medio de pago fue rechazado.
         setRejection({ code: err.codigo, message: err.message })
         setRejections((current) => ({ ...current, [selectedMethodId]: err.codigo }))
+        setSelectedMethodId(null)
         window.scrollTo({ top: 0, behavior: "smooth" })
       } else {
         // Falla de red o del servidor: se puede reintentar con el mismo medio.

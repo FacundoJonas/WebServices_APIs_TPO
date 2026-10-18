@@ -143,6 +143,16 @@ export function CartProvider({ children }) {
         setCoupon(null)
     }
 
+    /*
+     * Las notas viajan dentro del pedido (DTO-04). Si el pedido ya
+     * se creó, hay que recrearlo para que lleve las notas nuevas.
+     */
+    function updateNotes(text) {
+        setNotes(text)
+
+        if (order) resetOrder()
+    }
+
     function clearCart() {
         setCart([])
         setNotes("")
@@ -178,7 +188,7 @@ export function CartProvider({ children }) {
         address,
         cart,
         notes,
-        setNotes,
+        updateNotes,
         coupon,
         setCoupon,
         order,
