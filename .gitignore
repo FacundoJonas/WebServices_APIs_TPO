@@ -1,0 +1,13 @@
+# Compilados de Maven
+target/
+
+# Bases H2 en archivo que se crean al correr localmente
+datos/
+*.mv.db
+*.trace.db
+
+# IDE
+.idea/
+*.iml
+.vscode/*
+!.vscode/extensions.json
