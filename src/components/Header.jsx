@@ -1,3 +1,7 @@
+import { Link } from "react-router"
+
+import { useCart } from "../context/useCart"
+
 import deliveryGoLogo from "../assets/deliverygo_logo.png"
 import profileImage from "../assets/patricio.png"
 
@@ -17,6 +21,8 @@ import profileImage from "../assets/patricio.png"
  * TODO: Integrar React Router.
  */
 function Header() {
+
+  const { itemCount, amounts } = useCart()
 
   return (
     <header className="fixed top-0 left-0 right-0 w-full z-50 bg-surface-container-lowest/90 backdrop-blur-xl shadow-[0_1px_8px_rgba(0,0,0,0.04)]">
@@ -136,9 +142,10 @@ function Header() {
             </span>
           </a>
 
-          {/* Resumen del carrito */}
-          <a
-            href="#"
+          {/* Resumen del carrito (NAV-03) */}
+          <Link
+            to="/carrito"
+            aria-label={`Ver carrito: ${itemCount} productos`}
             className="flex items-center gap-space-xs py-space-xs px-space-sm rounded-xl bg-surface-container-low hover:bg-surface-container text-on-surface transition-colors"
           >
 
@@ -150,14 +157,14 @@ function Header() {
 
               {/* Cantidad de productos en el carrito */}
               <span className="absolute -top-1.5 -right-2 flex items-center justify-center min-w-[16px] h-[16px] px-1 bg-primary-container text-on-primary rounded-full font-caption-bold text-[10px] leading-none">
-                2
+                {itemCount}
               </span>
             </div>
 
             <span className="hidden sm:inline-block font-body-md-medium text-body-md-medium text-on-surface">
-              $8.450
+              $ {amounts.total.toLocaleString("es-AR")}
             </span>
-          </a>
+          </Link>
 
           {/* Perfil del usuario */}
           <a

@@ -1,11 +1,11 @@
 import { useState } from "react"
 
-import WelcomeHeader from "../components/homePage/WelcomeHeader"
-import ActiveOrderCard from "../components/homePage/ActiveOrderCard"
-import CategoryChips from "../components/homePage/CategoryChips"
-import FilterBar from "../components/homePage/FilterBar"
-import StoreCard from "../components/homePage/StoreCard"
-import PrimeBanner from "../components/homePage/PrimeBanner"
+import WelcomeHeader from "../components/HomePage/WelcomeHeader"
+import ActiveOrderCard from "../components/HomePage/ActiveOrderCard"
+import CategoryChips from "../components/HomePage/CategoryChips"
+import FilterBar from "../components/HomePage/FilterBar"
+import StoreCard from "../components/HomePage/StoreCard"
+import PrimeBanner from "../components/HomePage/PrimeBanner"
 
 import courierImage from "../assets/matias.png"
 
