@@ -14,3 +14,9 @@ The React Compiler is not enabled on this template because of its impact on dev 
 ## Expanding the ESLint configuration
 
 If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+
+---
+
+## Prueba de integración entre VMs (Proxmox)
+
+Esta branch (`feature/prueba-integracion-proxmox`) agrega la carpeta [`prueba-integracion/`](prueba-integracion/README.md): dos servicios Java Spring Boot (emisor = Pedidos, receptor = Notificaciones) para probar la comunicación REST entre las máquinas virtuales Debian del Proxmox, con scripts de instalación y diagnóstico. Ver [`prueba-integracion/README.md`](prueba-integracion/README.md).

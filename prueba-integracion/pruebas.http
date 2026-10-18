@@ -1,0 +1,63 @@
+### =====================================================================
+###  Pruebas manuales desde VS Code
+###  Requiere la extensión "REST Client" (humao.rest-client).
+###  Hacé clic en "Send Request" arriba de cada petición.
+###  Cambiá estas dos variables por las IPs de tus VMs:
+### =====================================================================
+@emisor = http://192.168.1.21:8081
+@receptor = http://192.168.1.22:8082
+
+### 1. ¿Responde la VM emisora? (muestra hostname e IPs)
+GET {{emisor}}/api/v1/ping
+
+### 2. ¿Responde la VM receptora?
+GET {{receptor}}/api/v1/ping
+
+### 3. Diagnóstico de red del emisor hacia el receptor (DNS, TCP, HTTP, contrato)
+GET {{emisor}}/api/v1/diagnostico
+
+### 4. Crear un pedido: el emisor notifica al receptor
+POST {{emisor}}/api/v1/orders
+Content-Type: application/json
+X-Correlation-Id: prueba-manual-001
+
+{
+  "userId": "u-42",
+  "merchantId": "m-1",
+  "deliveryAddressId": "d-9",
+  "items": [
+    { "productId": "p-1", "quantity": 2, "unitPrice": 7800 },
+    { "productId": "p-4", "quantity": 1, "unitPrice": 3900 }
+  ]
+}
+
+### 5. Ver en el RECEPTOR lo que llegó para ese usuario
+GET {{receptor}}/api/v1/users/u-42/notifications
+
+### 6. Consultar el pedido en el emisor
+GET {{emisor}}/api/v1/orders/1
+
+### 7. Reintentar la notificación (si quedó FALLIDA)
+POST {{emisor}}/api/v1/orders/1/notify
+
+### 8. Error de validación (400 normalizado)
+POST {{emisor}}/api/v1/orders
+Content-Type: application/json
+
+{ "userId": "", "items": [] }
+
+### 9. Regla de negocio (422): plantilla inexistente, directo al receptor
+POST {{receptor}}/api/v1/notifications
+Content-Type: application/json
+
+{ "recipientId": "u-1", "channel": "EMAIL", "template": "NO_EXISTE" }
+
+### 10. Idempotencia: mandá esta petición 2 veces -> 201 y luego 200, sin duplicar
+POST {{receptor}}/api/v1/notifications
+Content-Type: application/json
+Idempotency-Key: clave-manual-1
+
+{ "recipientId": "u-1", "channel": "PUSH", "template": "PRUEBA_CONEXION" }
+
+### 11. Salud de cada servicio (Spring Actuator)
+GET {{receptor}}/actuator/health
