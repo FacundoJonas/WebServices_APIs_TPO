@@ -3,6 +3,8 @@
 > Branch: `feature/prueba-integracion-proxmox`
 > Objetivo: verificar que las máquinas virtuales Debian del Proxmox pueden **exponer una API Java** y **consumirse entre sí por la red**, y encontrar rápido qué está mal cuando no pueden.
 
+> 📘 **Guía completa paso a paso** (cómo funciona por dentro, crear las VMs en Proxmox, plan de pruebas con planilla de resultados y diagnóstico de defectos): [`docs/guia-completa-proxmox.md`](docs/guia-completa-proxmox.md)
+
 La prueba usa dos módulos reales del TPO, reducidos a lo mínimo:
 
 | Rol | Módulo del TPO | Qué hace | Puerto |
@@ -412,6 +414,8 @@ prueba-integracion/
 │       ├── service/      NotificacionService (validación, idempotencia, simulación)
 │       ├── domain/       Notificacion, Plantilla, Canal, EstadoEnvio (JPA)
 │       └── ...           repository, dto, mapper, exception, config (igual estructura)
+├── docs/
+│   └── guia-completa-proxmox.md     ← guía detallada de implementación y pruebas
 ├── despliegue/
 │   ├── instalar-debian.sh           ← instala un módulo como servicio systemd
 │   ├── diagnostico-vm.sh            ← revisa la VM y la conectividad
