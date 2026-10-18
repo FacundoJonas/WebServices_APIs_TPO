@@ -3,6 +3,10 @@
 > Branch: `feature/prueba-integracion-proxmox`
 > Objetivo: verificar que las máquinas virtuales Debian del Proxmox pueden **exponer una API Java** y **consumirse entre sí por la red**, y encontrar rápido qué está mal cuando no pueden.
 
+> 🖥️ **Página web:** el emisor sirve una página en `http://IP_EMISOR:8081/` para cargar pedidos como cliente, ver si llegaron al receptor y verificarlo leyendo la base del receptor.
+>
+> 🔎 **Especificación y auditoría** de cada módulo (para comparar con los módulos de los compañeros): [`docs/especificacion-y-auditoria-modulos.md`](docs/especificacion-y-auditoria-modulos.md)
+>
 > 📘 **Guía completa paso a paso** (cómo funciona por dentro, crear las VMs en Proxmox, plan de pruebas con planilla de resultados y diagnóstico de defectos): [`docs/guia-completa-proxmox.md`](docs/guia-completa-proxmox.md)
 
 La prueba usa dos módulos reales del TPO, reducidos a lo mínimo:
@@ -194,7 +198,14 @@ RESULTADO: integración OK
 3. Cambiá `@emisor` y `@receptor` por las IPs de tus VMs.
 4. Tocá **Send Request** en cada bloque.
 
-### Opción C - Swagger
+### Opción C - Página web del emisor
+
+Abrí `http://IP_VM1:8081/` en el navegador:
+- **Nuevo pedido:** elegí cliente, comercio y productos, y tocá *Confirmar pedido*.
+- **Pedidos:** la lista se actualiza sola. Los `FALLIDA` tienen el botón *Reintentar*; los `ENVIADA`, *Verificar en receptor*, que muestra lo que guardó la otra CT.
+- **Estado del receptor:** la píldora de arriba a la derecha. Tocándola, ves el diagnóstico paso a paso.
+
+### Opción D - Swagger
 
 - `http://IP_VM1:8081/swagger-ui.html`
 - `http://IP_VM2:8082/swagger-ui.html`
@@ -291,7 +302,9 @@ Otras pruebas útiles:
 | `GET` | `/api/v1/orders/{id}` | Consulta un pedido | `200`, `404` |
 | `GET` | `/api/v1/orders` | Lista pedidos | `200` |
 | `POST` | `/api/v1/orders/{id}/notify` | Reintenta la notificación | `200`, `503`, `504` |
-| `GET` | `/api/v1/diagnostico` | Diagnóstico de red hacia el receptor | `200`, `503` |
+| `GET` | `/api/v1/orders/{id}/verificacion` | Pregunta al receptor qué guardó para ese pedido | `200`, `404`, `409`, `503`, `504` |
+| `GET` | `/api/v1/diagnostico` | Diagnóstico de red hacia el receptor. Con `?contrato=false` no escribe en el receptor | `200`, `503` |
+| `GET` | `/` | Página web para cargar y verificar pedidos | `200` |
 | `GET` | `/api/v1/ping` | Identifica la VM | `200` |
 
 **Request `POST /api/v1/orders`** (basado en el ejemplo de la consigna):
@@ -407,7 +420,8 @@ prueba-integracion/
 │       ├── dto/          CrearPedidoRequest, PedidoResponse, DiagnosticoResponse, ErrorResponse
 │       ├── mapper/       PedidoMapper (entidad → DTO)
 │       ├── exception/    ApiException, GlobalExceptionHandler
-│       └── config/       CorrelationIdFilter, RestClientConfig (timeouts), ReceptorProperties, WebConfig
+│       ├── config/       CorrelationIdFilter, RestClientConfig (timeouts), ReceptorProperties, WebConfig
+│       └── (resources/static/) index.html, estilos.css, app.js  ← página web
 ├── receptor-notificaciones/
 │   └── src/main/java/ar/edu/uade/api/deliverygo/notificaciones/
 │       ├── controller/   NotificacionController, PingController
@@ -415,7 +429,8 @@ prueba-integracion/
 │       ├── domain/       Notificacion, Plantilla, Canal, EstadoEnvio (JPA)
 │       └── ...           repository, dto, mapper, exception, config (igual estructura)
 ├── docs/
-│   └── guia-completa-proxmox.md     ← guía detallada de implementación y pruebas
+│   ├── guia-completa-proxmox.md     ← guía detallada de implementación y pruebas
+│   └── especificacion-y-auditoria-modulos.md  ← especificación de cada módulo + checklist de auditoría
 ├── despliegue/
 │   ├── instalar-debian.sh           ← instala un módulo como servicio systemd
 │   ├── diagnostico-vm.sh            ← revisa la VM y la conectividad

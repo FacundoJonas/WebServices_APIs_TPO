@@ -1,0 +1,117 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>DeliveryGo · Pedidos</title>
+  <link rel="stylesheet" href="estilos.css">
+</head>
+<body>
+
+  <!-- ============ Encabezado: qué CT es y si llega al receptor ============ -->
+  <header class="encabezado">
+    <div class="marca">
+      <span class="logo" aria-hidden="true">🛵</span>
+      <div>
+        <h1>DeliveryGo · Pedidos</h1>
+        <p class="sub" id="info-emisor">Emisor · cargando…</p>
+      </div>
+    </div>
+
+    <button type="button" class="estado-receptor" id="estado-receptor" aria-expanded="false" aria-controls="panel-diagnostico">
+      <span class="punto" aria-hidden="true"></span>
+      <span id="estado-receptor-texto">Comprobando receptor…</span>
+    </button>
+  </header>
+
+  <!-- Detalle del diagnóstico (se abre al tocar el estado del receptor) -->
+  <section class="panel diagnostico" id="panel-diagnostico" hidden>
+    <div class="panel-titulo">
+      <h2>Diagnóstico de red hacia el receptor</h2>
+      <button type="button" class="boton secundario" id="boton-diagnostico">Prueba completa (con envío)</button>
+    </div>
+    <p class="ayuda" id="diagnostico-url"></p>
+    <ol class="pasos" id="diagnostico-pasos"></ol>
+  </section>
+
+  <!-- Mensajes de error / éxito -->
+  <div class="aviso" id="aviso" role="alert" hidden></div>
+
+  <main class="grilla">
+
+    <!-- ============ Formulario del cliente ============ -->
+    <section class="panel" aria-labelledby="titulo-nuevo">
+      <h2 id="titulo-nuevo">Nuevo pedido</h2>
+
+      <form id="formulario" novalidate>
+        <label for="cliente">Cliente</label>
+        <input id="cliente" name="cliente" type="text" placeholder="Ej: juan" maxlength="60" required autocomplete="off">
+
+        <label for="comercio">Comercio</label>
+        <select id="comercio" name="comercio"></select>
+
+        <fieldset>
+          <legend>Productos</legend>
+          <ul class="productos" id="productos"></ul>
+        </fieldset>
+
+        <div class="total">
+          <span>Total</span>
+          <strong id="total">$ 0</strong>
+        </div>
+
+        <button type="submit" class="boton primario" id="boton-confirmar" disabled>Confirmar pedido</button>
+        <p class="ayuda">El total lo vuelve a calcular el servidor. Al confirmar, el emisor le avisa al receptor (otra CT).</p>
+      </form>
+
+      <!-- Resultado del último pedido -->
+      <div class="resultado" id="resultado" hidden></div>
+    </section>
+
+    <!-- ============ Lista de pedidos ============ -->
+    <section class="panel" aria-labelledby="titulo-lista">
+      <div class="panel-titulo">
+        <h2 id="titulo-lista">Pedidos</h2>
+        <label class="interruptor">
+          <input type="checkbox" id="auto" checked>
+          Actualizar cada 5 s
+        </label>
+      </div>
+
+      <div class="tabla-contenedor">
+        <table>
+          <thead>
+            <tr>
+              <th scope="col">#</th>
+              <th scope="col">Cliente</th>
+              <th scope="col">Total</th>
+              <th scope="col">Hora</th>
+              <th scope="col">Notificación</th>
+              <th scope="col"><span class="oculto">Acciones</span></th>
+            </tr>
+          </thead>
+          <tbody id="lista"></tbody>
+        </table>
+      </div>
+      <p class="vacio" id="vacio">Todavía no hay pedidos.</p>
+    </section>
+  </main>
+
+  <!-- ============ Verificación en el receptor ============ -->
+  <dialog id="dialogo" aria-labelledby="dialogo-titulo">
+    <form method="dialog">
+      <h2 id="dialogo-titulo">Verificación en el receptor</h2>
+      <div id="dialogo-contenido"></div>
+      <div class="acciones-dialogo">
+        <button class="boton primario" value="cerrar">Cerrar</button>
+      </div>
+    </form>
+  </dialog>
+
+  <footer class="pie">
+    Prueba de integración entre CTs · <a href="swagger-ui.html">Swagger</a> · <a href="api/v1/diagnostico">Diagnóstico (JSON)</a>
+  </footer>
+
+  <script src="app.js"></script>
+</body>
+</html>

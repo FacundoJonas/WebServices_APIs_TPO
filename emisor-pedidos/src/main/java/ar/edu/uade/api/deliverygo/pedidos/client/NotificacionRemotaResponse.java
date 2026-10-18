@@ -7,5 +7,14 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
  * {@code ignoreUnknown}: si el receptor agrega campos nuevos, el emisor no se rompe.
  */
 @JsonIgnoreProperties(ignoreUnknown = true)
-public record NotificacionRemotaResponse(Long id, String status, String message, String originIp) {
+public record NotificacionRemotaResponse(
+        Long id,
+        String recipientId,
+        String template,
+        String message,
+        String status,
+        String originIp,
+        String correlationId,
+        String receivedAt
+) {
 }
