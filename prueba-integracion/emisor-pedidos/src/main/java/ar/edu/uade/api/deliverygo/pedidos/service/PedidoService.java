@@ -91,13 +91,39 @@ public class PedidoService {
             notificar(pedido);
             return pedido;
         } catch (ReceptorException e) {
-            HttpStatus status = switch (e.getTipo()) {
-                case TIMEOUT_CONEXION, TIMEOUT_LECTURA -> HttpStatus.GATEWAY_TIMEOUT;
-                default -> HttpStatus.SERVICE_UNAVAILABLE;
-            };
-            throw new ApiException(status, "RECEPTOR_" + e.getTipo().name(),
-                    e.getMessage() + ". Sugerencia: " + e.getSugerencia());
+            throw aApiException(e);
         }
+    }
+
+    /**
+     * Le pregunta al receptor qué guardó para la notificación de este pedido.
+     * Lo usa la página web para comprobar la integración sin tener que entrar al receptor.
+     */
+    public NotificacionRemotaResponse verificarEnReceptor(Long id) {
+
+        Pedido pedido = buscar(id);
+
+        if (pedido.getNotificacionId() == null) {
+            throw new ApiException(HttpStatus.CONFLICT, "PEDIDO_SIN_NOTIFICACION",
+                    "El pedido " + id + " todavía no fue notificado al receptor (estado "
+                            + pedido.getEstadoNotificacion() + "). Reintentá la notificación primero.");
+        }
+
+        try {
+            return notificaciones.buscar(pedido.getNotificacionId());
+        } catch (ReceptorException e) {
+            throw aApiException(e);
+        }
+    }
+
+    /** 504 para los timeouts, 503 para el resto, con el error normalizado. */
+    private static ApiException aApiException(ReceptorException e) {
+        HttpStatus status = switch (e.getTipo()) {
+            case TIMEOUT_CONEXION, TIMEOUT_LECTURA -> HttpStatus.GATEWAY_TIMEOUT;
+            default -> HttpStatus.SERVICE_UNAVAILABLE;
+        };
+        return new ApiException(status, "RECEPTOR_" + e.getTipo().name(),
+                e.getMessage() + ". Sugerencia: " + e.getSugerencia());
     }
 
     /** Llama al receptor y guarda el resultado (éxito o falla) en el pedido. */

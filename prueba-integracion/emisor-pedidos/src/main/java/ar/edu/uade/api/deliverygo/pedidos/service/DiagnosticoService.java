@@ -35,6 +35,10 @@ import java.util.UUID;
  *  3. TCP            ¿la VM acepta conexiones en ese puerto?
  *  4. HTTP ping      ¿responde el servicio correcto?
  *  5. Contrato       ¿acepta un POST real con el DTO acordado?
+ *
+ * El paso 5 ESCRIBE una notificación de prueba en el receptor. Con
+ * {@code incluirContrato = false} se omite, para chequeos frecuentes
+ * (ej. la página web) que no deben llenar la base del receptor.
  */
 @Service
 public class DiagnosticoService {
@@ -47,8 +51,9 @@ public class DiagnosticoService {
         this.cliente = cliente;
     }
 
-    public DiagnosticoResponse diagnosticar() {
+    public DiagnosticoResponse diagnosticar(boolean incluirContrato) {
 
+        int esperados = incluirContrato ? 5 : 4;
         List<Paso> pasos = new ArrayList<>();
 
         // ---------- 1. Configuración ----------
@@ -68,7 +73,7 @@ public class DiagnosticoService {
         } catch (IllegalArgumentException e) {
             pasos.add(new Paso("1. Configuración", false, 0, "RECEPTOR_URL inválida: " + e.getMessage(),
                     "Formato esperado: http://IP:PUERTO, ej. http://192.168.1.22:8082", null));
-            return resultado(pasos);
+            return resultado(pasos, esperados);
         }
 
         // ---------- 2. DNS ----------
@@ -82,7 +87,7 @@ public class DiagnosticoService {
         } catch (UnknownHostException e) {
             pasos.add(new Paso("2. DNS", false, desde(inicio), "No se pudo resolver " + uri.getHost(),
                     "Usar la IP directamente o agregar el nombre en /etc/hosts de esta VM.", null));
-            return resultado(pasos);
+            return resultado(pasos, esperados);
         }
 
         // ---------- 3. TCP ----------
@@ -95,7 +100,7 @@ public class DiagnosticoService {
         } catch (IOException e) {
             pasos.add(new Paso("3. TCP", false, desde(inicio), e.getClass().getSimpleName() + ": " + e.getMessage(),
                     sugerenciaTcp(e, puerto), null));
-            return resultado(pasos);
+            return resultado(pasos, esperados);
         }
 
         // ---------- 4. HTTP ping ----------
@@ -109,11 +114,15 @@ public class DiagnosticoService {
                     esReceptor ? null : "RECEPTOR_URL apunta a un servicio que no es el receptor (¿puerto equivocado?).",
                     ping));
             if (!esReceptor) {
-                return resultado(pasos);
+                return resultado(pasos, esperados);
             }
         } catch (ReceptorException e) {
             pasos.add(new Paso("4. HTTP ping", false, desde(inicio), e.getMessage(), e.getSugerencia(), null));
-            return resultado(pasos);
+            return resultado(pasos, esperados);
+        }
+
+        if (!incluirContrato) {
+            return resultado(pasos, esperados);
         }
 
         // ---------- 5. Contrato ----------
@@ -130,11 +139,11 @@ public class DiagnosticoService {
                     e.getMessage(), e.getSugerencia(), null));
         }
 
-        return resultado(pasos);
+        return resultado(pasos, esperados);
     }
 
-    private DiagnosticoResponse resultado(List<Paso> pasos) {
-        boolean ok = pasos.size() == 5 && pasos.stream().allMatch(Paso::ok);
+    private DiagnosticoResponse resultado(List<Paso> pasos, int esperados) {
+        boolean ok = pasos.size() == esperados && pasos.stream().allMatch(Paso::ok);
         return new DiagnosticoResponse(ok, receptor.url(), Instant.now(), pasos);
     }
 

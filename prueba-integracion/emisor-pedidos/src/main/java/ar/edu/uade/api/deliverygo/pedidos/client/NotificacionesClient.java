@@ -56,6 +56,21 @@ public class NotificacionesClient {
         }
     }
 
+    /**
+     * GET {RECEPTOR_URL}/api/v1/notifications/{id}
+     * Le pregunta al receptor qué guardó realmente (para verificar desde la página web).
+     */
+    public NotificacionRemotaResponse buscar(Long id) {
+        try {
+            return restClient.get()
+                    .uri("/api/v1/notifications/{id}", id)
+                    .retrieve()
+                    .body(NotificacionRemotaResponse.class);
+        } catch (RestClientException e) {
+            throw clasificar(e);
+        }
+    }
+
     /** GET {RECEPTOR_URL}/api/v1/ping */
     public Map<String, Object> ping() {
         try {

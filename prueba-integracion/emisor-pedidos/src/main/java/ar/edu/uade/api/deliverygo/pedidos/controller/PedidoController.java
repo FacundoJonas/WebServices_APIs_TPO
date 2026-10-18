@@ -1,8 +1,10 @@
 package ar.edu.uade.api.deliverygo.pedidos.controller;
 
+import ar.edu.uade.api.deliverygo.pedidos.client.NotificacionRemotaResponse;
 import ar.edu.uade.api.deliverygo.pedidos.client.NotificacionesClient;
 import ar.edu.uade.api.deliverygo.pedidos.dto.CrearPedidoRequest;
 import ar.edu.uade.api.deliverygo.pedidos.dto.PedidoResponse;
+import ar.edu.uade.api.deliverygo.pedidos.dto.VerificacionResponse;
 import ar.edu.uade.api.deliverygo.pedidos.mapper.PedidoMapper;
 import ar.edu.uade.api.deliverygo.pedidos.service.PedidoService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -49,6 +51,15 @@ public class PedidoController {
     @GetMapping
     public List<PedidoResponse> listar() {
         return service.listar().stream().map(p -> PedidoMapper.aResponse(p, notificaciones.url())).toList();
+    }
+
+    @Operation(summary = "Verificar en el RECEPTOR qué guardó para la notificación de este pedido")
+    @GetMapping("/{id}/verificacion")
+    public VerificacionResponse verificar(@PathVariable Long id) {
+        NotificacionRemotaResponse remota = service.verificarEnReceptor(id);
+        return new VerificacionResponse(id, remota.id(), remota.recipientId(), remota.message(),
+                remota.status(), remota.originIp(), remota.correlationId(), remota.receivedAt(),
+                notificaciones.url());
     }
 
     @Operation(summary = "Reintentar la notificación de un pedido que falló")

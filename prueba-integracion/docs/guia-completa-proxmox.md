@@ -218,6 +218,8 @@ Los dos módulos siguen la estructura que sugiere la consigna:
 | `emisor-pedidos/pom.xml` | Dependencias del emisor (las mismas que el receptor) |
 | `emisor-pedidos/src/main/resources/application.properties` | Configuración del emisor, incluida `RECEPTOR_URL` y los timeouts |
 | `emisor-pedidos/src/main/java/.../pedidos/` | Código del emisor: 28 clases (sección 8) |
+| `emisor-pedidos/src/main/resources/static/` | Página web del emisor: `index.html`, `estilos.css`, `app.js` (sección 6 de `especificacion-y-auditoria-modulos.md`) |
+| `docs/especificacion-y-auditoria-modulos.md` | Especificación de cada módulo, brecha con la consigna, checklist y plantilla para auditar los módulos de los compañeros |
 | `emisor-pedidos/src/test/.../NotificacionesClientTest.java` | 3 tests que provocan fallas de red reales y verifican su clasificación |
 | `despliegue/instalar-debian.sh` | Instala un módulo como servicio systemd en Debian |
 | `despliegue/diagnostico-vm.sh` | Revisa la VM y la conexión con la otra VM. Sólo lee, no cambia nada |
@@ -369,7 +371,7 @@ Los DTO que usa el cliente son propios del emisor:
 
 Responde `200` si todo está OK y `503` si algo falló. Cada paso trae `detalle`, `sugerencia` y `ms` (cuánto tardó).
 
-> El paso 5 **escribe** una notificación de prueba en el receptor. Es intencional: prueba el camino completo de escritura.
+> El paso 5 **escribe** una notificación de prueba en el receptor. Es intencional: prueba el camino completo de escritura. Con `?contrato=false` se omite; es lo que usa la página web en su chequeo automático cada 15 s, para no llenar la base del receptor.
 
 ### 8.6 Entrada y salida
 
@@ -465,7 +467,9 @@ Ver la sección 17.3 y la tabla completa de variables en el `README.md`.
 | `GET` | `/api/v1/orders` | `200` |
 | `GET` | `/api/v1/orders/{id}` | `200`, `400`, `404` |
 | `POST` | `/api/v1/orders/{id}/notify` | `200`, `404`, `503`, `504` |
-| `GET` | `/api/v1/diagnostico` | `200`, `503` |
+| `GET` | `/api/v1/orders/{id}/verificacion` | `200`, `404`, `409`, `503`, `504` |
+| `GET` | `/api/v1/diagnostico` (`?contrato=false` no escribe en el receptor) | `200`, `503` |
+| `GET` | `/` | Página web |
 | `GET` | `/api/v1/ping` | `200` |
 | `GET` | `/actuator/health` | `200` |
 | `GET` | `/swagger-ui.html` | Swagger UI |

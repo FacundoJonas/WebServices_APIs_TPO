@@ -8,6 +8,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
@@ -25,10 +26,12 @@ public class DiagnosticoController {
      * 200 si toda la cadena funciona; 503 si algún paso falló
      * (así un script o un monitor puede detectarlo por el código HTTP).
      */
-    @Operation(summary = "Probar la red hacia el receptor paso a paso (DNS, TCP, HTTP, contrato)")
+    @Operation(summary = "Probar la red hacia el receptor paso a paso (DNS, TCP, HTTP, contrato). "
+            + "Con contrato=false no se escribe nada en el receptor.")
     @GetMapping("/diagnostico")
-    public ResponseEntity<DiagnosticoResponse> diagnosticar() {
-        DiagnosticoResponse resultado = service.diagnosticar();
+    public ResponseEntity<DiagnosticoResponse> diagnosticar(
+            @RequestParam(defaultValue = "true") boolean contrato) {
+        DiagnosticoResponse resultado = service.diagnosticar(contrato);
         return ResponseEntity.status(resultado.ok() ? HttpStatus.OK : HttpStatus.SERVICE_UNAVAILABLE).body(resultado);
     }
 }
