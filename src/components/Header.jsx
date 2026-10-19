@@ -83,7 +83,7 @@ function Header() {
                   </span>
 
                   <span className="font-body-md-medium text-body-md-medium text-on-surface truncate max-w-[150px] md:max-w-[200px] leading-tight">
-                    Lima 717, CABA
+                    {usuario?.direcciones?.[0]?.calle ?? "Agregá una dirección"}
                   </span>
                 </div>
 

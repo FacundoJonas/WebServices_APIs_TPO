@@ -6,7 +6,7 @@ import CategoryChips from "../components/HomePage/CategoryChips"
 import FilterBar from "../components/HomePage/FilterBar"
 import StoreCard from "../components/HomePage/StoreCard"
 import PrimeBanner from "../components/HomePage/PrimeBanner"
-
+import { obtenerUsuario } from "../servicies/authServicie.js"
 import courierImage from "../assets/matias.png"
 
 /*
@@ -16,15 +16,6 @@ import courierImage from "../assets/matias.png"
  * hasta contar con las imágenes definitivas de cada comercio y del mapa.
  */
 import placeholderImage from "../assets/deliverygo_logo.png"
-
-/*
- * Datos del usuario logueado.
- */
-const user = {
-    name: "Lucas",
-    address: "Av. Corrientes 1450, Piso 4 B, Balvanera, CABA",
-    zone: "Balvanera",
-}
 
 /*
  * Cupón destacado en el encabezado.
@@ -282,9 +273,20 @@ const primePlan = {
 function HomePage() {
 
     /*
+    * Datos del usuario logueado (se guardan al iniciar sesión).
+    */
+    const usuario = obtenerUsuario()
+
+    const direccionPrincipal = usuario?.direcciones?.[0]
+
+    /*
      * Dirección de entrega actual.
      */
-    const [address, setAddress] = useState(user.address)
+    const [address, setAddress] = useState(
+        direccionPrincipal
+            ? `${direccionPrincipal.calle}, ${direccionPrincipal.barrio}, ${direccionPrincipal.ciudad}`
+            : ""
+    )
 
     /*
      * Categoría seleccionada. "all" muestra todas.
@@ -369,7 +371,7 @@ function HomePage() {
 
                 {/* Saludo, dirección y cupón */}
                 <WelcomeHeader
-                    userName={user.name}
+                    userName={usuario?.nombre}
                     address={address}
                     onChangeAddress={handleChangeAddress}
                     coupon={welcomeCoupon}
@@ -407,7 +409,7 @@ function HomePage() {
                         </h2>
 
                         <span className="font-caption-bold text-caption-bold text-secondary">
-                            {visibleStores.length} disponibles en {user.zone}
+                            {visibleStores.length} disponibles en {direccionPrincipal?.barrio ?? "tu zona"}
                         </span>
                     </div>
 
