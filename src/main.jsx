@@ -12,6 +12,8 @@ import LoginLayout from "./layouts/LoginLayout.jsx";
 import CartPage from './pages/CartPage'
 import CheckoutPage from './pages/CheckoutPage'
 import { CartProvider } from './context/CartProvider'
+import ProtectedRoute from './routes/ProtectedRoute'
+import PublicRoute from './routes/PublicRoute'
 
 createRoot(document.getElementById('root')).render(
     <StrictMode>
@@ -20,16 +22,23 @@ createRoot(document.getElementById('root')).render(
             <Routes>
                 <Route path="/" element={<Navigate to="/login" replace />} />
 
-                <Route element={<LoginLayout/>}>
-                    <Route path="/login" element={<AuthPage />} />
+                {/* Rutas públicas: solo accesibles sin sesión */}
+                <Route element={<PublicRoute />}>
+                    <Route element={<LoginLayout/>}>
+                        <Route path="/login" element={<AuthPage />} />
+                    </Route>
                 </Route>
-                <Route element={<MainLayout />}>
-                    <Route path="/inicio" element={<HomePage />} />
-                    <Route path="/comercio" element={<StorePage />} />
-                    <Route path="/pedido" element={<OrderReviewPage />} />
-                    <Route path="/notificaciones" element={<NotificationsPage />} />
-                    <Route path="/carrito" element={<CartPage />} />
-                    <Route path="/pagar" element={<CheckoutPage />} />
+
+                {/* Rutas internas: requieren sesión iniciada */}
+                <Route element={<ProtectedRoute />}>
+                    <Route element={<MainLayout />}>
+                        <Route path="/inicio" element={<HomePage />} />
+                        <Route path="/comercio" element={<StorePage />} />
+                        <Route path="/pedido" element={<OrderReviewPage />} />
+                        <Route path="/notificaciones" element={<NotificationsPage />} />
+                        <Route path="/carrito" element={<CartPage />} />
+                        <Route path="/pagar" element={<CheckoutPage />} />
+                    </Route>
                 </Route>
             </Routes>
         </BrowserRouter>

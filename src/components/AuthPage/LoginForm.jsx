@@ -3,7 +3,7 @@ import SocialButton from "../SocialButton";
 import appleLogo from "../../assets/apple.png";
 import googleLogo from "../../assets/google.png";
 import { login } from "../../servicies/authServicie.js"
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router";
 
 /**
  * Formulario de inicio de sesión.
@@ -16,6 +16,13 @@ import { useNavigate } from "react-router-dom";
 function LoginForm({ goToRegister }) {
 
     const navigate = useNavigate();
+
+    const location = useLocation();
+
+    // Si el usuario venía de una ruta protegida, se vuelve ahí.
+    // Si no, se va al inicio.
+    const destino = location.state?.from?.pathname || "/inicio";
+
     // Controla la visibilidad de la contraseña.
     const [showPassword, setShowPassword] = useState(false);
 
@@ -52,7 +59,7 @@ function LoginForm({ goToRegister }) {
 
             // El token y los datos del usuario ya se guardan
             // desde authService.js.
-            navigate("/inicio");
+            navigate(destino, { replace: true });
         } catch (error) {
             setError(error.message);
         } finally {
