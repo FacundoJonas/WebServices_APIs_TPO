@@ -1,10 +1,10 @@
 import { useState } from "react"
 
-import ActiveOrderBanner from "../components/notificationsPage/ActiveOrderBanner"
-import FilterTabs from "../components/notificationsPage/FilterTabs"
-import NotificationGroup from "../components/notificationsPage/NotificationGroup"
-import InfoTile from "../components/notificationsPage/InfoTile"
-import EmptyState from "../components/notificationsPage/EmptyState"
+import ActiveOrderBanner from "../components/NotificationsPage/ActiveOrderBanner"
+import FilterTabs from "../components/NotificationsPage/FilterTabs"
+import NotificationGroup from "../components/NotificationsPage/NotificationGroup"
+import InfoTile from "../components/NotificationsPage/InfoTile"
+import EmptyState from "../components/NotificationsPage/EmptyState"
 
 /*
  * Filtros disponibles.

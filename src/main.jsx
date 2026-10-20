@@ -9,9 +9,13 @@ import OrderReviewPage from './pages/OrderReviewPage'
 import NotificationsPage from './pages/NotificationsPage'
 import HomePage from './pages/HomePage'
 import LoginLayout from "./layouts/LoginLayout.jsx";
+import CartPage from './pages/CartPage'
+import CheckoutPage from './pages/CheckoutPage'
+import { CartProvider } from './context/CartProvider'
 
 createRoot(document.getElementById('root')).render(
     <StrictMode>
+      <CartProvider>
         <BrowserRouter>
             <Routes>
                 <Route path="/" element={<Navigate to="/login" replace />} />
@@ -24,8 +28,11 @@ createRoot(document.getElementById('root')).render(
                     <Route path="/comercio" element={<StorePage />} />
                     <Route path="/pedido" element={<OrderReviewPage />} />
                     <Route path="/notificaciones" element={<NotificationsPage />} />
+                    <Route path="/carrito" element={<CartPage />} />
+                    <Route path="/pagar" element={<CheckoutPage />} />
                 </Route>
             </Routes>
         </BrowserRouter>
+      </CartProvider>
     </StrictMode>,
 )
