@@ -1,7 +1,6 @@
 # Guía completa: prueba de integración entre VMs en Proxmox
 
-> **Branch:** `feature/prueba-integracion-proxmox`
-> **Carpeta:** `prueba-integracion/`
+> **Rama:** `lab/proxmox-integracion` (huérfana: solo contiene este laboratorio, no comparte historia con el Portal Web y nunca se mergea a `main`)
 > **Para qué sirve este documento:** entender **todo** lo que contiene la prueba, cómo funciona por dentro, y cómo implementarla y validarla paso a paso en el Proxmox, desde crear la VM hasta registrar las evidencias.
 >
 > El `README.md` de la carpeta es la referencia rápida. Esta guía es la versión larga y explicada.
@@ -206,11 +205,11 @@ Los dos módulos siguen la estructura que sugiere la consigna:
 
 | Archivo | Para qué sirve |
 |---|---|
-| `prueba-integracion/pom.xml` | Proyecto Maven "padre": agrupa los dos módulos, fija Spring Boot 3.5.16, Java 17 y la versión de Swagger (springdoc 2.8.9) |
-| `prueba-integracion/README.md` | Referencia rápida |
-| `prueba-integracion/docs/guia-completa-proxmox.md` | Esta guía |
-| `prueba-integracion/pruebas.http` | 11 peticiones listas para mandar desde VS Code (extensión REST Client) |
-| `prueba-integracion/.gitignore` | Evita subir `target/` (compilados) y `datos/` (bases H2) |
+| `pom.xml` | Proyecto Maven "padre": agrupa los dos módulos, fija Spring Boot 3.5.16, Java 17 y la versión de Swagger (springdoc 2.8.9) |
+| `README.md` | Referencia rápida |
+| `docs/guia-completa-proxmox.md` | Esta guía |
+| `pruebas.http` | 11 peticiones listas para mandar desde VS Code (extensión REST Client) |
+| `.gitignore` | Evita subir `target/` (compilados), `datos/` (bases H2), los `.env` con secretos y el material local (cátedra, `node_modules`) |
 | `receptor-notificaciones/pom.xml` | Dependencias del receptor: web, JPA, validación, actuator, Swagger, H2, tests |
 | `receptor-notificaciones/src/main/resources/application.properties` | Configuración del receptor. Todo se puede cambiar con variables de entorno |
 | `receptor-notificaciones/src/main/java/.../notificaciones/` | Código del receptor: 19 clases (sección 7) |
@@ -660,19 +659,19 @@ sudo ufw allow 8081/tcp     # en el emisor
 
 ### 17.1 Antes: subir la branch
 
-Las VMs clonan desde GitHub, así que la branch tiene que estar subida. Desde tu PC:
+Las VMs clonan desde GitHub, así que la rama tiene que estar subida. Desde tu PC, parado en la rama:
 
 ```bash
-git -C /ruta/a/WebServices_APIs_TPO-prueba-proxmox push -u origin feature/prueba-integracion-proxmox
+git push -u origin lab/proxmox-integracion
 ```
 
-> **Sin internet en las VMs:** compilá en tu PC (`cd prueba-integracion && mvn clean package`) y copiá la carpeta con los JAR: `scp -r prueba-integracion alumno@192.168.1.22:`. En la VM tiene que estar instalado `default-jre-headless`.
+> **Sin internet en las VMs:** compilá en tu PC (`mvn clean package` desde la raíz de la rama) y copiá la rama con los JAR: `rsync -a --exclude target --exclude 'Materia de APIS' --exclude node_modules ./ alumno@192.168.1.22:deliverygo-lab/`. En la VM tiene que estar instalado `default-jre-headless`.
 
 ### 17.2 VM receptora (primero)
 
 ```bash
-git clone -b feature/prueba-integracion-proxmox https://github.com/FacundoJonas/WebServices_APIs_TPO.git
-cd WebServices_APIs_TPO/prueba-integracion
+git clone -b lab/proxmox-integracion --single-branch https://github.com/FacundoJonas/WebServices_APIs_TPO.git deliverygo-lab
+cd deliverygo-lab
 sudo ./despliegue/instalar-debian.sh receptor
 ```
 
@@ -693,8 +692,8 @@ LISTO. deliverygo-receptor está corriendo.
 ### 17.3 VM emisora
 
 ```bash
-git clone -b feature/prueba-integracion-proxmox https://github.com/FacundoJonas/WebServices_APIs_TPO.git
-cd WebServices_APIs_TPO/prueba-integracion
+git clone -b lab/proxmox-integracion --single-branch https://github.com/FacundoJonas/WebServices_APIs_TPO.git deliverygo-lab
+cd deliverygo-lab
 sudo ./despliegue/instalar-debian.sh emisor
 ```
 
@@ -929,8 +928,8 @@ sudo nano /etc/deliverygo/receptor-notificaciones.env
 sudo systemctl restart deliverygo-receptor
 
 # Actualizar a una versión nueva de la branch
-cd ~/WebServices_APIs_TPO && git pull
-cd prueba-integracion && rm -rf */target
+cd ~/deliverygo-lab && git pull
+rm -rf */target
 sudo ./despliegue/instalar-debian.sh receptor     # recompila y conserva el .env
 
 # Ver los datos guardados

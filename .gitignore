@@ -11,3 +11,14 @@ datos/
 *.iml
 .vscode/*
 !.vscode/extensions.json
+
+# Secretos (token de Proxmox, contraseñas): nunca al repo
+.env
+*.env
+
+# Material local que vive en la misma carpeta pero no es de esta rama
+Materia de APIS/
+TPO_DeliveryGo_*.odt
+TPO DeliveryGo *.pdf
+node_modules/
+CONTEXTO_SESION_*.md

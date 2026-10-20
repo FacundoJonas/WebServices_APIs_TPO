@@ -1,6 +1,6 @@
 # Prueba de integración entre VMs (Proxmox + Debian)
 
-> Branch: `feature/prueba-integracion-proxmox`
+> Rama: `lab/proxmox-integracion` (huérfana: solo contiene este laboratorio, no comparte historia con el Portal Web y nunca se mergea a `main`)
 > Objetivo: verificar que las máquinas virtuales Debian del Proxmox pueden **exponer una API Java** y **consumirse entre sí por la red**, y encontrar rápido qué está mal cuando no pueden.
 
 > 🖥️ **Página web:** el emisor sirve una página en `http://IP_EMISOR:8081/` para cargar pedidos como cliente, ver si llegaron al receptor y verificarlo leyendo la base del receptor.
@@ -127,8 +127,8 @@ El script hace todo:
 
 ```bash
 sudo apt update && sudo apt install -y git curl python3
-git clone -b feature/prueba-integracion-proxmox https://github.com/FacundoJonas/WebServices_APIs_TPO.git
-cd WebServices_APIs_TPO/prueba-integracion
+git clone -b lab/proxmox-integracion --single-branch https://github.com/FacundoJonas/WebServices_APIs_TPO.git deliverygo-lab
+cd deliverygo-lab
 sudo ./despliegue/instalar-debian.sh receptor
 ```
 
@@ -138,8 +138,8 @@ Al final muestra la IP y la URL de Swagger. **Anotá la IP.**
 
 ```bash
 sudo apt update && sudo apt install -y git curl python3
-git clone -b feature/prueba-integracion-proxmox https://github.com/FacundoJonas/WebServices_APIs_TPO.git
-cd WebServices_APIs_TPO/prueba-integracion
+git clone -b lab/proxmox-integracion --single-branch https://github.com/FacundoJonas/WebServices_APIs_TPO.git deliverygo-lab
+cd deliverygo-lab
 sudo ./despliegue/instalar-debian.sh emisor
 
 # Apuntar el emisor a la IP de la VM 2:
@@ -147,7 +147,7 @@ sudo nano /etc/deliverygo/emisor-pedidos.env      # RECEPTOR_URL=http://IP_DE_LA
 sudo systemctl restart deliverygo-emisor
 ```
 
-> **Sin internet en las VMs:** compilá en tu PC (`mvn clean package`) y copiá la carpeta con los JAR ya generados (`scp -r prueba-integracion usuario@IP:`). El script detecta el JAR en `target/` y no compila. Igual necesita `default-jre-headless` instalado.
+> **Sin internet en las VMs:** compilá en tu PC (`mvn clean package`) y copiá la rama con los JAR ya generados (`rsync -a --exclude target --exclude 'Materia de APIS' --exclude node_modules ./ alumno@IP:deliverygo-lab/`). El script detecta el JAR en `target/` y no compila. Igual necesita `default-jre-headless` instalado.
 
 ### Comandos del día a día
 
@@ -408,7 +408,7 @@ Se editan en `/etc/deliverygo/<modulo>.env`; los valores de ejemplo están en `d
 ## 10. Cómo está hecho el código
 
 ```
-prueba-integracion/
+(raíz de la rama lab/proxmox-integracion)
 ├── pom.xml                          ← agrupa los dos módulos (Spring Boot 3.5.16, Java 17+)
 ├── emisor-pedidos/
 │   └── src/main/java/ar/edu/uade/api/deliverygo/pedidos/
@@ -473,7 +473,7 @@ mvn test
 Con Java 17+ y Maven:
 
 ```bash
-cd prueba-integracion
+# desde la raíz de la rama
 mvn clean package
 java -jar receptor-notificaciones/target/receptor-notificaciones.jar          # :8082
 RECEPTOR_URL=http://localhost:8082 java -jar emisor-pedidos/target/emisor-pedidos.jar   # :8081

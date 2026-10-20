@@ -1,6 +1,6 @@
 # Especificación de los módulos de prueba y guía de auditoría
 
-> **Branch:** `feature/prueba-integracion-proxmox` · **Carpeta:** `prueba-integracion/`
+> **Rama:** `lab/proxmox-integracion` (huérfana: solo contiene este laboratorio, no comparte historia con el Portal Web y nunca se mergea a `main`)
 >
 > **Para qué sirve:** es la **especificación de referencia** de los módulos de prueba: qué expone cada uno, con qué datos, qué reglas aplica y cómo se comporta ante errores. Sirve para **comparar ("interpolar")** lo que entreguen los compañeros contra esta referencia y contra la consigna del TPO, con un checklist y una plantilla de comparación.
 >
