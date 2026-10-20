@@ -2,8 +2,8 @@ import { useState } from "react";
 import SocialButton from "../SocialButton";
 import appleLogo from "../../assets/apple.png";
 import googleLogo from "../../assets/google.png";
-import { login } from "../../servicies/authServicie.js"
-import { useNavigate } from "react-router-dom";
+import { useAuth } from "../../context/useAuth";
+import { useLocation, useNavigate } from "react-router";
 
 /**
  * Formulario de inicio de sesión.
@@ -16,6 +16,16 @@ import { useNavigate } from "react-router-dom";
 function LoginForm({ goToRegister }) {
 
     const navigate = useNavigate();
+
+    // login del AuthContext: guarda la sesión y actualiza el estado global.
+    const { login } = useAuth();
+
+    const location = useLocation();
+
+    // Si el usuario venía de una ruta protegida, se vuelve ahí.
+    // Si no, se va al inicio.
+    const destino = location.state?.from?.pathname || "/inicio";
+
     // Controla la visibilidad de la contraseña.
     const [showPassword, setShowPassword] = useState(false);
 
@@ -29,7 +39,7 @@ function LoginForm({ goToRegister }) {
 
     /**
      * Procesa el inicio de sesión.
-     * Invoca el servicio de autenticación.
+     * Invoca el login del AuthContext.
      */
     async function handleLogin(e) {
         e.preventDefault();
@@ -50,9 +60,8 @@ function LoginForm({ goToRegister }) {
             console.log("Usuario:", data.username);
             console.log("Rol:", data.rol);
 
-            // El token y los datos del usuario ya se guardan
-            // desde authService.js.
-            navigate("/inicio");
+            // El AuthContext ya guardó el token y los datos del usuario.
+            navigate(destino, { replace: true });
         } catch (error) {
             setError(error.message);
         } finally {

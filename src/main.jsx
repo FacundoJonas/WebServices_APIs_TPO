@@ -12,27 +12,38 @@ import LoginLayout from "./layouts/LoginLayout.jsx";
 import CartPage from './pages/CartPage'
 import CheckoutPage from './pages/CheckoutPage'
 import { CartProvider } from './context/CartProvider'
+import ProtectedRoute from './routes/ProtectedRoute'
+import PublicRoute from './routes/PublicRoute'
+import {AuthProvider} from "./context/AuthProvider.jsx";
 
 createRoot(document.getElementById('root')).render(
     <StrictMode>
-      <CartProvider>
-        <BrowserRouter>
-            <Routes>
-                <Route path="/" element={<Navigate to="/login" replace />} />
+        <AuthProvider>
+            <CartProvider>
+                <BrowserRouter>
+                    <Routes>
+                        <Route path="/" element={<Navigate to="/login" replace />} />
+                        {/* Rutas públicas: solo accesibles sin sesión */}
+                        <Route element={<PublicRoute />}>
+                            <Route element={<LoginLayout/>}>
+                                <Route path="/login" element={<AuthPage />} />
+                            </Route>
+                        </Route>
+                        {/* Rutas internas: requieren sesión iniciada */}
+                        <Route element={<ProtectedRoute />}>
+                            <Route element={<MainLayout />}>
+                                <Route path="/inicio" element={<HomePage />} />
+                                <Route path="/comercio" element={<StorePage />} />
+                                <Route path="/pedido" element={<OrderReviewPage />} />
+                                <Route path="/notificaciones" element={<NotificationsPage />} />
+                                <Route path="/carrito" element={<CartPage />} />
+                                <Route path="/pagar" element={<CheckoutPage />} />
+                            </Route>
+                        </Route>
+                    </Routes>
+                </BrowserRouter>
+            </CartProvider>
+        </AuthProvider>
 
-                <Route element={<LoginLayout/>}>
-                    <Route path="/login" element={<AuthPage />} />
-                </Route>
-                <Route element={<MainLayout />}>
-                    <Route path="/inicio" element={<HomePage />} />
-                    <Route path="/comercio" element={<StorePage />} />
-                    <Route path="/pedido" element={<OrderReviewPage />} />
-                    <Route path="/notificaciones" element={<NotificationsPage />} />
-                    <Route path="/carrito" element={<CartPage />} />
-                    <Route path="/pagar" element={<CheckoutPage />} />
-                </Route>
-            </Routes>
-        </BrowserRouter>
-      </CartProvider>
     </StrictMode>,
 )
