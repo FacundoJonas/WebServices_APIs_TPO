@@ -6,7 +6,7 @@ import CategoryChips from "../components/HomePage/CategoryChips"
 import FilterBar from "../components/HomePage/FilterBar"
 import StoreCard from "../components/HomePage/StoreCard"
 import PrimeBanner from "../components/HomePage/PrimeBanner"
-import { obtenerUsuario } from "../servicies/authServicie.js"
+import { useAuth } from "../context/useAuth"
 import courierImage from "../assets/matias.png"
 
 /*
@@ -275,7 +275,7 @@ function HomePage() {
     /*
     * Datos del usuario logueado (se guardan al iniciar sesión).
     */
-    const usuario = obtenerUsuario()
+    const { usuario } = useAuth()
 
     const direccionPrincipal = usuario?.direcciones?.[0]
 

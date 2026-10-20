@@ -1,6 +1,6 @@
 import { Navigate, Outlet } from "react-router"
 
-import { obtenerToken } from "../servicies/authServicie.js"
+import { useAuth } from "../context/useAuth"
 
 /**
  * Rutas públicas (login / registro).
@@ -10,7 +10,7 @@ import { obtenerToken } from "../servicies/authServicie.js"
  */
 function PublicRoute() {
 
-    const token = obtenerToken()
+    const { token } = useAuth()
 
     if (token) {
         return <Navigate to="/inicio" replace />
