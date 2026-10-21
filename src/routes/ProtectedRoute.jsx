@@ -1,6 +1,7 @@
 import { Navigate, Outlet, useLocation } from "react-router"
 
-import { obtenerToken } from "../servicies/authServicie.js"
+import { useAuth } from "../context/useAuth"
+
 
 /**
  * Si el usuario no inició sesión, lo redirige a /login
@@ -13,7 +14,7 @@ function ProtectedRoute() {
 
     const location = useLocation()
 
-    const token = obtenerToken()
+    const { token } = useAuth()
 
     if (!token) {
         return <Navigate to="/login" replace state={{ from: location }} />
