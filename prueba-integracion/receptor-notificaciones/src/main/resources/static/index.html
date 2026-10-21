@@ -1,0 +1,152 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>DeliveryGo · Notificaciones</title>
+  <link rel="stylesheet" href="estilos.css">
+</head>
+<body>
+
+  <!-- ============ Encabezado: qué CT es y estado de los canales ============ -->
+  <header class="encabezado">
+    <div class="marca">
+      <span class="logo" aria-hidden="true">🔔</span>
+      <div>
+        <h1>DeliveryGo · Notificaciones</h1>
+        <p class="sub" id="info-receptor">Receptor · cargando…</p>
+      </div>
+    </div>
+
+    <div>
+      <div class="canales" id="canales" aria-label="Canales de entrega (simulación)"></div>
+      <p class="ayuda">Canales simulados: tocá uno para marcarlo caído u operativo.</p>
+    </div>
+  </header>
+
+  <!-- Mensajes de error / éxito -->
+  <div class="aviso" id="aviso" role="alert" hidden></div>
+
+  <main class="grilla">
+
+    <!-- ============ Formulario de plantilla ============ -->
+    <section class="panel" aria-labelledby="titulo-form">
+      <h2 id="titulo-form">Nueva plantilla</h2>
+
+      <form id="formulario" novalidate>
+        <label for="code">Código</label>
+        <input id="code" type="text" maxlength="50" placeholder="Ej: PROMO_JUEVES" autocomplete="off" required>
+
+        <label for="type">Tipo (el Portal lo usa para el ícono y los filtros)</label>
+        <select id="type">
+          <option value="PEDIDO">PEDIDO</option>
+          <option value="PROMOCION">PROMOCION</option>
+          <option value="SISTEMA">SISTEMA</option>
+        </select>
+
+        <label for="title">Título</label>
+        <input id="title" type="text" maxlength="100" placeholder="Ej: Pedido #{orderId} creado" required>
+
+        <label for="text">Texto</label>
+        <textarea id="text" maxlength="500" placeholder="Ej: Tu pedido #{orderId} por $ {total} fue creado." required></textarea>
+
+        <label for="action">Botón en el Portal (opcional)</label>
+        <input id="action" type="text" maxlength="40" placeholder="Ej: Ver pedido">
+
+        <label class="casilla" id="fila-activa" hidden>
+          <input id="active" type="checkbox" checked> Activa
+        </label>
+
+        <p class="ayuda" id="datos-detectados">Datos que va a exigir: ninguno.</p>
+
+        <div class="acciones-form">
+          <button type="submit" class="boton primario" id="boton-guardar">Crear plantilla</button>
+          <button type="button" class="boton secundario" id="boton-cancelar" hidden>Cancelar</button>
+        </div>
+        <p class="ayuda">Usá {clave} para los datos que manda el otro módulo. Editar una plantilla
+          no cambia las notificaciones ya enviadas.</p>
+      </form>
+    </section>
+
+    <!-- ============ Lista de plantillas ============ -->
+    <section class="panel" aria-labelledby="titulo-plantillas">
+      <h2 id="titulo-plantillas">Plantillas</h2>
+      <div class="tabla-contenedor">
+        <table>
+          <thead>
+            <tr>
+              <th scope="col">Código</th>
+              <th scope="col">Tipo</th>
+              <th scope="col">Título</th>
+              <th scope="col">Datos</th>
+              <th scope="col">Estado</th>
+              <th scope="col"><span class="oculto">Acciones</span></th>
+            </tr>
+          </thead>
+          <tbody id="lista-plantillas"></tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- ============ Notificaciones recibidas ============ -->
+    <section class="panel ancho-completo" aria-labelledby="titulo-notificaciones">
+      <div class="panel-titulo">
+        <h2 id="titulo-notificaciones">Notificaciones recibidas</h2>
+        <label class="interruptor">
+          <input type="checkbox" id="auto" checked>
+          Actualizar cada 5 s
+        </label>
+      </div>
+
+      <div class="tabla-contenedor">
+        <table>
+          <thead>
+            <tr>
+              <th scope="col">#</th>
+              <th scope="col">Hora</th>
+              <th scope="col">Destinatario</th>
+              <th scope="col">Plantilla</th>
+              <th scope="col">Mensaje</th>
+              <th scope="col">Estado (y reintento)</th>
+              <th scope="col">Intentos</th>
+              <th scope="col">Llegó desde</th>
+            </tr>
+          </thead>
+          <tbody id="lista-notificaciones"></tbody>
+        </table>
+      </div>
+      <p class="vacio" id="vacio">Todavía no llegó ninguna notificación.</p>
+    </section>
+
+    <!-- ============ Vista del Portal ============ -->
+    <section class="panel ancho-completo" aria-labelledby="titulo-portal">
+      <h2 id="titulo-portal">Vista del Portal</h2>
+      <p class="ayuda">Lo que recibe el Portal en <code>GET /api/v1/users/{id}/notifications</code>,
+        dibujado como su Centro de Notificaciones. En el login de prueba del Portal, el usuario
+        cliente@gmail.com tiene el id 2.</p>
+
+      <form class="buscador" id="form-portal">
+        <div>
+          <label for="usuario">Id de usuario</label>
+          <input id="usuario" type="text" value="2" maxlength="100" autocomplete="off">
+        </div>
+        <button type="submit" class="boton secundario">Ver como el Portal</button>
+      </form>
+
+      <div class="tarjetas" id="tarjetas"></div>
+      <p class="vacio" id="vacio-portal" hidden>Ese usuario no tiene notificaciones.</p>
+
+      <details>
+        <summary>JSON exacto que recibe el Portal</summary>
+        <pre id="json-portal">—</pre>
+      </details>
+    </section>
+  </main>
+
+  <footer class="pie">
+    Prueba de integración entre CTs · <a href="swagger-ui.html">Swagger</a> · <a href="api/v1/ping">Ping (JSON)</a>
+  </footer>
+
+  <script src="app.js"></script>
+</body>
+</html>

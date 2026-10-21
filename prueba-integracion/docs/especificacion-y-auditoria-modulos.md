@@ -103,7 +103,7 @@ Los módulos **no comparten código**: cada uno tiene sus propias clases, aunque
 
 ### 4.1 Responsabilidad
 
-Recibir solicitudes de notificación de otros módulos, validarlas (destinatario, canal y plantilla válida), armar el mensaje, guardarlas en **su propia base** y responder con lo que guardó. No envía emails reales: la notificación queda `ENVIADA` al registrarse.
+Recibir solicitudes de notificación de otros módulos, validarlas (destinatario, canal y plantilla válida), armar el mensaje, guardarlas en **su propia base** y responder con lo que guardó. Administra las **plantillas** (crear, editar, desactivar) y permite **reintentar** las entregas fallidas con un tope. No envía emails reales: la entrega se simula y sólo falla si el canal está marcado caído.
 
 ### 4.2 Configuración
 
@@ -113,7 +113,9 @@ Recibir solicitudes de notificación de otros módulos, validarlas (destinatario
 | `HOST` | `0.0.0.0` | Interfaz donde escucha |
 | `MODULO_NOMBRE` | `notificaciones` | Nombre en `/ping` (el emisor lo usa para confirmar que habla con el receptor) |
 | `CORS_ORIGENES` | `*` | Orígenes permitidos |
-| `DB_URL` / `DB_USUARIO` / `DB_CLAVE` | H2 `./datos/notificaciones` / `sa` / vacío | Base propia |
+| `DB_URL` / `DB_USUARIO` / `DB_CLAVE` | H2 `./datos/notificaciones-v2` / `sa` / vacío | Base propia (v2 desde que las plantillas son tabla) |
+| `MAX_INTENTOS` | `3` | Tope de intentos de entrega, contando el primero |
+| `CANALES_CAIDOS` | vacío | Canales que arrancan caídos (ej. `EMAIL`); se cambian en caliente con `PUT /api/v1/channels/{canal}` |
 | `SIMULAR_DEMORA_MS` | `0` | Demora artificial antes de procesar un `POST` |
 | `SIMULAR_FALLA_PORCENTAJE` | `0` | % de `POST` que responden `503 FALLA_SIMULADA` |
 | `H2_CONSOLA` / `H2_CONSOLA_REMOTA` | `false` / `false` | Consola web de H2 |
@@ -126,6 +128,11 @@ Recibir solicitudes de notificación de otros módulos, validarlas (destinatario
 | `GET` | `/api/v1/notifications/{id}` | — | `200` · `400` · `404 NOTIFICACION_INEXISTENTE` | `X-Correlation-Id` |
 | `GET` | `/api/v1/notifications` | — | `200` lista, más reciente primero | — |
 | `GET` | `/api/v1/users/{id}/notifications` | — | `200` lista del usuario, más reciente primero (vacía si no hay) | — |
+| `POST` | `/api/v1/notifications/{id}/retry` | — | `200` · `404` · `409 NOTIFICACION_YA_ENVIADA` · `422 REINTENTOS_AGOTADOS` | — |
+| `POST` | `/api/v1/templates` | `CrearPlantillaRequest` (`code`, `type`, `title`, `text`, `action`) | `201` · `400` · `409 PLANTILLA_DUPLICADA` | Salida: `Location` |
+| `GET` | `/api/v1/templates` · `/api/v1/templates/{code}` | — | `200` · `404 PLANTILLA_INEXISTENTE` (extensión) | — |
+| `PUT` | `/api/v1/templates/{code}` | `type`, `title`, `text`, `action`, `active` | `200` · `400` · `404` (extensión) | — |
+| `GET` · `PUT` | `/api/v1/channels` · `/api/v1/channels/{canal}` | `{ "available": bool }` | `200` · `400` (sólo simulación) | — |
 | `GET` | `/api/v1/ping` | — | `200 PingResponse` | — |
 
 ### 4.4 DTO de entrada: `CrearNotificacionRequest`
@@ -147,8 +154,13 @@ Recibir solicitudes de notificación de otros módulos, validarlas (destinatario
 | `recipientId` | string | `"u-42"` | Request |
 | `channel` | string | `"EMAIL"` | Request |
 | `template` | string | `"PEDIDO_CREADO"` | Request |
+| `type` | string | `"PEDIDO"` | Copiado de la plantilla (`PEDIDO`/`PROMOCION`/`SISTEMA`) |
+| `title` | string | `"Pedido #3 creado"` | Título de la plantilla, completado |
 | `message` | string | `"Tu pedido #3 por $ 19500 fue creado y está pendiente de pago."` | Armado con la plantilla |
-| `status` | string | `"ENVIADA"` | Siempre `ENVIADA` al registrarse |
+| `action` | string | `"Ver pedido"` | Texto del botón para el Portal (puede ser `null`) |
+| `status` | string | `"ENVIADA"` | `ENVIADA` o `FALLIDA` (canal caído) |
+| `attempts` | number | `1` | Intentos de entrega |
+| `failureReason` | string | `null` | Motivo del último intento fallido |
 | `sourceModule` | string | `"pedidos"` | Request |
 | `referenceId` | string | `"3"` | Request |
 | `correlationId` | string | `"prueba-2026..."` | Header de la petición |
@@ -161,28 +173,37 @@ Recibir solicitudes de notificación de otros módulos, validarlas (destinatario
 |---|---|---|
 | RN-N1 | Destinatario, canal y plantilla son obligatorios | `400 VALIDACION` |
 | RN-N2 | El canal debe ser `EMAIL`, `PUSH` o `INTERNA` | `400 VALIDACION` |
-| RN-N3 | La plantilla debe existir | `422 PLANTILLA_INVALIDA` (lista las válidas) |
+| RN-N3 | La plantilla debe existir y estar activa | `422 PLANTILLA_INVALIDA` (lista las activas) / `422 PLANTILLA_INACTIVA` |
 | RN-N4 | Deben venir los datos que requiere la plantilla | `422 DATOS_INCOMPLETOS` (lista los faltantes) |
 | RN-N5 | **Idempotencia:** si llega la misma `Idempotency-Key`, no se crea otra; se devuelve la existente | `200` en vez de `201` |
 | RN-N6 | Se registra la IP de origen y el `correlationId` (trazabilidad) | — |
+| RN-N7 | El título y el mensaje armados no superan 100 y 500 caracteres | `422 TITULO_DEMASIADO_LARGO` / `422 MENSAJE_DEMASIADO_LARGO` |
+| RN-N8 | **Reintentos limitados:** sólo se reintenta una `FALLIDA`, hasta `MAX_INTENTOS` | `409 NOTIFICACION_YA_ENVIADA` / `422 REINTENTOS_AGOTADOS` |
+| RN-N9 | Editar una plantilla no cambia las notificaciones ya creadas (se copian título y mensaje) | — |
+| RN-N10 | Una plantilla no se borra: se desactiva (el historial guarda su código) | — |
 
 **Orden de evaluación en `POST`:**
 1. Validación del DTO (400).
-2. Simulación de demora/falla.
-3. Idempotencia (200).
+2. Idempotencia (200). **Va antes de la simulación:** reintentar algo ya guardado no recibe una falla simulada.
+3. Simulación de demora/falla.
 4. Plantilla (422).
-5. Datos de la plantilla (422).
-6. Guardar (201).
+5. Datos de la plantilla y largo del mensaje (422).
+6. Entrega simulada por el canal (`ENVIADA` o `FALLIDA`).
+7. Guardar (201). Si otra petición con la misma clave se guardó en el mismo instante, se devuelve esa (200), no un 500.
 
 > Consecuencia: una petición repetida con la misma clave devuelve `200` **aunque** ahora traiga otra plantilla. La clave manda.
 
 ### 4.7 Plantillas
 
-| Plantilla | Datos requeridos | Texto |
-|---|---|---|
-| `PEDIDO_CREADO` | `orderId`, `total` | `Tu pedido #{orderId} por $ {total} fue creado y está pendiente de pago.` |
-| `PEDIDO_CONFIRMADO` | `orderId` | `Tu pedido #{orderId} fue confirmado. ¡Ya lo están preparando!` |
-| `PRUEBA_CONEXION` | — | `Mensaje de prueba de conexión entre máquinas virtuales.` |
+Son una tabla (`plantilla`) editable desde la página del receptor o la API. Los datos requeridos se deducen de los marcadores `{clave}` del título y del texto. Si la base está vacía, al arrancar se cargan:
+
+| Plantilla | Tipo | Título | Datos requeridos | Texto |
+|---|---|---|---|---|
+| `PEDIDO_CREADO` | `PEDIDO` | `Pedido #{orderId} creado` | `orderId`, `total` | `Tu pedido #{orderId} por $ {total} fue creado y está pendiente de pago.` |
+| `PEDIDO_CONFIRMADO` | `PEDIDO` | `Pedido #{orderId} confirmado` | `orderId` | `Tu pedido #{orderId} fue confirmado. ¡Ya lo están preparando!` |
+| `PRUEBA_CONEXION` | `SISTEMA` | `Prueba de conexión` | — | `Mensaje de prueba de conexión entre máquinas virtuales.` |
+
+Los números enteros se muestran sin decimales aunque lleguen como `7800.0`.
 
 ### 4.8 Persistencia (tabla `notificacion`)
 
@@ -191,15 +212,22 @@ Recibir solicitudes de notificación de otros módulos, validarlas (destinatario
 | `id` | bigint | PK, identity |
 | `destinatario_id` | varchar | not null |
 | `canal` | varchar (enum) | not null |
-| `plantilla` | varchar (enum) | not null |
+| `plantilla_codigo` | varchar(50) | not null |
+| `tipo` | varchar (enum) | — |
+| `titulo` | varchar(100) | — |
 | `mensaje` | varchar(500) | not null |
+| `accion` | varchar(40) | — |
 | `modulo_origen` | varchar | — |
 | `referencia_id` | varchar | — |
 | `clave_idempotencia` | varchar | **unique** |
 | `correlation_id` | varchar | — |
 | `ip_origen` | varchar | — |
 | `estado` | varchar (enum) | not null |
+| `intentos` | int | not null |
+| `motivo_falla` | varchar(300) | — |
 | `recibida_en` | timestamp | not null |
+
+Tabla `plantilla`: `id`, `codigo` (unique), `tipo`, `titulo`, `texto`, `accion`, `activa`, `actualizada_en`.
 
 ### 4.9 Errores propios
 
@@ -208,6 +236,12 @@ Recibir solicitudes de notificación de otros módulos, validarlas (destinatario
 | 404 | `NOTIFICACION_INEXISTENTE` | `GET /notifications/{id}` con id que no existe |
 | 422 | `PLANTILLA_INVALIDA` | RN-N3 |
 | 422 | `DATOS_INCOMPLETOS` | RN-N4 |
+| 422 | `PLANTILLA_INACTIVA` | RN-N3 |
+| 422 | `TITULO_DEMASIADO_LARGO` / `MENSAJE_DEMASIADO_LARGO` | RN-N7 |
+| 409 | `NOTIFICACION_YA_ENVIADA` | RN-N8 |
+| 422 | `REINTENTOS_AGOTADOS` | RN-N8 |
+| 409 | `PLANTILLA_DUPLICADA` | `POST /templates` con un código existente |
+| 404 | `PLANTILLA_INEXISTENTE` | `GET`/`PUT /templates/{code}` |
 | 503 | `FALLA_SIMULADA` | `SIMULAR_FALLA_PORCENTAJE` > 0 |
 
 ### 4.10 Logs que deja
@@ -478,15 +512,15 @@ La prueba es **de infraestructura**: implementa lo mínimo para validar la comun
 |---|---|---|
 | `POST /api/v1/notifications` | ✅ | ➕ Idempotencia con `Idempotency-Key` |
 | `GET /api/v1/notifications/{id}` | ✅ | — |
-| `POST /api/v1/notifications/{id}/retry` | ❌ | Reintentos limitados (regla de la consigna): no implementado |
+| `POST /api/v1/notifications/{id}/retry` | ✅ | Tope `MAX_INTENTOS` (3); la falla se provoca con un canal caído (simulación) |
 | `GET /api/v1/users/{id}/notifications` | ✅ | — |
-| `POST /api/v1/templates` | ❌ | Las plantillas son fijas (`enum`) |
-| `GET /api/v1/notifications`, `GET /ping` | ➕ | Para la prueba |
+| `POST /api/v1/templates` | ✅ | ➕ `GET` y `PUT` para editar/desactivar desde la página |
+| `GET /api/v1/notifications`, `GET /ping`, `/api/v1/channels` | ➕ | Para la prueba (canales: sólo simulación) |
 
 | Regla (consigna) | Prueba |
 |---|---|
 | Destinatario, canal y plantilla válida | ✅ (RN-N1 a RN-N4) |
-| Reintentos limitados | ❌ |
+| Reintentos limitados | ✅ Manuales (página o `POST /retry`); sin reintento automático |
 | No guardar contenido sensible | ✅ Sólo id, mensaje y datos técnicos |
 | "Usuarios para datos mínimos del destinatario" | ❌ No consulta a Usuarios |
 

@@ -61,6 +61,12 @@ public class NotificacionController {
         return NotificacionMapper.aResponse(service.buscarPorId(id));
     }
 
+    @Operation(summary = "Reintentar la entrega de una notificación FALLIDA (intentos limitados)")
+    @PostMapping("/notifications/{id}/retry")
+    public NotificacionResponse reintentar(@PathVariable Long id) {
+        return NotificacionMapper.aResponse(service.reintentar(id));
+    }
+
     @Operation(summary = "Listar todas las notificaciones recibidas (para la prueba)")
     @GetMapping("/notifications")
     public List<NotificacionResponse> listar() {

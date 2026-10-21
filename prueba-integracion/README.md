@@ -3,7 +3,7 @@
 > Branch: `feature/prueba-integracion-proxmox`
 > Objetivo: verificar que las máquinas virtuales Debian del Proxmox pueden **exponer una API Java** y **consumirse entre sí por la red**, y encontrar rápido qué está mal cuando no pueden.
 
-> 🖥️ **Página web:** el emisor sirve una página en `http://IP_EMISOR:8081/` para cargar pedidos como cliente, ver si llegaron al receptor y verificarlo leyendo la base del receptor.
+> 🖥️ **Páginas web:** el emisor (`http://IP_EMISOR:8081/`) carga pedidos como cliente y verifica que llegaron. El receptor (`http://IP_RECEPTOR:8082/`) es donde **se modifica**: plantillas, reintentos, canales caídos, y una *Vista del Portal* con el JSON exacto que consume el front.
 >
 > 🔎 **Especificación y auditoría** de cada módulo (para comparar con los módulos de los compañeros): [`docs/especificacion-y-auditoria-modulos.md`](docs/especificacion-y-auditoria-modulos.md)
 >
@@ -42,6 +42,8 @@ Respeta las reglas de la consigna:
 11. [Desarrollo local](#11-desarrollo-local)
 12. [Qué se verificó y qué no](#12-qué-se-verificó-y-qué-no)
 13. [Limitaciones](#13-limitaciones)
+14. [Cómo lo consume el Portal](#14-cómo-lo-consume-el-portal)
+15. [¿Hace falta un programa para controlar las PCs?](#15-hace-falta-un-programa-para-controlar-las-pcs)
 
 ---
 
@@ -205,6 +207,21 @@ Abrí `http://IP_VM1:8081/` en el navegador:
 - **Pedidos:** la lista se actualiza sola. Los `FALLIDA` tienen el botón *Reintentar*; los `ENVIADA`, *Verificar en receptor*, que muestra lo que guardó la otra CT.
 - **Estado del receptor:** la píldora de arriba a la derecha. Tocándola, ves el diagnóstico paso a paso.
 
+### Opción C2 - Página web del receptor (donde se modifica)
+
+Abrí `http://IP_VM2:8082/`:
+- **Canales** (arriba a la derecha): tocá `EMAIL` para marcarlo **caído**. Los pedidos nuevos del emisor llegan, pero quedan `FALLIDA` en el receptor. Volvé a ponerlo operativo y tocá **Reintentar** en la tabla.
+- **Plantillas:** creá una nueva (`POST /api/v1/templates`) o editá una existente. Los `{datos}` que exige se deducen del título y del texto. Editar no cambia el historial; desactivar hace que el emisor reciba `422 PLANTILLA_INACTIVA`.
+- **Notificaciones recibidas:** todo lo que llegó, de qué IP y con cuántos intentos.
+- **Vista del Portal:** id de usuario `2` = `cliente@gmail.com` del login de prueba del Portal. Muestra las tarjetas y el JSON exacto de `GET /api/v1/users/2/notifications`.
+
+**Recorrido para ver el efecto entre las dos PCs:**
+1. En el receptor, editá `PEDIDO_CREADO` (ej. cambiá el título).
+2. En el emisor, creá un pedido con cliente `2`.
+3. En el receptor, la *Vista del Portal* muestra el texto nuevo, llegado desde la IP del emisor.
+4. Poné `EMAIL` caído y repetí: el emisor dice que el receptor lo recibió, pero el receptor lo tiene `FALLIDA` → *Reintentar*.
+5. Desactivá `PEDIDO_CREADO` y creá otro pedido: el emisor lo muestra `FALLIDA` con `422 PLANTILLA_INACTIVA`. Reactivala y usá *Reintentar* en el emisor.
+
 ### Opción D - Swagger
 
 - `http://IP_VM1:8081/swagger-ui.html`
@@ -283,6 +300,7 @@ Para comprobar que el emisor maneja bien los problemas **sin romper nada a mano*
 |---|---|---|
 | `SIMULAR_DEMORA_MS` | `8000` | Supera el timeout de lectura (5 s): `TIMEOUT_LECTURA`, reintento → `504` |
 | `SIMULAR_FALLA_PORCENTAJE` | `50` | La mitad de las notificaciones responden `503 FALLA_SIMULADA` |
+| `CANALES_CAIDOS` | `EMAIL` | El receptor acepta (`201`) pero la notificación queda `FALLIDA` hasta reintentarla. También se cambia en caliente desde la página |
 
 Otras pruebas útiles:
 - `sudo systemctl stop deliverygo-receptor`: el emisor crea el pedido con la notificación `FALLIDA` (`CONEXION_RECHAZADA`).
@@ -337,7 +355,13 @@ Otras pruebas útiles:
 | `POST` | `/api/v1/notifications` | Recibe una solicitud de notificación | `201` nueva, `200` repetida (idempotencia), `400`, `422`, `503` simulado |
 | `GET` | `/api/v1/notifications/{id}` | Consulta una notificación | `200`, `404` |
 | `GET` | `/api/v1/notifications` | Lista todas (para la prueba) | `200` |
-| `GET` | `/api/v1/users/{id}/notifications` | Historial de un usuario | `200` |
+| `GET` | `/api/v1/users/{id}/notifications` | Historial de un usuario (lo que consume el Portal) | `200` |
+| `POST` | `/api/v1/notifications/{id}/retry` | **Obligatorio.** Reintenta la entrega de una `FALLIDA` (máximo `MAX_INTENTOS`) | `200`, `404`, `409` ya enviada, `422` reintentos agotados |
+| `POST` | `/api/v1/templates` | **Obligatorio.** Crea una plantilla | `201`, `400`, `409` código repetido |
+| `GET` | `/api/v1/templates` · `/api/v1/templates/{code}` | Lista / consulta plantillas (extensión) | `200`, `404` |
+| `PUT` | `/api/v1/templates/{code}` | Edita o desactiva (extensión; no hay DELETE porque el historial usa el código) | `200`, `400`, `404` |
+| `GET` · `PUT` | `/api/v1/channels` · `/api/v1/channels/{canal}` | **Sólo simulación:** canal operativo o caído | `200`, `400` |
+| `GET` | `/` | Página web del receptor | `200` |
 | `GET` | `/api/v1/ping` | Identifica la VM | `200` |
 
 **Request `POST /api/v1/notifications`** (lo que manda el emisor):
@@ -353,7 +377,25 @@ Otras pruebas útiles:
 ```
 - **Headers:** `X-Correlation-Id` (seguimiento) e `Idempotency-Key` (para que un reintento no duplique).
 - `channel`: `EMAIL` | `PUSH` | `INTERNA`.
-- `template`: `PEDIDO_CREADO` (requiere `orderId`, `total`) | `PEDIDO_CONFIRMADO` (requiere `orderId`) | `PRUEBA_CONEXION`.
+- `template`: código de una plantilla **activa**. Vienen cargadas `PEDIDO_CREADO` (requiere `orderId`, `total`), `PEDIDO_CONFIRMADO` (requiere `orderId`) y `PRUEBA_CONEXION`; se agregan con `POST /api/v1/templates`. Si no existe → `422 PLANTILLA_INVALIDA`; si está desactivada → `422 PLANTILLA_INACTIVA`; si faltan datos → `422 DATOS_INCOMPLETOS`; si el mensaje armado supera 500 caracteres → `422 MENSAJE_DEMASIADO_LARGO`.
+
+**Response `201`** (los campos `type`, `title`, `action`, `attempts` y `failureReason` son los que necesita el Portal):
+```json
+{
+  "id": 3, "recipientId": "2", "channel": "EMAIL", "template": "PEDIDO_CREADO",
+  "type": "PEDIDO", "title": "¡Recibimos tu pedido #2!",
+  "message": "Pedido #2 por $ 7800. Te avisamos cuando el comercio lo confirme.",
+  "action": "Ver pedido", "status": "ENVIADA", "attempts": 1, "failureReason": null,
+  "sourceModule": "pedidos", "referenceId": "2", "correlationId": "...",
+  "originIp": "10.89.50.12", "receivedAt": "2026-10-21T00:03:47Z"
+}
+```
+
+**Request `POST /api/v1/templates`:**
+```json
+{ "code": "PROMO_JUEVES", "type": "PROMOCION", "title": "{pct}% OFF",
+  "text": "Hoy {pct}% en {comercio}.", "action": "Pedir" }
+```
 
 ### Error normalizado (ambos módulos)
 
@@ -397,7 +439,9 @@ Se editan en `/etc/deliverygo/<modulo>.env`; los valores de ejemplo están en `d
 | `CORS_ORIGENES` | ambos | `*` | Orígenes permitidos para el Portal React |
 | `SIMULAR_DEMORA_MS` | receptor | `0` | Demora artificial (ms) |
 | `SIMULAR_FALLA_PORCENTAJE` | receptor | `0` | % de respuestas 503 a propósito |
-| `DB_URL` | ambos | H2 en archivo en `/var/lib/deliverygo/<modulo>/datos/` | Base propia del módulo |
+| `MAX_INTENTOS` | receptor | `3` | Tope de intentos de entrega, contando el primero |
+| `CANALES_CAIDOS` | receptor | vacío | Canales que arrancan caídos (ej. `EMAIL`). En memoria: al reiniciar vuelve a este valor |
+| `DB_URL` | ambos | H2 en archivo en `/var/lib/deliverygo/<modulo>/datos/` | Base propia del módulo. El receptor usa `notificaciones-v2` desde que las plantillas son una tabla; la base vieja queda al lado sin tocar |
 | `H2_CONSOLA` | ambos | `false` | Consola web de H2 en `/h2-console` |
 | `H2_CONSOLA_REMOTA` | ambos | `false` | Permite abrir la consola desde otra PC |
 
@@ -465,6 +509,8 @@ mvn test
 
 - `NotificacionesClientTest` (emisor): abre sockets reales para provocar **conexión rechazada**, **timeout de lectura** y **host desconocido**, y verifica que se clasifiquen bien.
 - `NotificacionControllerTest` (receptor): contrato HTTP completo (`201` y mensaje armado, idempotencia `201`→`200`, `422` normalizado, `400` de validación) con H2 en memoria.
+- `PlantillasYReintentosTest` (receptor): crear, usar, editar y desactivar plantillas; el historial no cambia al editar; canal caído → `FALLIDA` → reintento → `ENVIADA`; tope de reintentos; importes `7800.0` → `7800`; `data` largo → `422` (antes `500`); **dos POST simultáneos con la misma `Idempotency-Key`** → `201` + `200` y una sola fila (antes uno daba `500`; se comprobó que sin la corrección el test falla).
+- `FallaSimuladaTest` (receptor): con `SIMULAR_FALLA_PORCENTAJE=100`, la repetición de algo ya guardado devuelve `200` y no la falla simulada.
 
 ---
 
@@ -488,7 +534,10 @@ RECEPTOR_URL=http://localhost:8082 java -jar emisor-pedidos/target/emisor-pedido
 
 | Prueba | Resultado |
 |---|---|
-| `mvn package` con los 7 tests | ✅ BUILD SUCCESS |
+| `mvn package` con los 19 tests | ✅ BUILD SUCCESS |
+| **Dos contenedores con Java 17** (imagen `eclipse-temurin:17-jre`) en una red propia, IPs `10.89.50.11` (receptor) y `.12` (emisor): `probar-integracion.sh` completo | ✅ |
+| Entre esos dos contenedores: editar plantilla → pedido del emisor → texto nuevo en `GET /users/2/notifications`; canal caído → `FALLIDA` → reintento `ENVIADA`; plantilla desactivada → el emisor recibe `422` y queda `FALLIDA` → reactivar → reintento del emisor `ENVIADA`; datos conservados tras reiniciar | ✅ |
+| Página del receptor abierta en Chromium (sin pantalla): carga plantillas, canales, notificaciones y la *Vista del Portal*. Se corrigieron 2 defectos vistos en la captura (campos de edición visibles al crear, botón *Reintentar* oculto por el scroll) | ✅ |
 | Local: flujo completo, validación 400, JSON roto, 422, 404, idempotencia, persistencia tras reinicio | ✅ |
 | Local: receptor caído → pedido creado con notificación `FALLIDA` → reintento `503` → receptor arriba → reintento `ENVIADA` | ✅ |
 | Local: receptor lento (7 s) → `TIMEOUT_LECTURA`, reintento `504` | ✅ (este caso encontró y corrigió un bug de clasificación) |
@@ -500,7 +549,9 @@ RECEPTOR_URL=http://localhost:8082 java -jar emisor-pedidos/target/emisor-pedido
 
 **No verificado todavía** (requiere tus VMs reales):
 - **Proxmox real:** bridges, VLAN, Firewall de Proxmox. Los contenedores simulan la red, pero no esas capas.
-- **Debian 12:** el camino de `apt` con Java 17. El código compila con `release 17`, pero las pruebas corrieron en Java 21.
+- **Debian 12:** el camino de `apt` con Java 17. Java 17 ya se probó en contenedores, pero no la instalación con `instalar-debian.sh` sobre Debian 12.
+- **La versión nueva en las CTs 301 y 302:** hay que hacer `git pull` y volver a correr `instalar-debian.sh` en cada una.
+- **Clicks reales en la página:** se verificó que carga y dibuja; las acciones se probaron por API (las mismas rutas que usa la página), no con clicks.
 - **`ufw` activo:** el script lo contempla, pero no se probó con `ufw` encendido.
 
 ---
@@ -509,6 +560,44 @@ RECEPTOR_URL=http://localhost:8082 java -jar emisor-pedidos/target/emisor-pedido
 
 - **Sin autenticación JWT.** El emisor no manda `Authorization` y el receptor no lo exige. Se agrega cuando esté el Módulo Usuarios.
 - **Sin Catálogo:** el precio lo manda el cliente (`unitPrice`). En el sistema real lo confirma Catálogo.
-- **No se envían emails reales:** la notificación queda `ENVIADA` al registrarse.
+- **No se envían emails reales:** la entrega se simula; sólo falla si el canal está marcado caído.
+- **"ENVIADA" significa dos cosas distintas.** En el emisor: "el módulo Notificaciones la recibió". En el receptor: "se entregó al usuario". Con un canal caído el emisor muestra `ENVIADA` y el receptor `FALLIDA`. Conviene renombrar la del emisor (ej. `RECIBIDA`) cuando se acuerde el contrato.
+- **"Leída" no existe en el contrato del Equipo 6.** El Portal la maneja de su lado; si se quiere persistir hay que acordar un endpoint nuevo.
+- **Los reintentos del receptor son manuales** (página o `POST /retry`); no hay reintento automático programado.
 - **H2 es para pruebas.** Para la entrega conviene PostgreSQL o MySQL, cambiando `DB_URL` y el driver.
 - **Mocks declarados:** si se usa en el Demo Day, aclarar que es una prueba de infraestructura y no la integración final (la consigna pide declarar las integraciones simuladas).
+
+---
+
+## 14. Cómo lo consume el Portal
+
+El Portal (`src/` en `feature/facundo`) **no se modificó**. Hoy su Centro de Notificaciones usa datos fijos. Cuando se conecte, lo que tiene que leer es `GET /api/v1/users/{id}/notifications` del receptor, y el mapeo es:
+
+| Campo del receptor | Campo de la tarjeta del Portal (`NotificationCard`) | Nota |
+|---|---|---|
+| `type` (`PEDIDO`/`PROMOCION`/`SISTEMA`) | `type` (`order`/`promo`/`system`) e ícono | Traducción en el Portal |
+| `title` | `title` | Viene de la plantilla, ya completado |
+| `message` | `description` | |
+| `receivedAt` | `time` ("Hace 6 minutos") | El Portal lo formatea |
+| `status` | `badge` | |
+| `action` | `action.label` | El destino del botón lo decide el Portal |
+| — | `read` | **No existe en el contrato.** El Portal lo maneja localmente |
+
+Para que se vea en el Portal hacen falta, del lado del front y a cargo de quien mantenga `feature/facundo`: un servicio de notificaciones que llame a esa ruta con el id del usuario logueado (`id: 2` en el login de prueba), y la URL del receptor (o del gateway) en la configuración. El CORS del receptor ya acepta cualquier origen (`CORS_ORIGENES=*`).
+
+---
+
+## 15. ¿Hace falta un programa para controlar las PCs?
+
+**Para dos PCs, no.** Lo que hace falta ya existe:
+
+| Necesidad | Con qué se resuelve |
+|---|---|
+| Instalar, actualizar, arrancar y parar | `instalar-debian.sh` + `systemctl` (y la interfaz de Proxmox para la CT) |
+| ¿Se ven las dos máquinas? | `diagnostico-vm.sh` en cada CT y la píldora de estado de la página del emisor |
+| Prueba de punta a punta con evidencia | `probar-integracion.sh` (sale con código ≠ 0 si algo falla) |
+| Modificar datos y ver el efecto | Las dos páginas web |
+| Provocar fallas | `CANALES_CAIDOS` / botón de canal, `SIMULAR_*`, `systemctl stop` |
+| Seguir una operación entre máquinas | `X-Correlation-Id` + `journalctl ... \| grep <id>` |
+
+**Cuándo sí conviene programarlo:** cuando haya 4 o más módulos (uno por compañero) y quieras repetir los mismos escenarios contra todos y guardar la evidencia. Ahí aporta un inventario (CT, IP, puerto y responsable por módulo) y un menú que corra salud + escenarios y deje un log con fecha. Programarlo antes de tener esos módulos es invertir en algo que la consigna no evalúa.

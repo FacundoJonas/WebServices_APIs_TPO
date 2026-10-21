@@ -61,3 +61,32 @@ Idempotency-Key: clave-manual-1
 
 ### 11. Salud de cada servicio (Spring Actuator)
 GET {{receptor}}/actuator/health
+
+### 12. Plantillas: listar (las usa la página del receptor)
+GET {{receptor}}/api/v1/templates
+
+### 13. Plantillas: crear (obligatorio del Equipo 6). Repetirla -> 409
+POST {{receptor}}/api/v1/templates
+Content-Type: application/json
+
+{ "code": "PROMO_JUEVES", "type": "PROMOCION", "title": "{pct}% OFF",
+  "text": "Hoy {pct}% en {comercio}.", "action": "Pedir" }
+
+### 14. Usar la plantilla nueva
+POST {{receptor}}/api/v1/notifications
+Content-Type: application/json
+
+{ "recipientId": "2", "channel": "PUSH", "template": "PROMO_JUEVES",
+  "data": { "pct": 25, "comercio": "La Birra Bar" }, "sourceModule": "manual" }
+
+### 15. Simulación: marcar EMAIL como caído (después volver a true)
+PUT {{receptor}}/api/v1/channels/EMAIL
+Content-Type: application/json
+
+{ "available": false }
+
+### 16. Reintentar una notificación FALLIDA (cambiar el id). Tope: MAX_INTENTOS
+POST {{receptor}}/api/v1/notifications/1/retry
+
+### 17. Lo que consume el Portal (usuario 2 = cliente@gmail.com en el login de prueba)
+GET {{receptor}}/api/v1/users/2/notifications

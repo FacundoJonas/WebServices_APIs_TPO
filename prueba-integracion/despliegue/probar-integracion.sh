@@ -12,6 +12,8 @@
 #    4. Se verifica, preguntándole DIRECTAMENTE al receptor, que la
 #       notificación de ese pedido llegó (con el mismo correlationId).
 #    5. El error normalizado funciona (pedido inexistente -> 404).
+#    6. El receptor tiene activa la plantilla que usa el emisor y devuelve
+#       los campos que consume el Portal (type, title, action). No escribe nada.
 #
 #  Requiere: curl y python3. Devuelve 0 si todo salió bien.
 # =============================================================================
@@ -89,6 +91,11 @@ if curl -sf -m 5 "$RECEPTOR/api/v1/users/$USUARIO/notifications" -o "$TMP/notif.
       && ok "Mismo correlationId en ambas VMs ($CID)" \
       || falla "El correlationId no viajó entre las VMs"
     ok "El receptor vio la petición venir de $(json "$TMP/notif.json" 'd[0]["originIp"]') (debería ser la IP del emisor)"
+    if [[ -n "$(json "$TMP/notif.json" 'd[0]["type"] and d[0]["title"]')" ]]; then
+      ok "Trae los campos del Portal: type=$(json "$TMP/notif.json" 'd[0]["type"]'), title=\"$(json "$TMP/notif.json" 'd[0]["title"]')\""
+    else
+      falla "La notificación no trae type/title: ¿el receptor tiene la versión con plantillas?"
+    fi
   else
     falla "El receptor tiene $CANTIDAD notificaciones para $USUARIO (se esperaba 1)"
   fi
@@ -102,6 +109,16 @@ if [[ "$CODIGO" == "404" && "$(json "$TMP/err.json" 'd["code"]')" == "PEDIDO_INE
   ok "404 con {timestamp, status, code, message, path, correlationId}"
 else
   falla "Se esperaba 404 PEDIDO_INEXISTENTE y llegó HTTP $CODIGO: $(cat "$TMP/err.json")"
+fi
+
+echo; echo "6. Plantillas del receptor (sólo lectura)"
+CODIGO=$(curl -s -m 5 -o "$TMP/plantilla.json" -w '%{http_code}' "$RECEPTOR/api/v1/templates/PEDIDO_CREADO")
+if [[ "$CODIGO" == "200" && "$(json "$TMP/plantilla.json" 'd["active"]')" == "True" ]]; then
+  ok "PEDIDO_CREADO activa, exige: $(json "$TMP/plantilla.json" '", ".join(d["requiredData"])')"
+elif [[ "$CODIGO" == "200" ]]; then
+  falla "PEDIDO_CREADO está desactivada: el emisor va a recibir 422. Activala desde la página del receptor"
+else
+  falla "GET /api/v1/templates/PEDIDO_CREADO devolvió HTTP $CODIGO (¿receptor sin la versión con plantillas?)"
 fi
 
 echo
