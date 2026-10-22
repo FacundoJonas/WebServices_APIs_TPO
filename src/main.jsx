@@ -1,20 +1,23 @@
 import { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router'
+
 import './index.css'
-import MainLayout from './layouts/MainLayout'
-import AuthPage from './pages/AuthPage'
-import StorePage from './pages/StorePage'
-import OrderReviewPage from './pages/OrderReviewPage'
-import NotificationsPage from './pages/NotificationsPage'
-import HomePage from './pages/HomePage'
-import LoginLayout from "./layouts/LoginLayout.jsx";
-import CartPage from './pages/CartPage'
-import CheckoutPage from './pages/CheckoutPage'
-import { CartProvider } from './context/CartProvider'
-import ProtectedRoute from './routes/ProtectedRoute'
-import PublicRoute from './routes/PublicRoute'
-import {AuthProvider} from "./context/AuthProvider.jsx";
+
+import { CartProvider } from './context/CartProvider.jsx'
+import { AuthProvider } from "./context/AuthProvider.jsx"
+
+import AppLayout from './layouts/AppLayout.jsx'
+
+import AuthPage from './pages/AuthPage.jsx'
+import CartPage from './pages/CartPage.jsx'
+import HomePage from './pages/HomePage.jsx'
+import StorePage from './pages/StorePage.jsx'
+import PublicRoute from './routes/PublicRoute.jsx'
+import CheckoutPage from './pages/CheckoutPage.jsx'
+import ProtectedRoute from './routes/ProtectedRoute.jsx'
+import OrderReviewPage from './pages/OrderReviewPage.jsx'
+import NotificationsPage from './pages/NotificationsPage.jsx'
 
 createRoot(document.getElementById('root')).render(
     <StrictMode>
@@ -22,28 +25,25 @@ createRoot(document.getElementById('root')).render(
             <CartProvider>
                 <BrowserRouter>
                     <Routes>
-                        <Route path="/" element={<Navigate to="/login" replace />} />
-                        {/* Rutas públicas: solo accesibles sin sesión */}
-                        <Route element={<PublicRoute />}>
-                            <Route element={<LoginLayout/>}>
+                        <Route path="/" element={<Navigate to="/inicio" replace />} />
+
+                        <Route element={<AppLayout />}>
+                            <Route element={<PublicRoute />}>
                                 <Route path="/login" element={<AuthPage />} />
                             </Route>
-                        </Route>
-                        {/* Rutas internas: requieren sesión iniciada */}
-                        <Route element={<ProtectedRoute />}>
-                            <Route element={<MainLayout />}>
+
+                            <Route element={<ProtectedRoute />}>
                                 <Route path="/inicio" element={<HomePage />} />
                                 <Route path="/comercio" element={<StorePage />} />
-                                <Route path="/pedido" element={<OrderReviewPage />} />
-                                <Route path="/notificaciones" element={<NotificationsPage />} />
                                 <Route path="/carrito" element={<CartPage />} />
                                 <Route path="/pagar" element={<CheckoutPage />} />
+                                <Route path="/pedido" element={<OrderReviewPage />} />
+                                <Route path="/notificaciones" element={<NotificationsPage />} />
                             </Route>
                         </Route>
                     </Routes>
                 </BrowserRouter>
             </CartProvider>
         </AuthProvider>
-
-    </StrictMode>,
+    </StrictMode>
 )
