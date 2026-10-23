@@ -19,23 +19,38 @@ import ProtectedRoute from './routes/ProtectedRoute.jsx'
 import OrderReviewPage from './pages/OrderReviewPage.jsx'
 import NotificationsPage from './pages/NotificationsPage.jsx'
 
+/**
+ * Funcionalidad             |   Invitado   |   Autenticado   |
+ * Explorar comercios        |	    ✅      |       ✅        |
+ * Ver productos             |      ✅      |       ✅        |
+ * Agregar productos         |      ✅      |       ✅        |
+ * Modificar el carrito      |      ✅      |       ✅        |
+ * Iniciar el checkout	     |      🔐      |       ✅        |
+ * Crear y pagar un pedido	 |      🔐      |       ✅        |
+ * Consultar pedidos propios |      🔐      |       ✅        |
+ */
+
+
 createRoot(document.getElementById('root')).render(
     <StrictMode>
         <AuthProvider>
             <CartProvider>
                 <BrowserRouter>
                     <Routes>
-                        <Route path="/" element={<Navigate to="/inicio" replace />} />
-
                         <Route element={<AppLayout />}>
+                            <Route path="/" element={<Navigate to="/inicio" replace />} />
+
                             <Route element={<PublicRoute />}>
                                 <Route path="/login" element={<AuthPage />} />
                             </Route>
 
+                            {/* Rutas accesibles por todos */}
+                            <Route path="/inicio" element={<HomePage />} />
+                            <Route path="/comercio" element={<StorePage />} />
+                            <Route path="/carrito" element={<CartPage />} />
+
+                            {/* Rutas que requieren autenticación */}
                             <Route element={<ProtectedRoute />}>
-                                <Route path="/inicio" element={<HomePage />} />
-                                <Route path="/comercio" element={<StorePage />} />
-                                <Route path="/carrito" element={<CartPage />} />
                                 <Route path="/pagar" element={<CheckoutPage />} />
                                 <Route path="/pedido" element={<OrderReviewPage />} />
                                 <Route path="/notificaciones" element={<NotificationsPage />} />

@@ -51,26 +51,17 @@ function Footer() {
               MATERIA
             </span>
 
-            <a
-              href="#"
-              className="font-body-md text-body-md text-on-surface-variant hover:text-primary transition-colors"
-            >
+            <span className="font-body-md text-body-md text-on-surface-variant hover:text-primary transition-colors">
               Aplicaciones Interactivas
-            </a>
+            </span>
 
-            <a
-              href="#"
-              className="font-body-md text-body-md text-on-surface-variant hover:text-primary transition-colors"
-            >
+            <span className="font-body-md text-body-md text-on-surface-variant hover:text-primary transition-colors">
               2° Cuatrimestre 2026
-            </a>
+            </span>
 
-            <a
-              href="#"
-              className="font-body-md text-body-md text-on-surface-variant hover:text-primary transition-colors"
-            >
+            <span className="font-body-md text-body-md text-on-surface-variant hover:text-primary transition-colors">
               UADE - FAIN
-            </a>
+            </span>
           </div>
 
           {/* Enlaces legales */}
@@ -80,33 +71,21 @@ function Footer() {
               GRUPO 8
             </span>
 
-            <a
-              href="#"
-              className="font-body-md text-body-md text-on-surface-variant hover:text-primary transition-colors"
-            >
+            <span className="font-body-md text-body-md text-on-surface-variant hover:text-primary transition-colors">
               Szlukier Ezequiel
-            </a>
+            </span>
 
-            <a
-              href="#"
-              className="font-body-md text-body-md text-on-surface-variant hover:text-primary transition-colors"
-            >
+            <span className="font-body-md text-body-md text-on-surface-variant hover:text-primary transition-colors">
               Jonas Facundo
-            </a>
+            </span>
 
-            <a
-              href="#"
-              className="font-body-md text-body-md text-on-surface-variant hover:text-primary transition-colors"
-            >
+            <span className="font-body-md text-body-md text-on-surface-variant hover:text-primary transition-colors">
               Graeff Dieguez Nicolas
-            </a>
+            </span>
 
-            <a
-              href="#"
-              className="font-body-md text-body-md text-on-surface-variant hover:text-primary transition-colors"
-            >
+            <span className="font-body-md text-body-md text-on-surface-variant hover:text-primary transition-colors">
               Botta Guido
-            </a>
+            </span>
           </div>
 
           {/* Información sobre medios de pago */}
@@ -139,7 +118,7 @@ function Footer() {
           </div>
         </div>
 
-        {/* Información legal e institucional inferior */}
+        {/* Información institucional inferior */}
         <div className="pt-space-lg flex flex-col sm:flex-row items-center justify-between gap-space-md bg-surface-container-lowest text-center sm:text-left">
 
           <p className="font-caption-sm text-caption-sm text-on-surface-variant">
