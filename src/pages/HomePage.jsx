@@ -1,12 +1,14 @@
 import { useState } from "react"
 
-import WelcomeHeader from "../components/HomePage/WelcomeHeader"
-import ActiveOrderCard from "../components/HomePage/ActiveOrderCard"
-import CategoryChips from "../components/HomePage/CategoryChips"
-import FilterBar from "../components/HomePage/FilterBar"
-import StoreCard from "../components/HomePage/StoreCard"
-import PrimeBanner from "../components/HomePage/PrimeBanner"
 import { useAuth } from "../context/useAuth"
+
+import FilterBar from "../components/homePage/FilterBar.jsx"
+import StoreCard from "../components/homePage/StoreCard.jsx"
+import PrimeBanner from "../components/homePage/PrimeBanner.jsx"
+import WelcomeHeader from "../components/homePage/WelcomeHeader.jsx"
+import CategoryChips from "../components/homePage/CategoryChips.jsx"
+import ActiveOrderCard from "../components/homePage/ActiveOrderCard.jsx"
+
 import courierImage from "../assets/matias.png"
 
 /*
@@ -275,7 +277,7 @@ function HomePage() {
     /*
     * Datos del usuario logueado (se guardan al iniciar sesión).
     */
-    const { usuario } = useAuth()
+    const { token, usuario } = useAuth()
 
     const direccionPrincipal = usuario?.direcciones?.[0]
 
@@ -378,7 +380,7 @@ function HomePage() {
                 />
 
                 {/* Pedido en curso */}
-                <ActiveOrderCard order={activeOrder} />
+                {token && ( <ActiveOrderCard order={activeOrder} /> )}
 
                 {/* Categorías y filtros */}
                 <section className="space-y-space-md">
