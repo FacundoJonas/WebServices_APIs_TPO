@@ -29,10 +29,10 @@ function WelcomeHeader({ userName, address, onChangeAddress, coupon }) {
                     Entregas activas en tu zona
                 </div>
 
-                {/* Saludo */}
+                {/* Saludo según el usuario */}
                 <h1 className="font-display-hero text-display-hero text-on-surface tracking-tight">
 
-                    ¡Hola {userName}!{" "}
+                    {userName ? `¡Hola ${userName}!` : "¡Bienvenido a DeliveryGo!" }{" "}
 
                     <span className="text-on-surface-variant font-headline-lg font-normal">
                         ¿Qué vas a pedir hoy?

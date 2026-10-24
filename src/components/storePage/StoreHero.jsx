@@ -30,24 +30,6 @@ function StoreHero({ bannerImage, logoImage, favorite, onToggleFavorite }) {
         {/* Gradiente para mejorar la legibilidad sobre la imagen */}
         <div className="absolute inset-0 bg-gradient-to-t from-on-surface/90 via-on-surface/40 to-transparent" />
 
-        {/* Navegación de regreso */}
-        <div className="absolute top-4 left-4 z-10">
-
-          <a
-            href="#top"
-            className="flex items-center gap-space-xs px-space-sm py-space-xs rounded-full bg-surface-container-lowest/80 backdrop-blur-md text-on-surface font-body-md-medium shadow-sm hover:bg-surface-container-lowest transition-all"
-          >
-
-            <span className="material-symbols-outlined text-[18px]">
-              arrow_back
-            </span>
-
-            <span>
-              Volver a comercios
-            </span>
-          </a>
-        </div>
-
         {/* Acciones rápidas */}
         <div className="absolute top-4 right-4 z-10 flex items-center gap-space-xs">
 
