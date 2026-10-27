@@ -1,7 +1,6 @@
-import { useState } from "react"
-
+import { useEffect, useState } from "react"
 import { useAuth } from "../context/useAuth"
-
+import { obtenerComercios } from "../servicies/catalogoServicie.js"
 import FilterBar from "../components/homePage/FilterBar.jsx"
 import StoreCard from "../components/homePage/StoreCard.jsx"
 import PrimeBanner from "../components/homePage/PrimeBanner.jsx"
@@ -143,117 +142,6 @@ const compareStores = {
 }
 
 /*
- * Comercios cercanos.
- *
- * Cada comercio contiene:
- * - id, name, category, description
- * - rating: calificación promedio
- * - deliveryTime: { min, max } en minutos
- * - shippingCost: costo de envío (0 = gratis)
- * - isOpen / opensAt: estado de apertura
- * - image, path: imagen y ruta de destino
- */
-const stores = [
-    {
-        id: 1,
-        name: "La Birra Bar",
-        category: "burgers",
-        description: "Hamburguesas • Cervezas artesanales (1.240)",
-        rating: 4.8,
-        deliveryTime: { min: 25, max: 35 },
-        shippingCost: 850,
-        isOpen: true,
-        image: placeholderImage,
-        path: "/comercio",
-    },
-    {
-        id: 2,
-        name: "Pizzería Güerrín",
-        category: "pizza",
-        description: "Pizza clásica porteña • Fugazzeta (3.410)",
-        rating: 4.9,
-        deliveryTime: { min: 30, max: 40 },
-        shippingCost: 950,
-        isOpen: true,
-        image: placeholderImage,
-        path: "/comercio",
-    },
-    {
-        id: 3,
-        name: "Sushiclub Recoleta",
-        category: "sushi",
-        description: "Sushi & Fusión • Woks (890)",
-        rating: 4.7,
-        deliveryTime: { min: 40, max: 50 },
-        shippingCost: 0,
-        isOpen: true,
-        image: placeholderImage,
-        path: "/comercio",
-    },
-    {
-        id: 4,
-        name: "Green Eat Palermo",
-        category: "healthy",
-        description: "Bowls & Ensaladas • Wraps (530)",
-        rating: 4.6,
-        deliveryTime: { min: 20, max: 30 },
-        shippingCost: 750,
-        isOpen: true,
-        image: placeholderImage,
-        path: "/comercio",
-    },
-    {
-        id: 5,
-        name: "Rapanui Helados",
-        category: "desserts",
-        description: "Heladería artesanal • Chocolates (2.150)",
-        rating: 4.9,
-        deliveryTime: { min: 20, max: 30 },
-        shippingCost: 800,
-        isOpen: true,
-        image: placeholderImage,
-        path: "/comercio",
-    },
-    {
-        id: 6,
-        name: "Don Julio Parrilla",
-        category: "grill",
-        description: "Carnes y Asado argentino (4.800)",
-        rating: 4.9,
-        deliveryTime: { min: 50, max: 60 },
-        shippingCost: 1200,
-        isOpen: false,
-        opensAt: "20:00",
-        image: placeholderImage,
-        path: "/comercio",
-    },
-    {
-        id: 7,
-        name: "Kentucky Pizzería",
-        category: "pizza",
-        description: "Pizza al corte • Fainá • Empanadas (980)",
-        rating: 4.3,
-        deliveryTime: { min: 25, max: 35 },
-        shippingCost: 700,
-        isOpen: true,
-        image: placeholderImage,
-        path: "/comercio",
-    },
-    {
-        id: 8,
-        name: "El Techo Dulce",
-        category: "desserts",
-        description: "Postres & Bakery • Medialunas (420)",
-        rating: 4.7,
-        deliveryTime: { min: 30, max: 40 },
-        shippingCost: 850,
-        isOpen: true,
-        image: placeholderImage,
-        path: "/comercio",
-    },
-]
-
-/*
  * Información del plan Prime.
  */
 const primePlan = {
@@ -312,6 +200,54 @@ function HomePage() {
      * ids de los comercios marcados como favoritos.
      */
     const [favorites, setFavorites] = useState([])
+
+    /*
+     * Comercios que devuelve el Módulo Catálogo (GET /api/v1/catalog).
+     */
+    const [stores, setStores] = useState([])
+    const [loadingStores, setLoadingStores] = useState(true)
+    const [storesError, setStoresError] = useState("")
+
+    /*
+     * Aumenta cada vez que el usuario toca "Reintentar".
+     * Al cambiar, el useEffect vuelve a pedir los comercios.
+     */
+    const [retryCount, setRetryCount] = useState(0)
+
+    /*
+     * Pide los comercios al montar la página y en cada reintento.
+     *
+     * "ignore" evita actualizar el estado si la página se desmontó
+     * antes de que llegue la respuesta.
+     */
+    useEffect(() => {
+
+        let ignore = false
+
+        obtenerComercios()
+            .then((data) => {
+                if (!ignore) setStores(data)
+            })
+            .catch((error) => {
+                if (!ignore) setStoresError(error.message)
+            })
+            .finally(() => {
+                if (!ignore) setLoadingStores(false)
+            })
+
+        return () => {
+            ignore = true
+        }
+    }, [retryCount])
+
+    /**
+     * Vuelve a pedir los comercios después de un error.
+     */
+    function handleRetry() {
+        setStoresError("")
+        setLoadingStores(true)
+        setRetryCount((current) => current + 1)
+    }
 
     /**
      * Activa o desactiva un filtro rápido.
@@ -410,12 +346,55 @@ function HomePage() {
                             Comercios destacados cerca de vos
                         </h2>
 
-                        <span className="font-caption-bold text-caption-bold text-secondary">
-                            {visibleStores.length} disponibles en {direccionPrincipal?.barrio ?? "tu zona"}
-                        </span>
+                        {!loadingStores && !storesError && (
+                            <span className="font-caption-bold text-caption-bold text-secondary">
+                                {visibleStores.length} disponibles en {direccionPrincipal?.barrio ?? "tu zona"}
+                            </span>
+                        )}
                     </div>
 
-                    {visibleStores.length > 0 ? (
+                    {loadingStores ? (
+
+                        /* Cargando: tarjetas vacías mientras llega la respuesta */
+                        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-space-lg">
+
+                            {[1, 2, 3, 4].map((item) => (
+                                <div
+                                    key={item}
+                                    className="h-72 rounded-xl bg-surface-container-low animate-pulse"
+                                />
+                            ))}
+                        </div>
+
+                    ) : storesError ? (
+
+                        /* Error al consultar el Módulo Catálogo */
+                        <div
+                            role="alert"
+                            className="flex flex-col items-center text-center py-space-2xl rounded-xl bg-surface-container-lowest shadow-sm"
+                        >
+
+                            <span className="material-symbols-outlined text-[40px] text-error mb-space-xs">
+                                cloud_off
+                            </span>
+
+                            <p className="font-body-lg text-body-lg text-on-surface-variant mb-space-md">
+                                {storesError}
+                            </p>
+
+                            <button
+                                type="button"
+                                onClick={handleRetry}
+                                className="h-11 px-space-lg rounded-lg bg-primary-container hover:bg-surface-tint text-on-primary font-body-md-medium text-body-md-medium transition-colors flex items-center gap-2"
+                            >
+                                <span className="material-symbols-outlined text-[20px]">
+                                    refresh
+                                </span>
+                                Reintentar
+                            </button>
+                        </div>
+
+                    ) : visibleStores.length > 0 ? (
 
                         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-space-lg">
 
