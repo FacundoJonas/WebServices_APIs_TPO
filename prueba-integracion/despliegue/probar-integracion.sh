@@ -42,7 +42,14 @@ echo "Correlation-Id de esta prueba: $CID"
 
 echo; echo "1. Ping desde esta PC"
 for URL in "$EMISOR" "$RECEPTOR"; do
-  if curl -sf -m 5 "$URL/api/v1/ping" -o "$TMP/ping.json"; then
+  # Justo después de un systemctl restart, Spring Boot tarda ~15 s en atender: se espera hasta 30 s
+  RESPONDE=no
+  for INTENTO in $(seq 1 30); do
+    if curl -sf -m 5 "$URL/api/v1/ping" -o "$TMP/ping.json"; then RESPONDE=si; break; fi
+    [[ $INTENTO -eq 1 ]] && echo "  ...esperando a que $URL arranque (hasta 30 s)"
+    sleep 1
+  done
+  if [[ "$RESPONDE" == "si" ]]; then
     ok "$URL -> módulo $(json "$TMP/ping.json" 'd["module"]') en $(json "$TMP/ping.json" 'd["hostname"]') (me vio como $(json "$TMP/ping.json" 'd["clientIp"]'))"
   else
     falla "$URL no responde. Correr en esa VM: ./despliegue/diagnostico-vm.sh"

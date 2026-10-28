@@ -60,6 +60,14 @@ fi
 
 # ---------------------------------------------------------------- 2. JAR
 paso "Preparando el JAR de $MODULO"
+# Después de un git pull el JAR viejo queda en target/: si el código es más nuevo, se recompila.
+# REUSAR_JAR=1 lo evita (VM sin internet con el JAR copiado desde otra PC).
+if [[ -f "$JAR_ORIGEN" && "${REUSAR_JAR:-0}" != "1" ]] \
+   && [[ -n "$(find "$DIR_PROYECTO/$MODULO/src" "$DIR_PROYECTO/$MODULO/pom.xml" "$DIR_PROYECTO/pom.xml" \
+                 -newer "$JAR_ORIGEN" -print -quit 2>/dev/null)" ]]; then
+  echo "El código es más nuevo que $JAR_ORIGEN (¿hubo un git pull?): se vuelve a compilar."
+  rm -f "$JAR_ORIGEN"
+fi
 if [[ ! -f "$JAR_ORIGEN" ]]; then
   echo "No existe $JAR_ORIGEN: se compila con Maven."
   if ! command -v mvn >/dev/null 2>&1 || ! command -v javac >/dev/null 2>&1; then

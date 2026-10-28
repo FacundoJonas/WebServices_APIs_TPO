@@ -149,7 +149,16 @@ sudo nano /etc/deliverygo/emisor-pedidos.env      # RECEPTOR_URL=http://IP_DE_LA
 sudo systemctl restart deliverygo-emisor
 ```
 
-> **Sin internet en las VMs:** compilá en tu PC (`mvn clean package`) y copiá la carpeta con los JAR ya generados (`scp -r prueba-integracion usuario@IP:`). El script detecta el JAR en `target/` y no compila. Igual necesita `default-jre-headless` instalado.
+> **Sin internet en las VMs:** compilá en tu PC (`mvn clean package`) y copiá la carpeta con los JAR ya generados (`scp -r prueba-integracion usuario@IP:`). Instalá con `sudo REUSAR_JAR=1 ./despliegue/instalar-debian.sh <rol>` para que use el JAR de `target/` sin compilar. Igual necesita `default-jre-headless` instalado.
+
+### Actualizar una VM a una versión nueva de la branch
+
+```bash
+git -C ~/WebServices_APIs_TPO pull
+sudo ~/WebServices_APIs_TPO/prueba-integracion/despliegue/instalar-debian.sh receptor   # o emisor
+```
+
+El instalador detecta que el código es más nuevo que el JAR de `target/` y **recompila solo**. Antes del 27/10 reusaba el JAR viejo y la VM quedaba con la versión anterior aunque el `git pull` hubiera funcionado. El `.env` se conserva: si es la primera vez que se instala el emisor, revisá `RECEPTOR_URL`.
 
 ### Comandos del día a día
 
@@ -221,6 +230,16 @@ Abrí `http://IP_VM2:8082/`:
 3. En el receptor, la *Vista del Portal* muestra el texto nuevo, llegado desde la IP del emisor.
 4. Poné `EMAIL` caído y repetí: el emisor dice que el receptor lo recibió, pero el receptor lo tiene `FALLIDA` → *Reintentar*.
 5. Desactivá `PEDIDO_CREADO` y creá otro pedido: el emisor lo muestra `FALLIDA` con `422 PLANTILLA_INACTIVA`. Reactivala y usá *Reintentar* en el emisor.
+
+### Opción C3 - Ver las páginas desde fuera de la red (Tailscale + túnel SSH)
+
+Las CTs están en `vmbr1`, detrás de OPNsense, y el miniserver **no publica** la red `192.168.1.x` en Tailscale. Desde una PC que sólo está conectada por Tailscale se entra con un túnel SSH a través del miniserver:
+
+```bash
+ssh -N -L 8081:192.168.1.197:8081 -L 8082:192.168.1.114:8082 root@100.64.222.75
+```
+
+Con esa terminal abierta: **http://localhost:8081** (emisor, para hacer pedidos) y **http://localhost:8082** (receptor). Al cerrarla, el acceso se corta. Si el navegador no conecta, el miniserver no tiene IP en `192.168.1.x` (`ip -4 -br addr`) y hay que hacer el túnel por OPNsense o instalar Tailscale en la CT.
 
 ### Opción D - Swagger
 
@@ -546,11 +565,24 @@ RECEPTOR_URL=http://localhost:8082 java -jar emisor-pedidos/target/emisor-pedido
 | `diagnostico-vm.sh` detecta `RECEPTOR_URL` errónea y el receptor atado a `127.0.0.1` | ✅ (este caso encontró y corrigió un bug con el formato `[::ffff:127.0.0.1]`) |
 | Reinstalar es idempotente (conserva el `.env`) | ✅ |
 | `shellcheck` sin advertencias en los 3 scripts | ✅ |
+| **Proxmox real (27/10):** versión `3dd1c57` en la CT 301 (receptor, `192.168.1.114`) y la CT 302 (emisor, `192.168.1.197`), Debian 13 con Java 21. Receptor con la plantilla `PEDIDO_CREADO` activa; el receptor ve llegar al emisor desde `192.168.1.197`; páginas abiertas desde otra PC por Tailscale + túnel SSH | ✅ |
+
+**Despliegue del 27/10 en Proxmox, paso a paso** (para repetirlo o auditarlo):
+
+| # | Dónde | Qué se hizo | Por qué |
+|---|---|---|---|
+| 1 | PC | `git push` de `3dd1c57` a `feature/prueba-integracion-proxmox` | Las CTs se actualizan desde GitHub y el commit sólo estaba en la PC |
+| 2 | CT 302 y 301 | `git -C /root/WebServices_APIs_TPO pull` (`0db0e07..3dd1c57`) | El repo de cada CT está en `/root/WebServices_APIs_TPO`, no en la carpeta de inicio |
+| 3 | CT 302 y 301 | `rm -rf .../<modulo>/target` + `instalar-debian.sh emisor` / `receptor` | Forzar la recompilación (el instalador de entonces reusaba el JAR viejo; ya está corregido) |
+| 4 | CT 302 | `RECEPTOR_URL=http://192.168.1.114:8082` en `/etc/deliverygo/emisor-pedidos.env` + `systemctl restart deliverygo-emisor` | El `.env` se conserva entre instalaciones y no apuntaba al receptor |
+| 5 | CT 302 | `probar-integracion.sh http://192.168.1.197:8081 http://192.168.1.114:8082` | Receptor OK; el emisor dio `HTTP 000` porque la prueba corrió durante su arranque. Ahora el script espera hasta 30 s |
+| 6 | PC (Tailscale) | Túnel SSH por el miniserver (Opción C3) | La PC no está en la red `192.168.1.x` |
 
 **No verificado todavía** (requiere tus VMs reales):
 - **Proxmox real:** bridges, VLAN, Firewall de Proxmox. Los contenedores simulan la red, pero no esas capas.
 - **Debian 12:** el camino de `apt` con Java 17. Java 17 ya se probó en contenedores, pero no la instalación con `instalar-debian.sh` sobre Debian 12.
-- **La versión nueva en las CTs 301 y 302:** hay que hacer `git pull` y volver a correr `instalar-debian.sh` en cada una.
+- **`probar-integracion.sh` completo en verde en Proxmox:** el 27/10 la primera corrida falló en el emisor por el arranque; repetirla y guardar la salida como evidencia.
+- **IPs fijas:** las CTs siguen por DHCP; si cambian, hay que corregir `RECEPTOR_URL` y el túnel.
 - **Clicks reales en la página:** se verificó que carga y dibuja; las acciones se probaron por API (las mismas rutas que usa la página), no con clicks.
 - **`ufw` activo:** el script lo contempla, pero no se probó con `ufw` encendido.
 

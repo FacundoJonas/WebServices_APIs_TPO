@@ -393,7 +393,7 @@ Se corre **con sudo, dentro del repo clonado en la VM**. Hace, en orden:
 | Paso | Qué hace | Detalle |
 |---|---|---|
 | 1 | Java | Si no hay `java`, instala `default-jre-headless` (Java 17 en Debian 12, 21 en Debian 13). Corta si la versión es menor a 17 |
-| 2 | JAR | Si existe `<modulo>/target/<modulo>.jar` lo usa. Si no, instala `default-jdk-headless` y `maven` y **compila con el usuario dueño del repo** (no como root) |
+| 2 | JAR | Si existe `<modulo>/target/<modulo>.jar` y el código no es más nuevo que él, lo usa (con `REUSAR_JAR=1` lo usa siempre). Si no, instala `default-jdk-headless` y `maven` y **compila con el usuario dueño del repo** (no como root) |
 | 3 | Usuario | Crea el usuario de sistema `deliverygo` (sin login, sin home) |
 | 4 | Archivos | JAR en `/opt/deliverygo/<modulo>/`; carpeta de datos `/var/lib/deliverygo/<modulo>/` |
 | 5 | Configuración | Copia `<rol>.env.ejemplo` a `/etc/deliverygo/<modulo>.env` **sólo si no existe** (al reinstalar se conserva) |
@@ -930,8 +930,8 @@ sudo systemctl restart deliverygo-receptor
 
 # Actualizar a una versión nueva de la branch
 cd ~/WebServices_APIs_TPO && git pull
-cd prueba-integracion && rm -rf */target
-sudo ./despliegue/instalar-debian.sh receptor     # recompila y conserva el .env
+cd prueba-integracion
+sudo ./despliegue/instalar-debian.sh receptor     # recompila si el código cambió y conserva el .env
 
 # Ver los datos guardados
 curl -s localhost:8082/api/v1/notifications | python3 -m json.tool
@@ -1026,6 +1026,7 @@ La consigna pide "Colección de pruebas o evidencia", "Registro de integraciones
 | `diagnostico-vm.sh` detecta `RECEPTOR_URL` errónea y el servicio en `127.0.0.1` | ✅ (encontró y corrigió un bug con `[::ffff:127.0.0.1]`) |
 | Reinstalación idempotente | ✅ |
 | `shellcheck` sin advertencias | ✅ |
+| Proxmox real (27/10): CT 301 receptor y CT 302 emisor con la versión `3dd1c57`, páginas accesibles por Tailscale + túnel SSH. Detalle en la sección 12 del `README.md` | ✅ |
 
 **No verificado (requiere tu Proxmox):**
 - Bridges, VLAN tags y el **Firewall de Proxmox** reales.
