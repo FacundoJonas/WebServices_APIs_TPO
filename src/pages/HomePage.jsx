@@ -1,12 +1,12 @@
 import { useEffect, useState } from "react"
 import { useAuth } from "../context/useAuth"
 import { obtenerComercios } from "../servicies/catalogoServicie.js"
-import FilterBar from "../components/homePage/FilterBar.jsx"
-import StoreCard from "../components/homePage/StoreCard.jsx"
-import PrimeBanner from "../components/homePage/PrimeBanner.jsx"
-import WelcomeHeader from "../components/homePage/WelcomeHeader.jsx"
-import CategoryChips from "../components/homePage/CategoryChips.jsx"
-import ActiveOrderCard from "../components/homePage/ActiveOrderCard.jsx"
+import FilterBar from "../components/HomePage/FilterBar.jsx"
+import StoreCard from "../components/HomePage/StoreCard.jsx"
+import PrimeBanner from "../components/HomePage/PrimeBanner.jsx"
+import WelcomeHeader from "../components/HomePage/WelcomeHeader.jsx"
+import CategoryChips from "../components/HomePage/CategoryChips.jsx"
+import ActiveOrderCard from "../components/HomePage/ActiveOrderCard.jsx"
 
 import courierImage from "../assets/matias.png"
 
