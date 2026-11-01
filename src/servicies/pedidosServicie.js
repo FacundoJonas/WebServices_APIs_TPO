@@ -5,7 +5,8 @@ import { crearPedidoMock, aplicarCuponMock } from './mocks/pedidosMock';
 const API = `${BASE_URL}/pedidos`;
 
 // Cambiar a false cuando el Módulo Pedidos esté disponible
-const USE_MOCK = true;
+const USE_MOCK = false;
+// Se puso en false el 31/10/26 para empezar a conecetar con el modulo de pedidos
 
 function headers() {
     return {
