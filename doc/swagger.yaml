@@ -1,0 +1,1052 @@
+openapi: 3.0.3
+info:
+  title: DeliveryGo · Equipo 8 · Portal Web Integrador — Contratos consumidos
+  version: 1.0.0
+  description: |
+    **Equipo 8 — Portal Web Integrador (Frontend).**
+    Integrantes: Graeff Nicolás, Botta Guido, Jonas Facundo, Szlukier Ezequiel.
+
+    Según el enunciado (sección 4.8), el Portal **no implementa lógica de negocio
+    propia ni expone APIs**: consume los contratos publicados por los siete
+    servicios. Este documento reúne esos contratos tal como los usa el Portal,
+    ordenados por los casos de uso del backlog (CU-01 a CU-10).
+
+    | CU | Caso de uso | Prioridad | Módulos |
+    |---|---|---|---|
+    | CU-01 | Registrarse e iniciar sesión | CORE | Usuarios (Eq. 1) |
+    | CU-02 | Explorar comercios y catálogo | CORE | Catálogo (Eq. 2) |
+    | CU-03 | Gestionar carrito y confirmar compra | CORE | Catálogo, Pedidos (Eq. 3) |
+    | CU-04 | Realizar pago | CORE | Pagos (Eq. 4) |
+    | CU-05 | Seguir estado del pedido y la entrega | CORE | Pedidos, Logística (Eq. 5) |
+    | CU-06 | Consultar o modificar perfil y direcciones | Evolución | Usuarios |
+    | CU-07 | Consultar historial de pedidos | Evolución | Pedidos |
+    | CU-08 | Visualizar notificaciones | Evolución | Notificaciones (Eq. 6) |
+    | CU-09 | Calificar comercio y repartidor | Evolución | Opiniones y Analítica (Eq. 7) |
+    | CU-10 | Visualizar métricas administrativas | Evolución | Opiniones y Analítica |
+
+    **Origen de cada endpoint** (extensión `x-contrato`):
+    - `obligatorio`: figura en las "APIs obligatorias" del módulo dueño en el enunciado.
+    - `propuesto`: el módulo dueño tiene el caso de uso, pero el enunciado no fija la ruta.
+      Es la ruta que propone el Portal y está pendiente de acordar con ese equipo.
+
+    **Convenciones comunes (sección 6 del enunciado):** base `/api/v1`, JSON UTF-8,
+    fechas ISO-8601, paginación `page`/`size`/`sort`, autenticación Bearer JWT,
+    header `X-Correlation-Id` recomendado y formato de error normalizado (`ErrorResponse`).
+
+    El Portal debe manejar loading, vacío, validaciones, errores 4xx/5xx y fallas
+    parciales con mensajes comprensibles (RN-11).
+  contact:
+    name: Equipo 8 — Portal Web Integrador
+servers:
+  - url: http://localhost:8080
+    description: Entorno local (cada módulo o gateway; configurable con variables VITE_*)
+
+tags:
+  - name: CU-01 Registro e inicio de sesión
+    description: Módulo Usuarios y Autenticación (Equipo 1)
+  - name: CU-02 Catálogo
+    description: Módulo Comercios y Catálogo (Equipo 2)
+  - name: CU-03 Carrito y compra
+    description: Módulo Pedidos (Equipo 3)
+  - name: CU-04 Pago
+    description: Módulo Pagos (Equipo 4)
+  - name: CU-05 Seguimiento
+    description: Módulos Pedidos (Equipo 3) y Logística (Equipo 5)
+  - name: CU-06 Perfil y direcciones
+    description: Módulo Usuarios y Autenticación (Equipo 1)
+  - name: CU-07 Historial de pedidos
+    description: Módulo Pedidos (Equipo 3)
+  - name: CU-08 Notificaciones
+    description: Módulo Notificaciones (Equipo 6)
+  - name: CU-09 Calificaciones
+    description: Módulo Opiniones y Analítica (Equipo 7)
+  - name: CU-10 Métricas administrativas
+    description: Módulo Opiniones y Analítica (Equipo 7)
+
+security:
+  - bearerAuth: []
+
+paths:
+
+  # ───────────── CU-01 · Registrarse e iniciar sesión ─────────────
+
+  /api/v1/auth/register:
+    post:
+      tags: [CU-01 Registro e inicio de sesión]
+      operationId: registrarUsuario
+      summary: Registrar un usuario nuevo
+      x-contrato: obligatorio
+      x-modulo: Usuarios (Equipo 1)
+      security: []
+      parameters:
+        - $ref: '#/components/parameters/CorrelationId'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: { $ref: '#/components/schemas/RegisterRequest' }
+      responses:
+        '201':
+          description: Usuario creado
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/UserResponse' }
+        '400': { $ref: '#/components/responses/BadRequest' }
+        '409':
+          description: El email ya está registrado (email único)
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/ErrorResponse' }
+
+  /api/v1/auth/login:
+    post:
+      tags: [CU-01 Registro e inicio de sesión]
+      operationId: iniciarSesion
+      summary: Iniciar sesión y obtener el JWT
+      description: El token identifica al usuario y sus roles. El Portal lo guarda en sessionStorage.
+      x-contrato: obligatorio
+      x-modulo: Usuarios (Equipo 1)
+      security: []
+      parameters:
+        - $ref: '#/components/parameters/CorrelationId'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: { $ref: '#/components/schemas/LoginRequest' }
+      responses:
+        '200':
+          description: Credenciales válidas
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/LoginResponse' }
+        '400': { $ref: '#/components/responses/BadRequest' }
+        '401':
+          description: Credenciales incorrectas o usuario inactivo
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/ErrorResponse' }
+
+  # ───────────── CU-01 / CU-06 · Perfil y direcciones ─────────────
+
+  /api/v1/users/{id}:
+    parameters:
+      - $ref: '#/components/parameters/UserId'
+      - $ref: '#/components/parameters/CorrelationId'
+    get:
+      tags: [CU-06 Perfil y direcciones]
+      operationId: obtenerUsuario
+      summary: Consultar perfil del usuario
+      description: También se usa en CU-01, después del login, para cargar nombre y direcciones.
+      x-contrato: obligatorio
+      x-modulo: Usuarios (Equipo 1)
+      responses:
+        '200':
+          description: Usuario encontrado
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/UserResponse' }
+        '401': { $ref: '#/components/responses/Unauthorized' }
+        '403': { $ref: '#/components/responses/Forbidden' }
+        '404': { $ref: '#/components/responses/NotFound' }
+    put:
+      tags: [CU-06 Perfil y direcciones]
+      operationId: modificarUsuario
+      summary: Modificar datos del perfil
+      x-contrato: obligatorio
+      x-modulo: Usuarios (Equipo 1)
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: { $ref: '#/components/schemas/UpdateUserRequest' }
+      responses:
+        '200':
+          description: Perfil actualizado
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/UserResponse' }
+        '400': { $ref: '#/components/responses/BadRequest' }
+        '401': { $ref: '#/components/responses/Unauthorized' }
+        '403': { $ref: '#/components/responses/Forbidden' }
+        '409':
+          description: El email ya está en uso
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/ErrorResponse' }
+
+  /api/v1/users/{id}/addresses:
+    post:
+      tags: [CU-06 Perfil y direcciones]
+      operationId: agregarDireccion
+      summary: Agregar una dirección de entrega
+      x-contrato: obligatorio
+      x-modulo: Usuarios (Equipo 1)
+      parameters:
+        - $ref: '#/components/parameters/UserId'
+        - $ref: '#/components/parameters/CorrelationId'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: { $ref: '#/components/schemas/AddressRequest' }
+      responses:
+        '201':
+          description: Dirección creada
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/Address' }
+        '400': { $ref: '#/components/responses/BadRequest' }
+        '401': { $ref: '#/components/responses/Unauthorized' }
+        '403': { $ref: '#/components/responses/Forbidden' }
+
+  # ───────────── CU-02 · Explorar comercios y catálogo ─────────────
+
+  /api/v1/catalog:
+    get:
+      tags: [CU-02 Catálogo]
+      operationId: buscarCatalogo
+      summary: Buscar comercios y productos disponibles
+      description: |
+        Pantalla de inicio. Es pública: el token se envía solo si hay sesión.
+        Cada producto informa el precio vigente y su disponibilidad.
+      x-contrato: obligatorio
+      x-modulo: Comercios y Catálogo (Equipo 2)
+      security: [{}, { bearerAuth: [] }]
+      parameters:
+        - $ref: '#/components/parameters/CorrelationId'
+        - name: q
+          in: query
+          description: Texto a buscar en comercios y productos
+          schema: { type: string }
+        - name: category
+          in: query
+          description: Rubro del comercio (filtro de la Home)
+          schema: { type: string, example: burgers }
+        - $ref: '#/components/parameters/Page'
+        - $ref: '#/components/parameters/Size'
+        - $ref: '#/components/parameters/Sort'
+      responses:
+        '200':
+          description: Página de comercios con sus productos
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/MerchantPage' }
+        '400': { $ref: '#/components/responses/BadRequest' }
+
+  /api/v1/products/{id}:
+    get:
+      tags: [CU-02 Catálogo]
+      operationId: obtenerProducto
+      summary: Consultar detalle de un producto
+      x-contrato: obligatorio
+      x-modulo: Comercios y Catálogo (Equipo 2)
+      security: [{}, { bearerAuth: [] }]
+      parameters:
+        - $ref: '#/components/parameters/Id'
+        - $ref: '#/components/parameters/CorrelationId'
+      responses:
+        '200':
+          description: Producto encontrado
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/Product' }
+        '404': { $ref: '#/components/responses/NotFound' }
+
+  # ───────────── CU-03 · Gestionar carrito y confirmar compra ─────────────
+
+  /api/v1/orders:
+    post:
+      tags: [CU-03 Carrito y compra]
+      operationId: crearPedido
+      summary: Crear el pedido a partir del carrito
+      description: |
+        El carrito vive en el Portal (estado local). Al confirmar la compra se crea el
+        pedido en estado DRAFT. Pedidos valida usuario, catálogo, precios y que todos
+        los productos sean del mismo comercio.
+      x-contrato: obligatorio
+      x-modulo: Pedidos (Equipo 3)
+      parameters:
+        - $ref: '#/components/parameters/CorrelationId'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: { $ref: '#/components/schemas/CreateOrderRequest' }
+      responses:
+        '201':
+          description: Pedido creado
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/OrderResponse' }
+        '400': { $ref: '#/components/responses/BadRequest' }
+        '401': { $ref: '#/components/responses/Unauthorized' }
+        '422':
+          description: Producto sin disponibilidad, precio modificado o productos de distintos comercios
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/ErrorResponse' }
+    get:
+      tags: [CU-07 Historial de pedidos]
+      operationId: listarPedidosDeUsuario
+      summary: Listar los pedidos de un usuario
+      description: El enunciado incluye "listar pedidos" en Pedidos, pero no fija la ruta.
+      x-contrato: propuesto
+      x-modulo: Pedidos (Equipo 3)
+      parameters:
+        - $ref: '#/components/parameters/CorrelationId'
+        - name: userId
+          in: query
+          required: true
+          schema: { type: integer, format: int64 }
+        - name: status
+          in: query
+          schema: { $ref: '#/components/schemas/OrderStatus' }
+        - $ref: '#/components/parameters/Page'
+        - $ref: '#/components/parameters/Size'
+        - $ref: '#/components/parameters/Sort'
+      responses:
+        '200':
+          description: Página de pedidos del usuario
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/OrderPage' }
+        '401': { $ref: '#/components/responses/Unauthorized' }
+        '403': { $ref: '#/components/responses/Forbidden' }
+
+  /api/v1/orders/{id}/items:
+    post:
+      tags: [CU-03 Carrito y compra]
+      operationId: agregarItemsAPedido
+      summary: Agregar ítems a un pedido en borrador
+      x-contrato: obligatorio
+      x-modulo: Pedidos (Equipo 3)
+      parameters:
+        - $ref: '#/components/parameters/Id'
+        - $ref: '#/components/parameters/CorrelationId'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: array
+              minItems: 1
+              items: { $ref: '#/components/schemas/OrderItemRequest' }
+      responses:
+        '200':
+          description: Pedido actualizado con el nuevo total
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/OrderResponse' }
+        '404': { $ref: '#/components/responses/NotFound' }
+        '409': { $ref: '#/components/responses/InvalidState' }
+        '422': { $ref: '#/components/responses/BusinessRule' }
+
+  /api/v1/orders/{id}/confirm:
+    post:
+      tags: [CU-03 Carrito y compra]
+      operationId: confirmarPedido
+      summary: Confirmar el pedido
+      description: Solo avanza si el pago fue aprobado (regla del módulo Pagos).
+      x-contrato: obligatorio
+      x-modulo: Pedidos (Equipo 3)
+      parameters:
+        - $ref: '#/components/parameters/Id'
+        - $ref: '#/components/parameters/CorrelationId'
+      responses:
+        '200':
+          description: Pedido confirmado
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/OrderResponse' }
+        '404': { $ref: '#/components/responses/NotFound' }
+        '409': { $ref: '#/components/responses/InvalidState' }
+        '422': { $ref: '#/components/responses/BusinessRule' }
+
+  # ───────────── CU-04 · Realizar pago ─────────────
+
+  /api/v1/payments:
+    post:
+      tags: [CU-04 Pago]
+      operationId: iniciarPago
+      summary: Iniciar el pago simulado del pedido
+      description: |
+        El importe debe coincidir con el total del pedido. El Portal envía una
+        `Idempotency-Key` por intento: si reintenta con la misma clave (por ejemplo,
+        ante un timeout) el pago no se duplica.
+      x-contrato: obligatorio
+      x-modulo: Pagos (Equipo 4)
+      parameters:
+        - $ref: '#/components/parameters/CorrelationId'
+        - name: Idempotency-Key
+          in: header
+          required: true
+          schema: { type: string, format: uuid }
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: { $ref: '#/components/schemas/PaymentRequest' }
+      responses:
+        '201':
+          description: Pago registrado (APROBADO o RECHAZADO)
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/PaymentResponse' }
+        '400': { $ref: '#/components/responses/BadRequest' }
+        '401': { $ref: '#/components/responses/Unauthorized' }
+        '422':
+          description: El importe no coincide con el pedido
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/ErrorResponse' }
+        '500': { $ref: '#/components/responses/ServerError' }
+
+  /api/v1/payments/{id}:
+    get:
+      tags: [CU-04 Pago]
+      operationId: consultarPago
+      summary: Consultar el estado de un pago
+      x-contrato: obligatorio
+      x-modulo: Pagos (Equipo 4)
+      parameters:
+        - $ref: '#/components/parameters/Id'
+        - $ref: '#/components/parameters/CorrelationId'
+      responses:
+        '200':
+          description: Pago encontrado
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/PaymentResponse' }
+        '404': { $ref: '#/components/responses/NotFound' }
+
+  # ───────────── CU-05 · Seguir estado del pedido y la entrega ─────────────
+
+  /api/v1/orders/{id}:
+    get:
+      tags: [CU-05 Seguimiento]
+      operationId: consultarPedido
+      summary: Consultar el pedido y su estado actual
+      description: La pantalla de seguimiento lo consulta por polling cada N segundos hasta ENTREGADO o CANCELADO.
+      x-contrato: obligatorio
+      x-modulo: Pedidos (Equipo 3)
+      parameters:
+        - $ref: '#/components/parameters/Id'
+        - $ref: '#/components/parameters/CorrelationId'
+      responses:
+        '200':
+          description: Pedido encontrado
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/OrderResponse' }
+        '401': { $ref: '#/components/responses/Unauthorized' }
+        '403': { $ref: '#/components/responses/Forbidden' }
+        '404': { $ref: '#/components/responses/NotFound' }
+
+  /api/v1/orders/{id}/cancel:
+    post:
+      tags: [CU-05 Seguimiento]
+      operationId: cancelarPedido
+      summary: Cancelar el pedido (solo en estado permitido)
+      x-contrato: obligatorio
+      x-modulo: Pedidos (Equipo 3)
+      parameters:
+        - $ref: '#/components/parameters/Id'
+        - $ref: '#/components/parameters/CorrelationId'
+      responses:
+        '200':
+          description: Pedido cancelado
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/OrderResponse' }
+        '404': { $ref: '#/components/responses/NotFound' }
+        '409': { $ref: '#/components/responses/InvalidState' }
+
+  /api/v1/orders/{id}/delivery:
+    get:
+      tags: [CU-05 Seguimiento]
+      operationId: consultarSeguimientoEntrega
+      summary: Consultar el seguimiento de la entrega de un pedido
+      description: |
+        Logística tiene el caso "consultar seguimiento", pero el enunciado no fija la ruta.
+        Se propone consultar la entrega por id de pedido, que es el dato que tiene el Portal.
+      x-contrato: propuesto
+      x-modulo: Logística (Equipo 5)
+      parameters:
+        - $ref: '#/components/parameters/Id'
+        - $ref: '#/components/parameters/CorrelationId'
+      responses:
+        '200':
+          description: Estado de la entrega y datos del repartidor
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/DeliveryResponse' }
+        '404':
+          description: El pedido todavía no tiene una entrega asignada
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/ErrorResponse' }
+
+  # ───────────── CU-08 · Visualizar notificaciones ─────────────
+
+  /api/v1/users/{id}/notifications:
+    get:
+      tags: [CU-08 Notificaciones]
+      operationId: listarNotificacionesDeUsuario
+      summary: Historial de notificaciones del usuario
+      x-contrato: obligatorio
+      x-modulo: Notificaciones (Equipo 6)
+      parameters:
+        - $ref: '#/components/parameters/UserId'
+        - $ref: '#/components/parameters/CorrelationId'
+        - $ref: '#/components/parameters/Page'
+        - $ref: '#/components/parameters/Size'
+        - $ref: '#/components/parameters/Sort'
+      responses:
+        '200':
+          description: Página de notificaciones
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/NotificationPage' }
+        '401': { $ref: '#/components/responses/Unauthorized' }
+        '403': { $ref: '#/components/responses/Forbidden' }
+
+  /api/v1/notifications/{id}:
+    get:
+      tags: [CU-08 Notificaciones]
+      operationId: obtenerNotificacion
+      summary: Consultar una notificación y su estado de envío
+      x-contrato: obligatorio
+      x-modulo: Notificaciones (Equipo 6)
+      parameters:
+        - $ref: '#/components/parameters/Id'
+        - $ref: '#/components/parameters/CorrelationId'
+      responses:
+        '200':
+          description: Notificación encontrada
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/NotificationResponse' }
+        '404': { $ref: '#/components/responses/NotFound' }
+
+  /api/v1/notifications/{id}/read:
+    patch:
+      tags: [CU-08 Notificaciones]
+      operationId: marcarNotificacionLeida
+      summary: Marcar una notificación interna como leída
+      description: Notificaciones tiene este caso de uso (evolución), pero el enunciado no fija la ruta.
+      x-contrato: propuesto
+      x-modulo: Notificaciones (Equipo 6)
+      parameters:
+        - $ref: '#/components/parameters/Id'
+        - $ref: '#/components/parameters/CorrelationId'
+      responses:
+        '204':
+          description: Marcada como leída
+        '404': { $ref: '#/components/responses/NotFound' }
+
+  # ───────────── CU-09 · Calificar comercio y repartidor ─────────────
+
+  /api/v1/reviews:
+    post:
+      tags: [CU-09 Calificaciones]
+      operationId: crearResena
+      summary: Calificar el comercio y el repartidor de un pedido
+      description: Solo pedidos entregados pueden calificarse, con una reseña por usuario y pedido.
+      x-contrato: obligatorio
+      x-modulo: Opiniones y Analítica (Equipo 7)
+      parameters:
+        - $ref: '#/components/parameters/CorrelationId'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: { $ref: '#/components/schemas/ReviewRequest' }
+      responses:
+        '201':
+          description: Reseña publicada
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/ReviewResponse' }
+        '400': { $ref: '#/components/responses/BadRequest' }
+        '409':
+          description: El pedido ya fue calificado por este usuario
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/ErrorResponse' }
+        '422':
+          description: El pedido no está entregado
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/ErrorResponse' }
+
+  /api/v1/merchants/{id}/rating:
+    get:
+      tags: [CU-09 Calificaciones]
+      operationId: obtenerPromedioComercio
+      summary: Promedio de calificación de un comercio
+      x-contrato: obligatorio
+      x-modulo: Opiniones y Analítica (Equipo 7)
+      security: [{}, { bearerAuth: [] }]
+      parameters:
+        - $ref: '#/components/parameters/Id'
+        - $ref: '#/components/parameters/CorrelationId'
+      responses:
+        '200':
+          description: Promedio del comercio
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/RatingResponse' }
+        '404': { $ref: '#/components/responses/NotFound' }
+
+  /api/v1/couriers/{id}/rating:
+    get:
+      tags: [CU-09 Calificaciones]
+      operationId: obtenerPromedioRepartidor
+      summary: Promedio de calificación de un repartidor
+      x-contrato: obligatorio
+      x-modulo: Opiniones y Analítica (Equipo 7)
+      parameters:
+        - $ref: '#/components/parameters/Id'
+        - $ref: '#/components/parameters/CorrelationId'
+      responses:
+        '200':
+          description: Promedio del repartidor
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/RatingResponse' }
+        '404': { $ref: '#/components/responses/NotFound' }
+
+  # ───────────── CU-10 · Visualizar métricas administrativas ─────────────
+
+  /api/v1/analytics/dashboard:
+    get:
+      tags: [CU-10 Métricas administrativas]
+      operationId: obtenerTablero
+      summary: Tablero de métricas (solo rol ADMIN)
+      description: Toda métrica indica período y fuente.
+      x-contrato: obligatorio
+      x-modulo: Opiniones y Analítica (Equipo 7)
+      parameters:
+        - $ref: '#/components/parameters/CorrelationId'
+        - name: from
+          in: query
+          schema: { type: string, format: date, example: '2026-10-01' }
+        - name: to
+          in: query
+          schema: { type: string, format: date, example: '2026-10-31' }
+      responses:
+        '200':
+          description: Métricas del período
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/DashboardResponse' }
+        '401': { $ref: '#/components/responses/Unauthorized' }
+        '403':
+          description: El usuario no tiene rol ADMIN
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/ErrorResponse' }
+
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+
+  parameters:
+    Id:
+      name: id
+      in: path
+      required: true
+      schema: { type: integer, format: int64 }
+    UserId:
+      name: id
+      in: path
+      required: true
+      description: Id del usuario (solo puede consultar sus propios datos, salvo ADMIN)
+      schema: { type: integer, format: int64 }
+    CorrelationId:
+      name: X-Correlation-Id
+      in: header
+      required: false
+      description: Id para seguir una operación a través de los módulos (recomendado)
+      schema: { type: string, format: uuid }
+    Page:
+      name: page
+      in: query
+      schema: { type: integer, minimum: 0, default: 0 }
+    Size:
+      name: size
+      in: query
+      schema: { type: integer, minimum: 1, default: 20 }
+    Sort:
+      name: sort
+      in: query
+      description: 'Campo y dirección, por ejemplo `createdAt,desc`'
+      schema: { type: string }
+
+  responses:
+    BadRequest:
+      description: Solicitud inválida o faltan datos obligatorios (400)
+      content:
+        application/json:
+          schema: { $ref: '#/components/schemas/ErrorResponse' }
+    Unauthorized:
+      description: Sin autenticación o token vencido (401)
+      content:
+        application/json:
+          schema: { $ref: '#/components/schemas/ErrorResponse' }
+    Forbidden:
+      description: Sin autorización para el recurso (403)
+      content:
+        application/json:
+          schema: { $ref: '#/components/schemas/ErrorResponse' }
+    NotFound:
+      description: Recurso inexistente (404)
+      content:
+        application/json:
+          schema: { $ref: '#/components/schemas/ErrorResponse' }
+    InvalidState:
+      description: Conflicto de estado (409)
+      content:
+        application/json:
+          schema: { $ref: '#/components/schemas/ErrorResponse' }
+    BusinessRule:
+      description: Regla de negocio incumplida (422)
+      content:
+        application/json:
+          schema: { $ref: '#/components/schemas/ErrorResponse' }
+    ServerError:
+      description: Error no controlado o servicio no disponible (500)
+      content:
+        application/json:
+          schema: { $ref: '#/components/schemas/ErrorResponse' }
+
+  schemas:
+
+    ErrorResponse:
+      description: Formato de error normalizado común a todos los módulos (sección 6)
+      type: object
+      properties:
+        timestamp: { type: string, format: date-time, example: '2026-08-11T20:15:30Z' }
+        status: { type: integer, example: 422 }
+        code: { type: string, example: ORDER_INVALID_STATE }
+        message: { type: string, example: El pedido no puede confirmarse en su estado actual }
+        path: { type: string, example: /api/v1/orders/123/confirm }
+        correlationId: { type: string }
+
+    PageMetadata:
+      type: object
+      properties:
+        page: { type: integer }
+        size: { type: integer }
+        totalElements: { type: integer, format: int64 }
+        totalPages: { type: integer }
+
+    # ── Usuarios ──
+
+    RegisterRequest:
+      type: object
+      required: [firstName, lastName, email, password]
+      properties:
+        firstName: { type: string, example: Ana }
+        lastName: { type: string, example: Pérez }
+        email: { type: string, format: email, example: ana@deliverygo.com }
+        password: { type: string, format: password, minLength: 8 }
+        phone: { type: string }
+
+    LoginRequest:
+      type: object
+      required: [email, password]
+      properties:
+        email: { type: string, format: email, example: ana@deliverygo.com }
+        password: { type: string, format: password }
+
+    LoginResponse:
+      type: object
+      properties:
+        token: { type: string, description: JWT con id de usuario y roles }
+        userId: { type: integer, format: int64, example: 10 }
+        roles:
+          type: array
+          items: { type: string, enum: [CLIENTE, COMERCIO, REPARTIDOR, ADMIN] }
+        expiresIn: { type: integer, description: Segundos de validez del token }
+
+    UserResponse:
+      type: object
+      properties:
+        id: { type: integer, format: int64 }
+        firstName: { type: string }
+        lastName: { type: string }
+        email: { type: string, format: email }
+        phone: { type: string }
+        active: { type: boolean }
+        roles:
+          type: array
+          items: { type: string }
+        addresses:
+          type: array
+          items: { $ref: '#/components/schemas/Address' }
+
+    UpdateUserRequest:
+      type: object
+      properties:
+        firstName: { type: string }
+        lastName: { type: string }
+        email: { type: string, format: email }
+        phone: { type: string }
+
+    AddressRequest:
+      type: object
+      required: [street, number, city]
+      properties:
+        alias: { type: string, example: Casa }
+        street: { type: string, example: Av. Corrientes }
+        number: { type: string, example: '1234' }
+        apartment: { type: string, example: 5B }
+        city: { type: string, example: CABA }
+        postalCode: { type: string }
+        notes: { type: string }
+
+    Address:
+      allOf:
+        - type: object
+          properties:
+            id: { type: integer, format: int64 }
+            default: { type: boolean }
+        - $ref: '#/components/schemas/AddressRequest'
+
+    # ── Catálogo ──
+
+    Merchant:
+      type: object
+      properties:
+        id: { type: integer, format: int64 }
+        name: { type: string, example: La Birra Bar }
+        category: { type: string, example: burgers }
+        description: { type: string }
+        rating: { type: number, example: 4.8 }
+        deliveryTimeMin: { type: integer, example: 25 }
+        deliveryTimeMax: { type: integer, example: 35 }
+        shippingCost: { type: number, example: 850 }
+        open: { type: boolean }
+        opensAt: { type: string, nullable: true, example: '19:00' }
+        imageUrl: { type: string, nullable: true }
+        products:
+          type: array
+          items: { $ref: '#/components/schemas/Product' }
+
+    MerchantPage:
+      allOf:
+        - $ref: '#/components/schemas/PageMetadata'
+        - type: object
+          properties:
+            content:
+              type: array
+              items: { $ref: '#/components/schemas/Merchant' }
+
+    Product:
+      type: object
+      properties:
+        id: { type: integer, format: int64 }
+        merchantId: { type: integer, format: int64 }
+        name: { type: string }
+        description: { type: string }
+        category: { type: string }
+        price: { type: number, description: Precio vigente }
+        currency: { type: string, example: ARS }
+        available: { type: boolean, description: 'Si es false, el Portal no permite agregarlo al carrito' }
+        imageUrl: { type: string, nullable: true }
+
+    # ── Pedidos ──
+
+    OrderStatus:
+      type: string
+      enum: [DRAFT, CONFIRMED, IN_PREPARATION, ON_THE_WAY, DELIVERED, CANCELLED]
+      description: BORRADOR, CONFIRMADO, EN_PREPARACION, EN_CAMINO, ENTREGADO, CANCELADO
+
+    OrderItemRequest:
+      type: object
+      required: [productId, quantity]
+      properties:
+        productId: { type: integer, format: int64 }
+        quantity: { type: integer, minimum: 1, example: 2 }
+        notes: { type: string }
+
+    CreateOrderRequest:
+      type: object
+      required: [userId, merchantId, deliveryAddressId, items]
+      properties:
+        userId: { type: integer, format: int64 }
+        merchantId: { type: integer, format: int64 }
+        deliveryAddressId: { type: integer, format: int64 }
+        items:
+          type: array
+          minItems: 1
+          items: { $ref: '#/components/schemas/OrderItemRequest' }
+        notes: { type: string }
+        couponCode: { type: string, example: DELIVERYGO20 }
+
+    OrderItem:
+      type: object
+      properties:
+        productId: { type: integer, format: int64 }
+        name: { type: string }
+        quantity: { type: integer }
+        unitPrice: { type: number }
+        subtotal: { type: number }
+
+    OrderResponse:
+      type: object
+      properties:
+        id: { type: integer, format: int64 }
+        userId: { type: integer, format: int64 }
+        merchantId: { type: integer, format: int64 }
+        status: { $ref: '#/components/schemas/OrderStatus' }
+        items:
+          type: array
+          items: { $ref: '#/components/schemas/OrderItem' }
+        subtotal: { type: number }
+        shippingCost: { type: number }
+        serviceFee: { type: number }
+        discount: { type: number }
+        total: { type: number, example: 18500.00 }
+        currency: { type: string, example: ARS }
+        createdAt: { type: string, format: date-time }
+        statusHistory:
+          type: array
+          items:
+            type: object
+            properties:
+              status: { $ref: '#/components/schemas/OrderStatus' }
+              changedAt: { type: string, format: date-time }
+
+    OrderPage:
+      allOf:
+        - $ref: '#/components/schemas/PageMetadata'
+        - type: object
+          properties:
+            content:
+              type: array
+              items: { $ref: '#/components/schemas/OrderResponse' }
+
+    # ── Pagos ──
+
+    PaymentRequest:
+      type: object
+      required: [orderId, amount, paymentMethodId]
+      properties:
+        orderId: { type: integer, format: int64 }
+        amount: { type: number, description: Debe coincidir con el total del pedido }
+        currency: { type: string, example: ARS }
+        paymentMethodId: { type: integer, format: int64 }
+        installments: { type: integer, minimum: 1, default: 1 }
+
+    PaymentResponse:
+      type: object
+      properties:
+        id: { type: integer, format: int64 }
+        orderId: { type: integer, format: int64 }
+        status: { type: string, enum: [PENDING, APPROVED, REJECTED, REFUNDED] }
+        amount: { type: number }
+        rejectionCode: { type: string, nullable: true, example: INSUFFICIENT_FUNDS }
+        rejectionMessage: { type: string, nullable: true }
+        createdAt: { type: string, format: date-time }
+
+    # ── Logística ──
+
+    DeliveryResponse:
+      type: object
+      properties:
+        id: { type: integer, format: int64 }
+        orderId: { type: integer, format: int64 }
+        status: { type: string, enum: [PENDING_ASSIGNMENT, ASSIGNED, PICKED_UP, COMPLETED, CANCELLED] }
+        courier:
+          type: object
+          nullable: true
+          properties:
+            id: { type: integer, format: int64 }
+            name: { type: string }
+            vehicle: { type: string }
+        currentLocation:
+          type: object
+          nullable: true
+          properties:
+            lat: { type: number }
+            lng: { type: number }
+        estimatedMinutes: { type: integer }
+        updatedAt: { type: string, format: date-time }
+
+    # ── Notificaciones ──
+
+    NotificationResponse:
+      type: object
+      properties:
+        id: { type: integer, format: int64 }
+        recipientId: { type: integer, format: int64 }
+        templateId: { type: integer, format: int64 }
+        channel: { type: string, enum: [EMAIL, PUSH, IN_APP] }
+        status: { type: string, enum: [PENDING, SENT, FAILED] }
+        title: { type: string }
+        message: { type: string }
+        read: { type: boolean }
+        createdAt: { type: string, format: date-time }
+
+    NotificationPage:
+      allOf:
+        - $ref: '#/components/schemas/PageMetadata'
+        - type: object
+          properties:
+            content:
+              type: array
+              items: { $ref: '#/components/schemas/NotificationResponse' }
+
+    # ── Opiniones y Analítica ──
+
+    ReviewRequest:
+      type: object
+      required: [orderId, merchantScore, courierScore]
+      properties:
+        orderId: { type: integer, format: int64 }
+        merchantScore: { type: integer, minimum: 1, maximum: 5 }
+        courierScore: { type: integer, minimum: 1, maximum: 5 }
+        tags:
+          type: array
+          items: { type: string }
+          example: [Rápido, Bien empaquetado]
+        comment: { type: string, maxLength: 500 }
+
+    ReviewResponse:
+      allOf:
+        - type: object
+          properties:
+            id: { type: integer, format: int64 }
+            userId: { type: integer, format: int64 }
+            createdAt: { type: string, format: date-time }
+        - $ref: '#/components/schemas/ReviewRequest'
+
+    RatingResponse:
+      type: object
+      properties:
+        id: { type: integer, format: int64, description: Id del comercio o repartidor }
+        average: { type: number, example: 4.7 }
+        count: { type: integer, example: 1240 }
+
+    DashboardResponse:
+      type: object
+      properties:
+        period:
+          type: object
+          properties:
+            from: { type: string, format: date }
+            to: { type: string, format: date }
+        metrics:
+          type: array
+          items:
+            type: object
+            properties:
+              name: { type: string, example: pedidos_entregados }
+              value: { type: number }
+              source: { type: string, example: Pedidos }
