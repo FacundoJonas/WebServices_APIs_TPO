@@ -1,6 +1,6 @@
 import { BASE_URL } from './api';
 import { obtenerToken } from './authServicie';
-import { obtenerComerciosMock } from './mocks/catalogoMock';
+import { obtenerComerciosMock, obtenerProductosMock } from './mocks/catalogoMock';
 import placeholderImage from '../assets/deliverygo_logo.png';
 
 const API = `${BASE_URL}/api/v1/catalog`;
@@ -37,7 +37,7 @@ function mapearComercio(dto) {
         isOpen: dto.open,
         opensAt: dto.opensAt,
         image: dto.imageUrl || placeholderImage,
-        path: "/comercio",
+        path: `/comercio/${dto.id}`,
     };
 }
 
@@ -68,4 +68,73 @@ export async function obtenerComercios() {
     const comercios = Array.isArray(data) ? data : data.content;
 
     return comercios.map(mapearComercio);
+}
+
+/**
+ * Busca un comercio por id dentro del catálogo.
+ * TODO: el enunciado no define GET /api/v1/merchants/{id}.
+ * Si el Módulo Catálogo lo agrega, conviene usarlo acá.
+ */
+export async function obtenerComercioPorId(id) {
+
+    const comercios = await obtenerComercios();
+
+    const comercio = comercios.find((item) => String(item.id) === String(id));
+
+    if (!comercio) {
+        throw new Error('No encontramos ese comercio.');
+    }
+
+    return comercio;
+}
+
+/*
+ * Convierte el DTO de un producto al formato que usa ProductCard.
+ */
+function mapearProducto(dto) {
+    return {
+        id: dto.id,
+        categoryId: dto.categoryId,
+        categoryName: dto.categoryName,
+        name: dto.name,
+        description: dto.description,
+        price: dto.price,
+        available: dto.available,
+        badge: dto.badge,
+        badgeIcon: dto.badgeIcon,
+        badgeColor: dto.badgeColor,
+        image: dto.imageUrl || placeholderImage,
+    };
+}
+
+/**
+ * GET /api/v1/catalog?merchantId={id}
+ * Devuelve los productos de un comercio.
+ * TODO: confirmar el filtro con el Equipo 2 (el enunciado no lo define).
+ */
+export async function obtenerProductos(merchantId) {
+
+    let data;
+
+    if (USE_MOCK) {
+        data = await obtenerProductosMock(merchantId);
+    } else {
+
+        const params = new URLSearchParams({ merchantId });
+
+        const r = await fetch(`${API}?${params}`, {
+            headers: headers()
+        });
+
+        if (!r.ok) {
+            throw new Error('No pudimos cargar los productos. Intentá nuevamente.');
+        }
+
+        data = await r.json();
+    }
+
+    // Si el backend responde paginado ({ content: [...] }), se toma la lista.
+    const productos = Array.isArray(data) ? data : data.content;
+
+    return productos.map(mapearProducto);
 }
