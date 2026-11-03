@@ -1,8 +1,8 @@
-import { BASE_URL } from './api';
+import { OPINIONES_ANALITICA_URL } from './api';
 import { obtenerToken } from './authServicie';
 import { obtenerTableroMock } from './mocks/analiticaMock';
 
-const API = `${BASE_URL}/api/v1/analytics`;
+const API = `${OPINIONES_ANALITICA_URL}/api/v1/analytics`;
 
 // Cambiar a false cuando el Módulo Opiniones y Analítica esté disponible
 const USE_MOCK = true;

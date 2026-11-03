@@ -1,9 +1,9 @@
-import { BASE_URL } from './api';
+import { CATALOGO_URL } from './api';
 import { obtenerToken } from './authServicie';
-import { obtenerCatalogoMock } from './mocks/catalogoMock';
+import { obtenerComerciosMock } from './mocks/catalogoMock';
 import placeholderImage from '../assets/deliverygo_logo.png';
 
-const API = `${BASE_URL}/api/v1/catalog`;
+const API = `${CATALOGO_URL}/api/v1/catalog`;
 
 // Cambiar a false cuando el Módulo Catálogo esté disponible
 const USE_MOCK = true;
@@ -22,28 +22,8 @@ function headers() {
 }
 
 /*
- * Convierte el DTO de un producto al formato que usa ProductCard.
- */
-function mapearProducto(dto) {
-    return {
-        id: dto.id,
-        categoryId: dto.categoryId,
-        categoryName: dto.categoryName,
-        name: dto.name,
-        description: dto.description,
-        price: dto.price,
-        available: dto.available,
-        badge: dto.badge,
-        badgeIcon: dto.badgeIcon,
-        badgeColor: dto.badgeColor,
-        image: dto.imageUrl || placeholderImage,
-    };
-}
-
-/*
- * Convierte el DTO del Módulo Catálogo al formato que usan
- * StoreCard y StorePage. Si el backend cambia el nombre
- * de un campo, solo se ajusta acá.
+ * Convierte el DTO del Módulo Catálogo al formato que usa StoreCard.
+ * Si el backend cambia el nombre de un campo, solo se ajusta acá.
  */
 function mapearComercio(dto) {
     return {
@@ -57,22 +37,20 @@ function mapearComercio(dto) {
         isOpen: dto.open,
         opensAt: dto.opensAt,
         image: dto.imageUrl || placeholderImage,
-        path: `/comercio/${dto.id}`,
-        products: (dto.products ?? []).map(mapearProducto),
+        path: "/comercio",
     };
 }
 
 /**
  * GET /api/v1/catalog
- * Devuelve todos los comercios, cada uno con sus productos.
- * Es el único endpoint de listado del Módulo Catálogo.
+ * Devuelve los comercios disponibles para mostrar en el inicio.
  */
 export async function obtenerComercios() {
 
     let data;
 
     if (USE_MOCK) {
-        data = await obtenerCatalogoMock();
+        data = await obtenerComerciosMock();
     } else {
 
         const r = await fetch(API, {
@@ -80,7 +58,7 @@ export async function obtenerComercios() {
         });
 
         if (!r.ok) {
-            throw new Error('No pudimos cargar el catálogo. Intentá nuevamente.');
+            throw new Error('No pudimos cargar los comercios. Intentá nuevamente.');
         }
 
         data = await r.json();
@@ -90,21 +68,4 @@ export async function obtenerComercios() {
     const comercios = Array.isArray(data) ? data : data.content;
 
     return comercios.map(mapearComercio);
-}
-
-/**
- * Busca un comercio por id dentro del catálogo.
- * Devuelve el comercio con sus productos.
- */
-export async function obtenerComercioPorId(id) {
-
-    const comercios = await obtenerComercios();
-
-    const comercio = comercios.find((item) => String(item.id) === String(id));
-
-    if (!comercio) {
-        throw new Error('No encontramos ese comercio.');
-    }
-
-    return comercio;
 }

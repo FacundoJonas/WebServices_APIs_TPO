@@ -1,8 +1,8 @@
-import { BASE_URL } from './api';
+import { PEDIDOS_URL } from './api';
 import { obtenerToken } from './authServicie';
 import { crearPedidoMock, aplicarCuponMock, listarPedidosMock } from './mocks/pedidosMock';
 
-const API = `${BASE_URL}/pedidos`;
+const API = `${PEDIDOS_URL}`;
 
 // Cambiar a false cuando el Módulo Pedidos esté disponible
 const USE_MOCK = false;

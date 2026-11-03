@@ -1,8 +1,7 @@
-import { BASE_URL } from './api';
-import { loginMock, registerMock } from './mocks/authMock';
-
+import { USUARIOS_URL } from './api';
+import { loginMock } from './mocks/authMock';
 import { obtenerUsuarioPorId } from './userServicie';
-const API = `${BASE_URL}/api/v1/auth`;
+const API = `${USUARIOS_URL}/api/v1/auth`;
 
 // Cambiar a false cuando quieras utilizar Spring Boot
 const USE_MOCK = true;
@@ -47,7 +46,6 @@ export async function login(username, password) {
             nombre: usuario.nombre,
             apellido: usuario.apellido,
             email: usuario.email,
-            telefono: usuario.telefono,
             rol: data.rol,
             direcciones: usuario.direcciones
         }));
@@ -59,36 +57,6 @@ export async function login(username, password) {
         logout();
         throw error;
     }
-}
-
-/**
- * POST /api/v1/auth/register
- *
- * Crea un usuario nuevo. No inicia la sesión: de eso se encarga login().
- */
-export async function register(datos) {
-
-    if (USE_MOCK) {
-        return registerMock(datos);
-    }
-
-    const r = await fetch(`${API}/register`, {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(datos)
-    });
-
-    if (r.status === 409) {
-        throw new Error('Ya existe una cuenta con ese correo electrónico.');
-    }
-
-    if (!r.ok) {
-        throw new Error('No pudimos crear tu cuenta. Intentá nuevamente.');
-    }
-
-    return r.json();
 }
 
 export function obtenerToken() {

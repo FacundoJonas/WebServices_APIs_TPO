@@ -1,8 +1,8 @@
-import { BASE_URL } from './api';
+import { PAGOS_URL } from './api';
 import { obtenerToken } from './authServicie';
 import { procesarPagoMock } from './mocks/pagosMock';
 
-const API = `${BASE_URL}/pagos`;
+const API = `${PAGOS_URL}`;
 
 // Cambiar a false cuando el Módulo Pagos esté disponible
 const USE_MOCK = true;
