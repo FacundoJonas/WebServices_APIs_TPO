@@ -1,4 +1,6 @@
-import { useState } from "react"
+import { useState, useEffect } from "react"
+
+import { obtenerNotificacion } from "../servicies/notificacionesServicie.js"
 
 import InfoTile from "../components/notificationsPage/InfoTile.jsx"
 import FilterTabs from "../components/notificationsPage/FilterTabs.jsx"
@@ -181,6 +183,12 @@ const initialNotifications = [
  * - Alternar la vista de "estado vacío".
  */
 function NotificationsPage() {
+
+    useEffect(() => {
+    obtenerNotificacion(1)
+        .then(datos => console.log("Notificación del 006:", datos))
+        .catch(error => console.error("Falló la prueba:", error.message))
+    }, [])
 
     /*
      * Lista de notificaciones.
