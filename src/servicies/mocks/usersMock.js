@@ -41,3 +41,11 @@ export async function obtenerUsuarioPorIdMock(id) {
 
     return usuario;
 }
+
+/*
+ * Crea el perfil de un usuario recién registrado.
+ * Lo usa registerMock para que GET /users/{id} lo encuentre.
+ */
+export function crearPerfilMock(perfil) {
+    usuariosMock.push(perfil);
+}

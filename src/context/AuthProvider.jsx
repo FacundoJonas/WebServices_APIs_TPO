@@ -4,6 +4,7 @@ import { AuthContext } from "./AuthContext"
 import {
     login as loginService,
     logout as logoutService,
+    register as registerService,
     obtenerToken,
     obtenerUsuario
 } from "../servicies/authServicie.js"
@@ -30,6 +31,16 @@ export function AuthProvider({ children }) {
         return data
     }
 
+    /*
+ * Crea la cuenta e inicia la sesión con los mismos datos.
+ * PublicRoute se encarga de redirigir cuando cambia el token.
+ */
+    async function register(datos) {
+        await registerService(datos)
+        return login(datos.email, datos.password)
+    }
+
+
     function logout() {
         logoutService()
         setToken(null)
@@ -50,6 +61,7 @@ export function AuthProvider({ children }) {
         token,
         usuario,
         login,
+        register,
         logout,
         actualizarUsuario,
     }
