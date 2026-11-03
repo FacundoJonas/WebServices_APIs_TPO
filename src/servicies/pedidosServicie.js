@@ -1,12 +1,11 @@
 import { BASE_URL } from './api';
 import { obtenerToken } from './authServicie';
-import { crearPedidoMock, aplicarCuponMock } from './mocks/pedidosMock';
+import { crearPedidoMock, aplicarCuponMock, listarPedidosMock } from './mocks/pedidosMock';
 
 const API = `${BASE_URL}/pedidos`;
 
 // Cambiar a false cuando el Módulo Pedidos esté disponible
-const USE_MOCK = false;
-// Se puso en false el 31/10/26 para empezar a conecetar con el modulo de pedidos
+const USE_MOCK = true;
 
 function headers() {
     return {
@@ -56,6 +55,34 @@ export async function aplicarCupon(pedidoId, codigoCupon) {
 
     if (!r.ok) {
         throw new Error('El cupón no es válido.');
+    }
+
+    return r.json();
+}
+
+/**
+ * CU-07 GET /pedidos?usuarioId=&estados=&page=&size=
+ * Devuelve una página de pedidos del usuario: { content, page, totalPages, totalElements }.
+ * TODO: acordar la ruta con el Módulo Pedidos (el enunciado no la fija).
+ */
+export async function listarPedidos(usuarioId, { estados = [], page = 0, size = 4 } = {}) {
+
+    if (USE_MOCK) {
+        return listarPedidosMock(usuarioId, { estados, page, size });
+    }
+
+    const params = new URLSearchParams({ usuarioId, page, size });
+
+    if (estados.length > 0) {
+        params.set('estados', estados.join(','));
+    }
+
+    const r = await fetch(`${API}?${params}`, {
+        headers: headers()
+    });
+
+    if (!r.ok) {
+        throw new Error('No pudimos cargar tus pedidos. Intentá nuevamente.');
     }
 
     return r.json();

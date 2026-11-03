@@ -1,4 +1,3 @@
-
 import { NavLink } from "react-router-dom";
 import { Link, useNavigate } from "react-router";
 
@@ -50,7 +49,10 @@ function Header() {
     const renderUsuarioRegistrado = () => {
         return (
             <>
-                <div className="flex items-center gap-space-xs pl-space-xs py-space-xs">
+                <Link
+                    to="/perfil"
+                    className="flex items-center gap-space-xs pl-space-xs py-space-xs rounded-full hover:bg-surface-container-low transition-colors"
+                >
                     <img
                         src={profileImage}
                         alt="Imagen de perfil"
@@ -60,7 +62,7 @@ function Header() {
                     <span className="font-body-md-medium text-body-md-medium text-on-surface hidden lg:inline-block pr-space-xs">
                         {usuario?.nombre ?? "Mi perfil"}
                     </span>
-                </div>
+                </Link>
 
                 <button
                     type="button"
@@ -167,8 +169,14 @@ function Header() {
                         </NavLink>
 
                         {token && (
-                            <NavLink to="/pedido" className={getNavLinkClass}>
+                            <NavLink to="/pedidos" className={getNavLinkClass}>
                                 Mis Pedidos
+                            </NavLink>
+                        )}
+
+                        {usuario?.rol === "ADMIN" && (
+                            <NavLink to="/admin/metricas" className={getNavLinkClass}>
+                                Métricas
                             </NavLink>
                         )}
 

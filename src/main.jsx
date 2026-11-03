@@ -18,6 +18,10 @@ import CheckoutPage from './pages/CheckoutPage.jsx'
 import ProtectedRoute from './routes/ProtectedRoute.jsx'
 import OrderReviewPage from './pages/OrderReviewPage.jsx'
 import NotificationsPage from './pages/NotificationsPage.jsx'
+import ProfilePage from './pages/ProfilePage.jsx'
+import OrdersPage from './pages/OrdersPage.jsx'
+import MetricsPage from './pages/MetricsPage.jsx'
+import AdminRoute from './routes/AdminRoute.jsx'
 
 /**
  * Funcionalidad             |   Invitado   |   Autenticado   |
@@ -54,6 +58,13 @@ createRoot(document.getElementById('root')).render(
                                 <Route path="/pagar" element={<CheckoutPage />} />
                                 <Route path="/pedido" element={<OrderReviewPage />} />
                                 <Route path="/notificaciones" element={<NotificationsPage />} />
+                                <Route path="/perfil" element={<ProfilePage />} />
+                                <Route path="/pedidos" element={<OrdersPage />} />
+
+                                {/* Solo rol ADMIN */}
+                                <Route element={<AdminRoute />}>
+                                    <Route path="/admin/metricas" element={<MetricsPage />} />
+                                </Route>
                             </Route>
                         </Route>
                     </Routes>

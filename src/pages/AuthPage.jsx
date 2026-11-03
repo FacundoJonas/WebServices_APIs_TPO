@@ -1,8 +1,8 @@
 import { useState } from "react"
 
-import Feature from "../components/AuthPage/Feature"
-import LoginForm from "../components/AuthPage/LoginForm"
-import RegisterForm from "../components/AuthPage/RegisterForm"
+import Feature from "../components/authPage/Feature"
+import LoginForm from "../components/authPage/LoginForm"
+import RegisterForm from "../components/authPage/RegisterForm"
 
 /**
  * Página de autenticación de DeliveryGo.
