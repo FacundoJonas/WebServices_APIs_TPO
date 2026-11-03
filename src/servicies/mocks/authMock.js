@@ -1,3 +1,4 @@
+import { crearPerfilMock } from './usersMock';
 
 const usuariosMock = [
     {
@@ -47,4 +48,43 @@ export async function loginMock(username, password) {
         username: usuario.username,
         rol: usuario.rol
     };
+}
+
+/*
+ * POST /api/v1/auth/register
+ * Rechaza el registro si el email ya existe (regla "Email único").
+ *
+ * Los usuarios nuevos viven en memoria: se pierden al recargar la página.
+ * El backend real no guarda la contraseña en texto plano.
+ */
+export async function registerMock(datos) {
+
+    // Simulamos una pequeña demora del servidor
+    await new Promise(resolve => setTimeout(resolve, 500));
+
+    const existe = usuariosMock.some(u => u.username === datos.email);
+
+    if (existe) {
+        throw new Error("Ya existe una cuenta con ese correo electrónico.");
+    }
+
+    const id = Math.max(...usuariosMock.map(u => u.id)) + 1;
+
+    usuariosMock.push({
+        id,
+        username: datos.email,
+        password: datos.password,
+        rol: "CLIENTE"
+    });
+
+    crearPerfilMock({
+        id,
+        nombre: datos.nombre,
+        apellido: datos.apellido,
+        email: datos.email,
+        telefono: datos.telefono,
+        direcciones: [{ id: 1, etiqueta: "Casa", ...datos.direccion }]
+    });
+
+    return { id, email: datos.email, rol: "CLIENTE" };
 }

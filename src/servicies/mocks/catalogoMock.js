@@ -46,6 +46,131 @@ const comerciosMock = [
     }
 ]
 
+/*
+ * Productos simulados del Módulo Catálogo.
+ * Cada uno indica a qué comercio pertenece (merchantId).
+ */
+const productosMock = [
+    {
+        id: 1,
+        merchantId: 1,
+        categoryId: "hamburguesas-dobles",
+        categoryName: "Hamburguesas Dobles & Triples",
+        name: "Golden Burger Doble",
+        description: "Doble medallón de carne smash de 120g, queso cheddar americano x4, bacon crocante y salsa Thousand Island en pan brioche de papa.",
+        price: 7800,
+        available: true,
+        badge: "Más pedida",
+        badgeIcon: "workspace_premium",
+        badgeColor: "text-amber-600",
+        imageUrl: null,
+    },
+    {
+        id: 2,
+        merchantId: 1,
+        categoryId: "hamburguesas-dobles",
+        categoryName: "Hamburguesas Dobles & Triples",
+        name: "Royale Burger",
+        description: "Medallón de carne novillo, cebolla caramelizada lentamente, queso brie fundido, rúcula fresca seleccionada y mayonesa ahumada artesanal.",
+        price: 8200,
+        available: true,
+        imageUrl: null,
+    },
+    {
+        id: 3,
+        merchantId: 1,
+        categoryId: "hamburguesas-dobles",
+        categoryName: "Hamburguesas Dobles & Triples",
+        name: "Truffle Bacon Smash",
+        description: "Doble smash con mayonesa emulsionada de trufas negras europeas, panceta ahumada crujiente y cebolla morada grillada.",
+        price: 8900,
+        available: false,
+        imageUrl: null,
+    },
+    {
+        id: 4,
+        merchantId: 1,
+        categoryId: "guarniciones-papas",
+        categoryName: "Guarniciones & Papas",
+        name: "Papas con Cheddar y Panceta",
+        description: "Papas bastón rústicas doble cocción, cheddar fundido de la casa, lluvia de panceta crocante y ciboulette finamente picado.",
+        price: 3900,
+        available: true,
+        imageUrl: null,
+    },
+    {
+        id: 5,
+        merchantId: 1,
+        categoryId: "bebidas-cervezas",
+        categoryName: "Bebidas & Cervezas",
+        name: "Limonada con Menta y Jengibre 500ml",
+        description: "Fresca exprimida en el momento con jugo de limones tucumanos, hojas frescas de menta orgánica y un toque de jengibre.",
+        price: 2100,
+        available: true,
+        badge: "100% Natural",
+        badgeIcon: "eco",
+        imageUrl: null,
+    },
+    {
+        id: 201,
+        merchantId: 2,
+        categoryId: "pizzas",
+        categoryName: "Pizzas",
+        name: "Muzzarella grande",
+        description: "Muzzarella abundante, salsa de tomate y aceitunas. 8 porciones.",
+        price: 9500,
+        available: true,
+        badge: "Más pedida",
+        badgeIcon: "workspace_premium",
+        badgeColor: "text-amber-600",
+        imageUrl: null,
+    },
+    {
+        id: 202,
+        merchantId: 2,
+        categoryId: "pizzas",
+        categoryName: "Pizzas",
+        name: "Fugazzeta rellena",
+        description: "Rellena de muzzarella, con cebolla dorada y orégano. 8 porciones.",
+        price: 12800,
+        available: true,
+        imageUrl: null,
+    },
+    {
+        id: 203,
+        merchantId: 2,
+        categoryId: "empanadas",
+        categoryName: "Empanadas",
+        name: "Empanada de carne",
+        description: "Carne cortada a cuchillo, al horno.",
+        price: 1600,
+        available: true,
+        imageUrl: null,
+    },
+    {
+        id: 301,
+        merchantId: 3,
+        categoryId: "rolls",
+        categoryName: "Rolls",
+        name: "Philadelphia Roll x10",
+        description: "Salmón, queso crema y palta.",
+        price: 11200,
+        available: true,
+        imageUrl: null,
+    },
+    {
+        id: 302,
+        merchantId: 3,
+        categoryId: "woks",
+        categoryName: "Woks",
+        name: "Wok de vegetales y pollo",
+        description: "Fideos de arroz, pollo y vegetales salteados con salsa teriyaki.",
+        price: 9800,
+        available: false,
+        imageUrl: null,
+    },
+]
+
 // Cambiar a true para probar el manejo de errores (sirve para el Demo Day).
 const SIMULAR_ERROR = false
 
@@ -55,15 +180,20 @@ function esperar(ms) {
 
 /*
  * GET /api/v1/catalog
- * Devuelve la lista de comercios.
+ * Devuelve todos los comercios, cada uno con sus productos.
  */
-export async function obtenerComerciosMock() {
+export async function obtenerCatalogoMock() {
 
     await esperar(500)
 
     if (SIMULAR_ERROR) {
-        throw new Error("No pudimos cargar los comercios. Intentá nuevamente.")
+        throw new Error("No pudimos cargar el catálogo. Intentá nuevamente.")
     }
 
-    return comerciosMock
+    return comerciosMock.map((comercio) => ({
+        ...comercio,
+        products: productosMock.filter(
+            (producto) => producto.merchantId === comercio.id
+        ),
+    }))
 }

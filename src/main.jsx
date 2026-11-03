@@ -50,7 +50,8 @@ createRoot(document.getElementById('root')).render(
 
                             {/* Rutas accesibles por todos */}
                             <Route path="/inicio" element={<HomePage />} />
-                            <Route path="/comercio" element={<StorePage />} />
+                            <Route path="/comercio" element={<Navigate to="/inicio" replace />} />
+                            <Route path="/comercio/:id" element={<StorePage />} />
                             <Route path="/carrito" element={<CartPage />} />
 
                             {/* Rutas que requieren autenticación */}
