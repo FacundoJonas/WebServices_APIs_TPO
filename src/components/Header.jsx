@@ -169,8 +169,14 @@ function Header() {
                         </NavLink>
 
                         {token && (
-                            <NavLink to="/pedido" className={getNavLinkClass}>
+                            <NavLink to="/pedidos" className={getNavLinkClass}>
                                 Mis Pedidos
+                            </NavLink>
+                        )}
+
+                        {usuario?.rol === "ADMIN" && (
+                            <NavLink to="/admin/metricas" className={getNavLinkClass}>
+                                Métricas
                             </NavLink>
                         )}
 
