@@ -2,7 +2,7 @@ import { useEffect, useState } from "react"
 import { Link, useParams } from "react-router"
 
 import { useCart } from "../context/useCart"
-import { obtenerComercioPorId, obtenerProductos } from "../servicies/catalogoServicie.js"
+import { obtenerComercioPorId } from "../servicies/catalogoServicie.js"
 
 import StoreHero from "../components/storePage/StoreHero"
 import CategorySidebar from "../components/storePage/CategorySidebar"
@@ -34,10 +34,9 @@ function StorePage() {
     const { id } = useParams()
 
     /*
-     * Datos que devuelve el Módulo Catálogo.
+     * Comercio con sus productos, que devuelve el Módulo Catálogo.
      */
     const [store, setStore] = useState(null)
-    const [products, setProducts] = useState([])
     const [loading, setLoading] = useState(true)
     const [error, setError] = useState("")
 
@@ -58,13 +57,12 @@ function StorePage() {
 
         let ignore = false
 
-        Promise.all([obtenerComercioPorId(id), obtenerProductos(id)])
-            .then(([storeData, productsData]) => {
+        obtenerComercioPorId(id)
+            .then((storeData) => {
                 if (ignore) return
 
                 setError("")
                 setStore(storeData)
-                setProducts(productsData)
             })
             .catch((error) => {
                 if (!ignore) setError(error.message)
@@ -152,7 +150,7 @@ function StorePage() {
      * Agrupa los productos por categoría, respetando
      * el orden en que los devuelve el catálogo.
      */
-    const categories = products.reduce((groups, product) => {
+    const categories = (store?.products ?? []).reduce((groups, product) => {
 
         const group = groups.find((item) => item.id === product.categoryId)
 

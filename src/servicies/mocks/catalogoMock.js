@@ -180,32 +180,20 @@ function esperar(ms) {
 
 /*
  * GET /api/v1/catalog
- * Devuelve la lista de comercios.
+ * Devuelve todos los comercios, cada uno con sus productos.
  */
-export async function obtenerComerciosMock() {
+export async function obtenerCatalogoMock() {
 
     await esperar(500)
 
     if (SIMULAR_ERROR) {
-        throw new Error("No pudimos cargar los comercios. Intentá nuevamente.")
+        throw new Error("No pudimos cargar el catálogo. Intentá nuevamente.")
     }
 
-    return comerciosMock
-}
-
-/*
- * GET /api/v1/catalog?merchantId={id}
- * Devuelve los productos de un comercio.
- */
-export async function obtenerProductosMock(merchantId) {
-
-    await esperar(500)
-
-    if (SIMULAR_ERROR) {
-        throw new Error("No pudimos cargar los productos. Intentá nuevamente.")
-    }
-
-    return productosMock.filter(
-        (producto) => String(producto.merchantId) === String(merchantId)
-    )
+    return comerciosMock.map((comercio) => ({
+        ...comercio,
+        products: productosMock.filter(
+            (producto) => producto.merchantId === comercio.id
+        ),
+    }))
 }
