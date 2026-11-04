@@ -4,4 +4,5 @@ export const BASE_URL = import.meta.env.VITE_API_URL
 export const NOTIF_URL = import.meta.env.VITE_NOTIF_URL ?? '/notif-api';
 
 export const PEDIDOS_URL = import.meta.env.VITE_PEDIDOS_URL ?? '/pedidos-api';
-//Para que fucione en el entorno de desarrollo, se debe agregar la variable VITE_PEDIDOS_URL en el archivo .env y en vite_config.en
+// Los prefijos se reenvían a cada módulo con el proxy de vite.config.js.
+// Las direcciones reales van en .env (PEDIDOS_PROXY_TARGET, NOTIF_PROXY_TARGET).
