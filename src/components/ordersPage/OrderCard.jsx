@@ -33,9 +33,15 @@ function OrderCard({ pedido, selected, onSelect, onRate, onReorder }) {
     const cancelado = pedido.estado === "CANCELADO"
 
     /*
+     * PedidoResponse solo trae comercioId, sin nombre. El nombre del
+     * comercio es un enriquecido propio del mock, por eso es opcional.
+     */
+    const nombreComercio = pedido.comercio?.nombre ?? `Comercio #${pedido.comercioId}`
+
+    /*
      * Iniciales del comercio para el avatar. Ejemplo: "La Birra Bar" -> "LB".
      */
-    const initials = pedido.comercio.nombre
+    const initials = nombreComercio
         .split(" ")
         .slice(0, 2)
         .map((palabra) => palabra[0])
@@ -43,8 +49,11 @@ function OrderCard({ pedido, selected, onSelect, onRate, onReorder }) {
         .toUpperCase()
 
     const resumen = pedido.items
-        .map((item) => `${item.cantidad}x ${item.nombre}`)
+        .map((item) => `${item.cantidad}x ${item.nombreProducto}`)
         .join(", ")
+
+    const motivoCancelacion = pedido.motivoCancelacion
+        ?? (cancelado ? pedido.historial?.at(-1)?.motivo : null)
 
     return (
         <article
@@ -62,11 +71,11 @@ function OrderCard({ pedido, selected, onSelect, onRate, onReorder }) {
 
                     <div>
                         <h2 className="font-title-md text-title-md text-on-surface">
-                            {pedido.comercio.nombre}
+                            {nombreComercio}
                         </h2>
 
                         <p className="font-caption-sm text-caption-sm text-on-surface-variant">
-                            {formatearFecha(pedido.fecha)} · Pedido{" "}
+                            {formatearFecha(pedido.fechaCreacion)} · Pedido{" "}
                             <span className="font-caption-bold text-caption-bold text-on-surface">
                                 #{pedido.id}
                             </span>
@@ -85,10 +94,10 @@ function OrderCard({ pedido, selected, onSelect, onRate, onReorder }) {
                         {resumen}
                     </p>
 
-                    {pedido.motivoCancelacion && (
+                    {motivoCancelacion && (
                         <p className="font-caption-sm text-caption-sm text-error mt-1 flex items-center gap-1">
                             <span className="material-symbols-outlined text-[14px]">info</span>
-                            {pedido.motivoCancelacion}
+                            {motivoCancelacion}
                         </p>
                     )}
                 </div>
@@ -117,7 +126,7 @@ function OrderCard({ pedido, selected, onSelect, onRate, onReorder }) {
                             </span>
                             Calificado {pedido.calificacion.puntaje}
                         </span>
-                    ) : (
+                    ) : pedido.medioPago && (
                         <>
                             <span className="material-symbols-outlined text-[18px]">credit_card</span>
                             {pedido.medioPago}

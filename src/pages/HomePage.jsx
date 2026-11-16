@@ -7,6 +7,7 @@ import PrimeBanner from "../components/homePage/PrimeBanner.jsx"
 import WelcomeHeader from "../components/homePage/WelcomeHeader.jsx"
 import CategoryChips from "../components/homePage/CategoryChips.jsx"
 import ActiveOrderCard from "../components/homePage/ActiveOrderCard.jsx"
+import { useNavigate } from "react-router"
 
 import courierImage from "../assets/matias.png"
 
@@ -169,6 +170,7 @@ function HomePage() {
 
     const direccionPrincipal = usuario?.direcciones?.[0]
 
+    const navigate = useNavigate()
     /*
      * Dirección de entrega actual.
      */
@@ -312,6 +314,8 @@ function HomePage() {
                     userName={usuario?.nombre}
                     address={address}
                     onChangeAddress={handleChangeAddress}
+                    hasAddress={Boolean(direccionPrincipal)}
+                    onAddAddress={() => navigate("/perfil")}
                     coupon={welcomeCoupon}
                 />
 

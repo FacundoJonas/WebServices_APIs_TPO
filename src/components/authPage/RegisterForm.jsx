@@ -6,8 +6,6 @@ const emptyForm = {
     nombre: "",
     apellido: "",
     email: "",
-    calle: "",
-    barrio: "",
     password: "",
     telefono: "",
 }
@@ -60,10 +58,6 @@ function RegisterForm({ goToLogin }) {
             return "Ingresá un correo electrónico válido."
         }
 
-        if (!form.calle.trim() || !form.barrio.trim()) {
-            return "Completá tu dirección y barrio de entrega."
-        }
-
         if (form.password.length < 8) {
             return "La contraseña debe tener al menos 8 caracteres."
         }
@@ -98,11 +92,6 @@ function RegisterForm({ goToLogin }) {
                 email: form.email.trim().toLowerCase(),
                 password: form.password,
                 telefono: form.telefono.trim(),
-                direccion: {
-                    calle: form.calle.trim(),
-                    barrio: form.barrio.trim(),
-                    ciudad: "CABA",
-                },
             })
         } catch (error) {
             setError(error.message)
@@ -196,63 +185,6 @@ function RegisterForm({ goToLogin }) {
                     onChange={handleChange}
                     className={inputClass}
                 />
-            </div>
-
-            {/* Dirección habitual de entrega */}
-            <div className="grid grid-cols-1 sm:grid-cols-3 gap-space-sm">
-
-                <div className="flex flex-col gap-1.5 sm:col-span-2">
-
-                    <label
-                        htmlFor="register-address"
-                        className="font-label-md text-label-md text-on-surface"
-                    >
-                        Dirección de entrega habitual
-                    </label>
-
-                    <div className="relative flex items-center">
-
-            <span className="material-symbols-outlined absolute left-3 text-primary text-[20px] pointer-events-none">
-              location_on
-            </span>
-
-                        <input
-                            id="register-address"
-                            name="calle"
-                            type="text"
-                            placeholder="Av. Santa Fe 3200"
-                            autoComplete="street-address"
-                            value={form.calle}
-                            onChange={handleChange}
-                            className="w-full h-11 pl-10 pr-20 rounded-lg bg-surface-container-low text-on-surface font-body-md text-body-md placeholder:text-outline focus:outline-none focus:ring-2 focus:ring-primary-container"
-                        />
-
-                        {/* Indicador visual de la localidad */}
-                        <span className="absolute right-2 px-2 py-1 rounded bg-surface-container text-on-surface font-caption-bold text-caption-bold">
-              CABA
-            </span>
-                    </div>
-                </div>
-
-                <div className="flex flex-col gap-1.5">
-
-                    <label
-                        htmlFor="register-neighborhood"
-                        className="font-label-md text-label-md text-on-surface"
-                    >
-                        Barrio
-                    </label>
-
-                    <input
-                        id="register-neighborhood"
-                        name="barrio"
-                        type="text"
-                        placeholder="Palermo"
-                        value={form.barrio}
-                        onChange={handleChange}
-                        className={inputClass}
-                    />
-                </div>
             </div>
 
             {/* Contraseña y teléfono */}

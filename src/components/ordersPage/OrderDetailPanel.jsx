@@ -1,3 +1,4 @@
+import { useAuth } from "../../context/useAuth"
 import OrderStatusBadge from "./OrderStatusBadge"
 import { estadosPedido, formatearHora, formatearPrecio } from "./orderStatus"
 
@@ -10,6 +11,11 @@ const pasos = ["CONFIRMADO", "EN_PREPARACION", "EN_CAMINO", "ENTREGADO"]
  * Panel lateral con el detalle de un pedido:
  * línea de tiempo de estados, productos, totales, dirección y pago.
  *
+ * PedidoResponse solo trae comercioId/direccionEntregaId (no nombre ni
+ * dirección en texto) y no trae medioPago ni desglose de envío/tarifa.
+ * Ese enriquecido es propio del mock, así que todo eso se trata como
+ * opcional acá.
+ *
  * Props:
  * @param {Object} pedido
  * Pedido seleccionado (PedidoResponse).
@@ -19,13 +25,31 @@ const pasos = ["CONFIRMADO", "EN_PREPARACION", "EN_CAMINO", "ENTREGADO"]
  */
 function OrderDetailPanel({ pedido, onClose }) {
 
+    const { usuario } = useAuth()
+
     /*
      * Hora en la que el pedido pasó por cada estado.
      */
     const horas = Object.fromEntries(
-        pedido.historial.map((paso) => [paso.estado, paso.fecha]))
+        pedido.historial.map((paso) => [paso.estadoNuevo, paso.fechaCambio]))
 
     const cancelado = pedido.estado === "CANCELADO"
+
+    const nombreComercio = pedido.comercio?.nombre ?? `Comercio #${pedido.comercioId}`
+
+    /*
+     * La dirección no viaja como texto: se resuelve buscando, entre las
+     * direcciones guardadas del usuario, la que tiene ese id.
+     */
+    const direccionGuardada = usuario?.direcciones?.find((d) => d.id === pedido.direccionEntregaId)
+
+    const direccionTexto = pedido.direccion
+        ?? (direccionGuardada ? `${direccionGuardada.calle}, ${direccionGuardada.barrio}, ${direccionGuardada.ciudad}` : null)
+
+    const tieneDesglose = pedido.subtotal != null
+
+    const motivoCancelacion = pedido.motivoCancelacion
+        ?? (cancelado ? pedido.historial.at(-1)?.motivo : null)
 
     return (
         <aside className="bg-surface-container-lowest rounded-xl shadow-md p-space-lg flex flex-col gap-space-md lg:sticky lg:top-24">
@@ -43,7 +67,7 @@ function OrderDetailPanel({ pedido, onClose }) {
                     </div>
 
                     <h2 className="font-title-md text-title-md text-on-surface mt-space-xs">
-                        {pedido.comercio.nombre}
+                        {nombreComercio}
                     </h2>
                 </div>
 
@@ -66,7 +90,7 @@ function OrderDetailPanel({ pedido, onClose }) {
                 {cancelado ? (
                     <p className="font-body-md text-body-md text-error flex items-start gap-space-xs">
                         <span className="material-symbols-outlined text-[18px]">cancel</span>
-                        {pedido.motivoCancelacion ?? "El pedido fue cancelado."}
+                        {motivoCancelacion ?? "El pedido fue cancelado."}
                     </p>
                 ) : (
                     <div className="relative">
@@ -124,7 +148,7 @@ function OrderDetailPanel({ pedido, onClose }) {
                                 <span className="w-5 h-5 rounded bg-surface-container flex items-center justify-center text-primary font-caption-bold text-caption-bold">
                                     {item.cantidad}
                                 </span>
-                                {item.nombre}
+                                {item.nombreProducto}
                             </span>
 
                             <span className="font-body-md-medium text-body-md-medium text-on-surface">
@@ -138,29 +162,33 @@ function OrderDetailPanel({ pedido, onClose }) {
             {/* Totales */}
             <div className="bg-surface rounded-lg p-space-sm flex flex-col gap-1.5 font-body-md text-body-md text-on-surface-variant">
 
-                <div className="flex justify-between">
-                    <span>Subtotal</span>
-                    <span>{formatearPrecio(pedido.subtotal)}</span>
-                </div>
+                {tieneDesglose && (
+                    <>
+                        <div className="flex justify-between">
+                            <span>Subtotal</span>
+                            <span>{formatearPrecio(pedido.subtotal)}</span>
+                        </div>
 
-                <div className="flex justify-between">
-                    <span>Envío</span>
-                    <span>{formatearPrecio(pedido.envio)}</span>
-                </div>
+                        <div className="flex justify-between">
+                            <span>Envío</span>
+                            <span>{formatearPrecio(pedido.envio)}</span>
+                        </div>
 
-                <div className="flex justify-between">
-                    <span>Tarifa de servicio</span>
-                    <span>{formatearPrecio(pedido.tarifaServicio)}</span>
-                </div>
+                        <div className="flex justify-between">
+                            <span>Tarifa de servicio</span>
+                            <span>{formatearPrecio(pedido.tarifaServicio)}</span>
+                        </div>
 
-                {pedido.descuento > 0 && (
-                    <div className="flex justify-between text-primary">
-                        <span>Descuento por cupón</span>
-                        <span>- {formatearPrecio(pedido.descuento)}</span>
-                    </div>
+                        {pedido.descuento > 0 && (
+                            <div className="flex justify-between text-primary">
+                                <span>Descuento por cupón</span>
+                                <span>- {formatearPrecio(pedido.descuento)}</span>
+                            </div>
+                        )}
+
+                        <div className="border-t border-surface-container my-1" />
+                    </>
                 )}
-
-                <div className="border-t border-surface-container my-1" />
 
                 <div className="flex justify-between items-baseline">
                     <span className="font-title-md text-title-md text-on-surface">Total</span>
@@ -173,15 +201,19 @@ function OrderDetailPanel({ pedido, onClose }) {
             {/* Dirección y pago */}
             <div className="flex flex-col gap-space-xs font-caption-sm text-caption-sm text-on-surface-variant">
 
-                <span className="flex items-start gap-space-xs">
-                    <span className="material-symbols-outlined text-[18px] text-primary">location_on</span>
-                    {pedido.direccion}
-                </span>
+                {direccionTexto && (
+                    <span className="flex items-start gap-space-xs">
+                        <span className="material-symbols-outlined text-[18px] text-primary">location_on</span>
+                        {direccionTexto}
+                    </span>
+                )}
 
-                <span className="flex items-center gap-space-xs">
-                    <span className="material-symbols-outlined text-[18px]">payment</span>
-                    {pedido.medioPago}
-                </span>
+                {pedido.medioPago && (
+                    <span className="flex items-center gap-space-xs">
+                        <span className="material-symbols-outlined text-[18px]">payment</span>
+                        {pedido.medioPago}
+                    </span>
+                )}
             </div>
         </aside>
     )

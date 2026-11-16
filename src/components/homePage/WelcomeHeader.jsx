@@ -11,10 +11,16 @@
  * @param {Function} onChangeAddress
  * Se ejecuta al hacer clic en "Cambiar dirección".
  *
+ * @param {boolean} hasAddress
+ * Indica si el usuario ya tiene una dirección cargada.
+ *
+ * @param {Function} onAddAddress
+ * Se ejecuta al hacer clic en "Agregar dirección" (sin dirección cargada).
+ *
  * @param {Object} coupon
  * Cupón destacado con la forma { label, title }.
  */
-function WelcomeHeader({ userName, address, onChangeAddress, coupon }) {
+function WelcomeHeader({ userName, address, onChangeAddress, hasAddress, onAddAddress, coupon }) {
 
     return (
         <section className="flex flex-col md:flex-row md:items-end justify-between gap-space-md">
@@ -42,30 +48,46 @@ function WelcomeHeader({ userName, address, onChangeAddress, coupon }) {
                 {/* Dirección de entrega */}
                 <div className="flex flex-wrap items-center gap-space-xs text-on-surface-variant pt-space-2xs">
 
-                    <span className="material-symbols-outlined text-primary-container text-[20px]">
-                        near_me
-                    </span>
+                    {hasAddress ? (
+                        <>
+                            <span className="material-symbols-outlined text-primary-container text-[20px]">
+                                near_me
+                            </span>
 
-                    <span className="font-body-md-medium text-body-md-medium text-on-surface">
-                        {address}
-                    </span>
+                            <span className="font-body-md-medium text-body-md-medium text-on-surface">
+                                {address}
+                            </span>
 
-                    <span className="text-secondary opacity-40">
-                        •
-                    </span>
+                            <span className="text-secondary opacity-40">
+                                •
+                            </span>
 
-                    <button
-                        type="button"
-                        onClick={onChangeAddress}
-                        className="text-primary font-body-md-medium text-body-md-medium hover:underline inline-flex items-center gap-0.5 cursor-pointer"
-                    >
+                            <button
+                                type="button"
+                                onClick={onChangeAddress}
+                                className="text-primary font-body-md-medium text-body-md-medium hover:underline inline-flex items-center gap-0.5 cursor-pointer"
+                            >
 
-                        Cambiar dirección
+                                Cambiar dirección
 
-                        <span className="material-symbols-outlined text-[16px]">
-                            expand_more
-                        </span>
-                    </button>
+                                <span className="material-symbols-outlined text-[16px]">
+                                    expand_more
+                                </span>
+                            </button>
+                        </>
+                    ) : (
+                        <button
+                            type="button"
+                            onClick={onAddAddress}
+                            className="text-primary font-body-md-medium text-body-md-medium hover:underline inline-flex items-center gap-1 cursor-pointer"
+                        >
+                            <span className="material-symbols-outlined text-[18px]">
+                                add_location_alt
+                            </span>
+
+                            Agregar dirección
+                        </button>
+                    )}
                 </div>
             </div>
 

@@ -13,12 +13,12 @@ const USE_MOCK = true;
  * Inicia sesión y, con el id que devuelve, pide los datos
  * del usuario (GET /api/v1/users/{id}). Guarda todo en sessionStorage.
  */
-export async function login(username, password) {
+export async function login(email, password) {
 
     let data;
 
     if (USE_MOCK) {
-        data = await loginMock(username, password);
+        data = await loginMock(email, password);
     } else {
 
         const r = await fetch(`${API}/login`, {
@@ -26,7 +26,7 @@ export async function login(username, password) {
             headers: {
                 'Content-Type': 'application/json'
             },
-            body: JSON.stringify({ username, password })
+            body: JSON.stringify({ email, password })
         });
 
         if (!r.ok) {
@@ -40,7 +40,7 @@ export async function login(username, password) {
     sessionStorage.setItem('token', data.token);
 
     try {
-        const usuario = await obtenerUsuarioPorId(data.id);
+        const usuario = await obtenerUsuarioPorId(data.usuarioId);
 
         sessionStorage.setItem('usuario', JSON.stringify({
             id: usuario.id,
@@ -48,7 +48,7 @@ export async function login(username, password) {
             apellido: usuario.apellido,
             email: usuario.email,
             telefono: usuario.telefono,
-            rol: data.rol,
+            rol: usuario.rol,
             direcciones: usuario.direcciones
         }));
 
@@ -65,6 +65,11 @@ export async function login(username, password) {
  * POST /api/v1/auth/register
  *
  * Crea un usuario nuevo. No inicia la sesión: de eso se encarga login().
+ *
+ * RegistrarUsuarioRequest solo acepta { nombre, apellido, email, telefono, password }.
+ * La dirección que carga el formulario no tiene dónde ir todavía
+ * (no hay campo para eso ni un endpoint de direcciones en este swagger),
+ * así que no se manda al backend real.
  */
 export async function register(datos) {
 
@@ -72,12 +77,14 @@ export async function register(datos) {
         return registerMock(datos);
     }
 
+    const { nombre, apellido, email, telefono, password } = datos;
+
     const r = await fetch(`${API}/register`, {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
         },
-        body: JSON.stringify(datos)
+        body: JSON.stringify({ nombre, apellido, email, telefono, password })
     });
 
     if (r.status === 409) {

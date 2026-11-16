@@ -2,7 +2,7 @@
  * Cómo se muestra cada estado del pedido (Módulo Pedidos).
  */
 export const estadosPedido = {
-    PENDIENTE_PAGO: {
+    BORRADOR: {
         label: "Pendiente de pago",
         icon: "schedule",
         classes: "bg-surface-container-high text-on-surface-variant",
@@ -37,7 +37,7 @@ export const estadosPedido = {
 /*
  * Estados que se consideran "en curso".
  */
-export const estadosEnCurso = ["PENDIENTE_PAGO", "CONFIRMADO", "EN_PREPARACION", "EN_CAMINO"]
+export const estadosEnCurso = ["BORRADOR", "CONFIRMADO", "EN_PREPARACION", "EN_CAMINO"]
 
 export function formatearPrecio(valor) {
     return `$ ${valor.toLocaleString("es-AR")}`

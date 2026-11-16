@@ -1,38 +1,118 @@
-import { BASE_URL } from './api';
-import { obtenerToken } from './authServicie';
-import { crearPedidoMock, aplicarCuponMock, listarPedidosMock } from './mocks/pedidosMock';
+import { PEDIDOS_URL } from './api';
+import { obtenerToken, obtenerUsuario } from './authServicie';
+import { crearPedidoMock, agregarItemsMock, confirmarPedidoMock, consultarPedidoMock, aplicarCuponMock, listarPedidosMock } from './mocks/pedidosMock';
 
-const API = `${BASE_URL}/pedidos`;
+const API = `${PEDIDOS_URL}/api/v1/orders`;
 
 // Cambiar a false cuando el Módulo Pedidos esté disponible
-const USE_MOCK = false;
-// Se puso en false el 31/10/26 para empezar a conecetar con el modulo de pedidos
+const USE_MOCK = true;
+// Se puso en true de nuevo: la PC del equipo de Pedidos (192.168.1.160) no responde desde esta red.
 
+/*
+ * El Módulo Pedidos no usa Authorization Bearer: identifica al cliente
+ * con el header X-Cliente-Id (ver swagger, ninguna ruta de Pedidos
+ * tiene "security: bearerAuth"). Se manda igual el token por las dudas.
+ */
 function headers() {
     return {
         'Content-Type': 'application/json',
-        'Authorization': `Bearer ${obtenerToken()}`
+        'Authorization': `Bearer ${obtenerToken()}`,
+        'X-Cliente-Id': obtenerUsuario()?.id
     };
 }
 
 /**
- * API-04 POST /pedidos
- * DTO-04 CrearPedidoRequest -> DTO-05 PedidoResponse
+ * CU-01 POST /orders
+ * Crea el pedido en BORRADOR, sin items y con total cero.
  */
-export async function crearPedido(pedidoRequest) {
+export async function crearPedido({ comercioId, direccionEntregaId }) {
 
     if (USE_MOCK) {
-        return crearPedidoMock(pedidoRequest);
+        return crearPedidoMock({ comercioId, direccionEntregaId });
     }
 
     const r = await fetch(API, {
         method: 'POST',
         headers: headers(),
-        body: JSON.stringify(pedidoRequest)
+        body: JSON.stringify({ comercioId, direccionEntregaId })
     });
 
     if (!r.ok) {
         throw new Error('No se pudo crear el pedido. Intentá nuevamente.');
+    }
+
+    return r.json();
+}
+
+/**
+ * CU-02 POST /orders/{id}/items
+ * Carga las líneas del carrito en un pedido en BORRADOR.
+ * No se manda precioUnitario: el backend lo calcula contra el Catálogo.
+ */
+export async function agregarItems(pedidoId, items) {
+
+    if (USE_MOCK) {
+        return agregarItemsMock(pedidoId, items);
+    }
+
+    const r = await fetch(`${API}/${pedidoId}/items`, {
+        method: 'POST',
+        headers: headers(),
+        body: JSON.stringify({
+            items: items.map(({ productoId, cantidad }) => ({ productoId, cantidad }))
+        })
+    });
+
+    if (!r.ok) {
+        throw new Error('No se pudieron cargar los productos del pedido.');
+    }
+
+    return r.json();
+}
+
+/**
+ * CU-03 POST /orders/{id}/confirm
+ * Revalida el pedido, procesa el cobro con Pagos y lo pasa a CONFIRMADO.
+ */
+export async function confirmarPedido(pedidoId, medioPago) {
+
+    if (USE_MOCK) {
+        return confirmarPedidoMock(pedidoId, medioPago);
+    }
+
+    const r = await fetch(`${API}/${pedidoId}/confirm`, {
+        method: 'POST',
+        headers: headers(),
+        body: JSON.stringify({ medioPago })
+    });
+
+    if (!r.ok) {
+        const data = await r.json().catch(() => ({}));
+        const error = new Error(data.message ?? 'No se pudo confirmar el pedido.');
+        error.codigo = data.code;
+        throw error;
+    }
+
+    return r.json();
+}
+
+/**
+ * CU-05 GET /orders/{id}
+ * Devuelve el pedido con sus items y su historial de estados.
+ */
+export async function consultarPedido(pedidoId) {
+
+    if (USE_MOCK) {
+        return consultarPedidoMock(pedidoId);
+    }
+
+    const r = await fetch(`${API}/${pedidoId}`, {
+        headers: headers()
+    });
+
+    if (!r.ok) {
+        const data = await r.json().catch(() => ({}));
+        throw new Error(data.message ?? 'No se pudo obtener el pedido.');
     }
 
     return r.json();

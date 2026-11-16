@@ -3,7 +3,7 @@ import { obtenerToken } from './authServicie';
 import { obtenerCatalogoMock } from './mocks/catalogoMock';
 import placeholderImage from '../assets/deliverygo_logo.png';
 
-const API = `${BASE_URL}/api/v1/catalog`;
+const API = `${BASE_URL}/api/v1/catalogo`;
 
 // Cambiar a false cuando el Módulo Catálogo esté disponible
 const USE_MOCK = true;

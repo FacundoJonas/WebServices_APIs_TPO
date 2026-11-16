@@ -21,13 +21,13 @@ const usuariosMock = [
     }
 ];
 
-export async function loginMock(username, password) {
+export async function loginMock(email, password) {
 
     // Simulamos una pequeña demora del servidor
     await new Promise(resolve => setTimeout(resolve, 500));
 
     const usuario = usuariosMock.find(
-        u => u.username === username && u.password === password
+        u => u.username === email && u.password === password
     );
 
     if (!usuario) {
@@ -44,9 +44,7 @@ export async function loginMock(username, password) {
 
     return {
         token,
-        id: usuario.id,
-        username: usuario.username,
-        rol: usuario.rol
+        usuarioId: usuario.id
     };
 }
 
@@ -83,7 +81,9 @@ export async function registerMock(datos) {
         apellido: datos.apellido,
         email: datos.email,
         telefono: datos.telefono,
-        direcciones: [{ id: 1, etiqueta: "Casa", ...datos.direccion }]
+        rol: "CLIENTE",
+        // El registro ya no pide dirección, así que arranca sin ninguna.
+        direcciones: []
     });
 
     return { id, email: datos.email, rol: "CLIENTE" };

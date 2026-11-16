@@ -14,6 +14,12 @@ function ActiveOrderBanner({ pedido, onTrack }) {
 
     const estado = estadosPedido[pedido.estado]?.label ?? pedido.estado
 
+    /*
+     * PedidoResponse solo trae comercioId, sin nombre: el nombre del
+     * comercio es un enriquecido propio del mock, por eso es opcional.
+     */
+    const nombreComercio = pedido.comercio?.nombre ?? `Comercio #${pedido.comercioId}`
+
     return (
         <div className="relative overflow-hidden rounded-xl bg-gradient-to-r from-primary to-primary-container p-space-lg text-on-primary shadow-lg flex flex-col md:flex-row md:items-center justify-between gap-space-md">
 
@@ -41,7 +47,7 @@ function ActiveOrderBanner({ pedido, onTrack }) {
                     </div>
 
                     <p className="font-title-md text-title-md mt-0.5">
-                        Tu pedido de {pedido.comercio.nombre} está {estado.toLowerCase()}
+                        Tu pedido de {nombreComercio} está {estado.toLowerCase()}
                         {pedido.minutosEstimados && ` · llega en ${pedido.minutosEstimados} min`}
                     </p>
 

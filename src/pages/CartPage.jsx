@@ -7,8 +7,7 @@ import PurchaseSummary from "../components/cartPage/PurchaseSummary"
 import EmptyCart from "../components/cartPage/EmptyCart"
 
 import { useCart } from "../context/useCart"
-import { crearPedido, aplicarCupon } from "../servicies/pedidosServicie"
-import { useAuth } from "../context/useAuth"
+import { crearPedido, agregarItems, aplicarCupon } from "../servicies/pedidosServicie"
 
 /**
  * PNT-04 Carrito (CU-03).
@@ -37,9 +36,6 @@ function CartPage() {
         getCartVersion,
     } = useCart()
 
-    // Usuario logueado (AuthContext)
-    const { usuario } = useAuth()
-
     /*
      * React Router no resetea el scroll al cambiar de ruta.
      */
@@ -61,25 +57,27 @@ function CartPage() {
 
     /**
      * Devuelve el pedido actual o lo crea en el Módulo Pedidos.
-     * Arma el DTO-04 CrearPedidoRequest.
+     *
+     * CU-01: crea el pedido vacío (comercio + dirección de entrega).
+     * CU-02: carga los items del carrito en ese pedido.
      */
     async function getOrCreateOrder() {
 
         if (order) return order
 
         const newOrder = await crearPedido({
-            usuarioId: usuario?.id,
             comercioId: store.id,
-            items: cart.map((item) => ({
-                productoId: item.id,
-                cantidad: item.quantity,
-                precioUnitario: item.price,
-            })),
-            notas: notes,
             direccionEntregaId: address.id,
         })
 
-        return newOrder
+        const items = cart.map((item) => ({
+            productoId: item.id,
+            cantidad: item.quantity,
+            precioUnitario: item.price,
+            nombreProducto: item.name,
+        }))
+
+        return agregarItems(newOrder.id, items)
     }
 
     /**

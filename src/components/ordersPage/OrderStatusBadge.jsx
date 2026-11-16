@@ -9,7 +9,7 @@ import { estadosPedido } from "./orderStatus"
  */
 function OrderStatusBadge({ estado }) {
 
-    const config = estadosPedido[estado] ?? estadosPedido.PENDIENTE_PAGO
+    const config = estadosPedido[estado] ?? estadosPedido.BORRADOR
 
     return (
         <span className={`inline-flex items-center gap-1.5 px-space-sm py-1 rounded-full font-caption-bold text-caption-bold whitespace-nowrap ${config.classes}`}>
