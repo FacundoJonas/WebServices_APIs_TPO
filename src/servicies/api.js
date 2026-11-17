@@ -22,6 +22,3 @@ export const LOGISTICA_URL = import.meta.env.VITE_REPARTIDORES_LOGISTICA_URL ?? 
 export const NOTIF_URL = import.meta.env.VITE_NOTIF_URL ?? '/notif-api';
 
 export const ANALITICA_URL = import.meta.env.VITE_OPINIONES_ANALITICA_URL ?? '/opiniones-analitica-api';
-
-// Transitorio: lo usan los servicios hasta migrar a su prefijo propio.
-export const BASE_URL = import.meta.env.VITE_API_URL ?? 'http://localhost:8089';
