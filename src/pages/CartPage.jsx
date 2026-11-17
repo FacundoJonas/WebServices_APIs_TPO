@@ -76,7 +76,11 @@ function CartPage() {
                 precioUnitario: item.price,
             })),
             notas: notes,
-            direccionEntregaId: address.id,
+            // La dirección real es la del Módulo Usuarios (la predeterminada);
+            // la del carrito de demostración queda como respaldo del mock.
+            direccionEntregaId: usuario?.direcciones?.find((d) => d.predeterminada)?.id
+                ?? usuario?.direcciones?.[0]?.id
+                ?? address.id,
         })
 
         return newOrder
