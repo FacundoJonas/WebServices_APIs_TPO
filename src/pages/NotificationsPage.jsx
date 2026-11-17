@@ -1,6 +1,10 @@
 import { useState, useEffect } from "react"
 
-import { obtenerNotificacion } from "../servicies/notificacionesServicie.js"
+import { useAuth } from "../context/useAuth"
+import {
+    listarNotificacionesDeUsuario,
+    marcarNotificacionLeida,
+} from "../servicies/notificacionesServicie.js"
 
 import InfoTile from "../components/notificationsPage/InfoTile.jsx"
 import FilterTabs from "../components/notificationsPage/FilterTabs.jsx"
@@ -35,141 +39,21 @@ const filters = [
 
 /*
  * Grupos temporales en los que se dividen las notificaciones.
+ * El servicio asigna "group" según la fecha de cada notificación.
  */
 const groups = [
     {
         id: "today",
         title: "Hoy",
-        subtitle: "2 notificaciones recientes",
         highlight: true,
     },
     {
         id: "this-week",
         title: "Esta semana",
-        subtitle: "• 2 registros",
     },
     {
         id: "older",
         title: "Anteriores",
-        subtitle: "• Historial de cuenta",
-    },
-]
-
-/*
- * Notificaciones iniciales.
- *
- * Cada notificación contiene:
- * - id: identificador único.
- * - group: grupo temporal al que pertenece.
- * - type: tipo usado por los filtros.
- * - read: indica si ya fue leída.
- * - icon / iconClass: ícono y sus colores.
- * - badge / badgeClass: etiqueta y sus colores.
- * - time, title, description: contenido visible.
- * - action: acción de la derecha { kind, label, icon? }.
- */
-const initialNotifications = [
-    {
-        id: 1,
-        group: "today",
-        type: "order",
-        read: false,
-        icon: "two_wheeler",
-        iconClass: "bg-primary-fixed/30 text-primary-container",
-        badge: "En tránsito",
-        badgeClass: "bg-primary-fixed text-on-primary-container",
-        time: "Hace 6 minutos",
-        title: "Tu pedido #AR-8942 está en camino",
-        description:
-            "El repartidor Matías G. está a 8 cuadras de tu domicilio en Av. Corrientes 1450. Tocá acá para ver el seguimiento en vivo en el mapa.",
-        action: {
-            kind: "link",
-            label: "Ver mapa",
-        },
-    },
-    {
-        id: 2,
-        group: "today",
-        type: "promo",
-        read: false,
-        icon: "local_offer",
-        iconClass: "bg-surface-container text-tertiary",
-        badge: "Promoción Especial",
-        badgeClass: "bg-surface-container-high text-on-surface",
-        time: "Hace 2 horas",
-        title: "25% de descuento en Pizzería Güerrín",
-        /*
-         * Como el archivo es .jsx, la descripción puede
-         * incluir JSX para resaltar el cupón.
-         */
-        description: (
-            <>
-                Aprovechá hoy en tu cena el cupón{" "}
-                <strong className="font-body-md-medium text-on-surface bg-surface-container-low px-1 rounded">
-                    GUERRIN25
-                </strong>{" "}
-                en todas las pizzas grandes al molde.
-            </>
-        ),
-        action: {
-            kind: "button",
-            label: "Pedir con descuento",
-        },
-    },
-    {
-        id: 3,
-        group: "this-week",
-        type: "order",
-        read: true,
-        icon: "task_alt",
-        iconClass: "bg-surface-container text-primary-container",
-        badge: "Entregado",
-        badgeClass: "bg-surface-container-low text-secondary",
-        time: "Ayer a las 21:40 hs",
-        title: "Pedido #AR-8810 entregado con éxito",
-        description:
-            "Tu pedido de Sushiclub Recoleta fue entregado. ¡Dejanos tu reseña para ayudar a la comunidad!",
-        action: {
-            kind: "button",
-            label: "Calificar pedido",
-            icon: "star",
-        },
-    },
-    {
-        id: 4,
-        group: "this-week",
-        type: "system",
-        read: true,
-        icon: "shield",
-        iconClass: "bg-surface-container text-secondary",
-        badge: "Seguridad",
-        badgeClass: "bg-surface-container-low text-secondary",
-        time: "Martes 14:15 hs",
-        title: "Nueva tarjeta de crédito vinculada",
-        description:
-            "Se agregó con éxito la tarjeta terminada en •••• 9012 a tu billetera DeliveryGo.",
-        action: {
-            kind: "verified",
-            label: "Verificado",
-        },
-    },
-    {
-        id: 5,
-        group: "older",
-        type: "system",
-        read: true,
-        icon: "workspace_premium",
-        iconClass: "bg-primary-fixed/20 text-primary",
-        badge: "Membresía Activa",
-        badgeClass: "bg-primary-fixed-dim/30 text-on-primary-fixed-variant",
-        time: "Hace 2 semanas",
-        title: "¡Bienvenido a DeliveryGo Prime!",
-        description:
-            "Tenés 30 días de envíos sin cargo en comercios seleccionados y beneficios exclusivos.",
-        action: {
-            kind: "text",
-            label: "Ver beneficios Prime",
-        },
     },
 ]
 
@@ -180,33 +64,62 @@ const initialNotifications = [
  * - Ver el pedido actualmente en tránsito.
  * - Filtrar notificaciones por tipo.
  * - Marcar una o todas las notificaciones como leídas.
- * - Alternar la vista de "estado vacío".
+ *
+ * Los datos vienen del Módulo Notificaciones (006) a través de
+ * notificacionesServicie.js, que ya los entrega con la forma de la tarjeta.
  */
 function NotificationsPage() {
 
-    useEffect(() => {
-    obtenerNotificacion(1)
-        .then(datos => console.log("Notificación del 006:", datos))
-        .catch(error => console.error("Falló la prueba:", error.message))
-    }, [])
+    const { usuario } = useAuth()
 
     /*
-     * Lista de notificaciones.
+     * Lista de notificaciones (ya traducidas por el servicio).
      * Se guarda en estado porque el campo "read" puede cambiar.
      */
-    const [notifications, setNotifications] = useState(initialNotifications)
+    const [notifications, setNotifications] = useState([])
+    const [loading, setLoading] = useState(true)
+    const [error, setError] = useState("")
+
+    /*
+     * Se incrementa para volver a pedir las notificaciones.
+     */
+    const [retryCount, setRetryCount] = useState(0)
+
+    /*
+     * Pide el historial del usuario al montar la página y en cada reintento.
+     * "ignore" evita guardar la respuesta si la página se desmontó antes.
+     */
+    useEffect(() => {
+
+        let ignore = false
+
+        listarNotificacionesDeUsuario(usuario?.id)
+            .then((lista) => {
+                if (!ignore) setNotifications(lista)
+            })
+            .catch((e) => {
+                if (!ignore) setError(e.message)
+            })
+            .finally(() => {
+                if (!ignore) setLoading(false)
+            })
+
+        return () => {
+            ignore = true
+        }
+    }, [usuario?.id, retryCount])
+
+    function handleRetry() {
+        setError("")
+        setLoading(true)
+        setRetryCount((n) => n + 1)
+    }
 
     /*
      * Filtro seleccionado.
      * Valores posibles: "all", "order", "promo" o "system".
      */
     const [activeFilter, setActiveFilter] = useState("all")
-
-    /*
-     * Determina si se muestra la vista vacía
-     * en lugar de la lista de notificaciones.
-     */
-    const [showEmpty, setShowEmpty] = useState(false)
 
     /*
      * Cantidad de notificaciones sin leer.
@@ -224,34 +137,52 @@ function NotificationsPage() {
             activeFilter === "all" || notification.type === activeFilter
     )
 
-    /**
-     * Marca una notificación puntual como leída.
+    /*
+     * Cambia "read" en la lista local (sin volver a pedir todo).
      */
-    function markAsRead(id) {
-
+    function setRead(ids, read) {
         setNotifications((current) =>
             current.map((notification) =>
-                notification.id === id
-                    ? {
-                        ...notification,
-                        read: true,
-                    }
-                    : notification
+                ids.includes(notification.id) ? { ...notification, read } : notification
             )
         )
     }
 
     /**
-     * Marca todas las notificaciones como leídas.
+     * Marca una notificación como leída (CU-10 del 006).
+     *
+     * Actualización optimista: se marca en pantalla enseguida y se avisa
+     * al 006. Si el 006 falla, se vuelve atrás.
      */
-    function markAllAsRead() {
+    function markAsRead(id) {
 
-        setNotifications((current) =>
-            current.map((notification) => ({
-                ...notification,
-                read: true,
-            }))
-        )
+        const notification = notifications.find((n) => n.id === id)
+
+        if (!notification || notification.read) return
+
+        setRead([id], true)
+
+        marcarNotificacionLeida(id).catch((e) => {
+            console.error(e)
+            setRead([id], false)
+        })
+    }
+
+    /**
+     * Marca todas las no leídas. Se envían todas a la vez y se vuelven
+     * atrás solo las que fallaron.
+     */
+    async function markAllAsRead() {
+
+        const ids = notifications.filter((n) => !n.read).map((n) => n.id)
+
+        setRead(ids, true)
+
+        const resultados = await Promise.allSettled(ids.map((id) => marcarNotificacionLeida(id)))
+
+        const fallidas = ids.filter((_, i) => resultados[i].status === "rejected")
+
+        if (fallidas.length > 0) setRead(fallidas, false)
     }
 
     return (
@@ -302,22 +233,6 @@ function NotificationsPage() {
                   {unreadCount === 0 ? "Todas leídas" : "Marcar todas como leídas"}
                 </span>
                             </button>
-
-                            {/* Alternar estado vacío */}
-                            <button
-                                type="button"
-                                onClick={() => setShowEmpty((current) => !current)}
-                                className="inline-flex items-center gap-space-2xs px-space-sm py-space-xs bg-surface-container-lowest hover:bg-surface-container text-secondary font-caption-bold text-caption-bold rounded-lg transition-colors"
-                            >
-
-                <span className="material-symbols-outlined text-[18px]">
-                  visibility
-                </span>
-
-                                <span>
-                  {showEmpty ? "Ver lista de notificaciones" : "Ver estado vacío"}
-                </span>
-                            </button>
                         </div>
                     </div>
 
@@ -343,12 +258,40 @@ function NotificationsPage() {
                     </div>
                 </div>
 
-                {/* Lista de notificaciones o estado vacío */}
-                {showEmpty ? (
+                {/* Carga, error, vacío o lista */}
+                {loading ? (
 
-                    <EmptyState
-                        onRestore={() => setShowEmpty(false)}
-                    />
+                    <div className="flex flex-col gap-space-md">
+                        {[1, 2, 3].map((n) => (
+                            <div key={n} className="h-24 rounded-xl bg-surface-container-lowest shadow-sm animate-pulse" />
+                        ))}
+                    </div>
+
+                ) : error ? (
+
+                    <div role="alert" className="flex flex-col items-center text-center gap-space-md py-space-2xl rounded-xl bg-surface-container-lowest shadow-sm">
+
+                        <span className="material-symbols-outlined text-[40px] text-error">
+                            cloud_off
+                        </span>
+
+                        <p className="font-body-lg text-body-lg text-on-surface-variant">
+                            {error}
+                        </p>
+
+                        <button
+                            type="button"
+                            onClick={handleRetry}
+                            className="px-space-lg py-space-xs rounded-full bg-primary hover:bg-on-primary-fixed-variant text-on-primary font-body-md-medium text-body-md-medium transition-all flex items-center gap-space-xs"
+                        >
+                            <span className="material-symbols-outlined text-[18px]">refresh</span>
+                            Reintentar
+                        </button>
+                    </div>
+
+                ) : notifications.length === 0 ? (
+
+                    <EmptyState onRestore={handleRetry} />
 
                 ) : (
 
@@ -372,7 +315,7 @@ function NotificationsPage() {
                                 <NotificationGroup
                                     key={group.id}
                                     title={group.title}
-                                    subtitle={group.subtitle}
+                                    subtitle={`${groupNotifications.length} ${groupNotifications.length === 1 ? "notificación" : "notificaciones"}`}
                                     highlight={group.highlight}
                                     notifications={groupNotifications}
                                     onRead={markAsRead}
