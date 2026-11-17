@@ -13,11 +13,14 @@ hay que ajustarlos a la matriz maestra del equipo para que no choquen con los ya
 
 | CU | Nombre | Prioridad | Pantalla | Estado en el código |
 |---|---|---|---|---|
-| CU-06 | Consultar o modificar perfil y direcciones | Evolución | PNT-11 Mi perfil (`/perfil`) | ❌ Falta |
-| CU-07 | Consultar historial de pedidos | Evolución | PNT-09 Mis pedidos (`/pedidos`) | ❌ Falta |
-| CU-08 | Visualizar notificaciones | Evolución | PNT-12 Notificaciones (`/notificaciones`) | ✅ `NotificationsPage` |
-| CU-09 | Calificar comercio y repartidor | Evolución | PNT-13 Calificar (`/pedido`) | ✅ `OrderReviewPage` |
-| CU-10 | Visualizar métricas administrativas | Evolución | PNT-10 Métricas (`/admin/metricas`) | ❌ Falta |
+| CU-06 | Consultar o modificar perfil y direcciones | Evolución | PNT-11 Mi perfil (`/perfil`) | ✅ `ProfilePage` · `userServicie` (users + addresses) |
+| CU-07 | Consultar historial de pedidos | Evolución | PNT-09 Mis pedidos (`/pedidos`) | 🟡 `OrdersPage` con mock: el contrato no tiene listado por usuario (D4) |
+| CU-08 | Visualizar notificaciones | Evolución | PNT-12 Notificaciones (`/notificaciones`) | ✅ `NotificationsPage` · conectado al módulo |
+| CU-09 | Calificar comercio y repartidor | Evolución | PNT-13 Calificar (`/pedido`) | ✅ `OrderReviewPage` · `opinionesServicie` (`POST /reviews`) |
+| CU-10 | Visualizar métricas administrativas | Evolución | PNT-10 Métricas (`/admin/metricas`) | ✅ `MetricsPage` · `analiticaServicie` (`/analytics/dashboard`) |
+
+> Estado actualizado el 2026-11-16 contra el contrato consolidado `doc/swagger-ecosistema.yaml` (v1.4.0).
+> Endpoints reales, DTOs y pendientes por módulo: ver `docs/integraciones-equipos.md`.
 
 ---
 
@@ -75,7 +78,7 @@ interfaz respeta o valida antes de llamar al módulo dueño, que es quien las ap
 | Pantalla / componentes | PNT-09 Mis pedidos · CMP-23 Tarjeta de pedido · reutiliza `FilterTabs` y `EmptyState` (Notificaciones) |
 | Navegación | NAV-13 Header → Mis pedidos · NAV-14 Pedido en curso → PNT-08 Seguimiento · NAV-15 Pedido entregado → PNT-13 Calificar |
 | Secuencia | SEC-07 |
-| API consumida / DTO | API-14 `GET /api/v1/orders?userId={id}` → DTO-13 lista de PedidoResumenResponse · API-15 `GET /api/v1/orders/{id}` → DTO-05 PedidoResponse |
+| API consumida / DTO | API-14 listado de pedidos del usuario *(no existe en ningún contrato de Pedidos — D4, queda con mock)* → DTO-13 lista de PedidoResumenResponse · API-15 `GET /api/v1/orders/{id}` → DTO-05 PedidoResponse |
 | Integración | INT Pedidos (Equipo 3) |
 
 > **Pendiente de acordar con Pedidos:** el enunciado sólo publica `GET /api/v1/orders/{id}`.
@@ -149,7 +152,7 @@ interfaz respeta o valida antes de llamar al módulo dueño, que es quien las ap
 | Pantalla / componentes | PNT-10 Métricas · CMP-24 Selector de período · CMP-25 Tarjeta de indicador · CMP-26 Gráfico de pedidos por día · CMP-27 Tabla de top comercios · reutiliza `InfoTile` y `RatingSummary` |
 | Navegación | NAV-19 Header (sólo ADMIN) → Métricas · NAV-20 Acceso sin rol → Inicio |
 | Secuencia | SEC-10 |
-| API consumida / DTO | API-18 `GET /api/v1/analytics/dashboard?desde=&hasta=` → DTO-17 TableroResponse |
+| API consumida / DTO | API-18 `GET /api/v1/analytics/dashboard?periodoDesde=&periodoHasta=` → DTO-17 TableroResponse |
 | Integración | INT Opiniones y Analítica (Equipo 7) |
 
 > **Falta en el código:** `ProtectedRoute` hoy sólo controla que haya sesión. Para RN-10 hay que

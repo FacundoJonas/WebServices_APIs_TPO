@@ -23,16 +23,38 @@ npm run dev
 
 La app queda disponible en `http://localhost:5173`.
 
-### Conexión con el backend
+### Conexión con los módulos del ecosistema
 
-La URL del backend se configura con la variable de entorno `VITE_API_URL`.
-Si no está definida, se usa `http://localhost:8089`.
+El Portal consume 7 módulos, cada uno en su propio servidor. El contrato común es
+`doc/swagger-ecosistema.yaml` (consolidado v1.4.0 publicado por la cátedra) y el detalle de
+cada integración está en [`docs/integraciones-equipos.md`](docs/integraciones-equipos.md).
 
-Para cambiarla, creá un archivo `.env` en la raíz:
+El navegador llama a `localhost:5173/<prefijo>/...` y el proxy de Vite lo reenvía al módulo:
 
+| Módulo | Prefijo (`VITE_*_URL`) | Dirección real (`*_PROXY_TARGET`) |
+|---|---|---|
+| Usuarios | `VITE_USUARIOS_URL=/usuarios-api` | `USUARIOS_PROXY_TARGET` |
+| Catálogo | `VITE_CATALOGO_URL=/catalogo-api` | `CATALOGO_PROXY_TARGET` |
+| Pedidos | `VITE_PEDIDOS_URL=/pedidos-api` | `PEDIDOS_PROXY_TARGET` |
+| Pagos | `VITE_PAGOS_URL=/pagos-api` | `PAGOS_PROXY_TARGET` |
+| Logística | `VITE_REPARTIDORES_LOGISTICA_URL=/repartidores-logistica-api` | `REPARTIDORES_LOGISTICA_PROXY_TARGET` |
+| Notificaciones | `VITE_NOTIF_URL=/notif-api` | `NOTIF_PROXY_TARGET` |
+| Opiniones y Analítica | `VITE_OPINIONES_ANALITICA_URL=/opiniones-analitica-api` | `OPINIONES_ANALITICA_PROXY_TARGET` |
+
+Las direcciones compartidas van en `.env`. Para usar otra en tu PC, ponela en `.env.local`
+(tiene prioridad y no se sube). Después de cambiarlas hay que reiniciar `npm run dev`.
+
+Todas las llamadas pasan por `src/servicies/http.js`, que agrega el JWT (`Authorization: Bearer`),
+el `X-Correlation-Id` y traduce los errores del contrato a mensajes para el usuario.
+
+Para verificar que los servicios armen los requests tal como dice el Swagger (sin levantar los módulos):
+
+```bash
+npm run test:contrato
 ```
-VITE_API_URL=http://localhost:8089
-```
+
+El día de integración, los pasos para apagar los mocks de Catálogo, Pedidos y Notificaciones están en
+[`docs/integraciones-equipos.md`](docs/integraciones-equipos.md#6-día-de-integración-1711-catálogo-pedidos-y-notificaciones).
 
 ### Mocks
 
