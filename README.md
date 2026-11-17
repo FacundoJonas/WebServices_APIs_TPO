@@ -55,6 +55,8 @@ npm run test:contrato
 
 El día de integración, los pasos para apagar los mocks de Catálogo, Pedidos y Notificaciones están en
 [`docs/integraciones-equipos.md`](docs/integraciones-equipos.md#6-día-de-integración-1711-catálogo-pedidos-y-notificaciones).
+Los de Usuarios, Opiniones y Analítica (y por qué Pagos y Logística no se consumen directo) están en la
+[sección 7](docs/integraciones-equipos.md#7-resto-de-los-módulos-usuarios-opiniones-y-analítica-pagos-y-logística).
 
 ### Mocks
 

@@ -13,7 +13,7 @@ hay que ajustarlos a la matriz maestra del equipo para que no choquen con los ya
 
 | CU | Nombre | Prioridad | Pantalla | Estado en el código |
 |---|---|---|---|---|
-| CU-06 | Consultar o modificar perfil y direcciones | Evolución | PNT-11 Mi perfil (`/perfil`) | ✅ `ProfilePage` · `userServicie` (users + addresses) |
+| CU-06 | Consultar o modificar perfil y direcciones | Evolución | PNT-11 Mi perfil (`/perfil`) | ✅ `ProfilePage` · `userServicie` (perfil: GET/PUT; direcciones: GET/POST/PATCH default/DELETE) |
 | CU-07 | Consultar historial de pedidos | Evolución | PNT-09 Mis pedidos (`/pedidos`) | 🟡 `OrdersPage` con mock: el contrato no tiene listado por usuario (D4) |
 | CU-08 | Visualizar notificaciones | Evolución | PNT-12 Notificaciones (`/notificaciones`) | ✅ `NotificationsPage` · conectado al módulo |
 | CU-09 | Calificar comercio y repartidor | Evolución | PNT-13 Calificar (`/pedido`) | ✅ `OrderReviewPage` · `opinionesServicie` (`POST /reviews`) |
@@ -57,7 +57,7 @@ interfaz respeta o valida antes de llamar al módulo dueño, que es quien las ap
 | Pantalla / componentes | PNT-11 Mi perfil · CMP-20 Formulario de datos personales · CMP-21 Lista de direcciones · CMP-22 Formulario de nueva dirección |
 | Navegación | NAV-11 Header (avatar) → Mi perfil · NAV-12 Checkout (`DeliveryAddress`) → "Agregar dirección" |
 | Secuencia | SEC-06 |
-| API consumida / DTO | API-11 `GET /api/v1/users/{id}` → DTO-10 UsuarioResponse · API-12 `PUT /api/v1/users/{id}` ← DTO-11 ActualizarUsuarioRequest · API-13 `POST /api/v1/users/{id}/addresses` ← DTO-12 DireccionRequest |
+| API consumida / DTO | API-11 `GET /api/v1/users/{id}` (+ `GET /addresses`) → UsuarioResponse, DireccionResponse[] · API-12 `PUT /api/v1/users/{id}` ← ModificarPerfilRequest { nombre, apellido, email, telefono } · API-13 `POST /api/v1/users/{id}/addresses` ← CrearDireccionRequest { calle, numero, piso, departamento, ciudad, provincia, codigoPostal, predeterminada } · `PATCH /api/v1/users/{id}/addresses/{addressId}/default` · `DELETE /api/v1/users/{id}/addresses/{addressId}` (todos del contrato propio de Usuarios, D7) |
 | Integración | INT Usuarios (Equipo 1) |
 
 ---

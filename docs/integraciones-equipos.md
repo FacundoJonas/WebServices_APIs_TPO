@@ -1,6 +1,6 @@
 # Integración del Portal Web con el ecosistema DeliveryGo
 
-> Equipo Web (Portal integrador) · actualizado el 2026-11-16
+> Equipo Web (Portal integrador) · actualizado el 2026-11-17
 > Contrato de referencia: **`doc/swagger-ecosistema.yaml`** — *DeliveryGo API, Consolidado MVP Ecosistema Completo* v1.4.0
 > (el publicado por la cátedra; es el mismo archivo que `swagger-ecosistema.txt` del repo de Pedidos).
 > Para verlo: <https://editor.swagger.io/> → *File → Import file* con ese archivo.
@@ -78,10 +78,12 @@ Analítica la tiene comentada; Pedidos y Logística no validan JWT. Los GET de C
 | CU-04 | `/pagar` | `pedidosServicie.confirmarPedido` | `POST /api/v1/orders/{id}/confirm` (`X-Cliente-Id`) | ConfirmarPedidoRequest { medioPago } → PedidoResponse | ✅ conectado al Checkout (D1) |
 | CU-04 | — | `pagosServicie.*` | `POST /api/v1/payments`, `GET /api/v1/payments/{codigoPago}` | CrearPagoRequest → PagoResponse | Alineado pero sin uso en pantallas: el cobro lo hace Pedidos (paso 5) |
 | CU-05 | `/inicio` (tarjeta "Pedido en curso") | `pedidosServicie.obtenerPedido` + `homePage/seguimientoPedido.js` | `GET /api/v1/orders/{id}` (`X-Cliente-Id`), cada 20 s hasta ENTREGADO/CANCELADO | PedidoResponse (estado + historial) | ✅ conectado |
-| CU-06 | `/perfil` | `userServicie.obtenerUsuarioPorId` | `GET /api/v1/users/{id}` + `/addresses` ¹ | UsuarioResponse, DireccionResponse | ✅ alineado |
+| CU-06 | `/perfil` | `userServicie.obtenerUsuarioPorId` | `GET /api/v1/users/{id}` + `GET /api/v1/users/{id}/addresses` ¹ | UsuarioResponse, DireccionResponse | ✅ alineado |
+| CU-06 | `/perfil` (datos personales) | `userServicie.actualizarPerfil` | `PUT /api/v1/users/{id}` ¹ | ModificarPerfilRequest → UsuarioResponse | ✅ conectado |
+| CU-06 | `/perfil` (direcciones) | `userServicie.crearDireccion` / `marcarDireccionPredeterminada` / `eliminarDireccion` | `POST /api/v1/users/{id}/addresses`, `PATCH …/addresses/{addressId}/default`, `DELETE …/addresses/{addressId}` ¹ | CrearDireccionRequest → DireccionResponse | ✅ conectado (D12) |
 | CU-07 | `/pedidos` | `pedidosServicie.listarPedidos` | — no existe en ningún contrato | — | 🟡 siempre mock (D4) |
 | CU-08 | `/notificaciones` | `notificacionesServicie.*` | `GET /api/v1/users/{id}/notifications`, `GET/PATCH /api/v1/notifications/{id}[/read]`, `GET /api/v1/channels` | NotificacionResponseDto | ✅ conectado |
-| CU-09 | `/pedido` | `opinionesServicie.crearResena` | `POST /api/v1/reviews` (`X-Usuario-Id`, `X-Correlation-Id`) | ResenaRequest → ResenaResponse | ✅ alineado |
+| CU-09 | `/pedido` | `opinionesServicie.crearResena` | `POST /api/v1/reviews` (`X-Usuario-Id`, `X-Correlation-Id`) | ResenaRequest { pedidoId int64 } → ResenaResponse | ✅ alineado (D10) |
 | CU-09 | `/pedido` | `opinionesServicie.obtenerRating*` | `GET /api/v1/merchants/{id}/rating`, `GET /api/v1/couriers/{id}/rating` | RatingResponse | ✅ listo |
 | CU-10 | `/admin/metricas` | `analiticaServicie.obtenerTablero` | `GET /api/v1/analytics/dashboard?periodoDesde=&periodoHasta=` | DashboardResponse, MetricaResumen | ✅ alineado (parcial) |
 
@@ -106,6 +108,9 @@ desglose envío/tarifa/descuento del pedido, facturación, variación, pedidos p
 | D7 | Direcciones y perfil en el consolidado | Usuarios / cátedra | Se usan los de su Swagger propio (`users/{id}`, `addresses`); falta que estén en el consolidado. |
 | D8 | Tipos de id entre módulos | Pedidos + Usuarios | El código de Pedidos usa `comercioId`/`productoId` numéricos (compatibles con Catálogo) aunque su Swagger diga UUID; cliente y dirección son UUID de su Usuarios simulado (`DatosMock`), y Usuarios usa ids numéricos. El Portal manda el cliente/dirección de prueba de Pedidos cuando el id no es UUID. |
 | D9 | Token para Notificaciones | Notificaciones + Usuarios | Su back exige JWT firmado con la clave compartida (claims `sub`, `role`). Con Usuarios simulado, cargar un token válido en `VITE_TOKEN_DEMO`. |
+| D10 | `pedidoId` de la reseña | Opiniones + Pedidos | `ResenaRequest.pedidoId` es int64, pero Pedidos identifica los pedidos con UUID. Opiniones valida el pedido contra su Pedidos simulado (`PedidosClientMock`: pedidos 1 y 2 ENTREGADOS, 3 EN_CAMINO, todos del usuario 100). Hasta que acuerden el tipo, la reseña se demuestra con el pedido 1 y el usuario 100. El Portal manda el id como número cuando es numérico. |
+| D11 | Identidad y rol en Opiniones/Analítica | Opiniones y Analítica | No validan JWT (clave comentada): el usuario va en `X-Usuario-Id` y el tablero no controla el rol ADMIN en el back; el Portal lo restringe con `ProtectedRoute` (RN-10). Su puerto por defecto es 8089, el mismo que Notificaciones: si corren en la misma máquina, uno tiene que cambiarlo. |
+| D12 | Código postal obligatorio | Usuarios | `CrearDireccionRequest` exige `codigoPostal` (y `numero`, `ciudad`, `provincia`). Se agregó el campo en el registro y en "Agregar dirección". En el Portal, "barrio" se manda como `ciudad` y la zona CABA/GBA como `provincia`. Etiqueta e indicaciones no están en el contrato: quedan sólo en la sesión del Portal. |
 
 ---
 
@@ -146,3 +151,41 @@ En `main` todos los servicios quedan con `USE_MOCK = true`. El 17 sólo hay que 
 7. Errores esperables: producto sin stock (mensaje de Pedidos), comercio inexistente (404), token inválido (401).
 
 **Si algo falla:** volver ese servicio a `USE_MOCK = true`, anotar el motivo en la sección 4 y seguir con el resto.
+
+---
+
+## 7. Resto de los módulos: Usuarios, Opiniones y Analítica, Pagos y Logística
+
+Mismo mecanismo que la sección 6: en `main` quedan con `USE_MOCK = true` y se apagan **de a uno, un commit por archivo**.
+Todos están cubiertos por `npm run test:contrato` (38 controles: Catálogo, Pedidos, Notificaciones, Usuarios, Opiniones y Analítica).
+
+| Módulo | Archivo(s) | Endpoints que empieza a consumir | Proxy en `.env.local` |
+|---|---|---|---|
+| Usuarios (CU-01, CU-06) | `src/servicies/authServicie.js` **y** `src/servicies/userServicie.js` (los dos juntos: el login pide el perfil) | `POST /api/v1/auth/register`, `POST /api/v1/auth/login`, `GET/PUT /api/v1/users/{id}`, `GET/POST /api/v1/users/{id}/addresses`, `PATCH …/addresses/{addressId}/default`, `DELETE …/addresses/{addressId}` | `USUARIOS_PROXY_TARGET` |
+| Opiniones (CU-09) | `src/servicies/opinionesServicie.js` | `POST /api/v1/reviews`, `GET /api/v1/merchants/{id}/rating`, `GET /api/v1/couriers/{id}/rating` | `OPINIONES_ANALITICA_PROXY_TARGET` |
+| Analítica (CU-10) | `src/servicies/analiticaServicie.js` | `GET /api/v1/analytics/dashboard?periodoDesde=&periodoHasta=` | `OPINIONES_ANALITICA_PROXY_TARGET` |
+| Pagos (CU-04) | `src/servicies/pagosServicie.js` | Ninguno desde las pantallas: el cobro lo hace Pedidos (D1). Queda alineado a `POST /api/v1/payments` por si se necesita consultar un pago. | `PAGOS_PROXY_TARGET` |
+| Logística (pasos 7 y 9) | — | Ninguno: el consolidado sólo tiene operaciones de repartidores y entregas para otros módulos, sin GET para el cliente (D5). El seguimiento sale de Pedidos. | — |
+
+**Orden recomendado para apagar los mocks**
+
+1. **Usuarios primero.** Con el login real, el token que emite Usuarios es el que usan Notificaciones (y Catálogo si
+   valida). Requisito: misma `JWT_SECRET` en Usuarios, Notificaciones y Catálogo (D2). Al apagarlo, `VITE_TOKEN_DEMO`
+   deja de usarse.
+2. **Opiniones y Analítica** (un solo módulo, dos archivos, dos commits). Confirmar IP y puerto (D11).
+3. Pagos no se apaga en el Portal: se demuestra a través de Pedidos (sección 6).
+
+**Recorrido para mostrar (pasos 1, 10 y 11 del flujo)**
+
+1. `/login` → "Crear cuenta": `POST /auth/register` y después `POST /auth/login`; la dirección (con código postal)
+   se crea con `POST /users/{id}/addresses` como predeterminada (CU-01, paso 1).
+2. Email repetido → 409 "Ya existe una cuenta con ese correo electrónico". Clave incorrecta → 401.
+3. `/perfil`: editar nombre o teléfono (`PUT /users/{id}`); agregar otra dirección, marcarla predeterminada y
+   eliminar una (CU-06). Si el módulo responde error, el perfil no cambia y se muestra el mensaje.
+4. `/pedido` (calificar): estrellas al comercio y al repartidor → `POST /reviews` (CU-09, paso 10). Por D10, con
+   el usuario 100 y el pedido 1 de los datos de prueba de Opiniones. Calificar dos veces → 409 "Ya calificaste este pedido";
+   pedido no entregado → 422 con el mensaje del módulo (RN-08).
+5. `/admin/metricas` con un usuario ADMIN: `GET /analytics/dashboard` del período elegido (CU-10, paso 11). Cada
+   bloque indica su fuente (RN-09); las métricas que el módulo no informa muestran su error sin romper el resto (RN-11).
+
+**Si algo falla:** igual que en la sección 6: ese servicio vuelve a `USE_MOCK = true` y se anota el motivo.
