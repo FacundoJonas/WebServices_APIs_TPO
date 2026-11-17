@@ -1,17 +1,9 @@
 import { Link } from "react-router"
 
-import { obtenerUltimoPedido } from "../../servicies/pedidosServicie"
-
 /**
- * Banner superior con el último pedido confirmado en la sesión.
- * El estado en vivo se sigue en la tarjeta del Home (CU-05,
- * GET /api/v1/orders/{id}). Si no hay pedido, no se muestra.
+ * Banner superior que muestra el pedido actualmente en tránsito.
  */
 function ActiveOrderBanner() {
-
-    const pedido = obtenerUltimoPedido()
-
-    if (!pedido?.id) return null
 
     return (
         <div className="relative overflow-hidden rounded-xl bg-gradient-to-r from-primary-container/15 via-surface-container to-surface-container-low p-space-md lg:p-space-lg shadow-sm">
@@ -41,28 +33,34 @@ function ActiveOrderBanner() {
                         <div className="flex items-center gap-space-xs flex-wrap">
 
               <span className="font-caption-bold text-caption-bold uppercase tracking-wider text-primary">
-                Pedido en curso
+                En tránsito
+              </span>
+
+                            <span className="w-1.5 h-1.5 rounded-full bg-outline-variant" />
+
+                            <span className="font-caption-sm text-caption-sm text-secondary">
+                Llega en aprox. 12 min
               </span>
                         </div>
 
                         <h2 className="font-title-md text-title-md text-on-surface">
-                            Pedido #{pedido.id}{pedido.storeName ? ` de ${pedido.storeName}` : ""}
+                            Pedido #AR-8942 de La Birra Bar
                         </h2>
 
                         <p className="font-body-md text-body-md text-on-surface-variant">
-                            Seguí el estado actualizado en el inicio.
+                            Matías G. ya se encuentra en Av. Callao y Corrientes.
                         </p>
                     </div>
                 </div>
 
                 {/* Acceso al seguimiento */}
                 <Link
-                    to="/inicio"
+                    to="/pedido"
                     className="inline-flex items-center gap-space-xs px-space-md py-space-xs bg-primary-container text-on-primary font-body-md-medium text-body-md-medium rounded-lg shadow-sm hover:opacity-95 transition-all"
                 >
 
           <span>
-            Seguir pedido
+            Seguir en vivo
           </span>
 
                     <span className="material-symbols-outlined text-[18px]">

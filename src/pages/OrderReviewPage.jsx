@@ -1,16 +1,18 @@
-import { useEffect, useState } from "react"
+import { useState } from "react"
 import { useLocation } from "react-router"
 
-import { useAuth } from "../context/useAuth"
-import { crearResena, obtenerRatingComercio } from "../servicies/opinionesServicie"
-import { obtenerPedido, obtenerUltimoPedido } from "../servicies/pedidosServicie"
+import { crearResena } from "../servicies/opinionesServicie"
 
 import RatingStars from "../components/orderReviewPage/RatingStars"
 import QuickChip from "../components/orderReviewPage/QuickChip"
 import OrderSummary from "../components/orderReviewPage/OrderSummary"
+import ReviewCard from "../components/orderReviewPage/ReviewCard"
 import RatingSummary from "../components/orderReviewPage/RatingSummary"
 import SuccessModal from "../components/orderReviewPage/SuccessModal"
 
+import courierImage from "../assets/matias.png"
+import agustinImage from "../assets/agustin.png"
+import florenciaImage from "../assets/florencia.png"
 
 /*
  * Imágen temporal.
@@ -110,40 +112,11 @@ function OrderReviewPage() {
   const [showSuccessModal, setShowSuccessModal] = useState(false)
 
   /*
-   * Pedido a calificar: llega desde "Mis pedidos" o desde la tarjeta del Home.
-   * Si se entra directo, se usa el último pedido confirmado en la sesión.
+   * Pedido a calificar: llega desde "Mis pedidos" (OrdersPage).
+   * Si se entra directo, se usa el pedido de demostración.
    */
   const location = useLocation()
-  const ultimoPedido = obtenerUltimoPedido()
-  const pedidoId = location.state?.pedidoId ?? ultimoPedido?.id
-  const storeName = location.state?.storeName ?? ultimoPedido?.storeName ?? "el comercio"
-
-  const { usuario } = useAuth()
-
-  /*
-   * Pedido (GET /api/v1/orders/{id}) y calificación del comercio
-   * (GET /api/v1/merchants/{id}/rating). Repartidor: Logística no publica GET.
-   */
-  const [pedido, setPedido] = useState(null)
-  const [rating, setRating] = useState(null)
-  const [ratingError, setRatingError] = useState("")
-
-  useEffect(() => {
-    if (!pedidoId) return
-
-    let activo = true
-
-    obtenerPedido(pedidoId, usuario?.id)
-      .then((dto) => {
-        if (!activo) return
-        setPedido(dto)
-        return obtenerRatingComercio(dto.comercioId)
-      })
-      .then((r) => { if (activo && r) setRating(r) })
-      .catch((error) => { if (activo) setRatingError(error.message) })
-
-    return () => { activo = false }
-  }, [pedidoId, usuario?.id])
+  const pedidoId = location.state?.pedidoId ?? "DG-92813"
 
   const [sending, setSending] = useState(false)
   const [submitError, setSubmitError] = useState("")
@@ -178,11 +151,6 @@ function OrderReviewPage() {
    * Únicamente abre el modal de confirmación.
    */
   async function handleSubmit() {
-
-    if (!pedidoId) {
-      setSubmitError("No hay un pedido para calificar.")
-      return
-    }
 
     if (storeRating === 0 && courierRating === 0) {
       setSubmitError("Elegí al menos una calificación antes de enviar.")
@@ -247,7 +215,7 @@ function OrderReviewPage() {
               </span>
 
               <span className="font-body-md-medium text-body-md-medium text-on-surface">
-                {pedidoId ? `Pedido #${pedidoId}` : "Sin pedido"}
+                Pedido #{pedidoId}
               </span>
             </div>
 
@@ -257,7 +225,7 @@ function OrderReviewPage() {
               <span className="w-2 h-2 rounded-full bg-primary-container" />
 
               <span className="font-caption-bold text-caption-bold text-on-surface">
-                {pedido?.estado ?? "—"}
+                Entregado hace 18 min
               </span>
             </div>
           </div>
@@ -275,7 +243,7 @@ function OrderReviewPage() {
 
                   <img
                     src={restaurantImage}
-                    alt={storeName}
+                    alt="La Birra Bar"
                     className="w-16 h-16 rounded-xl object-cover shadow-sm shrink-0"
                   />
 
@@ -291,7 +259,7 @@ function OrderReviewPage() {
                     </span>
 
                     <h1 className="font-headline-md text-headline-md text-on-surface leading-snug">
-                      ¿Cómo estuvo tu pedido de {storeName}?
+                      ¡Tu pedido de La Birra Bar ya fue entregado!
                     </h1>
 
                     <p className="font-body-md text-body-md text-on-surface-variant mt-0.5">
@@ -314,7 +282,7 @@ function OrderReviewPage() {
                   </div>
 
                   <label className="font-title-md text-title-md text-on-surface">
-                    Calificá la comida y preparación de {storeName}
+                    Calificá la comida y preparación de La Birra Bar
                   </label>
                 </div>
 
@@ -329,18 +297,20 @@ function OrderReviewPage() {
 
                 <div className="flex items-center gap-space-sm">
 
-                  <div className="w-10 h-10 rounded-full bg-surface-container-high flex items-center justify-center text-primary">
-                    <span className="material-symbols-outlined text-[22px]">two_wheeler</span>
-                  </div>
+                  <img
+                    src={courierImage}
+                    alt="Imagen repartidor"
+                    className="w-10 h-10 rounded-full object-cover shadow-sm"
+                  />
 
                   <div>
 
                     <label className="font-title-md text-title-md text-on-surface">
-                      Calificá el servicio y la atención de tu repartidor
+                      Calificá el servicio y la atención de Matías G.
                     </label>
 
                     <p className="font-caption-sm text-caption-sm text-on-surface-variant">
-                      Entrega del pedido
+                      Tu repartidor en bicicleta motorizada
                     </p>
                   </div>
                 </div>
@@ -464,9 +434,6 @@ function OrderReviewPage() {
 
               {/* Resumen del pedido y selector de propina */}
               <OrderSummary
-                items={pedido?.items}
-                total={pedido?.total}
-                moneda={pedido?.moneda}
                 selectedTip={selectedTip}
                 onTipChange={setSelectedTip}
               />
@@ -506,17 +473,86 @@ function OrderReviewPage() {
                 </span>
 
                 <h2 className="font-headline-lg text-headline-lg text-on-surface tracking-tight">
-                  Calificación de {storeName}
+                  Opiniones de la comunidad sobre La Birra Bar
                 </h2>
               </div>
 
+              {/* Selector visual de ordenamiento */}
+              <button
+                type="button"
+                className="flex items-center gap-space-2xs px-space-sm py-space-2xs rounded-lg bg-surface-container-low hover:bg-surface-container text-on-surface font-body-md-medium text-body-md-medium transition-colors"
+              >
+
+                <span className="material-symbols-outlined text-[18px]">
+                  tune
+                </span>
+
+                <span>
+                  Más recientes
+                </span>
+
+                <span className="material-symbols-outlined text-[18px]">
+                  arrow_drop_down
+                </span>
+              </button>
             </div>
 
             <div className="grid grid-cols-1 lg:grid-cols-12 gap-space-xl">
 
               {/* Resumen estadístico de calificaciones */}
-              {/* GET /api/v1/merchants/{id}/rating. El contrato no publica el listado de reseñas. */}
-              <RatingSummary rating={rating} error={ratingError} />
+              <RatingSummary />
+
+              {/* Lista de reseñas de clientes */}
+              <div className="lg:col-span-8 space-y-space-md">
+
+                <ReviewCard
+                  image={agustinImage}
+                  name="Agustín R."
+                  rating={5}
+                  date="Hace 2 días"
+                  tag="Hamburguesa Golden Doble"
+                  text="La hamburguesa Golden Doble llegó súper caliente y las papas bien crocantes. Excelente servicio de entrega."
+                  usefulCount={14}
+                />
+
+                <ReviewCard
+                  image={florenciaImage}
+                  name="Florencia M."
+                  rating={5}
+                  date="Hace 5 días"
+                  tag="Empaque Térmico"
+                  text="Impecable La Birra Bar como siempre. El empaque térmico mantuvo todo en perfecto estado."
+                  usefulCount={9}
+                />
+
+                <ReviewCard
+                  initials="MP"
+                  name="Martín P."
+                  rating={4}
+                  date="Hace 1 semana"
+                  tag="Entrega Rápida"
+                  text="Muy ricas las salsas caseras. La entrega tardó solo 25 minutos."
+                  usefulCount={5}
+                />
+
+                {/* Acción visual para futuras reseñas adicionales */}
+                <div className="pt-space-xs text-center">
+
+                  <button
+                    type="button"
+                    className="px-space-xl py-space-sm rounded-xl bg-surface-container-low hover:bg-surface-container text-on-surface font-body-md-medium text-body-md-medium transition-colors inline-flex items-center gap-space-xs"
+                  >
+
+                    <span>
+                      Cargar más opiniones de clientes
+                    </span>
+
+                    <span className="material-symbols-outlined text-[18px]">
+                      expand_more
+                    </span>
+                  </button>
+                </div>
+              </div>
             </div>
           </section>
         </div>
@@ -526,7 +562,6 @@ function OrderReviewPage() {
       <SuccessModal
         isOpen={showSuccessModal}
         onClose={() => { setShowSuccessModal(false) }}
-        storeName={storeName}
       />
 
     </main>

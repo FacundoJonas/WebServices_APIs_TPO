@@ -1,7 +1,5 @@
 import { Link } from "react-router"
 
-import { useCart } from "../../context/useCart"
-
 /**
  * Fila reutilizable para mostrar un concepto
  * y su importe dentro del resumen del carrito.
@@ -43,9 +41,6 @@ function PriceRow({ label, value }) {
  * Función para disminuir la cantidad de un producto.
  */
 function MiniCart({ cart, onIncrease, onDecrease }) {
-
-  // Comercio del carrito (Catálogo): se fija al agregar el primer producto.
-  const { store } = useCart()
 
   /*
    * Cantidad total de unidades presentes en el carrito.
@@ -98,7 +93,7 @@ function MiniCart({ cart, onIncrease, onDecrease }) {
 
         {/* Comercio asociado al carrito */}
         <p className="font-caption-bold text-caption-bold uppercase tracking-wider text-secondary mb-space-xs">
-          {store ? [store.name, store.area].filter(Boolean).join(" - ") : "Sin comercio"}
+          La Birra Bar - Almagro
         </p>
 
         {/*

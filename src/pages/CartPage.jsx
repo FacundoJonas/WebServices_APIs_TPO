@@ -22,6 +22,7 @@ function CartPage() {
 
     const {
         store,
+        address,
         cart,
         notes,
         updateNotes,
@@ -66,13 +67,6 @@ function CartPage() {
 
         if (order) return order
 
-        // Dirección de entrega: la predeterminada del Módulo Usuarios.
-        const direccion = usuario?.direcciones?.find((d) => d.predeterminada) ?? usuario?.direcciones?.[0]
-
-        if (!direccion) {
-            throw new Error("Agregá una dirección de entrega en tu perfil para hacer el pedido.")
-        }
-
         const newOrder = await crearPedido({
             usuarioId: usuario?.id,
             comercioId: store.id,
@@ -82,7 +76,11 @@ function CartPage() {
                 precioUnitario: item.price,
             })),
             notas: notes,
-            direccionEntregaId: direccion.id,
+            // La dirección real es la del Módulo Usuarios (la predeterminada);
+            // la del carrito de demostración queda como respaldo del mock.
+            direccionEntregaId: usuario?.direcciones?.find((d) => d.predeterminada)?.id
+                ?? usuario?.direcciones?.[0]?.id
+                ?? address.id,
         })
 
         return newOrder
