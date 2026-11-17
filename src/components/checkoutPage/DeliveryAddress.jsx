@@ -1,8 +1,10 @@
+import { Link } from "react-router"
+
 /**
  * Dirección de entrega del pedido.
  *
  * Props:
- * @param {Object} address - { street, detail, instructions }
+ * @param {Object|null} address - { street, detail } o null si el usuario no tiene direcciones
  * @param {string} deliveryTime - Tiempo estimado de entrega.
  */
 function DeliveryAddress({ address, deliveryTime }) {
@@ -28,30 +30,42 @@ function DeliveryAddress({ address, deliveryTime }) {
         </div>
       </div>
 
-      {/* Datos de la dirección */}
-      <div className="rounded-lg bg-surface-container-low p-space-md space-y-1">
+      {/* Datos de la dirección (Módulo Usuarios) */}
+      {address ? (
+        <div className="rounded-lg bg-surface-container-low p-space-md space-y-1">
 
-        <div className="flex flex-wrap items-start justify-between gap-space-xs">
+          <div className="flex flex-wrap items-start justify-between gap-space-xs">
 
-          <p className="font-body-lg-medium text-body-lg-medium text-on-surface">
-            {address.street}
+            <p className="font-body-lg-medium text-body-lg-medium text-on-surface">
+              {address.street}
+            </p>
+
+            {deliveryTime && (
+              <span className="font-caption-bold text-caption-bold px-2 py-0.5 rounded-full bg-primary-fixed text-on-primary-fixed-variant flex items-center gap-1">
+                <span className="material-symbols-outlined text-[14px]">bolt</span>
+                {deliveryTime}
+              </span>
+            )}
+          </div>
+
+          <p className="font-body-md text-body-md text-on-surface-variant">
+            {address.detail}
+          </p>
+        </div>
+      ) : (
+        <div className="rounded-lg bg-surface-container-low p-space-md flex flex-wrap items-center justify-between gap-space-sm">
+          <p className="font-body-md text-body-md text-on-surface-variant">
+            Todavía no cargaste una dirección de entrega.
           </p>
 
-          <span className="font-caption-bold text-caption-bold px-2 py-0.5 rounded-full bg-primary-fixed text-on-primary-fixed-variant flex items-center gap-1">
-            <span className="material-symbols-outlined text-[14px]">bolt</span>
-            {deliveryTime}
-          </span>
+          <Link
+            to="/perfil"
+            className="font-body-md-medium text-body-md-medium text-primary hover:underline"
+          >
+            Agregar dirección
+          </Link>
         </div>
-
-        <p className="font-body-md text-body-md text-on-surface-variant">
-          {address.detail}
-        </p>
-
-        <p className="font-caption-sm text-caption-sm text-on-surface-variant flex items-center gap-1 pt-1">
-          <span className="material-symbols-outlined text-[16px] text-primary-container">notifications</span>
-          {address.instructions}
-        </p>
-      </div>
+      )}
     </section>
   )
 }

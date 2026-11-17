@@ -30,7 +30,7 @@ export const ESTADOS_FINALES = ["ENTREGADO", "CANCELADO"]
 
 function hora(fecha) {
     if (!fecha) return ""
-    return `${new Date(fecha).toLocaleTimeString("es-AR", { hour: "2-digit", minute: "2-digit" })} hs`
+    return `${new Date(fecha).toLocaleTimeString("es-AR", { hour: "2-digit", minute: "2-digit", hour12: false })} hs`
 }
 
 /**
@@ -73,6 +73,6 @@ export function armarSeguimiento(pedido, storeName) {
         courier: null,
         mapImage: null,
         distanceLabel: null,
-        trackingPath: "/pedido",
+        trackingPath: "/pedidos",
     }
 }

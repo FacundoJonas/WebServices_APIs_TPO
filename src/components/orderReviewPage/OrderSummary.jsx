@@ -1,27 +1,19 @@
-
 /**
- * Resumen del pedido entregado.
+ * Resumen del pedido entregado (Módulo Pedidos).
  *
- * Muestra:
- * - Productos comprados.
- * - Total abonado.
- * - Selector de propina para el repartidor.
+ * Muestra los productos comprados y el total abonado.
  *
  * Props:
- * @param {number|string} selectedTip
- * Propina actualmente seleccionada.
- *
- * Puede contener un monto numérico o el valor "other".
- *
- * @param {Function} onTipChange
- * Función utilizada para cambiar la propina seleccionada.
+ * @param {Object} pedido
+ * Pedido mapeado por pedidosServicie: { fecha, items: [{ productoId, nombre, cantidad, precioUnitario }], total }.
  */
-function OrderSummary({ selectedTip, onTipChange }) {
+function OrderSummary({ pedido }) {
 
-  /*
-   * Montos predefinidos disponibles como propina.
-   */
-  const tips = [200, 400, 600]
+  const items = pedido?.items ?? []
+
+  const hora = pedido?.fecha
+    ? `${new Date(pedido.fecha).toLocaleTimeString("es-AR", { hour: "2-digit", minute: "2-digit", hour12: false })} hs`
+    : ""
 
   return (
     <div className="bg-surface-container-lowest rounded-xl p-space-lg shadow-sm space-y-space-md">
@@ -33,25 +25,23 @@ function OrderSummary({ selectedTip, onTipChange }) {
           Resumen del pedido
         </span>
 
-        <span className="font-caption-sm text-caption-sm text-on-surface-variant">
-          13:42 hs
-        </span>
+        {hora && (
+          <span className="font-caption-sm text-caption-sm text-on-surface-variant">
+            {hora}
+          </span>
+        )}
       </div>
 
       {/* Productos incluidos en el pedido */}
       <div className="space-y-space-sm">
-
-        <OrderItem
-          quantity={1}
-          name="Golden Burger Doble Cheddar"
-          price="$6.200"
-        />
-
-        <OrderItem
-          quantity={1}
-          name="Papas Rústicas Trufadas"
-          price="$2.250"
-        />
+        {items.map((item) => (
+          <OrderItem
+            key={item.productoId}
+            quantity={item.cantidad}
+            name={item.nombre}
+            price={`$ ${(Number(item.precioUnitario) * item.cantidad).toLocaleString("es-AR")}`}
+          />
+        ))}
       </div>
 
       {/* Total abonado */}
@@ -62,49 +52,8 @@ function OrderSummary({ selectedTip, onTipChange }) {
         </span>
 
         <span className="font-title-md text-title-md text-primary font-bold">
-          $8.450 ARS
+          $ {Number(pedido?.total ?? 0).toLocaleString("es-AR")} {pedido?.moneda ?? "ARS"}
         </span>
-      </div>
-
-      {/* Selector de propina */}
-      <div className="pt-space-2xs space-y-space-2xs">
-
-        <span className="font-caption-bold text-caption-bold text-on-surface flex items-center gap-space-2xs">
-
-          <span className="material-symbols-outlined text-[16px] text-primary-container">
-            volunteer_activism
-          </span>
-
-          Propina al repartidor
-        </span>
-
-        <div className="grid grid-cols-4 gap-space-2xs text-center font-caption-bold text-caption-bold">
-
-          {/* Los botones se crean dinámicamente */}
-          {tips.map((tip) => (
-
-            <button
-              key={tip}
-              type="button"
-              onClick={() => onTipChange(tip)}
-              className={` py-1.5 rounded-lg transition-colors
-                ${ selectedTip === tip ? "bg-primary-container text-on-primary shadow-sm" : "bg-surface hover:bg-surface-container text-on-surface" }`}
-            >
-              ${tip}
-            </button>
-
-          ))}
-
-          {/* Opción para ingresar otro monto */}
-          <button
-            type="button"
-            onClick={() => onTipChange("other")}
-            className={` py-1.5 rounded-lg transition-colors
-              ${ selectedTip === "other" ? "bg-primary-container text-on-primary shadow-sm" : "bg-surface hover:bg-surface-container text-on-surface" }`}
-          >
-            Otro
-          </button>
-        </div>
       </div>
     </div>
   )

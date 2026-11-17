@@ -69,7 +69,8 @@ function WelcomeHeader({ userName, address, onChangeAddress, coupon }) {
                 </div>
             </div>
 
-            {/* Cupón destacado. Solo visible en pantallas grandes */}
+            {/* Cupón destacado (opcional). Solo visible en pantallas grandes */}
+            {coupon && (
             <div className="hidden xl:flex items-center gap-space-md p-space-sm rounded-xl bg-surface-container-low shadow-sm">
 
                 <div className="w-10 h-10 rounded-lg bg-primary-container/15 flex items-center justify-center text-primary">
@@ -90,6 +91,7 @@ function WelcomeHeader({ userName, address, onChangeAddress, coupon }) {
                     </span>
                 </div>
             </div>
+            )}
         </section>
     )
 }

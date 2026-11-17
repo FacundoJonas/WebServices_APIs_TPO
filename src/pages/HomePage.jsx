@@ -1,7 +1,8 @@
 import { useEffect, useState } from "react"
+import { useNavigate } from "react-router"
 import { useAuth } from "../context/useAuth"
 import { obtenerComercios } from "../servicies/catalogoServicie.js"
-import { obtenerPedido, obtenerUltimoPedido, olvidarUltimoPedido } from "../servicies/pedidosServicie.js"
+import { buscarPedidoEnCurso, obtenerPedido, olvidarUltimoPedido } from "../servicies/pedidosServicie.js"
 import { armarSeguimiento, ESTADOS_FINALES } from "../components/homePage/seguimientoPedido.js"
 import FilterBar from "../components/homePage/FilterBar.jsx"
 import StoreCard from "../components/homePage/StoreCard.jsx"
@@ -9,79 +10,6 @@ import PrimeBanner from "../components/homePage/PrimeBanner.jsx"
 import WelcomeHeader from "../components/homePage/WelcomeHeader.jsx"
 import CategoryChips from "../components/homePage/CategoryChips.jsx"
 import ActiveOrderCard from "../components/homePage/ActiveOrderCard.jsx"
-
-import courierImage from "../assets/matias.png"
-
-/*
- * Imágenes temporales.
- *
- * Se utiliza el logo de DeliveryGo como reemplazo
- * hasta contar con las imágenes definitivas de cada comercio y del mapa.
- */
-import placeholderImage from "../assets/deliverygo_logo.png"
-
-/*
- * Cupón destacado en el encabezado.
- */
-const welcomeCoupon = {
-    label: "Cupón bienvenida",
-    title: "25% OFF en tu pedido",
-}
-
-/*
- * Pedido de demostración. Se muestra mientras no haya un pedido
- * confirmado en la sesión; si lo hay, se sigue el real (CU-05).
- *
- * steps[].status puede ser:
- * "done"    -> paso completado.
- * "current" -> paso actual (con animación).
- * "pending" -> paso todavía no alcanzado.
- */
-const activeOrder = {
-    id: "AR-8942",
-    storeName: "La Birra Bar",
-    etaLabel: "Llega entre 20:45 y 21:00 hs (~15 min)",
-    progress: 72,
-    steps: [
-        {
-            id: "confirmed",
-            label: "Confirmado",
-            time: "20:12 hs",
-            icon: "check",
-            status: "done",
-        },
-        {
-            id: "preparing",
-            label: "En preparación",
-            time: "20:25 hs",
-            icon: "check",
-            status: "done",
-        },
-        {
-            id: "on-the-way",
-            label: "En camino",
-            time: "En tránsito",
-            icon: "two_wheeler",
-            status: "current",
-        },
-        {
-            id: "delivered",
-            label: "Entregado",
-            time: "Pendiente",
-            icon: "home",
-            status: "pending",
-        },
-    ],
-    courier: {
-        name: "Matías G.",
-        rating: 4.9,
-        image: courierImage,
-        vehicle: "Moto Honda Wave (Casco negro) • Valija térmica #42",
-    },
-    mapImage: placeholderImage,
-    distanceLabel: "A 8 cuadras de tu domicilio",
-    trackingPath: "/pedido",
-}
 
 /*
  * Cada cuánto se vuelve a consultar el estado del pedido en curso.
@@ -175,16 +103,18 @@ function HomePage() {
     */
     const { token, usuario } = useAuth()
 
-    const direccionPrincipal = usuario?.direcciones?.[0]
+    const navigate = useNavigate()
 
     /*
-     * Dirección de entrega actual.
+     * Dirección de entrega: la predeterminada del usuario (Módulo Usuarios)
+     * o la primera. Es la misma que se usa al crear el pedido.
      */
-    const [address, setAddress] = useState(
-        direccionPrincipal
-            ? `${direccionPrincipal.calle}, ${direccionPrincipal.barrio}, ${direccionPrincipal.ciudad}`
-            : ""
-    )
+    const direccionPrincipal = usuario?.direcciones?.find((d) => d.predeterminada)
+        ?? usuario?.direcciones?.[0]
+
+    const address = direccionPrincipal
+        ? [direccionPrincipal.calle, direccionPrincipal.barrio, direccionPrincipal.ciudad].filter(Boolean).join(", ")
+        : ""
 
     /*
      * Categoría seleccionada. "all" muestra todas.
@@ -223,38 +153,43 @@ function HomePage() {
     const [retryCount, setRetryCount] = useState(0)
 
     /*
-     * CU-05: seguimiento del último pedido confirmado (GET /api/v1/orders/{id}).
-     * null = no hay pedido real y se muestra el de demostración.
+     * CU-05: seguimiento del pedido en curso del usuario.
+     * 1. buscarPedidoEnCurso le pregunta a Pedidos cuál es (GET /api/v1/orders).
+     * 2. Se sigue con GET /api/v1/orders/{id} hasta que se entregue o se cancele.
+     * null = no hay pedido en curso y la tarjeta no se muestra.
      */
     const [seguimiento, setSeguimiento] = useState(null)
     const [seguimientoError, setSeguimientoError] = useState("")
 
     useEffect(() => {
 
-        const ultimo = obtenerUltimoPedido()
-
-        if (!token || !ultimo) return
+        if (!token) return
 
         let ignore = false
         let timer = null
+        let enCurso = null
 
-        function consultar() {
-            obtenerPedido(ultimo.id, usuario?.id)
+        function seguir() {
+            obtenerPedido(enCurso.id, usuario?.id)
                 .then((pedido) => {
                     if (ignore) return
                     setSeguimientoError("")
-                    setSeguimiento(armarSeguimiento(pedido, ultimo.storeName))
 
-                    // Se vuelve a consultar hasta que el pedido se entregue o se cancele.
-                    if (!ESTADOS_FINALES.includes(pedido.estado)) {
-                        timer = setTimeout(consultar, INTERVALO_SEGUIMIENTO_MS)
+                    // Entregado o cancelado: deja de ser un pedido en curso.
+                    if (ESTADOS_FINALES.includes(pedido.estado)) {
+                        olvidarUltimoPedido()
+                        setSeguimiento(null)
+                        return
                     }
+
+                    setSeguimiento(armarSeguimiento(pedido, enCurso.storeName))
+                    timer = setTimeout(seguir, INTERVALO_SEGUIMIENTO_MS)
                 })
                 .catch((error) => {
                     // RN-11: si falla, se avisa en la tarjeta y se reintenta más tarde.
                     if (ignore) return
 
-                    // 404: el pedido ya no existe; vuelve la tarjeta de demostración.
+                    // 404: el pedido ya no existe; se deja de mostrar la tarjeta.
                     if (error.status === 404) {
                         olvidarUltimoPedido()
                         setSeguimiento(null)
@@ -262,11 +197,20 @@ function HomePage() {
                     }
 
                     setSeguimientoError(error.message)
-                    timer = setTimeout(consultar, INTERVALO_SEGUIMIENTO_MS)
+                    timer = setTimeout(seguir, INTERVALO_SEGUIMIENTO_MS)
                 })
         }
 
-        consultar()
+        buscarPedidoEnCurso(usuario?.id)
+            .then((pedido) => {
+                if (ignore || !pedido) return
+                enCurso = pedido
+                seguir()
+            })
+            .catch(() => {
+                // Pedidos no respondió: no hay tarjeta que mostrar.
+                if (!ignore) setSeguimiento(null)
+            })
 
         return () => {
             ignore = true
@@ -334,17 +278,11 @@ function HomePage() {
     }
 
     /**
-     * Pide una nueva dirección y la guarda si no está vacía.
-     *
-     * TODO: reemplazar el prompt por un modal propio.
+     * Las direcciones se administran en el perfil (CU-05 de Usuarios):
+     * ahí se agregan y se elige la predeterminada.
      */
     function handleChangeAddress() {
-
-        const newAddress = window.prompt("Ingresá tu nueva dirección de entrega:", address)
-
-        if (newAddress && newAddress.trim() !== "") {
-            setAddress(newAddress.trim())
-        }
+        navigate("/perfil")
     }
 
     /*
@@ -372,13 +310,12 @@ function HomePage() {
                     userName={usuario?.nombre}
                     address={address}
                     onChangeAddress={handleChangeAddress}
-                    coupon={welcomeCoupon}
                 />
 
-                {/* Pedido en curso */}
-                {token && (
+                {/* Pedido en curso: sólo si hay uno real que seguir (CU-05) */}
+                {token && seguimiento && (
                     <div className="space-y-space-xs">
-                        <ActiveOrderCard order={seguimiento ?? activeOrder} />
+                        <ActiveOrderCard order={seguimiento} />
                         {seguimientoError && (
                             <p role="alert" className="font-caption-sm text-caption-sm text-error px-space-xs">
                                 {seguimientoError} Se vuelve a intentar en unos segundos.

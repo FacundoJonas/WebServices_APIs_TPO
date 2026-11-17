@@ -6,11 +6,14 @@
  * @param {boolean} isOpen
  * Determina si el modal debe mostrarse.
  *
+ * @param {string} storeName
+ * Comercio del pedido calificado.
+ *
  * @param {Function} onClose
  * Función ejecutada cuando el usuario desea cerrar
  * el modal.
  */
-function SuccessModal({ isOpen, onClose }) {
+function SuccessModal({ isOpen, storeName, onClose }) {
 
   /*
    * Renderizado condicional.
@@ -43,8 +46,8 @@ function SuccessModal({ isOpen, onClose }) {
           </h3>
 
           <p className="font-body-md text-body-md text-on-surface-variant">
-            Tu reseña fue publicada con éxito y ayuda a La Birra Bar
-            y a Matías G. a seguir mejorando cada entrega.
+            Tu reseña fue publicada con éxito y ayuda a {storeName}
+            y a su repartidor a seguir mejorando cada entrega.
           </p>
         </div>
 

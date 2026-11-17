@@ -247,7 +247,7 @@ function OrdersPage() {
                                         pedido={pedido}
                                         selected={selected?.id === pedido.id}
                                         onSelect={() => setSelected(pedido)}
-                                        onRate={() => navigate("/pedido", { state: { pedidoId: pedido.id } })}
+                                        onRate={() => navigate("/pedido", { state: { pedido } })}
                                         onReorder={() => navigate("/comercio")}
                                     />
                                 ))}

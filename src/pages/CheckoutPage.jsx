@@ -12,37 +12,57 @@ import { useAuth } from "../context/useAuth"
 import { confirmarPedido, guardarUltimoPedido } from "../servicies/pedidosServicie"
 
 /*
- * Medios de pago guardados del usuario.
- * TODO: obtenerlos del Módulo Pagos (CU-08 de Pagos).
- *
- * Para probar RN-05, la Visa Débito siempre es rechazada por el mock.
+ * Medios de pago del contrato (MedioPagoRequest.tipo del swagger del ecosistema).
+ * El id es el valor que viaja a Pedidos como ConfirmarPedidoRequest.medioPago;
+ * Pedidos cobra con Pagos (el Portal no llama a Pagos directamente).
  */
 const paymentMethods = [
   {
-    id: "visa-4821",
-    name: "Visa Débito •••• 4821",
-    detail: "Vence 08/27 • Banco Galicia",
+    id: "TARJETA_CREDITO",
+    name: "Tarjeta de crédito",
+    detail: "Se cobra con el Módulo Pagos al confirmar el pedido",
+    type: "credito",
+    icon: "credit_card",
+    hint: "Apta cuotas",
+  },
+  {
+    id: "TARJETA_DEBITO",
+    name: "Tarjeta de débito",
+    detail: "Se cobra con el Módulo Pagos al confirmar el pedido",
     type: "debito",
     icon: "credit_card",
   },
   {
-    id: "master-9012",
-    name: "Mastercard Crédito •••• 9012",
-    detail: "Vence 11/26 • Santander Río",
-    type: "credito",
-    icon: "credit_card",
-    badge: "Recomendado",
-    hint: "Apta cuotas",
-  },
-  {
-    id: "saldo",
-    name: "Dinero en cuenta DeliveryGo Pagos",
-    detail: "Saldo disponible: $ 18.200,00",
+    id: "BILLETERA_VIRTUAL",
+    name: "Billetera virtual",
+    detail: "Se cobra con el Módulo Pagos al confirmar el pedido",
     type: "saldo",
     icon: "account_balance_wallet",
-    hint: "Aprobación inmediata",
+  },
+  {
+    id: "TRANSFERENCIA",
+    name: "Transferencia",
+    detail: "Se cobra con el Módulo Pagos al confirmar el pedido",
+    type: "transferencia",
+    icon: "account_balance",
   },
 ]
+
+/*
+ * Dirección de entrega: la predeterminada del usuario (Módulo Usuarios, CU-05)
+ * o la primera que tenga. Es la misma que CartPage manda a Pedidos.
+ */
+function direccionDeEntrega(usuario) {
+  const direccion = usuario?.direcciones?.find((d) => d.predeterminada) ?? usuario?.direcciones?.[0]
+
+  if (!direccion) return null
+
+  return {
+    street: [direccion.calle, direccion.pisoDepto].filter(Boolean).join(", "),
+    detail: [direccion.barrio, direccion.ciudad].filter(Boolean).join(", ")
+      + (direccion.codigoPostal ? ` (${direccion.codigoPostal})` : ""),
+  }
+}
 
 /**
  * PNT-05 Pagar (CU-04).
@@ -106,9 +126,11 @@ function PaymentSuccess({ order }) {
 
 function CheckoutPage() {
 
-  const { store, address, cart, coupon, order, itemCount, amounts, clearCart } = useCart()
+  const { store, cart, coupon, order, itemCount, amounts, clearCart } = useCart()
 
   const { usuario } = useAuth()
+
+  const address = direccionDeEntrega(usuario)
 
   /*
    * React Router no resetea el scroll al cambiar de ruta.

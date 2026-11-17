@@ -44,7 +44,7 @@ function ActiveOrderCard({ order }) {
                                 </span>
 
                                 <h2 className="font-title-md text-title-md text-on-surface font-bold">
-                                    #{order.id} • {order.storeName}
+                                    #{String(order.id).slice(0, 8)} • {order.storeName}
                                 </h2>
                             </div>
                         </div>
@@ -96,17 +96,17 @@ function ActiveOrderCard({ order }) {
                     </div>
                     )}
 
+                    {/* El detalle (productos, historial) está en "Mis pedidos" */}
                     <Link
                         to={order.trackingPath}
-                        state={{ pedidoId: order.id }}
                         className="w-full h-11 px-space-md rounded-xl bg-surface-container-lowest hover:bg-primary/5 text-primary font-body-md-medium text-body-md-medium flex items-center justify-center gap-space-xs shadow-sm transition-all hover:shadow"
                     >
 
                         <span className="material-symbols-outlined text-[18px] text-primary-container">
-                            explore
+                            receipt_long
                         </span>
 
-                        Ver seguimiento en vivo
+                        Ver detalle del pedido
                     </Link>
                 </div>
             </div>

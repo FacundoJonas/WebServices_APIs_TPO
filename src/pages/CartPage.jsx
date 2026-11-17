@@ -22,7 +22,6 @@ function CartPage() {
 
     const {
         store,
-        address,
         cart,
         notes,
         updateNotes,
@@ -76,11 +75,9 @@ function CartPage() {
                 precioUnitario: item.price,
             })),
             notas: notes,
-            // La dirección real es la del Módulo Usuarios (la predeterminada);
-            // la del carrito de demostración queda como respaldo del mock.
+            // Dirección del Módulo Usuarios: la predeterminada o la primera.
             direccionEntregaId: usuario?.direcciones?.find((d) => d.predeterminada)?.id
-                ?? usuario?.direcciones?.[0]?.id
-                ?? address.id,
+                ?? usuario?.direcciones?.[0]?.id,
         })
 
         return newOrder
@@ -181,7 +178,7 @@ function CartPage() {
                     <div className="flex items-center gap-space-sm">
 
                         <Link
-                            to="/comercio"
+                            to={store ? `/comercio/${store.id}` : "/inicio"}
                             className="flex items-center gap-1 font-body-md-medium text-body-md-medium text-on-surface-variant hover:text-primary"
                         >
                             <span className="material-symbols-outlined text-[20px]">arrow_back</span>
@@ -227,15 +224,19 @@ function CartPage() {
 
                                         <p className="font-body-md text-body-md text-on-surface-variant flex items-center gap-1">
                                             {store.area}
-                                            <span>•</span>
-                                            <span className="material-symbols-outlined text-[16px] text-primary">schedule</span>
-                                            <span className="whitespace-nowrap">{store.deliveryTime}</span>
+                                            {store.deliveryTime && (
+                                                <>
+                                                    <span>•</span>
+                                                    <span className="material-symbols-outlined text-[16px] text-primary">schedule</span>
+                                                    <span className="whitespace-nowrap">{store.deliveryTime}</span>
+                                                </>
+                                            )}
                                         </p>
                                     </div>
                                 </div>
 
                                 <Link
-                                    to="/comercio"
+                                    to={`/comercio/${store.id}`}
                                     aria-label="Agregar más productos"
                                     className="h-10 px-space-sm sm:px-space-md rounded-lg bg-surface-container-low hover:bg-surface-container text-primary font-body-md-medium text-body-md-medium flex items-center gap-1 shrink-0"
                                 >

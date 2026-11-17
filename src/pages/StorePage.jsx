@@ -95,7 +95,7 @@ function StorePage() {
      * El carrito ahora vive en CartContext (DM-01)
      * para que CartPage y CheckoutPage puedan usarlo.
      */
-    const { cart, addToCart: addProductToCart, changeQuantity } = useCart()
+    const { cart, store: cartStore, addToCart: addProductToCart, changeQuantity } = useCart()
 
     /*
      * Mensaje temporal utilizado por el componente Toast.
@@ -328,6 +328,7 @@ function StorePage() {
                         {/* Carrito lateral */}
                         <MiniCart
                             cart={cart}
+                            storeName={cartStore?.name}
                             onIncrease={increaseQuantity}
                             onDecrease={decreaseQuantity}
                         />

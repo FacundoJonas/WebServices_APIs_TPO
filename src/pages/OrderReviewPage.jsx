@@ -1,18 +1,13 @@
-import { useState } from "react"
-import { useLocation } from "react-router"
+import { useEffect, useState } from "react"
+import { Link, Navigate, useLocation } from "react-router"
 
-import { crearResena } from "../servicies/opinionesServicie"
+import { crearResena, obtenerRatingComercio } from "../servicies/opinionesServicie"
 
 import RatingStars from "../components/orderReviewPage/RatingStars"
 import QuickChip from "../components/orderReviewPage/QuickChip"
 import OrderSummary from "../components/orderReviewPage/OrderSummary"
-import ReviewCard from "../components/orderReviewPage/ReviewCard"
 import RatingSummary from "../components/orderReviewPage/RatingSummary"
 import SuccessModal from "../components/orderReviewPage/SuccessModal"
-
-import courierImage from "../assets/matias.png"
-import agustinImage from "../assets/agustin.png"
-import florenciaImage from "../assets/florencia.png"
 
 /*
  * Imágen temporal.
@@ -100,26 +95,49 @@ function OrderReviewPage() {
   const [review, setReview] = useState("")
 
   /*
-   * Guarda el monto de propina seleccionado.
-   * La opción inicial es $400.
-   */
-  const [selectedTip, setSelectedTip] = useState(400)
-
-  /*
    * Determina si el modal de confirmación
    * se encuentra visible.
    */
   const [showSuccessModal, setShowSuccessModal] = useState(false)
 
   /*
-   * Pedido a calificar: llega desde "Mis pedidos" (OrdersPage).
-   * Si se entra directo, se usa el pedido de demostración.
+   * Pedido a calificar: llega desde "Mis pedidos" (OrdersPage) con sus datos
+   * (comercio, productos, total). Sin pedido no hay nada que calificar.
    */
   const location = useLocation()
-  const pedidoId = location.state?.pedidoId ?? "DG-92813"
+  const pedido = location.state?.pedido ?? null
+  const pedidoId = pedido?.id
+  const storeName = pedido?.comercio?.nombre ?? "el comercio"
 
   const [sending, setSending] = useState(false)
   const [submitError, setSubmitError] = useState("")
+
+  /*
+   * Calificación del comercio en el Módulo Opiniones (GET /merchants/{id}/rating).
+   * null = todavía no cargó o el módulo no respondió.
+   */
+  const [rating, setRating] = useState(null)
+
+  const comercioId = pedido?.comercio?.id
+
+  useEffect(() => {
+
+    if (!comercioId) return
+
+    let ignore = false
+
+    obtenerRatingComercio(comercioId)
+      .then((respuesta) => {
+        if (!ignore) setRating(respuesta)
+      })
+      .catch(() => {
+        if (!ignore) setRating(null)
+      })
+
+    return () => {
+      ignore = true
+    }
+  }, [comercioId])
 
   /**
    * Agrega o elimina un aspecto destacado de la lista.
@@ -183,6 +201,10 @@ function OrderReviewPage() {
     }
   }
 
+  if (!pedido) {
+    return <Navigate to="/pedidos" replace />
+  }
+
   return (
     <main id="top" className="w-full pt-20 bg-background min-h-[calc(100vh-280px)]">
 
@@ -197,8 +219,8 @@ function OrderReviewPage() {
             {/* Referencia al pedido actual */}
             <div className="flex items-center gap-space-xs text-on-surface-variant">
 
-              <a
-                href="#top"
+              <Link
+                to="/pedidos"
                 className="flex items-center gap-space-2xs hover:text-primary transition-colors font-body-md text-body-md"
               >
                 <span className="material-symbols-outlined text-[18px]">
@@ -208,14 +230,14 @@ function OrderReviewPage() {
                 <span>
                   Mis Pedidos
                 </span>
-              </a>
+              </Link>
 
               <span className="text-outline-variant font-caption-sm text-caption-sm">
                 /
               </span>
 
               <span className="font-body-md-medium text-body-md-medium text-on-surface">
-                Pedido #{pedidoId}
+                Pedido #{String(pedidoId).slice(0, 8)}
               </span>
             </div>
 
@@ -225,7 +247,7 @@ function OrderReviewPage() {
               <span className="w-2 h-2 rounded-full bg-primary-container" />
 
               <span className="font-caption-bold text-caption-bold text-on-surface">
-                Entregado hace 18 min
+                Entregado
               </span>
             </div>
           </div>
@@ -243,7 +265,7 @@ function OrderReviewPage() {
 
                   <img
                     src={restaurantImage}
-                    alt="La Birra Bar"
+                    alt={storeName}
                     className="w-16 h-16 rounded-xl object-cover shadow-sm shrink-0"
                   />
 
@@ -259,7 +281,7 @@ function OrderReviewPage() {
                     </span>
 
                     <h1 className="font-headline-md text-headline-md text-on-surface leading-snug">
-                      ¡Tu pedido de La Birra Bar ya fue entregado!
+                      ¡Tu pedido de {storeName} ya fue entregado!
                     </h1>
 
                     <p className="font-body-md text-body-md text-on-surface-variant mt-0.5">
@@ -282,7 +304,7 @@ function OrderReviewPage() {
                   </div>
 
                   <label className="font-title-md text-title-md text-on-surface">
-                    Calificá la comida y preparación de La Birra Bar
+                    Calificá la comida y preparación de {storeName}
                   </label>
                 </div>
 
@@ -297,21 +319,17 @@ function OrderReviewPage() {
 
                 <div className="flex items-center gap-space-sm">
 
-                  <img
-                    src={courierImage}
-                    alt="Imagen repartidor"
-                    className="w-10 h-10 rounded-full object-cover shadow-sm"
-                  />
+                  <div className="w-10 h-10 rounded-full bg-surface-container-high flex items-center justify-center text-primary shrink-0">
+                    <span className="material-symbols-outlined text-[22px]">
+                      two_wheeler
+                    </span>
+                  </div>
 
                   <div>
 
                     <label className="font-title-md text-title-md text-on-surface">
-                      Calificá el servicio y la atención de Matías G.
+                      Calificá el servicio y la atención del repartidor
                     </label>
-
-                    <p className="font-caption-sm text-caption-sm text-on-surface-variant">
-                      Tu repartidor en bicicleta motorizada
-                    </p>
                   </div>
                 </div>
 
@@ -432,11 +450,8 @@ function OrderReviewPage() {
             {/* Aside de la sección principal de valoración */}
             <aside className="lg:col-span-4 space-y-space-md">
 
-              {/* Resumen del pedido y selector de propina */}
-              <OrderSummary
-                selectedTip={selectedTip}
-                onTipChange={setSelectedTip}
-              />
+              {/* Resumen del pedido (Módulo Pedidos) */}
+              <OrderSummary pedido={pedido} />
 
               {/* Información sobre garantía */}
               <div className="p-space-md bg-surface-container-low rounded-xl flex items-start gap-space-sm">
@@ -473,86 +488,17 @@ function OrderReviewPage() {
                 </span>
 
                 <h2 className="font-headline-lg text-headline-lg text-on-surface tracking-tight">
-                  Opiniones de la comunidad sobre La Birra Bar
+                  Calificación de {storeName}
                 </h2>
               </div>
-
-              {/* Selector visual de ordenamiento */}
-              <button
-                type="button"
-                className="flex items-center gap-space-2xs px-space-sm py-space-2xs rounded-lg bg-surface-container-low hover:bg-surface-container text-on-surface font-body-md-medium text-body-md-medium transition-colors"
-              >
-
-                <span className="material-symbols-outlined text-[18px]">
-                  tune
-                </span>
-
-                <span>
-                  Más recientes
-                </span>
-
-                <span className="material-symbols-outlined text-[18px]">
-                  arrow_drop_down
-                </span>
-              </button>
             </div>
 
+            {/*
+             * Promedio y cantidad de reseñas del Módulo Opiniones. El contrato no
+             * publica un listado de reseñas, así que no se muestran reseñas individuales.
+             */}
             <div className="grid grid-cols-1 lg:grid-cols-12 gap-space-xl">
-
-              {/* Resumen estadístico de calificaciones */}
-              <RatingSummary />
-
-              {/* Lista de reseñas de clientes */}
-              <div className="lg:col-span-8 space-y-space-md">
-
-                <ReviewCard
-                  image={agustinImage}
-                  name="Agustín R."
-                  rating={5}
-                  date="Hace 2 días"
-                  tag="Hamburguesa Golden Doble"
-                  text="La hamburguesa Golden Doble llegó súper caliente y las papas bien crocantes. Excelente servicio de entrega."
-                  usefulCount={14}
-                />
-
-                <ReviewCard
-                  image={florenciaImage}
-                  name="Florencia M."
-                  rating={5}
-                  date="Hace 5 días"
-                  tag="Empaque Térmico"
-                  text="Impecable La Birra Bar como siempre. El empaque térmico mantuvo todo en perfecto estado."
-                  usefulCount={9}
-                />
-
-                <ReviewCard
-                  initials="MP"
-                  name="Martín P."
-                  rating={4}
-                  date="Hace 1 semana"
-                  tag="Entrega Rápida"
-                  text="Muy ricas las salsas caseras. La entrega tardó solo 25 minutos."
-                  usefulCount={5}
-                />
-
-                {/* Acción visual para futuras reseñas adicionales */}
-                <div className="pt-space-xs text-center">
-
-                  <button
-                    type="button"
-                    className="px-space-xl py-space-sm rounded-xl bg-surface-container-low hover:bg-surface-container text-on-surface font-body-md-medium text-body-md-medium transition-colors inline-flex items-center gap-space-xs"
-                  >
-
-                    <span>
-                      Cargar más opiniones de clientes
-                    </span>
-
-                    <span className="material-symbols-outlined text-[18px]">
-                      expand_more
-                    </span>
-                  </button>
-                </div>
-              </div>
+              <RatingSummary rating={rating} />
             </div>
           </section>
         </div>
@@ -561,6 +507,7 @@ function OrderReviewPage() {
       {/* Modal de confirmación. Solo cuando showSuccessModal = true */}
       <SuccessModal
         isOpen={showSuccessModal}
+        storeName={storeName}
         onClose={() => { setShowSuccessModal(false) }}
       />
 

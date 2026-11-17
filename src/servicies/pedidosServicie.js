@@ -1,5 +1,6 @@
 import { PEDIDOS_URL } from './api';
 import { pedir } from './http';
+import { obtenerComercioPorId } from './catalogoServicie';
 import { crearPedidoMock, aplicarCuponMock, listarPedidosMock, confirmarPedidoMock, obtenerPedidoMock } from './mocks/pedidosMock';
 
 /*
@@ -15,9 +16,9 @@ const USE_MOCK = false;
 
 /*
  * Ni el consolidado del ecosistema (v1.4.0) ni el Swagger del módulo Pedidos
- * tienen cupones ni listado de pedidos por usuario. Esas dos funciones quedan
- * siempre simuladas hasta que el módulo publique el endpoint
- * (ver docs/integraciones-equipos.md, D4 y D6).
+ * tienen cupones: aplicarCupon queda simulado (ver docs/integraciones-equipos.md, D6).
+ * El listado de pedidos por usuario (D4) ya lo publicó Pedidos como CU-06
+ * (GET /api/v1/orders) y listarPedidos lo consume.
  */
 
 /*
@@ -81,6 +82,9 @@ export async function crearPedido(pedidoRequest) {
 
     const headers = headersCliente(pedidoRequest.usuarioId);
 
+    await cancelarBorradorDeOtroComercio(headers, pedidoRequest.comercioId);
+
+    // Si ya hay un borrador de este comercio, Pedidos devuelve ese en vez de crear otro (REP-01).
     const borrador = await pedir(API, {
         method: 'POST',
         headers,
@@ -91,19 +95,87 @@ export async function crearPedido(pedidoRequest) {
         mensajeError: 'No se pudo crear el pedido. Intentá nuevamente.',
     });
 
-    const pedido = await pedir(`${API}/${borrador.id}/items`, {
-        method: 'POST',
-        headers,
-        body: {
-            items: pedidoRequest.items.map((item) => ({
-                productoId: item.productoId,
-                cantidad: item.cantidad,
-            })),
-        },
-        mensajeError: 'No se pudieron agregar los productos al pedido.',
-    });
+    const pedido = await sincronizarItems(borrador, pedidoRequest.items, headers);
 
     return mapearPedido(pedido);
+}
+
+/*
+ * Pedidos admite un solo borrador por cliente (REP-01) y no mezcla comercios
+ * (MIXED_MERCHANT). Si quedó un borrador abierto de otro comercio (un pago que
+ * no se terminó, un carrito anterior), se cancela antes de crear el nuevo.
+ */
+async function cancelarBorradorDeOtroComercio(headers, comercioId) {
+
+    const pagina = await pedir(`${API}?pagina=0&tamanio=100`, {
+        headers,
+        mensajeError: 'No se pudo crear el pedido. Intentá nuevamente.',
+    });
+
+    const borradores = (pagina.pedidos ?? []).filter((pedido) =>
+        pedido.estado === 'BORRADOR' && String(pedido.comercioId) !== String(comercioId));
+
+    for (const borrador of borradores) {
+        await pedir(`${API}/${borrador.id}`, {
+            method: 'DELETE',
+            headers,
+            mensajeError: 'No se pudo descartar el pedido anterior. Intentá nuevamente.',
+        });
+    }
+}
+
+/*
+ * Deja las líneas del borrador iguales al carrito (CU-02):
+ *   - producto que ya no está en el carrito → DELETE /{id}/items/{productoId}
+ *   - producto con otra cantidad            → PUT    /{id}/items/{productoId}
+ *   - producto nuevo                        → POST   /{id}/items
+ * Un borrador recién creado no tiene líneas, así que sólo se hace el POST.
+ */
+async function sincronizarItems(borrador, items, headers) {
+
+    const actuales = new Map((borrador.items ?? []).map((item) => [String(item.productoId), item.cantidad]));
+    const deseados = new Map(items.map((item) => [String(item.productoId), item.cantidad]));
+
+    let pedido = borrador;
+
+    for (const productoId of actuales.keys()) {
+        if (!deseados.has(productoId)) {
+            pedido = await pedir(`${API}/${borrador.id}/items/${productoId}`, {
+                method: 'DELETE',
+                headers,
+                mensajeError: 'No se pudo actualizar el pedido.',
+            });
+        }
+    }
+
+    for (const [productoId, cantidad] of deseados) {
+        if (actuales.has(productoId) && actuales.get(productoId) !== cantidad) {
+            pedido = await pedir(`${API}/${borrador.id}/items/${productoId}`, {
+                method: 'PUT',
+                headers,
+                body: { cantidad },
+                mensajeError: 'No se pudo actualizar el pedido.',
+            });
+        }
+    }
+
+    const nuevos = items.filter((item) => !actuales.has(String(item.productoId)));
+
+    if (nuevos.length > 0) {
+        pedido = await pedir(`${API}/${borrador.id}/items`, {
+            method: 'POST',
+            headers,
+            body: {
+                items: nuevos.map((item) => ({
+                    productoId: item.productoId,
+                    cantidad: item.cantidad,
+                })),
+            },
+            mensajeError: 'No se pudieron agregar los productos al pedido.',
+        });
+    }
+
+    return pedido;
 }
 
 /**
@@ -164,19 +236,156 @@ export async function confirmarPedido(pedidoId, clienteId, medioPago) {
 
 /**
  * API-09 Aplicar cupón.
- * No existe en ningún contrato de Pedidos: queda simulado (D6).
+ * No existe en ningún contrato de Pedidos (D6): el total que se cobra es el de
+ * Pedidos, así que un descuento simulado mostraría un importe que no se cobra.
+ * Con el módulo real se informa que no está disponible; el mock queda para USE_MOCK.
  */
 export async function aplicarCupon(pedidoId, codigoCupon) {
-    return aplicarCuponMock(pedidoId, codigoCupon);
+
+    if (USE_MOCK) {
+        return aplicarCuponMock(pedidoId, codigoCupon);
+    }
+
+    throw new Error('Los cupones todavía no están disponibles.');
+}
+
+/*
+ * Nombre de cada comercio para las tarjetas del historial. Pedidos sólo
+ * devuelve comercioId, así que el nombre sale de Catálogo y se guarda
+ * para no volver a pedirlo en cada página.
+ */
+const nombresComercio = new Map();
+
+function nombreComercio(comercioId) {
+    if (!nombresComercio.has(comercioId)) {
+        nombresComercio.set(comercioId, obtenerComercioPorId(comercioId)
+            .then((comercio) => comercio.name)
+            .catch(() => `Comercio #${comercioId}`));
+    }
+    return nombresComercio.get(comercioId);
+}
+
+/*
+ * PedidoResponse (detalle) → formato que usa la página "Mis pedidos"
+ * (el mismo que tenía el mock: comercio.nombre, fecha, items con nombre, etc.).
+ */
+function mapearPedidoHistorial(dto, nombre) {
+    const items = (dto.items ?? []).map((item) => ({
+        productoId: item.productoId,
+        nombre: item.nombreProducto,
+        cantidad: item.cantidad,
+        precioUnitario: item.precioUnitario,
+    }));
+    const historial = (dto.historial ?? []).map((paso) => ({
+        estado: paso.estadoNuevo,
+        fecha: paso.fechaCambio,
+    }));
+    const cancelacion = (dto.historial ?? []).find((paso) => paso.estadoNuevo === 'CANCELADO');
+
+    return {
+        ...mapearPedido(dto),
+        fecha: dto.fechaCreacion,
+        comercio: { id: dto.comercioId, nombre },
+        items,
+        historial,
+        motivoCancelacion: cancelacion?.motivo,
+        calificacion: null,
+    };
 }
 
 /**
  * CU-07 Historial de pedidos del usuario.
- * Devuelve { content, page, totalPages, totalElements }.
- * No existe en ningún contrato de Pedidos: queda simulado (D4).
+ * Devuelve { content, page, size, totalPages, totalElements }.
+ *
+ * GET /api/v1/orders?pagina=&tamanio= (CU-06 del módulo Pedidos) → PaginaPedidosResponse
+ * { pedidos: PedidoResumenResponse[], pagina, tamanio, totalElementos, totalPaginas }.
+ *
+ * Pedidos no filtra por estado, así que se trae el historial completo y el
+ * filtro y la paginación se hacen acá. Los BORRADOR (carrito sin confirmar)
+ * no son pedidos para el usuario y no se muestran. Para la página visible se
+ * pide el detalle (ítems e historial) y el nombre del comercio a Catálogo.
  */
 export async function listarPedidos(usuarioId, { estados = [], page = 0, size = 4 } = {}) {
-    return listarPedidosMock(usuarioId, { estados, page, size });
+
+    if (USE_MOCK) {
+        return listarPedidosMock(usuarioId, { estados, page, size });
+    }
+
+    const headers = headersCliente(usuarioId);
+
+    const respuesta = await pedir(`${API}?pagina=0&tamanio=100`, {
+        headers,
+        mensajeError: 'No pudimos cargar tus pedidos.',
+    });
+
+    const filtrados = (respuesta.pedidos ?? [])
+        .filter((pedido) => pedido.estado !== 'BORRADOR')
+        .filter((pedido) => estados.length === 0 || estados.includes(pedido.estado));
+
+    const inicio = page * size;
+
+    const content = await Promise.all(
+        filtrados.slice(inicio, inicio + size).map(async (resumen) => {
+            const [detalle, nombre] = await Promise.all([
+                pedir(`${API}/${resumen.id}`, {
+                    headers,
+                    mensajeError: 'No pudimos cargar tus pedidos.',
+                }),
+                nombreComercio(resumen.comercioId),
+            ]);
+            return mapearPedidoHistorial(detalle, nombre);
+        }),
+    );
+
+    return {
+        content,
+        page,
+        size,
+        totalElements: filtrados.length,
+        totalPages: Math.max(1, Math.ceil(filtrados.length / size)),
+    };
+}
+
+/*
+ * Estados en los que un pedido está "en curso" para el seguimiento (CU-05).
+ */
+const ESTADOS_EN_CURSO = ['CONFIRMADO', 'EN_PREPARACION', 'EN_CAMINO'];
+
+/**
+ * CU-05: pedido en curso del usuario, para el Home y Notificaciones.
+ * Devuelve { id, storeName } o null si no hay ninguno.
+ *
+ * Se lo pregunta a Pedidos (GET /api/v1/orders, el más reciente primero), no a la
+ * sesión del navegador: así aparece aunque el pedido se haya hecho en otra pestaña
+ * o antes de volver a iniciar sesión. El pedido que se acaba de pagar en esta sesión
+ * también cuenta aunque siga en BORRADOR (pago pendiente de autorización).
+ */
+export async function buscarPedidoEnCurso(usuarioId) {
+
+    const ultimo = obtenerUltimoPedido();
+
+    if (USE_MOCK) {
+        return ultimo;
+    }
+
+    const pagina = await pedir(`${API}?pagina=0&tamanio=100`, {
+        headers: headersCliente(usuarioId),
+        mensajeError: 'No pudimos consultar tu pedido en curso.',
+    });
+
+    const enCurso = (pagina.pedidos ?? []).find((pedido) =>
+        ESTADOS_EN_CURSO.includes(pedido.estado)
+        || (pedido.estado === 'BORRADOR' && String(pedido.id) === String(ultimo?.id)));
+
+    if (!enCurso) {
+        return null;
+    }
+
+    const storeName = String(enCurso.id) === String(ultimo?.id) && ultimo?.storeName
+        ? ultimo.storeName
+        : await nombreComercio(enCurso.comercioId);
+
+    return { id: enCurso.id, storeName };
 }
 
 /*

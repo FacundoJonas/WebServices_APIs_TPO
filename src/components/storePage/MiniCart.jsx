@@ -34,13 +34,16 @@ function PriceRow({ label, value }) {
  * @param {Array} cart
  * Productos presentes actualmente en el carrito.
  *
+ * @param {string} storeName
+ * Comercio al que pertenece el carrito (Catálogo).
+ *
  * @param {Function} onIncrease
  * Función para aumentar la cantidad de un producto.
  *
  * @param {Function} onDecrease
  * Función para disminuir la cantidad de un producto.
  */
-function MiniCart({ cart, onIncrease, onDecrease }) {
+function MiniCart({ cart, storeName, onIncrease, onDecrease }) {
 
   /*
    * Cantidad total de unidades presentes en el carrito.
@@ -55,10 +58,9 @@ function MiniCart({ cart, onIncrease, onDecrease }) {
     (total, item) => total + item.price * item.quantity, 0 )
 
   /*
-   * Se cobra envío únicamente si existe
-   * al menos un producto.
+   * Pedidos no cobra envío: el total es la suma de los productos.
    */
-  const shipping = cart.length > 0 ? 850 : 0
+  const shipping = 0
 
   /*
    * Total parcial del pedido.
@@ -92,9 +94,11 @@ function MiniCart({ cart, onIncrease, onDecrease }) {
         </div>
 
         {/* Comercio asociado al carrito */}
-        <p className="font-caption-bold text-caption-bold uppercase tracking-wider text-secondary mb-space-xs">
-          La Birra Bar - Almagro
-        </p>
+        {storeName && (
+          <p className="font-caption-bold text-caption-bold uppercase tracking-wider text-secondary mb-space-xs">
+            {storeName}
+          </p>
+        )}
 
         {/*
          * Renderizado condicional:
