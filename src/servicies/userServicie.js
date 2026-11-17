@@ -18,7 +18,7 @@ import {
 const API = `${USUARIOS_URL}/api/v1/users`;
 
 // Cambiar a false cuando el Módulo Usuarios esté disponible
-const USE_MOCK = true;
+const USE_MOCK = false;
 
 /*
  * Zonas del Portal → provincia del contrato.

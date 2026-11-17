@@ -13,7 +13,7 @@ import placeholderImage from '../assets/deliverygo_logo.png';
 const API = `${CATALOGO_URL}/api/v1`;
 
 // Cambiar a false cuando el Módulo Catálogo esté disponible
-const USE_MOCK = true;
+const USE_MOCK = false;
 
 // El módulo acepta size entre 1 y 100 (CatalogoService.validarCriterios).
 const TAMANIO_PAGINA = 100;

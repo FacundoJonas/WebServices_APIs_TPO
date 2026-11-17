@@ -49,7 +49,7 @@ const API = `${NOTIF_URL}/api/v1`;
  * true:  usa los datos de mocks/notificacionesMock.js.
  * Si el 006 no está levantado, ponelo en true para seguir trabajando.
  */
-const USE_MOCK = true;
+const USE_MOCK = false;
 
 // ─── 3. Ayudantes internos (no se exportan) ─────────────────────────────────
 

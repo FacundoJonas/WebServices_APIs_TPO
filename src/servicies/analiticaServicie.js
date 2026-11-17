@@ -9,7 +9,7 @@ import { obtenerTableroMock } from './mocks/analiticaMock';
 const API = `${ANALITICA_URL}/api/v1/analytics`;
 
 // Cambiar a false cuando el Módulo Opiniones y Analítica esté disponible
-const USE_MOCK = true;
+const USE_MOCK = false;
 
 const SIN_DATO = 'El Módulo Analítica no informa esta métrica.';
 

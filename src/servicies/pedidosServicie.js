@@ -11,7 +11,7 @@ import { crearPedidoMock, aplicarCuponMock, listarPedidosMock, confirmarPedidoMo
 const API = `${PEDIDOS_URL}/api/v1/orders`;
 
 // Cambiar a false cuando el Módulo Pedidos esté disponible
-const USE_MOCK = true;
+const USE_MOCK = false;
 
 /*
  * Ni el consolidado del ecosistema (v1.4.0) ni el Swagger del módulo Pedidos

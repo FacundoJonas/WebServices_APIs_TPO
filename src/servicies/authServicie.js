@@ -10,7 +10,7 @@ import { obtenerUsuarioPorId } from './userServicie';
 const API = `${USUARIOS_URL}/api/v1/auth`;
 
 // Cambiar a false cuando el Módulo Usuarios esté disponible
-const USE_MOCK = true;
+const USE_MOCK = false;
 
 /**
  * POST /api/v1/auth/login

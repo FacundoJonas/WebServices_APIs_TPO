@@ -12,7 +12,7 @@ import { obtenerUsuario } from './authServicie';
 const API = `${ANALITICA_URL}/api/v1`;
 
 // Cambiar a false cuando el Módulo Opiniones y Analítica esté disponible
-const USE_MOCK = true;
+const USE_MOCK = false;
 
 function esperar(ms) {
     return new Promise(resolve => setTimeout(resolve, ms));

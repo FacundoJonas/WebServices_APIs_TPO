@@ -10,7 +10,7 @@ import { procesarPagoMock } from './mocks/pagosMock';
 const API = `${PAGOS_URL}/api/v1/payments`;
 
 // Cambiar a false cuando el Módulo Pagos esté disponible
-const USE_MOCK = true;
+const USE_MOCK = false;
 
 /*
  * Número de intento por pedido. Se usa en la claveControl (idempotencia):
