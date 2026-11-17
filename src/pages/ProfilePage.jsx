@@ -2,6 +2,12 @@ import { useState } from "react"
 import { Link } from "react-router"
 
 import { useAuth } from "../context/useAuth"
+import {
+    actualizarPerfil,
+    crearDireccion,
+    marcarDireccionPredeterminada,
+    eliminarDireccion,
+} from "../servicies/userServicie.js"
 
 import ProfileSummary from "../components/profilePage/ProfileSummary.jsx"
 import PersonalInfoCard from "../components/profilePage/PersonalInfoCard.jsx"
@@ -51,56 +57,75 @@ function ProfilePage() {
     }
 
     /**
-     * Guarda los datos personales.
-     *
-     * TODO: llamar a PUT /api/v1/users/{id}.
+     * CU-06: guarda los datos personales en Usuarios (PUT /api/v1/users/{id}).
      */
-    function handleSavePersonalInfo(datos) {
-        actualizarUsuario(datos)
-        showMessage("Tus datos se actualizaron.")
+    async function handleSavePersonalInfo(datos) {
+        try {
+            await actualizarPerfil(usuario.id, { ...datos, email: usuario.email })
+            actualizarUsuario(datos)
+            showMessage("Tus datos se actualizaron.")
+        } catch (error) {
+            showMessage(error.message)
+        }
     }
 
     /**
-     * Agrega una dirección nueva.
-     * Si se marca como predeterminada, se coloca primera.
-     *
-     * TODO: llamar a POST /api/v1/users/{id}/addresses
-     * y usar el id que devuelva el backend.
+     * CU-06: agrega una dirección (POST /api/v1/users/{id}/addresses).
+     * Etiqueta e indicaciones no están en el contrato: quedan sólo en el Portal.
      */
-    function handleAddAddress(direccion, esPredeterminada) {
+    async function handleAddAddress(direccion, esPredeterminada) {
+        try {
+            const creada = await crearDireccion(usuario.id, direccion, { predeterminada: esPredeterminada })
+            const nueva = { ...direccion, ...creada }
 
-        const nueva = { ...direccion, id: Date.now() }
+            const lista = esPredeterminada
+                ? [nueva, ...direcciones.map((d) => ({ ...d, predeterminada: false }))]
+                : [...direcciones, nueva]
 
-        const lista = esPredeterminada
-            ? [nueva, ...direcciones]
-            : [...direcciones, nueva]
-
-        actualizarUsuario({ direcciones: lista })
-        setShowAddressForm(false)
-        showMessage("Dirección agregada.")
+            actualizarUsuario({ direcciones: lista })
+            setShowAddressForm(false)
+            showMessage("Dirección agregada.")
+        } catch (error) {
+            showMessage(error.message)
+        }
     }
 
     /**
-     * Mueve la dirección elegida al primer lugar.
+     * Marca la dirección elegida como predeterminada y la mueve al primer lugar
+     * (PATCH /api/v1/users/{id}/addresses/{addressId}/default).
      */
-    function handleSetDefault(id) {
+    async function handleSetDefault(id) {
+        try {
+            await marcarDireccionPredeterminada(usuario.id, id)
 
-        const elegida = direcciones.find((direccion) => direccion.id === id)
-        const resto = direcciones.filter((direccion) => direccion.id !== id)
+            const elegida = direcciones.find((direccion) => direccion.id === id)
+            const resto = direcciones.filter((direccion) => direccion.id !== id)
 
-        actualizarUsuario({ direcciones: [elegida, ...resto] })
-        showMessage("Dirección predeterminada actualizada.")
+            actualizarUsuario({
+                direcciones: [
+                    { ...elegida, predeterminada: true },
+                    ...resto.map((d) => ({ ...d, predeterminada: false })),
+                ],
+            })
+            showMessage("Dirección predeterminada actualizada.")
+        } catch (error) {
+            showMessage(error.message)
+        }
     }
 
     /**
-     * Elimina una dirección.
+     * Elimina una dirección (DELETE /api/v1/users/{id}/addresses/{addressId}).
      */
-    function handleDeleteAddress(id) {
-
-        actualizarUsuario({
-            direcciones: direcciones.filter((direccion) => direccion.id !== id),
-        })
-        showMessage("Dirección eliminada.")
+    async function handleDeleteAddress(id) {
+        try {
+            await eliminarDireccion(usuario.id, id)
+            actualizarUsuario({
+                direcciones: direcciones.filter((direccion) => direccion.id !== id),
+            })
+            showMessage("Dirección eliminada.")
+        } catch (error) {
+            showMessage(error.message)
+        }
     }
 
     return (
