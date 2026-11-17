@@ -116,6 +116,15 @@ desglose envío/tarifa/descuento del pedido, facturación, variación, pedidos p
 
 ## 6. Día de integración (17/11): Catálogo, Pedidos y Notificaciones
 
+> **Estado 17/11:** el commit `3ec088c` puso los 8 `USE_MOCK` en `false`, y se sacaron los datos de demostración que
+> quedaban en los componentes: carrito inicial y comercio "La Birra Bar", dirección fija del Checkout, pedido
+> "#AR-8942" del Home y de Notificaciones, y pedido "DG-92813", repartidor y reseñas de ejemplo en Calificar.
+> Ahora el carrito arranca vacío, la dirección es la predeterminada de Usuarios, el seguimiento y la reseña usan el
+> último pedido confirmado (`GET /orders/{id}`) y el promedio sale de `GET /merchants/{id}/rating`.
+> **Siguen simulados por no existir en ningún contrato:** cupones (D6) e historial "Mis pedidos" (D4).
+> **Siguen con datos de prueba de otro módulo:** `X-Cliente-Id` `1111…` y `direccionEntregaId` `aaaa…`, porque Pedidos
+> valida siempre contra su `UsuariosClientMock` (no tiene cliente HTTP de Usuarios ni en el perfil `integracion`, D8).
+
 En `main` todos los servicios quedan con `USE_MOCK = true`. El 17 sólo hay que cambiar estas líneas a `false`:
 
 | Módulo | Archivo | Línea | Endpoints que empieza a consumir |
