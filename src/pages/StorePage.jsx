@@ -112,7 +112,7 @@ function StorePage() {
      */
     function addToCart(product) {
 
-        addProductToCart(product)
+        addProductToCart(product, store)
 
         /*
          * Informa visualmente que el producto

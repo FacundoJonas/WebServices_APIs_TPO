@@ -4,10 +4,10 @@ import { CartContext } from "./CartContext"
 import productImage from "../assets/deliverygo_logo.png"
 
 /*
- * Comercio al que pertenece el carrito.
- * TODO: obtenerlo del Módulo Catálogo (API-03).
+ * Comercio del carrito de demostración. Cuando el usuario agrega un
+ * producto desde StorePage, se reemplaza por el comercio real (Catálogo).
  */
-const store = {
+const demoStore = {
     id: 1,
     name: "La Birra Bar",
     area: "Almagro",
@@ -60,6 +60,12 @@ export function CartProvider({ children }) {
 
     const [cart, setCart] = useState(initialCart)
 
+    /*
+     * Comercio al que pertenece el carrito. Su id viaja a Pedidos
+     * como comercioId (CrearPedidoRequest).
+     */
+    const [store, setStore] = useState(demoStore)
+
     const [notes, setNotes] = useState("")
 
     /*
@@ -79,9 +85,33 @@ export function CartProvider({ children }) {
      */
     const cartVersion = useRef(0)
 
-    function addToCart(product) {
+    /**
+     * @param {Object} product producto de ProductCard
+     * @param {Object} comercio comercio de StorePage (opcional)
+     *
+     * Un pedido es de un solo comercio: si el producto es de otro,
+     * el carrito empieza de nuevo con ese comercio.
+     */
+    function addToCart(product, comercio) {
 
-        setCart((currentCart) => {
+        const otroComercio = comercio && String(comercio.id) !== String(store.id)
+
+        if (otroComercio) {
+            setStore({
+                id: comercio.id,
+                name: comercio.name,
+                area: comercio.category ?? "",
+                deliveryTime: comercio.deliveryTime
+                    ? `${comercio.deliveryTime.min}-${comercio.deliveryTime.max} min`
+                    : "",
+                image: comercio.image,
+            })
+        }
+
+        setCart((previousCart) => {
+
+            const currentCart = otroComercio ? [] : previousCart
+
 
             const existingItem = currentCart.find((item) => item.id === product.id)
 
