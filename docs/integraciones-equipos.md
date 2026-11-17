@@ -56,7 +56,7 @@ Analítica la tiene comentada; Pedidos y Logística no validan JWT. Los GET de C
 | 2 | Explora comercios y productos | Portal ↔ Catálogo | ✅ integra | CU-02 |
 | 3 | Arma el carrito y solicita un pedido | Portal ↔ Pedidos ↔ Catálogo | ✅ integra (Pedidos) | CU-03 |
 | 4 | Pedido valida usuario, catálogo, precio y stock | Pedidos ↔ Usuarios/Catálogo | ❌ interno — muestra errores | CU-03 |
-| 5 | Se procesa el pago simulado | Pedidos ↔ Pagos | ⚠️ hoy el Portal llama a Pagos (ver decisión D1) | CU-04 |
+| 5 | Se procesa el pago simulado | Pedidos ↔ Pagos | ✅ el Checkout confirma en Pedidos y Pedidos cobra con Pagos (D1) | CU-04 |
 | 6 | Pedido queda confirmado | Pedidos | lee el estado | CU-04/05 |
 | 7 | Se crea/asigna la entrega | Pedidos ↔ Logística | ❌ interno | — |
 | 8 | Se notifican cambios relevantes | Módulos ↔ Notificaciones | lectura (lista / marca leídas) | CU-08 |
@@ -75,8 +75,8 @@ Analítica la tiene comentada; Pedidos y Logística no validan JWT. Los GET de C
 | CU-02 | `/inicio`, `/comercio/:id` | `catalogoServicie.obtenerComercios` / `obtenerComercioPorId` | `GET /api/v1/catalogo`, `GET /api/v1/comercios/{id}` ¹ | CatalogoResponseDTO, ProductoResponseDTO, ComercioResponseDTO | ✅ alineado |
 | CU-03 | `/carrito` | `pedidosServicie.crearPedido` | `POST /api/v1/orders` + `POST /api/v1/orders/{id}/items` (`X-Cliente-Id`) | CrearPedidoRequest, AgregarItemsPedidoRequest → PedidoResponse | ✅ alineado |
 | CU-03 | `/carrito` | `pedidosServicie.aplicarCupon` | — no existe en ningún contrato | — | 🟡 siempre mock (D6) |
-| CU-04 | `/pagar` | `pagosServicie.procesarPago` / `reintentarPago` | `POST /api/v1/payments` (reintento = pago nuevo con otra `claveControl`) | CrearPagoRequest → PagoResponse | ✅ alineado |
-| CU-04 | `/pagar` | `pedidosServicie.confirmarPedido` | `POST /api/v1/orders/{id}/confirm` | ConfirmarPedidoRequest | ⏳ listo, falta decidir D1 |
+| CU-04 | `/pagar` | `pedidosServicie.confirmarPedido` | `POST /api/v1/orders/{id}/confirm` (`X-Cliente-Id`) | ConfirmarPedidoRequest { medioPago } → PedidoResponse | ✅ conectado al Checkout (D1) |
+| CU-04 | — | `pagosServicie.*` | `POST /api/v1/payments`, `GET /api/v1/payments/{codigoPago}` | CrearPagoRequest → PagoResponse | Alineado pero sin uso en pantallas: el cobro lo hace Pedidos (paso 5) |
 | CU-05 | seguimiento | `pedidosServicie.obtenerPedido` | `GET /api/v1/orders/{id}` | PedidoResponse (estado + historial) | ⏳ servicio listo, sin pantalla |
 | CU-06 | `/perfil` | `userServicie.obtenerUsuarioPorId` | `GET /api/v1/users/{id}` + `/addresses` ¹ | UsuarioResponse, DireccionResponse | ✅ alineado |
 | CU-07 | `/pedidos` | `pedidosServicie.listarPedidos` | — no existe en ningún contrato | — | 🟡 siempre mock (D4) |
@@ -97,7 +97,7 @@ desglose envío/tarifa/descuento del pedido, facturación, variación, pedidos p
 
 | ID | Tema | Con quién | Propuesta |
 |---|---|---|---|
-| D1 | ¿Quién dispara el pago? El enunciado dice Pedidos ↔ Pagos | Pedidos + Pagos | Portal llama `POST /orders/{id}/confirm { medioPago }` y Pedidos llama a Pagos; el Portal consulta `GET /payments/{codigoPago}`. |
+| D1 | ¿Quién dispara el pago? | Pedidos + Pagos | ✅ **Resuelto (16/11):** el Checkout llama `POST /orders/{id}/confirm { medioPago }` y Pedidos cobra con Pagos, como dice el paso 5 del flujo. Respuestas: CONFIRMADO (aprobado), BORRADOR con `pagoId` (pago PENDIENTE), 422 `PAYMENT_REJECTED` (rechazo, se puede reintentar), 503 (Pagos caído). Con el perfil `integracion`, Pedidos necesita a Pagos levantado. |
 | D2 | Clave JWT compartida | Todos | Mismo `JWT_SECRET` en todos; Pagos y Analítica deben hacerla configurable. |
 | D3 | Medios de pago | Pagos | Los ids del Checkout (`visa-4821`…) son de demo; usar los `codigoMedioPago` registrados en `/payment-methods`. |
 | D4 | Historial de pedidos (CU-07) | Pedidos | Ningún contrato tiene un listado por usuario. Consultar al equipo si lo van a publicar; hasta entonces, mock. |
