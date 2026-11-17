@@ -34,7 +34,8 @@ export async function crearPedidoMock(pedidoRequest) {
 
     const pedido = {
         id: 1000 + pedidosMock.length + 1,
-        estado: "PENDIENTE_PAGO",
+        estado: "BORRADOR",
+        historial: [{ estadoAnterior: null, estadoNuevo: "BORRADOR", fechaCambio: new Date().toISOString(), motivo: "CU-01: pedido creado" }],
         subtotal,
         envio: ENVIO,
         tarifaServicio: TARIFA_SERVICIO,
@@ -46,6 +47,56 @@ export async function crearPedidoMock(pedidoRequest) {
 
     // Se devuelve una copia para no compartir el objeto con el estado de React.
     return { ...pedido }
+}
+
+/*
+ * Medio de pago que el Pagos simulado siempre rechaza, para poder mostrar RN-05.
+ */
+const MEDIO_RECHAZADO = "visa-4821"
+
+/*
+ * POST /api/v1/orders/{id}/confirm (ConfirmarPedidoRequest { medioPago }).
+ * Igual que el módulo: si Pagos rechaza responde 422 PAYMENT_REJECTED y el
+ * pedido sigue en BORRADOR; si aprueba, pasa a CONFIRMADO.
+ */
+export async function confirmarPedidoMock(pedidoId, medioPago) {
+
+    await esperar(1200)
+
+    const pedido = pedidosMock.find(p => p.id === pedidoId)
+
+    if (!pedido) {
+        throw new Error("Pedido no encontrado.")
+    }
+
+    if (medioPago === MEDIO_RECHAZADO) {
+        pedido.historial.push({ estadoAnterior: "BORRADOR", estadoNuevo: "BORRADOR", fechaCambio: new Date().toISOString(), motivo: "CU-03: pago RECHAZADO" })
+        const error = new Error("Tu pago no pudo ser procesado por la entidad emisora (fondos insuficientes o límite excedido).")
+        error.codigo = "PAYMENT_REJECTED"
+        throw error
+    }
+
+    pedido.historial.push({ estadoAnterior: pedido.estado, estadoNuevo: "CONFIRMADO", fechaCambio: new Date().toISOString(), motivo: "CU-03: pago APROBADO" })
+    pedido.estado = "CONFIRMADO"
+    pedido.pagoId = `pago-${pedido.id}`
+
+    return { ...pedido, historial: [...pedido.historial] }
+}
+
+/*
+ * GET /api/v1/orders/{id}: estado e historial del pedido (CU-05).
+ */
+export async function obtenerPedidoMock(pedidoId) {
+
+    await esperar(400)
+
+    const pedido = pedidosMock.find(p => String(p.id) === String(pedidoId))
+
+    if (!pedido) {
+        throw new Error("No encontramos ese pedido.")
+    }
+
+    return { ...pedido, historial: [...pedido.historial] }
 }
 
 /*

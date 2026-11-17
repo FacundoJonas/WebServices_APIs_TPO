@@ -1,6 +1,6 @@
 import { PEDIDOS_URL } from './api';
 import { pedir } from './http';
-import { crearPedidoMock, aplicarCuponMock, listarPedidosMock } from './mocks/pedidosMock';
+import { crearPedidoMock, aplicarCuponMock, listarPedidosMock, confirmarPedidoMock, obtenerPedidoMock } from './mocks/pedidosMock';
 
 /*
  * Módulo Pedidos (santi28/uade-deliverygo-ms-orders) — CU-03, CU-05, CU-07.
@@ -112,7 +112,7 @@ export async function crearPedido(pedidoRequest) {
 export async function obtenerPedido(pedidoId, clienteId) {
 
     if (USE_MOCK) {
-        throw new Error('El seguimiento no tiene mock todavía.');
+        return obtenerPedidoMock(pedidoId);
     }
 
     const pedido = await pedir(`${API}/${pedidoId}`, {
@@ -124,26 +124,42 @@ export async function obtenerPedido(pedidoId, clienteId) {
 }
 
 /**
- * CU-03: POST /api/v1/orders/{id}/confirm
- * ConfirmarPedidoRequest { medioPago } → PedidoResponse (CONFIRMADO)
+ * CU-03/CU-04: POST /api/v1/orders/{id}/confirm
+ * ConfirmarPedidoRequest { medioPago } → PedidoResponse
  *
- * Paso 5-6 del flujo: Pedidos procesa el pago con Pagos y queda confirmado.
- * TODO: acordar con Pedidos y Pagos quién dispara el pago (ver docs).
+ * Pasos 5 y 6 del flujo: Pedidos cobra con Pagos (el Portal no llama a Pagos).
+ * Respuestas del módulo (PedidoService.confirmarPedido):
+ *   - pago APROBADO  → 200, pedido CONFIRMADO.
+ *   - pago PENDIENTE → 200, pedido sigue en BORRADOR con pagoId (Pagos autoriza aparte).
+ *   - pago RECHAZADO → 422 PAYMENT_REJECTED, pedido sigue en BORRADOR (se puede reintentar).
+ *   - Pagos caído    → 503, nunca se confirma sin cobro.
+ *
+ * Sólo PAYMENT_REJECTED es un rechazo del medio de pago (RN-05) y lleva "codigo";
+ * el resto (precio cambiado, sin stock, Pagos caído) se muestra como error general.
  */
 export async function confirmarPedido(pedidoId, clienteId, medioPago) {
 
     if (USE_MOCK) {
-        return { id: pedidoId, estado: 'CONFIRMADO' };
+        return confirmarPedidoMock(pedidoId, medioPago);
     }
 
-    const pedido = await pedir(`${API}/${pedidoId}/confirm`, {
-        method: 'POST',
-        headers: headersCliente(clienteId),
-        body: { medioPago },
-        mensajeError: 'No se pudo confirmar el pedido.',
-    });
+    try {
+        const pedido = await pedir(`${API}/${pedidoId}/confirm`, {
+            method: 'POST',
+            headers: headersCliente(clienteId),
+            body: { medioPago },
+            mensajeError: 'No se pudo confirmar el pedido. Intentá nuevamente.',
+        });
 
-    return mapearPedido(pedido);
+        return mapearPedido(pedido);
+    } catch (error) {
+        if (error.codigo === 'PAYMENT_REJECTED') {
+            error.message = 'Tu pago fue rechazado por la entidad emisora. Probá con otro medio de pago.';
+        } else {
+            error.codigo = undefined;
+        }
+        throw error;
+    }
 }
 
 /**

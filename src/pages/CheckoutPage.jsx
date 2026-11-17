@@ -8,7 +8,8 @@ import PaymentRejectedBanner from "../components/checkoutPage/PaymentRejectedBan
 import PurchaseSummary from "../components/cartPage/PurchaseSummary"
 
 import { useCart } from "../context/useCart"
-import { procesarPago, reintentarPago } from "../servicies/pagosServicie"
+import { useAuth } from "../context/useAuth"
+import { confirmarPedido } from "../servicies/pedidosServicie"
 
 /*
  * Medios de pago guardados del usuario.
@@ -79,11 +80,14 @@ function PaymentSuccess({ order }) {
 
           <div>
             <h1 className="font-headline-md text-headline-md text-on-surface font-semibold">
-              ¡Pago confirmado!
+              {order.estado === "CONFIRMADO" ? "¡Pago confirmado!" : "Pago en proceso"}
             </h1>
 
+            {/* Pedidos deja el pedido en BORRADOR si Pagos todavía no autorizó el cobro. */}
             <p className="font-body-md text-body-md text-on-surface-variant mt-1">
-              Tu pedido #{order.id} por $ {order.total.toLocaleString("es-AR")} ya está en preparación.
+              {order.estado === "CONFIRMADO"
+                ? `Tu pedido #${order.id} por $ ${order.total.toLocaleString("es-AR")} quedó confirmado.`
+                : `Tu pedido #${order.id} por $ ${order.total.toLocaleString("es-AR")} espera la autorización del pago.`}
             </p>
           </div>
 
@@ -103,6 +107,8 @@ function PaymentSuccess({ order }) {
 function CheckoutPage() {
 
   const { store, address, cart, coupon, order, itemCount, amounts, clearCart } = useCart()
+
+  const { usuario } = useAuth()
 
   /*
    * React Router no resetea el scroll al cambiar de ruta.
@@ -132,7 +138,7 @@ function CheckoutPage() {
   const [paymentError, setPaymentError] = useState("")
 
   /*
-   * Pedido pagado: { id, total }. Se guarda antes de vaciar el carrito
+   * Pedido pagado: { id, total, estado }. Se guarda antes de vaciar el carrito
    * para poder mostrar la confirmación (paso 3).
    */
   const [paidOrder, setPaidOrder] = useState(null)
@@ -154,8 +160,9 @@ function CheckoutPage() {
   }
 
   /**
-   * Envía el DTO-06 PagoRequest.
-   * El primer intento usa API-05; los siguientes, API-10.
+   * Pasos 5 y 6 del flujo: confirma el pedido en Pedidos, que cobra con Pagos
+   * (POST /api/v1/orders/{id}/confirm). Si el pago se rechaza, el pedido sigue
+   * en BORRADOR y se puede reintentar con otro medio sin crear otro pedido (DM-03).
    */
   async function handlePay() {
 
@@ -163,22 +170,14 @@ function CheckoutPage() {
     setRejection(null)
     setPaymentError("")
 
-    const pagoRequest = {
-      pedidoId: order.id,
-      metodoPagoId: selectedMethodId,
-      cuotas: installments,
-      monto: amounts.total,
-    }
-
     try {
-      if (Object.keys(rejections).length > 0) {
-        await reintentarPago(pagoRequest)
-      } else {
-        await procesarPago(pagoRequest)
-      }
+      const pedido = await confirmarPedido(order.id, usuario?.id, selectedMethodId)
 
-      // NAV-06: PNT-08 Seguimiento todavía no existe, se muestra la confirmación.
-      setPaidOrder({ id: order.id, total: amounts.total })
+      setPaidOrder({
+        id: pedido.id ?? order.id,
+        total: pedido.total ?? amounts.total,
+        estado: pedido.estado,
+      })
       clearCart()
       window.scrollTo(0, 0)
     } catch (err) {

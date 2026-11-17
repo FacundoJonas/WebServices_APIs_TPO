@@ -61,6 +61,10 @@ ok(pedido.id === '0f0e0d0c-0000-0000-0000-000000000001' && pedido.total === 3500
 const conf = await ped.confirmarPedido(pedido.id, 2, 'cccccccc-cccc-cccc-cccc-cccccccccccc');
 ok(conf.estado === 'CONFIRMADO' && JSON.stringify(llamadas.at(-1).body) === JSON.stringify({ medioPago: 'cccccccc-cccc-cccc-cccc-cccccccccccc' }), 'Pedidos: confirm { medioPago }');
 ok((await ped.obtenerPedido(pedido.id, 2)).estado === 'EN_CAMINO', 'Pedidos: GET /orders/{id} (seguimiento CU-05)');
+rutas.unshift([/\/orders\/rechazado\/confirm$/, 422, { status: 422, code: 'PAYMENT_REJECTED', message: 'Pagos rechazo el pago' }]);
+try { await ped.confirmarPedido('rechazado', 2, 'visa'); ok(false, 'Pedidos: rechazo'); } catch (e) { ok(e.codigo === 'PAYMENT_REJECTED', 'Pedidos: 422 PAYMENT_REJECTED → rechazo del medio de pago (RN-05)'); }
+rutas.unshift([/\/orders\/caro\/confirm$/, 422, { status: 422, code: 'PRICE_CHANGED', message: 'El precio del producto 5 cambió' }]);
+try { await ped.confirmarPedido('caro', 2, 'visa'); ok(false, 'Pedidos: precio'); } catch (e) { ok(!e.codigo && e.message === 'El precio del producto 5 cambió', 'Pedidos: PRICE_CHANGED → error general, no rechazo de pago'); }
 rutas.unshift([/\/orders$/, 422, { status: 422, code: 'PRODUCTO_NO_DISPONIBLE', message: 'El producto 5 no está disponible' }]);
 try { await ped.crearPedido({ usuarioId: 2, comercioId: 10, direccionEntregaId: 1, items: [] }); ok(false, 'Pedidos: error'); } catch (e) { ok(e.message === 'El producto 5 no está disponible' && e.codigo === 'PRODUCTO_NO_DISPONIBLE', 'Pedidos: ErrorResponse → mensaje del módulo (RN-11)'); }
 
