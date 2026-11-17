@@ -1,5 +1,5 @@
 import { ANALITICA_URL } from './api';
-import { pedir, nuevoCorrelationId } from './http';
+import { pedir } from './http';
 import { obtenerUsuario } from './authServicie';
 
 /*
@@ -21,7 +21,7 @@ function esperar(ms) {
 /**
  * POST /api/v1/reviews
  * ResenaRequest { pedidoId, tipoObjetivo: COMERCIO|REPARTIDOR, puntuacion, comentario } → ResenaResponse
- * Headers obligatorios: X-Usuario-Id y X-Correlation-Id.
+ * Headers: X-Usuario-Id (obligatorio); X-Correlation-Id lo agrega pedir().
  */
 export async function crearResena({ pedidoId, tipoObjetivo, puntuacion, comentario }) {
 
@@ -32,17 +32,22 @@ export async function crearResena({ pedidoId, tipoObjetivo, puntuacion, comentar
 
     const usuario = obtenerUsuario();
 
+    // ResenaRequest.pedidoId es int64. Pedidos usa UUID (D10): si el id no es
+    // numérico se manda igual y el módulo responde el error de validación.
+    const id = /^\d+$/.test(String(pedidoId)) ? Number(pedidoId) : pedidoId;
+
     return pedir(`${API}/reviews`, {
         method: 'POST',
-        headers: {
-            'X-Usuario-Id': String(usuario?.id),
-            'X-Correlation-Id': nuevoCorrelationId(),
-        },
-        body: { pedidoId, tipoObjetivo, puntuacion, comentario },
+        headers: { 'X-Usuario-Id': String(usuario?.id) },
+        body: { pedidoId: id, tipoObjetivo, puntuacion, comentario },
         mensajeError: 'No pudimos enviar tu calificación. Intentá nuevamente.',
     }).catch((error) => {
         if (error.status === 409) {
             throw new Error('Ya calificaste este pedido.');
+        }
+        // RN-08: el pedido no existe, no es del usuario o todavía no fue entregado.
+        if (error.status === 422) {
+            throw new Error(error.message || 'Sólo podés calificar pedidos entregados.');
         }
         throw error;
     });
