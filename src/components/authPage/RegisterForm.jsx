@@ -8,6 +8,7 @@ const emptyForm = {
     email: "",
     calle: "",
     barrio: "",
+    codigoPostal: "",
     password: "",
     telefono: "",
 }
@@ -64,6 +65,11 @@ function RegisterForm({ goToLogin }) {
             return "Completá tu dirección y barrio de entrega."
         }
 
+        // El Módulo Usuarios exige el código postal para guardar la dirección.
+        if (!form.codigoPostal.trim()) {
+            return "Completá el código postal."
+        }
+
         if (form.password.length < 8) {
             return "La contraseña debe tener al menos 8 caracteres."
         }
@@ -102,6 +108,7 @@ function RegisterForm({ goToLogin }) {
                     calle: form.calle.trim(),
                     barrio: form.barrio.trim(),
                     ciudad: "CABA",
+                    codigoPostal: form.codigoPostal.trim().toUpperCase(),
                 },
             })
         } catch (error) {
@@ -199,7 +206,7 @@ function RegisterForm({ goToLogin }) {
             </div>
 
             {/* Dirección habitual de entrega */}
-            <div className="grid grid-cols-1 sm:grid-cols-3 gap-space-sm">
+            <div className="grid grid-cols-1 sm:grid-cols-4 gap-space-sm">
 
                 <div className="flex flex-col gap-1.5 sm:col-span-2">
 
@@ -249,6 +256,27 @@ function RegisterForm({ goToLogin }) {
                         type="text"
                         placeholder="Palermo"
                         value={form.barrio}
+                        onChange={handleChange}
+                        className={inputClass}
+                    />
+                </div>
+
+                <div className="flex flex-col gap-1.5">
+
+                    <label
+                        htmlFor="register-postal-code"
+                        className="font-label-md text-label-md text-on-surface"
+                    >
+                        Código postal
+                    </label>
+
+                    <input
+                        id="register-postal-code"
+                        name="codigoPostal"
+                        type="text"
+                        maxLength={10}
+                        placeholder="C1425"
+                        value={form.codigoPostal}
                         onChange={handleChange}
                         className={inputClass}
                     />

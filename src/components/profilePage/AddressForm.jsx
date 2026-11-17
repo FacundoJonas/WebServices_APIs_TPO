@@ -20,6 +20,7 @@ const emptyForm = {
     pisoDepto: "",
     barrio: "",
     ciudad: "CABA",
+    codigoPostal: "",
     indicaciones: "",
 }
 
@@ -62,6 +63,12 @@ function AddressForm({ isFirst, onSave, onCancel }) {
             return
         }
 
+        // El Módulo Usuarios exige el código postal (CrearDireccionRequest).
+        if (!form.codigoPostal.trim()) {
+            setError("Completá el código postal.")
+            return
+        }
+
         onSave(
             {
                 etiqueta: form.etiqueta,
@@ -69,6 +76,7 @@ function AddressForm({ isFirst, onSave, onCancel }) {
                 pisoDepto: form.pisoDepto.trim(),
                 barrio: form.barrio.trim(),
                 ciudad: form.ciudad,
+                codigoPostal: form.codigoPostal.trim().toUpperCase(),
                 indicaciones: form.indicaciones.trim(),
             },
             isFirst || isDefault
@@ -182,6 +190,24 @@ function AddressForm({ isFirst, onSave, onCancel }) {
                         <option value="GBA">GBA</option>
                     </select>
                 </div>
+            </div>
+
+            {/* Código postal (obligatorio en el contrato de Usuarios) */}
+            <div>
+                <label htmlFor="address-cp" className="block font-caption-bold text-caption-bold text-on-surface mb-1">
+                    Código postal
+                </label>
+
+                <input
+                    id="address-cp"
+                    name="codigoPostal"
+                    type="text"
+                    maxLength={10}
+                    placeholder="C1425"
+                    value={form.codigoPostal}
+                    onChange={handleChange}
+                    className={inputClass}
+                />
             </div>
 
             {/* Indicaciones */}
