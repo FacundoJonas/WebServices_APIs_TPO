@@ -106,9 +106,19 @@ function PaymentSuccess({ order }) {
 
 function CheckoutPage() {
 
-  const { store, address, cart, coupon, order, itemCount, amounts, clearCart } = useCart()
+  const { store, cart, coupon, order, itemCount, amounts, clearCart } = useCart()
 
   const { usuario } = useAuth()
+
+  /*
+   * Dirección de entrega: la predeterminada del usuario (Módulo Usuarios).
+   */
+  const direccion = usuario?.direcciones?.find((d) => d.predeterminada) ?? usuario?.direcciones?.[0]
+  const address = {
+    street: [direccion?.calle, direccion?.pisoDepto].filter(Boolean).join(", "),
+    detail: [direccion?.barrio, direccion?.ciudad, direccion?.codigoPostal && `(${direccion.codigoPostal})`].filter(Boolean).join(", "),
+    instructions: direccion?.indicaciones ?? "",
+  }
 
   /*
    * React Router no resetea el scroll al cambiar de ruta.

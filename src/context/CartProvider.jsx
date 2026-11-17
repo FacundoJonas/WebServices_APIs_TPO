@@ -1,52 +1,6 @@
 import { useRef, useState } from "react"
 
 import { CartContext } from "./CartContext"
-import productImage from "../assets/deliverygo_logo.png"
-
-/*
- * Comercio del carrito de demostración. Cuando el usuario agrega un
- * producto desde StorePage, se reemplaza por el comercio real (Catálogo).
- */
-const demoStore = {
-    id: 1,
-    name: "La Birra Bar",
-    area: "Almagro",
-    deliveryTime: "25-35 min",
-    image: productImage,
-}
-
-/*
- * Dirección de entrega seleccionada.
- * TODO: obtenerla del Módulo Usuarios (direcciones del usuario).
- */
-const address = {
-    id: 1,
-    street: "Av. Corrientes 1450, Piso 4 Depto B",
-    detail: "Balvanera, Ciudad Autónoma de Buenos Aires (C1042AAN)",
-    instructions: "Timbre: \"4B Rossi\" • Dejar en conserjería si no atiende de inmediato.",
-}
-
-/*
- * Carrito inicial de demostración (el mismo que tenía StorePage).
- */
-const initialCart = [
-    {
-        id: 1,
-        name: "Golden Burger Doble",
-        description: "Doble medallón 120g + cheddar",
-        price: 7800,
-        image: productImage,
-        quantity: 1,
-    },
-    {
-        id: 4,
-        name: "Papas con Cheddar y Panceta",
-        description: "Porción grande",
-        price: 3900,
-        image: productImage,
-        quantity: 1,
-    },
-]
 
 const SHIPPING_COST = 850
 const SERVICE_FEE = 350
@@ -58,13 +12,13 @@ const SERVICE_FEE = 350
  */
 export function CartProvider({ children }) {
 
-    const [cart, setCart] = useState(initialCart)
+    const [cart, setCart] = useState([])
 
     /*
-     * Comercio al que pertenece el carrito. Su id viaja a Pedidos
-     * como comercioId (CrearPedidoRequest).
+     * Comercio al que pertenece el carrito (Catálogo). Su id viaja a Pedidos
+     * como comercioId (CrearPedidoRequest). Se fija al agregar el primer producto.
      */
-    const [store, setStore] = useState(demoStore)
+    const [store, setStore] = useState(null)
 
     const [notes, setNotes] = useState("")
 
@@ -94,7 +48,7 @@ export function CartProvider({ children }) {
      */
     function addToCart(product, comercio) {
 
-        const otroComercio = comercio && String(comercio.id) !== String(store.id)
+        const otroComercio = comercio && String(comercio.id) !== String(store?.id)
 
         if (otroComercio) {
             setStore({
@@ -215,7 +169,6 @@ export function CartProvider({ children }) {
 
     const value = {
         store,
-        address,
         cart,
         notes,
         updateNotes,
