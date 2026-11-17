@@ -8,6 +8,7 @@ import {
     obtenerToken,
     obtenerUsuario
 } from "../servicies/authServicie.js"
+import { crearDireccion } from "../servicies/userServicie.js"
 
 /**
  * Estado global de la sesión.
@@ -37,7 +38,26 @@ export function AuthProvider({ children }) {
  */
     async function register(datos) {
         await registerService(datos)
-        return login(datos.email, datos.password)
+        const data = await login(datos.email, datos.password)
+
+        /*
+         * En el contrato de Usuarios el registro no incluye la dirección:
+         * se crea con POST /users/{id}/addresses, que ya necesita el token.
+         * Si falla, la cuenta queda creada y la dirección se carga desde el perfil.
+         */
+        if (datos.direccion) {
+            try {
+                const direccion = await crearDireccion(data.id, datos.direccion, { predeterminada: true })
+                const actual = obtenerUsuario()
+                const nuevo = { ...actual, direcciones: [...(actual?.direcciones ?? []), direccion] }
+                sessionStorage.setItem("usuario", JSON.stringify(nuevo))
+                setUsuario(nuevo)
+            } catch {
+                // RN-11: no se interrumpe el registro por la dirección.
+            }
+        }
+
+        return data
     }
 
 

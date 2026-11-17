@@ -49,3 +49,28 @@ export async function obtenerUsuarioPorIdMock(id) {
 export function crearPerfilMock(perfil) {
     usuariosMock.push(perfil);
 }
+
+/*
+ * POST /api/v1/users/{id}/addresses
+ * Agrega una dirección al perfil simulado.
+ */
+export async function crearDireccionMock(usuarioId, direccion) {
+
+    await new Promise(resolve => setTimeout(resolve, 300));
+
+    const usuario = usuariosMock.find(u => u.id === usuarioId);
+
+    if (!usuario) {
+        throw new Error("Usuario no encontrado");
+    }
+
+    const nueva = {
+        id: Math.max(0, ...usuario.direcciones.map(d => d.id)) + 1,
+        etiqueta: usuario.direcciones.length === 0 ? "Casa" : undefined,
+        ...direccion
+    };
+
+    usuario.direcciones.push(nueva);
+
+    return nueva;
+}

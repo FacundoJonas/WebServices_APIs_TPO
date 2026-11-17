@@ -35,8 +35,10 @@ export async function loginMock(username, password) {
     }
 
     // JWT ficticio. No es un token firmado ni sirve para autenticar
-    // solicitudes reales contra Spring Boot.
-    const token = `mock.${btoa(JSON.stringify({
+    // solicitudes reales contra Spring Boot. Si en .env.local hay un
+    // VITE_TOKEN_DEMO (firmado con la clave compartida), se usa ese: así los
+    // módulos que validan JWT (Notificaciones) responden aunque Usuarios siga simulado.
+    const token = import.meta.env.VITE_TOKEN_DEMO || `mock.${btoa(JSON.stringify({
         sub: usuario.username,
         id: usuario.id,
         rol: usuario.rol
@@ -83,7 +85,9 @@ export async function registerMock(datos) {
         apellido: datos.apellido,
         email: datos.email,
         telefono: datos.telefono,
-        direcciones: [{ id: 1, etiqueta: "Casa", ...datos.direccion }]
+        // La dirección se crea después, igual que en el contrato
+        // (POST /api/v1/users/{id}/addresses desde AuthProvider.register).
+        direcciones: []
     });
 
     return { id, email: datos.email, rol: "CLIENTE" };

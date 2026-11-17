@@ -1,46 +1,52 @@
-import { BASE_URL } from './api';
+import { USUARIOS_URL } from './api';
+import { pedir } from './http';
 import { loginMock, registerMock } from './mocks/authMock';
-
 import { obtenerUsuarioPorId } from './userServicie';
-const API = `${BASE_URL}/api/v1/auth`;
 
-// Cambiar a false cuando quieras utilizar Spring Boot
+/*
+ * Módulo Usuarios y Autenticación (Grupo 2).
+ * Contrato: doc/swagger-ecosistema.yaml → /api/v1/auth/*
+ */
+const API = `${USUARIOS_URL}/api/v1/auth`;
+
+// Cambiar a false cuando el Módulo Usuarios esté disponible
 const USE_MOCK = true;
 
 /**
  * POST /api/v1/auth/login
+ * LoginRequest { email, password } → LoginResponse { token, tipo, expiraEn, usuarioId, nombre, rol }
  *
- * Inicia sesión y, con el id que devuelve, pide los datos
- * del usuario (GET /api/v1/users/{id}). Guarda todo en sessionStorage.
+ * Con el usuarioId pide el perfil (GET /api/v1/users/{id}) y guarda todo
+ * en sessionStorage. El mismo token se usa en todos los módulos.
  */
-export async function login(username, password) {
+export async function login(email, password) {
 
     let data;
 
     if (USE_MOCK) {
-        data = await loginMock(username, password);
+        data = await loginMock(email, password);
     } else {
-
-        const r = await fetch(`${API}/login`, {
+        data = await pedir(`${API}/login`, {
             method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({ username, password })
+            auth: false,
+            body: { email, password },
+            mensajeError: 'No pudimos iniciar sesión. Intentá nuevamente.',
+        }).catch((error) => {
+            if (error.status === 401 || error.status === 400) {
+                throw new Error('Email o contraseña incorrectos.');
+            }
+            throw error;
         });
-
-        if (!r.ok) {
-            throw new Error('Credenciales inválidas');
-        }
-
-        data = await r.json();
     }
+
+    // El contrato devuelve "usuarioId"; el mock, "id".
+    const usuarioId = data.usuarioId ?? data.id;
 
     // El token se guarda primero porque /users/{id} lo necesita
     sessionStorage.setItem('token', data.token);
 
     try {
-        const usuario = await obtenerUsuarioPorId(data.id);
+        const usuario = await obtenerUsuarioPorId(usuarioId);
 
         sessionStorage.setItem('usuario', JSON.stringify({
             id: usuario.id,
@@ -48,11 +54,11 @@ export async function login(username, password) {
             apellido: usuario.apellido,
             email: usuario.email,
             telefono: usuario.telefono,
-            rol: data.rol,
+            rol: data.rol ?? usuario.rol,
             direcciones: usuario.direcciones
         }));
 
-        return { ...data, ...usuario };
+        return { ...data, ...usuario, id: usuarioId };
 
     } catch (error) {
         // Si falla el perfil, no dejamos una sesión a medias
@@ -63,8 +69,11 @@ export async function login(username, password) {
 
 /**
  * POST /api/v1/auth/register
+ * RegistrarUsuarioRequest { nombre, apellido, email, telefono, password } → UsuarioResponse
  *
- * Crea un usuario nuevo. No inicia la sesión: de eso se encarga login().
+ * Crea un usuario CLIENTE. No inicia la sesión: de eso se encarga login().
+ * La dirección no forma parte del registro en el contrato: se crea después
+ * con POST /api/v1/users/{id}/addresses (ver AuthProvider.register).
  */
 export async function register(datos) {
 
@@ -72,23 +81,23 @@ export async function register(datos) {
         return registerMock(datos);
     }
 
-    const r = await fetch(`${API}/register`, {
+    return pedir(`${API}/register`, {
         method: 'POST',
-        headers: {
-            'Content-Type': 'application/json'
+        auth: false,
+        body: {
+            nombre: datos.nombre,
+            apellido: datos.apellido,
+            email: datos.email,
+            telefono: datos.telefono,
+            password: datos.password,
         },
-        body: JSON.stringify(datos)
+        mensajeError: 'No pudimos crear tu cuenta. Intentá nuevamente.',
+    }).catch((error) => {
+        if (error.status === 409) {
+            throw new Error('Ya existe una cuenta con ese correo electrónico.');
+        }
+        throw error;
     });
-
-    if (r.status === 409) {
-        throw new Error('Ya existe una cuenta con ese correo electrónico.');
-    }
-
-    if (!r.ok) {
-        throw new Error('No pudimos crear tu cuenta. Intentá nuevamente.');
-    }
-
-    return r.json();
 }
 
 export function obtenerToken() {
