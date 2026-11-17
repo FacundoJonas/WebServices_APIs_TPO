@@ -1,4 +1,7 @@
 import { useState } from "react"
+import { useLocation } from "react-router"
+
+import { crearResena } from "../servicies/opinionesServicie"
 
 import RatingStars from "../components/orderReviewPage/RatingStars"
 import QuickChip from "../components/orderReviewPage/QuickChip"
@@ -108,6 +111,16 @@ function OrderReviewPage() {
    */
   const [showSuccessModal, setShowSuccessModal] = useState(false)
 
+  /*
+   * Pedido a calificar: llega desde "Mis pedidos" (OrdersPage).
+   * Si se entra directo, se usa el pedido de demostración.
+   */
+  const location = useLocation()
+  const pedidoId = location.state?.pedidoId ?? "DG-92813"
+
+  const [sending, setSending] = useState(false)
+  const [submitError, setSubmitError] = useState("")
+
   /**
    * Agrega o elimina un aspecto destacado de la lista.
    *
@@ -137,8 +150,37 @@ function OrderReviewPage() {
    *
    * Únicamente abre el modal de confirmación.
    */
-  function handleSubmit() {
-    setShowSuccessModal(true)
+  async function handleSubmit() {
+
+    if (storeRating === 0 && courierRating === 0) {
+      setSubmitError("Elegí al menos una calificación antes de enviar.")
+      return
+    }
+
+    setSubmitError("")
+    setSending(true)
+
+    const destacados = quickOptions
+      .filter((option) => selectedChips.includes(option.id))
+      .map((option) => option.label)
+
+    const comentario = [review.trim(), ...destacados].filter(Boolean).join(" · ")
+
+    try {
+      // CU-09: una reseña por objetivo (comercio y repartidor), RN-08.
+      if (storeRating > 0) {
+        await crearResena({ pedidoId, tipoObjetivo: "COMERCIO", puntuacion: storeRating, comentario })
+      }
+      if (courierRating > 0) {
+        await crearResena({ pedidoId, tipoObjetivo: "REPARTIDOR", puntuacion: courierRating, comentario })
+      }
+      setShowSuccessModal(true)
+    } catch (err) {
+      // RN-11: se muestra el error sin perder lo que escribió el usuario.
+      setSubmitError(err.message)
+    } finally {
+      setSending(false)
+    }
   }
 
   return (
@@ -173,7 +215,7 @@ function OrderReviewPage() {
               </span>
 
               <span className="font-body-md-medium text-body-md-medium text-on-surface">
-                Pedido #DG-92813
+                Pedido #{pedidoId}
               </span>
             </div>
 
@@ -363,14 +405,21 @@ function OrderReviewPage() {
                   </span>
                 </div>
 
+                {submitError && (
+                  <p role="alert" className="font-body-md text-body-md text-error">
+                    {submitError}
+                  </p>
+                )}
+
                 <button
                   type="button"
                   onClick={handleSubmit}
+                  disabled={sending}
                   className="w-full sm:w-auto px-space-xl py-space-sm bg-primary-container hover:bg-primary text-on-primary rounded-lg font-title-md text-title-md flex items-center justify-center gap-space-xs shadow-sm hover:shadow-md active:scale-98 transition-all"
                 >
 
                   <span>
-                    Enviar reseña y finalizar
+                    {sending ? "Enviando..." : "Enviar reseña y finalizar"}
                   </span>
 
                   <span className="material-symbols-outlined text-[20px]">

@@ -71,7 +71,7 @@ function exportarCsv(tablero) {
 
     const filas = [
         "fecha,pedidos",
-        ...tablero.pedidos.porDia.map((d) => `${d.fecha},${d.cantidad}`),
+        ...(tablero.pedidos.porDia ?? []).map((d) => `${d.fecha},${d.cantidad}`),
     ]
 
     const blob = new Blob([filas.join("\n")], { type: "text/csv;charset=utf-8" })
@@ -161,7 +161,7 @@ function MetricsPage() {
 
     const { pedidos, pagos, opiniones, topComercios, topRepartidores } = tablero ?? {}
 
-    const entregados = pedidos?.porEstado.find((e) => e.estado === "ENTREGADO")?.cantidad ?? 0
+    const entregados = pedidos?.porEstado?.find((e) => e.estado === "ENTREGADO")?.cantidad ?? 0
 
     return (
         <main className="w-full pt-20 bg-background min-h-[calc(100vh-280px)]">
@@ -279,9 +279,11 @@ function MetricsPage() {
                                         <span className="font-display-hero text-display-hero text-on-surface">
                                             {formatearNumero(pedidos.total)}
                                         </span>
-                                        <span className="font-caption-bold text-caption-bold text-primary px-1.5 py-0.5 rounded-full bg-primary/10">
-                                            ▲ {pedidos.variacion.toLocaleString("es-AR")}%
-                                        </span>
+                                        {pedidos.variacion != null && (
+                                            <span className="font-caption-bold text-caption-bold text-primary px-1.5 py-0.5 rounded-full bg-primary/10">
+                                                ▲ {pedidos.variacion.toLocaleString("es-AR")}%
+                                            </span>
+                                        )}
                                     </div>
                                 )}
                             </MetricCard>
@@ -303,11 +305,13 @@ function MetricsPage() {
                                 {!pagos.error && (
                                     <div className="flex items-baseline gap-space-xs">
                                         <span className="font-display-hero text-display-hero text-on-surface">
-                                            {formatearMillones(pagos.facturacion)}
+                                            {pagos.facturacion != null ? formatearMillones(pagos.facturacion) : "—"}
                                         </span>
-                                        <span className="font-caption-bold text-caption-bold text-primary px-1.5 py-0.5 rounded-full bg-primary/10">
-                                            ▲ {pagos.variacion.toLocaleString("es-AR")}%
-                                        </span>
+                                        {pagos.variacion != null && (
+                                            <span className="font-caption-bold text-caption-bold text-primary px-1.5 py-0.5 rounded-full bg-primary/10">
+                                                ▲ {pagos.variacion.toLocaleString("es-AR")}%
+                                            </span>
+                                        )}
                                     </div>
                                 )}
                             </MetricCard>
