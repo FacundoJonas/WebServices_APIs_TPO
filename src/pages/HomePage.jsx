@@ -10,7 +10,6 @@ import WelcomeHeader from "../components/homePage/WelcomeHeader.jsx"
 import CategoryChips from "../components/homePage/CategoryChips.jsx"
 import ActiveOrderCard from "../components/homePage/ActiveOrderCard.jsx"
 
-import courierImage from "../assets/matias.png"
 
 /*
  * Imágenes temporales.
@@ -18,7 +17,6 @@ import courierImage from "../assets/matias.png"
  * Se utiliza el logo de DeliveryGo como reemplazo
  * hasta contar con las imágenes definitivas de cada comercio y del mapa.
  */
-import placeholderImage from "../assets/deliverygo_logo.png"
 
 /*
  * Cupón destacado en el encabezado.
@@ -26,61 +24,6 @@ import placeholderImage from "../assets/deliverygo_logo.png"
 const welcomeCoupon = {
     label: "Cupón bienvenida",
     title: "25% OFF en tu pedido",
-}
-
-/*
- * Pedido de demostración. Se muestra mientras no haya un pedido
- * confirmado en la sesión; si lo hay, se sigue el real (CU-05).
- *
- * steps[].status puede ser:
- * "done"    -> paso completado.
- * "current" -> paso actual (con animación).
- * "pending" -> paso todavía no alcanzado.
- */
-const activeOrder = {
-    id: "AR-8942",
-    storeName: "La Birra Bar",
-    etaLabel: "Llega entre 20:45 y 21:00 hs (~15 min)",
-    progress: 72,
-    steps: [
-        {
-            id: "confirmed",
-            label: "Confirmado",
-            time: "20:12 hs",
-            icon: "check",
-            status: "done",
-        },
-        {
-            id: "preparing",
-            label: "En preparación",
-            time: "20:25 hs",
-            icon: "check",
-            status: "done",
-        },
-        {
-            id: "on-the-way",
-            label: "En camino",
-            time: "En tránsito",
-            icon: "two_wheeler",
-            status: "current",
-        },
-        {
-            id: "delivered",
-            label: "Entregado",
-            time: "Pendiente",
-            icon: "home",
-            status: "pending",
-        },
-    ],
-    courier: {
-        name: "Matías G.",
-        rating: 4.9,
-        image: courierImage,
-        vehicle: "Moto Honda Wave (Casco negro) • Valija térmica #42",
-    },
-    mapImage: placeholderImage,
-    distanceLabel: "A 8 cuadras de tu domicilio",
-    trackingPath: "/pedido",
 }
 
 /*
@@ -376,9 +319,10 @@ function HomePage() {
                 />
 
                 {/* Pedido en curso */}
-                {token && (
+                {/* Sólo si hay un pedido confirmado en la sesión (CU-05) */}
+                {token && (seguimiento || seguimientoError) && (
                     <div className="space-y-space-xs">
-                        <ActiveOrderCard order={seguimiento ?? activeOrder} />
+                        {seguimiento && <ActiveOrderCard order={seguimiento} />}
                         {seguimientoError && (
                             <p role="alert" className="font-caption-sm text-caption-sm text-error px-space-xs">
                                 {seguimientoError} Se vuelve a intentar en unos segundos.
