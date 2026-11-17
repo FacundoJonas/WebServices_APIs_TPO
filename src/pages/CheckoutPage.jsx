@@ -167,6 +167,7 @@ function CheckoutPage() {
       pedidoId: order.id,
       metodoPagoId: selectedMethodId,
       cuotas: installments,
+      monto: amounts.total,
     }
 
     try {

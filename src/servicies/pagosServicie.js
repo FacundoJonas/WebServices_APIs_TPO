@@ -1,53 +1,78 @@
-import { BASE_URL } from './api';
-import { obtenerToken } from './authServicie';
+import { PAGOS_URL } from './api';
+import { pedir } from './http';
+import { obtenerUsuario } from './authServicie';
 import { procesarPagoMock } from './mocks/pagosMock';
 
-const API = `${BASE_URL}/pagos`;
+/*
+ * Módulo Pagos (Grupo 3) — CU-04.
+ * Contrato: doc/swagger-ecosistema.yaml → /api/v1/payments
+ */
+const API = `${PAGOS_URL}/api/v1/payments`;
 
 // Cambiar a false cuando el Módulo Pagos esté disponible
 const USE_MOCK = true;
 
 /*
- * Envía el pago al endpoint indicado.
- *
- * Sólo un rechazo del medio de pago (4xx) lleva "codigo" (RN-05).
- * Los errores de red o del servidor no tienen código: no son un rechazo.
- * TODO: acordar con el Módulo Pagos el formato del error ({ codigo, mensaje }).
+ * Número de intento por pedido. Se usa en la claveControl (idempotencia):
+ * el mismo intento no se cobra dos veces, y un reintento usa una clave nueva.
  */
-async function enviarPago(url, pagoRequest) {
+const intentos = new Map();
 
-    let r;
-
-    try {
-        r = await fetch(url, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-                'Authorization': `Bearer ${obtenerToken()}`
-            },
-            body: JSON.stringify(pagoRequest)
-        });
-    } catch {
-        throw new Error('No pudimos comunicarnos con el servicio de pagos. Revisá tu conexión e intentá de nuevo.');
-    }
-
-    if (r.status >= 500) {
-        throw new Error('El servicio de pagos no está disponible en este momento. Intentá de nuevo en unos minutos.');
-    }
-
-    if (!r.ok) {
-        const data = await r.json().catch(() => ({}));
-        const error = new Error(data.mensaje ?? 'El pago fue rechazado.');
-        error.codigo = data.codigo ?? `HTTP_${r.status}`;
-        throw error;
-    }
-
-    return r.json();
+function siguienteClave(pedidoId) {
+    const intento = (intentos.get(pedidoId) ?? 0) + 1;
+    intentos.set(pedidoId, intento);
+    return `pedido-${pedidoId}-intento-${intento}`;
 }
 
 /**
- * API-05 POST /pagos
- * DTO-06 PagoRequest -> DTO-05 PedidoResponse
+ * POST /api/v1/payments
+ * CrearPagoRequest { codigoPedido, codigoUsuario, codigoMedioPago, monto, moneda, claveControl }
+ * → PagoResponse { codigoPago, codigoPedido, estado: PENDIENTE|APROBADO|RECHAZADO|REEMBOLSADO, ... }
+ *
+ * RN-05: sólo un rechazo del medio de pago lleva "codigo".
+ * Los errores de red o del servidor no tienen código: no son un rechazo.
+ */
+async function enviarPago(pagoRequest) {
+
+    const usuario = obtenerUsuario();
+
+    let pago;
+
+    try {
+        pago = await pedir(API, {
+            method: 'POST',
+            body: {
+                codigoPedido: String(pagoRequest.pedidoId),
+                codigoUsuario: String(usuario?.id),
+                codigoMedioPago: pagoRequest.metodoPagoId,
+                monto: pagoRequest.monto,
+                moneda: 'ARS',
+                claveControl: siguienteClave(pagoRequest.pedidoId),
+            },
+            mensajeError: 'El servicio de pagos no está disponible en este momento. Intentá de nuevo en unos minutos.',
+        });
+    } catch (error) {
+        // 4xx con cuerpo: el medio de pago fue rechazado o los datos no son válidos.
+        if (error.status >= 400 && error.status < 500 && error.status !== 401 && error.status !== 403) {
+            error.codigo = error.codigo ?? `HTTP_${error.status}`;
+        } else {
+            error.codigo = undefined;
+        }
+        throw error;
+    }
+
+    // El pago puede crearse y quedar RECHAZADO: también es un rechazo (RN-05).
+    if (pago?.estado === 'RECHAZADO') {
+        const error = new Error('Tu pago fue rechazado por la entidad emisora. Probá con otro medio de pago.');
+        error.codigo = `PAGO_RECHAZADO_${pago.codigoPago ?? ''}`.replace(/_$/, '');
+        throw error;
+    }
+
+    return pago;
+}
+
+/**
+ * API-05: procesa el pago de un pedido.
  */
 export async function procesarPago(pagoRequest) {
 
@@ -55,12 +80,14 @@ export async function procesarPago(pagoRequest) {
         return procesarPagoMock(pagoRequest);
     }
 
-    return enviarPago(API, pagoRequest);
+    return enviarPago(pagoRequest);
 }
 
 /**
- * API-10 POST /pagos/reintentar
- * Se usa después de un rechazo, sin crear un pedido nuevo (DM-03).
+ * API-10: reintento después de un rechazo, sin crear un pedido nuevo (DM-03).
+ *
+ * El contrato no tiene un endpoint de reintento: se crea un pago nuevo
+ * para el mismo pedido con otra claveControl.
  */
 export async function reintentarPago(pagoRequest) {
 
@@ -68,5 +95,14 @@ export async function reintentarPago(pagoRequest) {
         return procesarPagoMock(pagoRequest);
     }
 
-    return enviarPago(`${API}/reintentar`, pagoRequest);
+    return enviarPago(pagoRequest);
+}
+
+/**
+ * GET /api/v1/payments/{codigoPago} → PagoResponse
+ */
+export async function obtenerPago(codigoPago) {
+    return pedir(`${API}/${codigoPago}`, {
+        mensajeError: 'No pudimos consultar el pago.',
+    });
 }
