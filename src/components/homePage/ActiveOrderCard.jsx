@@ -63,12 +63,14 @@ function ActiveOrderCard({ order }) {
                         progress={order.progress}
                     />
 
-                    <CourierInfo courier={order.courier} />
+                    {/* Repartidor: dato de Logística; sólo si está disponible. */}
+                    {order.courier && <CourierInfo courier={order.courier} />}
                 </div>
 
                 {/* Lado derecho: mapa y acceso al seguimiento */}
                 <div className="lg:w-72 flex flex-col justify-between gap-space-sm shrink-0">
 
+                    {order.mapImage && (
                     <div
                         className="w-full h-32 rounded-xl bg-cover bg-center shadow-sm relative overflow-hidden flex items-end p-space-xs"
                         style={{ backgroundImage: `url(${order.mapImage})` }}
@@ -92,9 +94,11 @@ function ActiveOrderCard({ order }) {
                             </span>
                         </div>
                     </div>
+                    )}
 
                     <Link
                         to={order.trackingPath}
+                        state={{ pedidoId: order.id }}
                         className="w-full h-11 px-space-md rounded-xl bg-surface-container-lowest hover:bg-primary/5 text-primary font-body-md-medium text-body-md-medium flex items-center justify-center gap-space-xs shadow-sm transition-all hover:shadow"
                     >
 

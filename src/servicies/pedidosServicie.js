@@ -178,3 +178,25 @@ export async function aplicarCupon(pedidoId, codigoCupon) {
 export async function listarPedidos(usuarioId, { estados = [], page = 0, size = 4 } = {}) {
     return listarPedidosMock(usuarioId, { estados, page, size });
 }
+
+/*
+ * Último pedido confirmado en esta sesión. Lo guarda el Checkout y lo usa
+ * el seguimiento del Home (CU-05). Se guarda en sessionStorage, igual que la sesión.
+ */
+const CLAVE_ULTIMO_PEDIDO = 'ultimoPedido';
+
+export function guardarUltimoPedido({ id, storeName }) {
+    sessionStorage.setItem(CLAVE_ULTIMO_PEDIDO, JSON.stringify({ id, storeName }));
+}
+
+export function olvidarUltimoPedido() {
+    sessionStorage.removeItem(CLAVE_ULTIMO_PEDIDO);
+}
+
+export function obtenerUltimoPedido() {
+    try {
+        return JSON.parse(sessionStorage.getItem(CLAVE_ULTIMO_PEDIDO));
+    } catch {
+        return null;
+    }
+}

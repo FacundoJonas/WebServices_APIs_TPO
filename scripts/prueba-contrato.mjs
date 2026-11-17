@@ -60,7 +60,14 @@ ok(items.url.endsWith('/orders/0f0e0d0c-0000-0000-0000-000000000001/items') && J
 ok(pedido.id === '0f0e0d0c-0000-0000-0000-000000000001' && pedido.total === 3500 && pedido.subtotal === 3000 && pedido.envio === 0, 'Pedidos: mapea PedidoResponse a lo que usa el carrito');
 const conf = await ped.confirmarPedido(pedido.id, 2, 'cccccccc-cccc-cccc-cccc-cccccccccccc');
 ok(conf.estado === 'CONFIRMADO' && JSON.stringify(llamadas.at(-1).body) === JSON.stringify({ medioPago: 'cccccccc-cccc-cccc-cccc-cccccccccccc' }), 'Pedidos: confirm { medioPago }');
-ok((await ped.obtenerPedido(pedido.id, 2)).estado === 'EN_CAMINO', 'Pedidos: GET /orders/{id} (seguimiento CU-05)');
+const enCamino = await ped.obtenerPedido(pedido.id, 2);
+ok(enCamino.estado === 'EN_CAMINO', 'Pedidos: GET /orders/{id} (seguimiento CU-05)');
+const { armarSeguimiento } = await server.ssrLoadModule('/src/components/homePage/seguimientoPedido.js');
+const tarjeta = armarSeguimiento({ ...enCamino, historial: [
+  { estadoAnterior: 'BORRADOR', estadoNuevo: 'CONFIRMADO', fechaCambio: '2026-11-17T20:12:00-03:00' },
+  { estadoAnterior: 'CONFIRMADO', estadoNuevo: 'EN_PREPARACION', fechaCambio: '2026-11-17T20:25:00-03:00' },
+  { estadoAnterior: 'EN_PREPARACION', estadoNuevo: 'EN_CAMINO', fechaCambio: '2026-11-17T20:40:00-03:00' } ] }, 'Pizzería Demo');
+ok(tarjeta.steps.map(p => p.status).join() === 'done,done,current,pending' && tarjeta.steps[2].time !== 'Pendiente' && tarjeta.courier === null, 'Seguimiento: estado e historial → pasos de la tarjeta del Home (sin datos inventados de Logística)');
 rutas.unshift([/\/orders\/rechazado\/confirm$/, 422, { status: 422, code: 'PAYMENT_REJECTED', message: 'Pagos rechazo el pago' }]);
 try { await ped.confirmarPedido('rechazado', 2, 'visa'); ok(false, 'Pedidos: rechazo'); } catch (e) { ok(e.codigo === 'PAYMENT_REJECTED', 'Pedidos: 422 PAYMENT_REJECTED → rechazo del medio de pago (RN-05)'); }
 rutas.unshift([/\/orders\/caro\/confirm$/, 422, { status: 422, code: 'PRICE_CHANGED', message: 'El precio del producto 5 cambió' }]);

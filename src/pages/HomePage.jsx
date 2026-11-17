@@ -1,6 +1,8 @@
 import { useEffect, useState } from "react"
 import { useAuth } from "../context/useAuth"
 import { obtenerComercios } from "../servicies/catalogoServicie.js"
+import { obtenerPedido, obtenerUltimoPedido, olvidarUltimoPedido } from "../servicies/pedidosServicie.js"
+import { armarSeguimiento, ESTADOS_FINALES } from "../components/homePage/seguimientoPedido.js"
 import FilterBar from "../components/homePage/FilterBar.jsx"
 import StoreCard from "../components/homePage/StoreCard.jsx"
 import PrimeBanner from "../components/homePage/PrimeBanner.jsx"
@@ -27,7 +29,8 @@ const welcomeCoupon = {
 }
 
 /*
- * Pedido actualmente en curso.
+ * Pedido de demostración. Se muestra mientras no haya un pedido
+ * confirmado en la sesión; si lo hay, se sigue el real (CU-05).
  *
  * steps[].status puede ser:
  * "done"    -> paso completado.
@@ -79,6 +82,11 @@ const activeOrder = {
     distanceLabel: "A 8 cuadras de tu domicilio",
     trackingPath: "/pedido",
 }
+
+/*
+ * Cada cuánto se vuelve a consultar el estado del pedido en curso.
+ */
+const INTERVALO_SEGUIMIENTO_MS = 20000
 
 /*
  * Categorías gastronómicas.
@@ -215,6 +223,58 @@ function HomePage() {
     const [retryCount, setRetryCount] = useState(0)
 
     /*
+     * CU-05: seguimiento del último pedido confirmado (GET /api/v1/orders/{id}).
+     * null = no hay pedido real y se muestra el de demostración.
+     */
+    const [seguimiento, setSeguimiento] = useState(null)
+    const [seguimientoError, setSeguimientoError] = useState("")
+
+    useEffect(() => {
+
+        const ultimo = obtenerUltimoPedido()
+
+        if (!token || !ultimo) return
+
+        let ignore = false
+        let timer = null
+
+        function consultar() {
+            obtenerPedido(ultimo.id, usuario?.id)
+                .then((pedido) => {
+                    if (ignore) return
+                    setSeguimientoError("")
+                    setSeguimiento(armarSeguimiento(pedido, ultimo.storeName))
+
+                    // Se vuelve a consultar hasta que el pedido se entregue o se cancele.
+                    if (!ESTADOS_FINALES.includes(pedido.estado)) {
+                        timer = setTimeout(consultar, INTERVALO_SEGUIMIENTO_MS)
+                    }
+                })
+                .catch((error) => {
+                    // RN-11: si falla, se avisa en la tarjeta y se reintenta más tarde.
+                    if (ignore) return
+
+                    // 404: el pedido ya no existe; vuelve la tarjeta de demostración.
+                    if (error.status === 404) {
+                        olvidarUltimoPedido()
+                        setSeguimiento(null)
+                        return
+                    }
+
+                    setSeguimientoError(error.message)
+                    timer = setTimeout(consultar, INTERVALO_SEGUIMIENTO_MS)
+                })
+        }
+
+        consultar()
+
+        return () => {
+            ignore = true
+            clearTimeout(timer)
+        }
+    }, [token, usuario?.id])
+
+    /*
      * Pide los comercios al montar la página y en cada reintento.
      *
      * "ignore" evita actualizar el estado si la página se desmontó
@@ -316,7 +376,16 @@ function HomePage() {
                 />
 
                 {/* Pedido en curso */}
-                {token && ( <ActiveOrderCard order={activeOrder} /> )}
+                {token && (
+                    <div className="space-y-space-xs">
+                        <ActiveOrderCard order={seguimiento ?? activeOrder} />
+                        {seguimientoError && (
+                            <p role="alert" className="font-caption-sm text-caption-sm text-error px-space-xs">
+                                {seguimientoError} Se vuelve a intentar en unos segundos.
+                            </p>
+                        )}
+                    </div>
+                )}
 
                 {/* Categorías y filtros */}
                 <section className="space-y-space-md">

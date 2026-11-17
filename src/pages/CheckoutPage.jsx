@@ -9,7 +9,7 @@ import PurchaseSummary from "../components/cartPage/PurchaseSummary"
 
 import { useCart } from "../context/useCart"
 import { useAuth } from "../context/useAuth"
-import { confirmarPedido } from "../servicies/pedidosServicie"
+import { confirmarPedido, guardarUltimoPedido } from "../servicies/pedidosServicie"
 
 /*
  * Medios de pago guardados del usuario.
@@ -95,8 +95,8 @@ function PaymentSuccess({ order }) {
             to="/inicio"
             className="h-11 px-space-lg rounded-xl bg-primary-container hover:bg-primary text-on-primary font-body-md-medium text-body-md-medium flex items-center gap-2"
           >
-            <span className="material-symbols-outlined text-[20px]">home</span>
-            Volver al inicio
+            <span className="material-symbols-outlined text-[20px]">two_wheeler</span>
+            Seguir mi pedido
           </Link>
         </section>
       </div>
@@ -178,6 +178,9 @@ function CheckoutPage() {
         total: pedido.total ?? amounts.total,
         estado: pedido.estado,
       })
+
+      // CU-05: el Home sigue este pedido con GET /api/v1/orders/{id}.
+      guardarUltimoPedido({ id: pedido.id ?? order.id, storeName: store.name })
       clearCart()
       window.scrollTo(0, 0)
     } catch (err) {

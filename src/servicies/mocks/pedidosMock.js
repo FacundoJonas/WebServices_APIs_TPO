@@ -93,7 +93,9 @@ export async function obtenerPedidoMock(pedidoId) {
     const pedido = pedidosMock.find(p => String(p.id) === String(pedidoId))
 
     if (!pedido) {
-        throw new Error("No encontramos ese pedido.")
+        const error = new Error("No encontramos ese pedido.")
+        error.status = 404
+        throw error
     }
 
     return { ...pedido, historial: [...pedido.historial] }
