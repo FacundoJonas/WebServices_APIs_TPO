@@ -77,7 +77,7 @@ Analítica la tiene comentada; Pedidos y Logística no validan JWT. Los GET de C
 | CU-03 | `/carrito` | `pedidosServicie.aplicarCupon` | — no existe en ningún contrato | — | 🟡 siempre mock (D6) |
 | CU-04 | `/pagar` | `pedidosServicie.confirmarPedido` | `POST /api/v1/orders/{id}/confirm` (`X-Cliente-Id`) | ConfirmarPedidoRequest { medioPago } → PedidoResponse | ✅ conectado al Checkout (D1) |
 | CU-04 | — | `pagosServicie.*` | `POST /api/v1/payments`, `GET /api/v1/payments/{codigoPago}` | CrearPagoRequest → PagoResponse | Alineado pero sin uso en pantallas: el cobro lo hace Pedidos (paso 5) |
-| CU-05 | seguimiento | `pedidosServicie.obtenerPedido` | `GET /api/v1/orders/{id}` | PedidoResponse (estado + historial) | ⏳ servicio listo, sin pantalla |
+| CU-05 | `/inicio` (tarjeta "Pedido en curso") | `pedidosServicie.obtenerPedido` + `homePage/seguimientoPedido.js` | `GET /api/v1/orders/{id}` (`X-Cliente-Id`), cada 20 s hasta ENTREGADO/CANCELADO | PedidoResponse (estado + historial) | ✅ conectado |
 | CU-06 | `/perfil` | `userServicie.obtenerUsuarioPorId` | `GET /api/v1/users/{id}` + `/addresses` ¹ | UsuarioResponse, DireccionResponse | ✅ alineado |
 | CU-07 | `/pedidos` | `pedidosServicie.listarPedidos` | — no existe en ningún contrato | — | 🟡 siempre mock (D4) |
 | CU-08 | `/notificaciones` | `notificacionesServicie.*` | `GET /api/v1/users/{id}/notifications`, `GET/PATCH /api/v1/notifications/{id}[/read]`, `GET /api/v1/channels` | NotificacionResponseDto | ✅ conectado |
@@ -133,12 +133,16 @@ En `main` todos los servicios quedan con `USE_MOCK = true`. El 17 sólo hay que 
    con loguearse. Si no, poner en `.env.local` `VITE_TOKEN_DEMO=<token firmado con la clave compartida>`.
 4. Correr `npm run test:contrato`: verifica que el Portal arme los requests tal como dice el Swagger.
 
-**Recorrido para mostrar (pasos 2, 3, 8 y 9 del flujo)**
+**Recorrido para mostrar (pasos 2, 3, 5, 6, 8 y 9 del flujo)**
 
 1. `/inicio` lista los comercios reales de Catálogo (CU-02).
 2. Entrar a un comercio, agregar productos: el carrito pasa a ese comercio (un pedido = un comercio).
 3. `/carrito` → confirmar: Pedidos crea el borrador y agrega los ítems; valida catálogo, precio y stock (CU-03, paso 4).
-4. `/notificaciones`: aparecen las notificaciones del usuario y se pueden marcar como leídas (CU-08).
-5. Errores esperables: producto sin stock (mensaje de Pedidos), comercio inexistente (404), token inválido (401).
+4. `/pagar` → elegir medio y confirmar: Pedidos cobra con Pagos y el pedido queda CONFIRMADO (CU-04, pasos 5 y 6).
+   Con un rechazo (422 `PAYMENT_REJECTED`) aparece el banner de RN-05 y se reintenta con otro medio.
+5. "Seguir mi pedido" → `/inicio`: la tarjeta "Pedido en curso" muestra el estado y las horas del historial de
+   `GET /orders/{id}` y se actualiza sola (CU-05, paso 9). Repartidor y mapa no se muestran: Logística no publica GET.
+6. `/notificaciones`: aparecen las notificaciones del usuario y se pueden marcar como leídas (CU-08).
+7. Errores esperables: producto sin stock (mensaje de Pedidos), comercio inexistente (404), token inválido (401).
 
 **Si algo falla:** volver ese servicio a `USE_MOCK = true`, anotar el motivo en la sección 4 y seguir con el resto.
