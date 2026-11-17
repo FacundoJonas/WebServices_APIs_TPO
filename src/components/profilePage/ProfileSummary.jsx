@@ -1,3 +1,5 @@
+import VerifiedEmailBadge from "./VerifiedEmailBadge.jsx"
+
 /*
  * Texto a mostrar para cada rol.
  */
@@ -60,9 +62,11 @@ function ProfileSummary({ usuario, addressCount }) {
                         mail
                     </span>
 
-                    <span className="truncate">
+                    <span className="truncate flex-1">
                         {usuario?.email}
                     </span>
+
+                    {usuario?.email && <VerifiedEmailBadge />}
                 </div>
 
                 <div className="flex items-center gap-space-xs text-on-surface-variant font-caption-sm text-caption-sm">

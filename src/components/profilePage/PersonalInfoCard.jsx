@@ -1,5 +1,7 @@
 import { useState } from "react"
 
+import VerifiedEmailBadge from "./VerifiedEmailBadge.jsx"
+
 /*
  * Clases compartidas por los campos del formulario.
  */
@@ -79,7 +81,7 @@ function PersonalInfoCard({ usuario, onSave }) {
     const fields = [
         { label: "Nombre", value: usuario?.nombre },
         { label: "Apellido", value: usuario?.apellido },
-        { label: "Correo electrónico", value: usuario?.email },
+        { label: "Correo electrónico", value: usuario?.email, verified: true },
         { label: "Teléfono", value: usuario?.telefono },
     ]
 
@@ -159,13 +161,20 @@ function PersonalInfoCard({ usuario, onSave }) {
                                 Correo electrónico
                             </label>
 
-                            <input
-                                id="profile-email"
-                                type="email"
-                                value={usuario?.email ?? ""}
-                                disabled
-                                className={`${inputClass} opacity-60 cursor-not-allowed`}
-                            />
+                            <div className="relative">
+
+                                <input
+                                    id="profile-email"
+                                    type="email"
+                                    value={usuario?.email ?? ""}
+                                    disabled
+                                    className={`${inputClass} pr-10 opacity-60 cursor-not-allowed`}
+                                />
+
+                                <span className="absolute right-3 top-1/2 -translate-y-1/2 flex">
+                                    <VerifiedEmailBadge />
+                                </span>
+                            </div>
                         </div>
 
                         <div>
@@ -225,9 +234,15 @@ function PersonalInfoCard({ usuario, onSave }) {
                                 {field.label}
                             </span>
 
-                            <span className="font-body-md-medium text-body-md-medium text-on-surface mt-1 truncate">
-                                {field.value || "Sin completar"}
-                            </span>
+                            <div className="flex items-center justify-between gap-space-xs mt-1">
+
+                                <span className="font-body-md-medium text-body-md-medium text-on-surface truncate">
+                                    {field.value || "Sin completar"}
+                                </span>
+
+                                {/* Canal EMAIL de las notificaciones */}
+                                {field.verified && field.value && <VerifiedEmailBadge />}
+                            </div>
                         </div>
                     ))}
                 </div>
