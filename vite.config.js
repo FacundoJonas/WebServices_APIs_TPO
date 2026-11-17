@@ -27,14 +27,27 @@ export default defineConfig(({ mode }) => {
    */
   const env = loadEnv(mode, process.cwd(), '')
 
+  /*
+   * Un módulo del ecosistema por fila: [prefijo del Portal, variable con la
+   * dirección real]. El prefijo tiene que coincidir con el de src/servicies/api.js.
+   * Si la dirección no está cargada, ese módulo no tiene proxy (se usa el mock).
+   */
+  const modulos = [
+    [env.VITE_USUARIOS_URL ?? '/usuarios-api', env.USUARIOS_PROXY_TARGET],
+    [env.VITE_CATALOGO_URL ?? '/catalogo-api', env.CATALOGO_PROXY_TARGET],
+    [env.VITE_PEDIDOS_URL ?? '/pedidos-api', env.PEDIDOS_PROXY_TARGET],
+    [env.VITE_PAGOS_URL ?? '/pagos-api', env.PAGOS_PROXY_TARGET],
+    [env.VITE_REPARTIDORES_LOGISTICA_URL ?? '/repartidores-logistica-api', env.REPARTIDORES_LOGISTICA_PROXY_TARGET],
+    [env.VITE_NOTIF_URL ?? '/notif-api', env.NOTIF_PROXY_TARGET],
+    [env.VITE_OPINIONES_ANALITICA_URL ?? '/opiniones-analitica-api', env.OPINIONES_ANALITICA_PROXY_TARGET],
+  ]
+
   const proxy = {}
 
-  if (env.PEDIDOS_PROXY_TARGET) {
-    proxy['/pedidos-api'] = proxyHacia(env.PEDIDOS_PROXY_TARGET, '/pedidos-api')
-  }
-
-  if (env.NOTIF_PROXY_TARGET) {
-    proxy['/notif-api'] = proxyHacia(env.NOTIF_PROXY_TARGET, '/notif-api')
+  for (const [prefijo, target] of modulos) {
+    if (target) {
+      proxy[prefijo] = proxyHacia(target, prefijo)
+    }
   }
 
   return {
