@@ -17,7 +17,7 @@ store.token = 'jwt-de-prueba'; store.usuario = JSON.stringify({ id: 2, direccion
 const llamadas = []; let rutas = [];
 globalThis.fetch = async (url, op = {}) => { llamadas.push({ url, method: op.method ?? 'GET', headers: op.headers, body: op.body && JSON.parse(op.body) });
   const r = rutas.find(([re]) => re.test(url)); if (!r) return new Response('{}', { status: 404 });
-  const [, status, body] = r; return new Response(JSON.stringify(typeof body === 'function' ? body(url, op) : body), { status }); };
+  const [, status, body] = r; if (status === 204) return new Response(null, { status }); return new Response(JSON.stringify(typeof body === 'function' ? body(url, op) : body), { status }); };
 const ok = (c, m) => { console.log(`${c ? 'OK  ' : 'FALLA'} ${m}`); if (!c) process.exitCode = 1; };
 
 // ── Catálogo ──
@@ -89,4 +89,66 @@ ok(Array.isArray(lista) && lista.length === 1, 'Notificaciones: GET /users/{id}/
 ok(llamadas.every(l => (l.headers.Authorization ?? '') === 'Bearer jwt-de-prueba'), 'Notificaciones: manda el JWT');
 await notif.marcarNotificacionLeida(7); ok(llamadas.at(-1).method === 'PATCH', 'Notificaciones: PATCH /notifications/{id}/read');
 ok((await notif.listarCanales()).length >= 1, 'Notificaciones: GET /channels');
+
+// ── Usuarios (CU-01, CU-06) ──
+const dirDto = { id: 5, calle: 'Av. Corrientes', numero: '1450', piso: '4', departamento: 'B', ciudad: 'Balvanera', provincia: 'Ciudad Autónoma de Buenos Aires', codigoPostal: 'C1042AAP', predeterminada: true };
+rutas = [
+  [/\/usuarios-api\/api\/v1\/auth\/login$/, 200, { token: 'jwt-real', tipo: 'Bearer', expiraEn: '2026-11-17T23:00:00Z', usuarioId: 7, nombre: 'Ana', rol: 'CLIENTE' }],
+  [/\/usuarios-api\/api\/v1\/auth\/register$/, 201, { id: 7, nombre: 'Ana', apellido: 'Pérez', email: 'ana@example.com', rol: 'CLIENTE', estado: 'ACTIVO' }],
+  [/\/usuarios-api\/api\/v1\/users\/7\/addresses\/5\/default$/, 200, dirDto],
+  [/\/usuarios-api\/api\/v1\/users\/7\/addresses\/5$/, 204, null],
+  [/\/usuarios-api\/api\/v1\/users\/7\/addresses$/, 200, (url, op) => op.method === 'POST' ? { ...dirDto, id: 6, predeterminada: false } : [{ ...dirDto, id: 6, predeterminada: false }, dirDto]],
+  [/\/usuarios-api\/api\/v1\/users\/7$/, 200, { id: 7, nombre: 'Ana', apellido: 'Pérez', email: 'ana@example.com', telefono: null, rol: 'CLIENTE', estado: 'ACTIVO' }],
+];
+const auth = await server.ssrLoadModule('/src/servicies/authServicie.js');
+const usr = await server.ssrLoadModule('/src/servicies/userServicie.js');
+llamadas.length = 0;
+const sesion = await auth.login('ana@example.com', 'ClaveDemo2026!');
+ok(llamadas[0].method === 'POST' && JSON.stringify(llamadas[0].body) === JSON.stringify({ email: 'ana@example.com', password: 'ClaveDemo2026!' }) && !llamadas[0].headers.Authorization, 'Usuarios: POST /auth/login con LoginRequest y sin token');
+ok(llamadas.slice(1).every(l => l.headers.Authorization === 'Bearer jwt-real') && llamadas.some(l => l.url.endsWith('/users/7')), 'Usuarios: con el token emitido pide GET /users/{usuarioId}');
+ok(sesion.id === 7 && sesion.rol === 'CLIENTE' && sesion.direcciones[0].id === 5 && sesion.direcciones[0].pisoDepto === 'Piso 4 B' && sesion.direcciones[0].barrio === 'Balvanera', 'Usuarios: DireccionResponse → formato del Portal, predeterminada primero');
+llamadas.length = 0;
+await auth.register({ nombre: 'Ana', apellido: 'Pérez', email: 'ana@example.com', telefono: '', password: 'ClaveDemo2026!', direccion: {} });
+ok(JSON.stringify(Object.keys(llamadas[0].body)) === JSON.stringify(['nombre', 'apellido', 'email', 'telefono', 'password']), 'Usuarios: RegistrarUsuarioRequest sólo con campos del contrato');
+llamadas.length = 0;
+await usr.crearDireccion(7, { calle: 'Av. Corrientes 1450', pisoDepto: 'Piso 4 B', barrio: 'Balvanera', ciudad: 'CABA', codigoPostal: 'C1042AAP' }, { predeterminada: true });
+const req = llamadas[0].body;
+ok(req.calle === 'Av. Corrientes' && req.numero === '1450' && req.piso === '4' && req.departamento === 'B' && req.ciudad === 'Balvanera' && req.provincia === 'Ciudad Autónoma de Buenos Aires' && req.codigoPostal === 'C1042AAP' && req.predeterminada === true, 'Usuarios: CrearDireccionRequest con todos los obligatorios (calle, numero, ciudad, provincia, codigoPostal)');
+await usr.actualizarPerfil(7, { nombre: 'Ana', apellido: 'Gómez', email: 'ana@example.com', telefono: '' });
+ok(llamadas.at(-1).method === 'PUT' && llamadas.at(-1).url.endsWith('/users/7') && llamadas.at(-1).body.email === 'ana@example.com' && llamadas.at(-1).body.telefono === null, 'Usuarios: PUT /users/{id} con ModificarPerfilRequest');
+await usr.marcarDireccionPredeterminada(7, 5);
+ok(llamadas.at(-1).method === 'PATCH' && llamadas.at(-1).url.endsWith('/addresses/5/default'), 'Usuarios: PATCH /addresses/{addressId}/default');
+await usr.eliminarDireccion(7, 5);
+ok(llamadas.at(-1).method === 'DELETE' && llamadas.at(-1).url.endsWith('/users/7/addresses/5'), 'Usuarios: DELETE /addresses/{addressId} (204)');
+rutas.unshift([/\/auth\/login$/, 401, { status: 401, code: 'INVALID_CREDENTIALS', message: 'Credenciales incorrectas' }]);
+try { await auth.login('x@x.com', 'mala-clave'); ok(false, 'Usuarios: 401'); } catch (e) { ok(e.message === 'Email o contraseña incorrectos.', 'Usuarios: 401 → mensaje de credenciales'); }
+rutas.unshift([/\/auth\/register$/, 409, { status: 409, code: 'EMAIL_ALREADY_EXISTS', message: 'El email ya está registrado' }]);
+try { await auth.register({ nombre: 'a', apellido: 'b', email: 'ana@example.com', password: '12345678' }); ok(false, 'Usuarios: 409'); } catch (e) { ok(e.message.startsWith('Ya existe una cuenta'), 'Usuarios: 409 → email ya registrado'); }
+
+// ── Opiniones (CU-09) ──
+store.usuario = JSON.stringify({ id: 100, direcciones: [] });
+rutas = [
+  [/\/opiniones-analitica-api\/api\/v1\/reviews$/, 201, (url, op) => ({ id: 9001, usuarioId: 100, ...JSON.parse(op.body), objetivoId: 10, fechaCreacion: '2026-11-17T20:00:00' })],
+  [/\/opiniones-analitica-api\/api\/v1\/merchants\/10\/rating$/, 200, { objetivoId: 10, tipoObjetivo: 'COMERCIO', promedio: 4.75, cantidadResenas: 12 }],
+];
+const op = await server.ssrLoadModule('/src/servicies/opinionesServicie.js');
+llamadas.length = 0;
+await op.crearResena({ pedidoId: '1', tipoObjetivo: 'COMERCIO', puntuacion: 5, comentario: 'Excelente' });
+ok(llamadas[0].url === '/opiniones-analitica-api/api/v1/reviews' && llamadas[0].headers['X-Usuario-Id'] === '100' && llamadas[0].headers['X-Correlation-Id'], 'Opiniones: POST /reviews con X-Usuario-Id y X-Correlation-Id');
+ok(JSON.stringify(llamadas[0].body) === JSON.stringify({ pedidoId: 1, tipoObjetivo: 'COMERCIO', puntuacion: 5, comentario: 'Excelente' }), 'Opiniones: ResenaRequest con pedidoId int64');
+ok((await op.obtenerRatingComercio(10)).promedio === 4.75, 'Opiniones: GET /merchants/{id}/rating');
+rutas.unshift([/\/reviews$/, 409, { status: 409, error: 'DUPLICATE_REVIEW', message: 'Ya existe una reseña' }]);
+try { await op.crearResena({ pedidoId: 1, tipoObjetivo: 'COMERCIO', puntuacion: 5 }); ok(false, 'Opiniones: 409'); } catch (e) { ok(e.message === 'Ya calificaste este pedido.', 'Opiniones: 409 → reseña duplicada (RN-08)'); }
+
+// ── Analítica (CU-10) ──
+rutas = [[/\/opiniones-analitica-api\/api\/v1\/analytics\/dashboard\?/, 200, { generadoEn: '2026-11-17T20:00:00', parcial: true, metricas: [
+  { fuente: 'RESENAS', tipoMetrica: 'PROMEDIO_CALIFICACION', periodoDesde: '2026-11-01', periodoHasta: '2026-11-17', valor: 4.5 },
+  { fuente: 'RESENAS', tipoMetrica: 'CANTIDAD_RESENAS', periodoDesde: '2026-11-01', periodoHasta: '2026-11-17', valor: 8 },
+  { fuente: 'PEDIDOS', tipoMetrica: 'PEDIDOS_ENTREGADOS', periodoDesde: '2026-11-01', periodoHasta: '2026-11-17', valor: 2 } ] }]];
+const ana = await server.ssrLoadModule('/src/servicies/analiticaServicie.js');
+llamadas.length = 0;
+const tablero = await ana.obtenerTablero('2026-11-01', '2026-11-17');
+ok(llamadas[0].url === '/opiniones-analitica-api/api/v1/analytics/dashboard?periodoDesde=2026-11-01&periodoHasta=2026-11-17', 'Analítica: GET /analytics/dashboard?periodoDesde=&periodoHasta=');
+ok(tablero.opiniones.promedio === 4.5 && tablero.pedidos.porEstado[0].cantidad === 2 && tablero.pagos.error && tablero.parcial === true, 'Analítica: métricas por fuente; la que falta muestra error sólo en su bloque (RN-11)');
+
 await server.close();
