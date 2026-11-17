@@ -8,6 +8,10 @@
  * - Selector de propina para el repartidor.
  *
  * Props:
+ * @param {Array} items - ItemResponse[] del pedido (GET /api/v1/orders/{id}).
+ * @param {number} total - total calculado por Pedidos.
+ * @param {string} moneda
+ *
  * @param {number|string} selectedTip
  * Propina actualmente seleccionada.
  *
@@ -16,7 +20,7 @@
  * @param {Function} onTipChange
  * Función utilizada para cambiar la propina seleccionada.
  */
-function OrderSummary({ selectedTip, onTipChange }) {
+function OrderSummary({ items = [], total, moneda = "ARS", selectedTip, onTipChange }) {
 
   /*
    * Montos predefinidos disponibles como propina.
@@ -33,25 +37,25 @@ function OrderSummary({ selectedTip, onTipChange }) {
           Resumen del pedido
         </span>
 
-        <span className="font-caption-sm text-caption-sm text-on-surface-variant">
-          13:42 hs
-        </span>
       </div>
 
       {/* Productos incluidos en el pedido */}
       <div className="space-y-space-sm">
 
-        <OrderItem
-          quantity={1}
-          name="Golden Burger Doble Cheddar"
-          price="$6.200"
-        />
+        {items.length === 0 && (
+          <p className="font-body-md text-body-md text-on-surface-variant">
+            No pudimos cargar los productos del pedido.
+          </p>
+        )}
 
-        <OrderItem
-          quantity={1}
-          name="Papas Rústicas Trufadas"
-          price="$2.250"
-        />
+        {items.map((item) => (
+          <OrderItem
+            key={item.id ?? item.productoId}
+            quantity={item.cantidad}
+            name={item.nombreProducto ?? `Producto ${item.productoId}`}
+            price={`$${(item.subtotal ?? 0).toLocaleString("es-AR")}`}
+          />
+        ))}
       </div>
 
       {/* Total abonado */}
@@ -62,7 +66,7 @@ function OrderSummary({ selectedTip, onTipChange }) {
         </span>
 
         <span className="font-title-md text-title-md text-primary font-bold">
-          $8.450 ARS
+          {total != null ? `$${total.toLocaleString("es-AR")} ${moneda}` : "—"}
         </span>
       </div>
 
