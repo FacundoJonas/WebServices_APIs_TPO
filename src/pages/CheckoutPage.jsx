@@ -10,11 +10,12 @@ import PurchaseSummary from "../components/cartPage/PurchaseSummary"
 import { useCart } from "../context/useCart"
 import { useAuth } from "../context/useAuth"
 import { confirmarPedido, guardarUltimoPedido } from "../servicies/pedidosServicie"
+import { procesarPago, reintentarPago } from "../servicies/pagosServicie"
 
 /*
  * Medios de pago del contrato (MedioPagoRequest.tipo del swagger del ecosistema).
- * El id es el valor que viaja a Pedidos como ConfirmarPedidoRequest.medioPago;
- * Pedidos cobra con Pagos (el Portal no llama a Pagos directamente).
+ * El id es el tipo con el que se registra el medio en Pagos y se cobra
+ * (POST /api/v1/payments); también viaja a Pedidos como ConfirmarPedidoRequest.medioPago.
  */
 const paymentMethods = [
   {
@@ -100,14 +101,14 @@ function PaymentSuccess({ order }) {
 
           <div>
             <h1 className="font-headline-md text-headline-md text-on-surface font-semibold">
-              {order.estado === "CONFIRMADO" ? "¡Pago confirmado!" : "Pago en proceso"}
+              {order.estadoPago === "APROBADO" ? "¡Pago confirmado!" : "Pago en proceso"}
             </h1>
 
-            {/* Pedidos deja el pedido en BORRADOR si Pagos todavía no autorizó el cobro. */}
+            {/* Estado del pago en el Módulo Pagos: APROBADO o PENDIENTE de autorización. */}
             <p className="font-body-md text-body-md text-on-surface-variant mt-1">
-              {order.estado === "CONFIRMADO"
-                ? `Tu pedido #${order.id} por $ ${order.total.toLocaleString("es-AR")} quedó confirmado.`
-                : `Tu pedido #${order.id} por $ ${order.total.toLocaleString("es-AR")} espera la autorización del pago.`}
+              {order.estadoPago === "APROBADO"
+                ? `Tu pedido #${String(order.id).slice(0, 8)} por $ ${order.total.toLocaleString("es-AR")} quedó pagado.`
+                : `Tu pedido #${String(order.id).slice(0, 8)} por $ ${order.total.toLocaleString("es-AR")} espera la autorización del pago.`}
             </p>
           </div>
 
@@ -182,9 +183,12 @@ function CheckoutPage() {
   }
 
   /**
-   * Pasos 5 y 6 del flujo: confirma el pedido en Pedidos, que cobra con Pagos
-   * (POST /api/v1/orders/{id}/confirm). Si el pago se rechaza, el pedido sigue
-   * en BORRADOR y se puede reintentar con otro medio sin crear otro pedido (DM-03).
+   * Pasos 5 y 6 del flujo:
+   * 1. Cobra con Pagos (POST /api/v1/payments) con el usuario fijo de Pagos y los
+   *    datos del pedido real (id, total, medio elegido).
+   * 2. Si el pago no se rechazó, confirma el pedido en Pedidos (POST /api/v1/orders/{id}/confirm).
+   * Si el pago se rechaza, el pedido sigue en BORRADOR y se puede reintentar con
+   * otro medio sin crear otro pedido (DM-03).
    */
   async function handlePay() {
 
@@ -193,16 +197,33 @@ function CheckoutPage() {
     setPaymentError("")
 
     try {
-      const pedido = await confirmarPedido(order.id, usuario?.id, selectedMethodId)
+      const pagoRequest = {
+        pedidoId: order.id,
+        monto: order.total ?? amounts.total,
+        moneda: order.moneda ?? "ARS",
+        metodoPagoId: selectedMethodId,
+      }
+
+      // Después de un rechazo es un reintento: Pagos recibe otra claveControl (DM-03).
+      const pago = Object.keys(rejections).length > 0
+        ? await reintentarPago(pagoRequest)
+        : await procesarPago(pagoRequest)
+
+      // El cobro ya lo resolvió Pagos: si Pedidos no responde, el pago no se pierde.
+      try {
+        await confirmarPedido(order.id, usuario?.id, selectedMethodId)
+      } catch (errorPedidos) {
+        console.warn("[Pedidos] No se pudo confirmar el pedido después del pago:", errorPedidos.message)
+      }
 
       setPaidOrder({
-        id: pedido.id ?? order.id,
-        total: pedido.total ?? amounts.total,
-        estado: pedido.estado,
+        id: order.id,
+        total: Number(pago.monto ?? pagoRequest.monto),
+        estadoPago: pago.estado,
       })
 
       // CU-05: el Home sigue este pedido con GET /api/v1/orders/{id}.
-      guardarUltimoPedido({ id: pedido.id ?? order.id, storeName: store.name })
+      guardarUltimoPedido({ id: order.id, storeName: store.name })
       clearCart()
       window.scrollTo(0, 0)
     } catch (err) {
